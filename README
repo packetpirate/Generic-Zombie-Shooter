@@ -24,13 +24,12 @@ you fire them until they hit a target or go out of bounds.
 
 Changes:
 
-- Split Canvas.java into GZSFramework and GZSCanvas.
-- Optimized a few things for slightly increased performance.
-- Changed zombie spawn locations. Now, they will spawn at the four sides of the screen, rather than at random locations on the screen.
+- Fixed issue with thread not spawning zombies with correct timer.
+- Removed some unused code. Mostly redundant constructors.
 
 Known Issues:
 
-- Zombies are not spawning at the correct rate. The spawn counter is not working properly. It is supposed to set itself to the SPAWN_TIME constant in Globals.java to begin with, and then decrement in every cycle of the main thread. Once it reaches zero, a new zombie spawns and then it sets itself back to the SPAWN_TIME constant. The SPAWN_TIME constant is 500, but the text on screen that shows the SPAWN_TIME seems to always count down from 100, rather than 500. I have no idea where this number is coming from.
+- None
 
 For v0.7:
 
