@@ -10,8 +10,8 @@ public class Globals {
     // Final
     public static final int W_WIDTH = 800; // The width of the game window.
     public static final int W_HEIGHT = 640; // The height of the game window.
-    public static final int SLEEP_TIME = 20; // The sleep time of the animation thread.
-    public static final int SPAWN_TIME = 500; // The time it takes zombies to spawn. (SLEEP_TIME * SPAWN_TIME)
+    public static final long SLEEP_TIME = 20; // The sleep time of the animation thread.
+    public static final long SPAWN_TIME = 50; // The time it takes zombies to spawn. (SLEEP_TIME * SPAWN_TIME)
     
     // Non-Final
     public static Runnable animation; // The primary animation thread.

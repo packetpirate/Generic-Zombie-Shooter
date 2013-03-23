@@ -27,8 +27,8 @@ public class GZSFramework {
     public GZSCanvas canvas;
     private Random rand;
     
-    private int zSpawn;
-    public int getSpawnTime() { return zSpawn; }
+    private long zSpawn;
+    public long getSpawnTime() { return zSpawn; }
     
     // Game objects.
     private Player player; // The player character.
