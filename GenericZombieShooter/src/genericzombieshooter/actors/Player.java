@@ -86,14 +86,14 @@ public class Player extends Rectangle2D.Double {
             case 0: // Up
                 y -= MOVE_SPEED;
                 break;
-            case 1: // Right
-                x += MOVE_SPEED;
+            case 1: // Left
+                x -= MOVE_SPEED;
                 break;
             case 2: // Down
                 y += MOVE_SPEED;
                 break;
-            case 3: // Left
-                x -= MOVE_SPEED;
+            case 3: // Right
+                x += MOVE_SPEED;
                 break;
             default: // No direction.
                 break;
