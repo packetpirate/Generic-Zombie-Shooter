@@ -1,6 +1,6 @@
 -----------------------
 Author: Darin Beaudreau
-Version: 0.6.5
+Version: 0.6.6
 -----------------------
 
 Description:
@@ -24,8 +24,7 @@ you fire them until they hit a target or go out of bounds.
 
 Changes:
 
-- Fixed issue with thread not spawning zombies with correct timer.
-- Removed some unused code. Mostly redundant constructors.
+- Added a rudimentary score system.
 
 Known Issues:
 
