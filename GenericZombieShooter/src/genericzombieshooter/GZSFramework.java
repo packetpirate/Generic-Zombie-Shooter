@@ -37,6 +37,9 @@ public class GZSFramework {
     public List<Zombie> getZombies() { return zombies; }
     private List<Particle> projectiles;
     public List<Particle> getProjectiles() { return projectiles; }
+    
+    private int score; // The player's current score.
+    public int getScore() { return score; }
 
     public GZSFramework() {
         canvas = new GZSCanvas(this);
@@ -188,7 +191,10 @@ public class GZSFramework {
                             if(p.intersects(z)) {
                                 // Deal damage to the zombie. If it is dead, remove it. Then remove the particle.
                                 z.takeDamage(p.getDamage());
-                                if(z.isDead()) zombies.remove(z);
+                                if(z.isDead()) {
+                                    score += z.getScore();
+                                    zombies.remove(z);
+                                }
                                 projectiles.remove(i);
                                 collision = true;
                                 break;
@@ -271,7 +277,7 @@ public class GZSFramework {
         // Create the zombie.
         String fileName_ = "/resources/images/GZS_Zombie_2.png";
         Rectangle2D.Double rect_ = new Rectangle2D.Double(x_, y_, w_, h_);
-        Zombie z_ = new Zombie(rect_, 20, 1, fileName_);
+        Zombie z_ = new Zombie(rect_, 20, 1, 100, fileName_);
         zombies.add(z_);
     }
 

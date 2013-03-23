@@ -99,6 +99,6 @@ public class GZSCanvas extends JPanel {
         } // End drawing the health bar.
         
         g2d.setColor(Color.WHITE);
-        g2d.drawString(("Spawn Time: " + framework.getSpawnTime()), 10, 45);
+        g2d.drawString(("Score: " + framework.getScore()), 10, 45);
     }
 }

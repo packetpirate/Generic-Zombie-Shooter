@@ -21,14 +21,16 @@ public class Zombie extends Rectangle2D.Double implements Enemy {
     
     private int health; // How much health the zombie has.
     private int damage; // How much damage the zombie does per tick to the player.
+    private int scoreValue; // How many points the zombie is worth.
     
-    public Zombie(Rectangle2D.Double rect_, int health_, int damage_, String fileName_) {
+    public Zombie(Rectangle2D.Double rect_, int health_, int damage_, int score_, String fileName_) {
         super(rect_.x, rect_.y, rect_.width, rect_.height);
         af = new AffineTransform();
         LoadImage(fileName_);
         
         health = health_;
         damage = damage_;
+        scoreValue = score_;
     }
     
     private void LoadImage(String fileName_) {
@@ -43,6 +45,7 @@ public class Zombie extends Rectangle2D.Double implements Enemy {
     // Getter/Setter methods.
     public int getHealth() { return health; }
     public int getDamage() { return damage; }
+    public int getScore() { return scoreValue; }
     public AffineTransform getTransform() { return af; }
     public Animation getImage() { return img; }
     
