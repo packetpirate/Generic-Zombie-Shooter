@@ -13,7 +13,6 @@ import javax.imageio.ImageIO;
  */
 public class Particle extends Rectangle2D.Double {
     // Member variables.
-    private Point target;
     private double playerAngle;
     private double firingAngle;
     private AffineTransform af;
@@ -21,39 +20,8 @@ public class Particle extends Rectangle2D.Double {
     
     private int damage;
     
-    public Particle() { 
-        super();
-        target = new Point();
-        playerAngle = 0.0;
-        firingAngle = 0.0;
-        af = new AffineTransform();
-        img = null;
-        
-        damage = 10;
-    }
-    public Particle(double x_, double y_, double w_, double h_) { 
-        super(x_, y_, w_, h_);
-        target = new Point();
-        playerAngle = 0.0;
-        firingAngle = 0.0;
-        af = new AffineTransform();
-        img = null;
-        
-        damage = 10;
-    }
-    public Particle(double x_, double y_, double w_, double h_, Point target_) {
-        super(x_, y_, w_, h_);
-        target = target_;
-        playerAngle = Math.atan2((target_.y - y_), (target_.x - x_));
-        firingAngle = Math.atan2((target.x - x_), (target.y - y_));
-        af = new AffineTransform();
-        img = null;
-        
-        damage = 10;
-    }
     public Particle(double x_, double y_, double w_, double h_, int damage_, Point target_, double playerAngle_, double firingAngle_, String fileName_) {
         super(x_, y_, w_, h_);
-        target = target_;
         playerAngle = playerAngle_;
         firingAngle = firingAngle_;
         af = new AffineTransform();
@@ -61,6 +29,7 @@ public class Particle extends Rectangle2D.Double {
         
         damage = damage_;
     }
+    
     private void LoadImage(String fileName_) {
         try {
             img = ImageIO.read(getClass().getResource(fileName_));
@@ -69,8 +38,6 @@ public class Particle extends Rectangle2D.Double {
         }
     }
     
-    public Point getTarget() { return target; }
-    public void setTarget(Point target_) { target = target_; }
     public double getPlayerAngle() { return playerAngle; }
     public double getFiringAngle() { return firingAngle; }
     public AffineTransform getTransform() { return af; }
