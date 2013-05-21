@@ -1,6 +1,6 @@
 -----------------------
 Author: Darin Beaudreau
-Version: 0.6.6
+Version: 0.6.7
 -----------------------
 
 Description:
@@ -24,14 +24,14 @@ you fire them until they hit a target or go out of bounds.
 
 Changes:
 
-- Added a rudimentary score system.
+- Added a basic sound system.
 
 Known Issues:
 
-- None
+- Occasionally, the sound will drop out and no longer play when firing your weapon.
+- The sound for the gunshot is just... awful.
 
 For v0.7:
 
-- Will add scoring so you can tell how many zombies you have killed.
 - Will add a delay before zombies start spawning.
 - Will let the player 'die' and show a message when you die before exiting.
