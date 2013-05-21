@@ -3,6 +3,7 @@ package genericzombieshooter;
 import genericzombieshooter.actors.Player;
 import genericzombieshooter.actors.Zombie;
 import genericzombieshooter.misc.Globals;
+import genericzombieshooter.misc.Sounds;
 import genericzombieshooter.structures.Particle;
 import genericzombieshooter.structures.Vector2D;
 import java.awt.Point;
@@ -111,6 +112,7 @@ public class GZSFramework {
             });
         } // End adding key and mouse listeners to canvas.
 
+        Sounds.init();
         initializeThread();
         startThread();
     }
@@ -131,7 +133,10 @@ public class GZSFramework {
         }
         
         // If the left mouse button is held down, create a new projectile.
-        if(Globals.buttons[0] && !player.isOnCooldown()) createParticle(pAngle);
+        if(Globals.buttons[0] && !player.isOnCooldown()) {
+            createParticle(pAngle);
+            Sounds.RIFLE.play();
+        }
         player.decCooldown();
         
         // Update zombie vectors and positions.
