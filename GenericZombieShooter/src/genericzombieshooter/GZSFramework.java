@@ -12,8 +12,10 @@ import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.geom.AffineTransform;
+import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
 
@@ -134,9 +136,14 @@ public class GZSFramework {
         }
         
         // If the left mouse button is held down, create a new projectile.
-        if(Globals.buttons[0] && !player.isOnCooldown()) {
-            createParticle(pAngle);
-            Sounds.RIFLE.play();
+        if(Globals.buttons[0] /*&& !player.isOnCooldown()*/) {
+            /*createParticle(pAngle);
+            Sounds.RIFLE.play();*/
+            Point target = new Point(Globals.mousePos);
+            Point2D.Double pos = new Point2D.Double((player.x + 28), (player.y - 8));
+            double theta = Math.atan2((target.x - pos.x), (target.y - pos.y));
+            AffineTransform.getRotateInstance(pAngle, player.getCenterX(), player.getCenterY()).transform(pos, pos);
+            player.getWeapon().fire(theta, pos);
         }
         player.decCooldown();
         
@@ -178,7 +185,7 @@ public class GZSFramework {
         }
         
         // Update all projectiles.
-        if(!projectiles.isEmpty()) {
+        /*if(!projectiles.isEmpty()) {
             for(int i = 0; i < projectiles.size(); i++) {
                 Particle p = projectiles.get(i);
                 
@@ -216,6 +223,21 @@ public class GZSFramework {
                         p.y += dY * 5;
                         p.rotate(p.getPlayerAngle(), p.x, p.y);
                     }
+                }
+            }
+        }*/
+        // Update the player's weapon, including its ammo.
+        player.getWeapon().updateWeapon();
+        // Check for collisions between zombies and ammo.
+        Iterator<Zombie> it = this.zombies.iterator();
+        while(it.hasNext()) {
+            Zombie z = it.next();
+            int damage = player.getWeapon().checkForDamage(z);
+            if(damage > 0) {
+                z.takeDamage(damage);
+                if(z.isDead()) {
+                    score += z.getScore();
+                    it.remove();
                 }
             }
         }
@@ -283,7 +305,7 @@ public class GZSFramework {
         // Create the zombie.
         String fileName_ = "/resources/images/GZS_Zombie_2.png";
         Rectangle2D.Double rect_ = new Rectangle2D.Double(x_, y_, w_, h_);
-        Zombie z_ = new Zombie(rect_, 20, 1, 100, fileName_);
+        Zombie z_ = new Zombie(rect_, 250, 1, 100, fileName_);
         zombies.add(z_);
     }
 

@@ -1,5 +1,6 @@
 package genericzombieshooter.structures;
 
+import genericzombieshooter.misc.Globals;
 import java.awt.Graphics2D;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Point2D;
@@ -14,7 +15,6 @@ import java.util.Random;
 public class SprayParticle {
     private int size; // The size in pixels of the particle. Used for width and height.
     private double theta; // The angle that the particle moves in.
-    private double spread; // The possible spread of the weapon. Is added or subtracted to the theta.
     private Point2D.Double pos; // The location of the particle on the screen.
     public Point2D.Double getPos() { return this.pos; }
     private int life; // The current time left before the particle expires. Measured in MS / SLEEP TIME.
@@ -39,9 +39,10 @@ public class SprayParticle {
         Random r = new Random();
         boolean deviate = ((((r.nextInt(10) + 1) % 2) == 0)?true:false);
         if(deviate) {
-            int mod = ((r.nextInt(2) == 1)?1:-1);
-            double spreadMod = r.nextDouble() * this.spread;
-            this.spread += (spreadMod * mod);
+            boolean mod = r.nextBoolean();
+            double spreadMod = r.nextDouble() * spread;
+            spread += (spreadMod * ((mod)?-1:1));
+            this.theta += spread;
         }
     }
     
@@ -67,8 +68,8 @@ public class SprayParticle {
         if(this.isAlive()) {
             double dx = Math.sin(this.theta);
             double dy = Math.cos(this.theta);
-            this.pos.x += dx * 5;
-            this.pos.y += dy * 5;
+            this.pos.x += dx * 0.5;
+            this.pos.y += dy * 0.5;
         }
     }
     
@@ -77,5 +78,13 @@ public class SprayParticle {
             this.life = 0;
             return true;
         } else return false;
+    }
+    
+    public boolean outOfBounds() {
+        boolean top = this.pos.y < 0;
+        boolean right = this.pos.x > Globals.W_WIDTH;
+        boolean bottom = this.pos.y > Globals.W_HEIGHT;
+        boolean left = this.pos.x < 0;
+        return top || right || bottom || left;
     }
 }

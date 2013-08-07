@@ -2,11 +2,13 @@ package genericzombieshooter.structures.weapons;
 
 import genericzombieshooter.misc.Globals;
 import genericzombieshooter.structures.SprayParticle;
+import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
 
@@ -18,10 +20,10 @@ public class Flamethrower extends Weapon {
     // Final Variables
     private static final int DEFAULT_AMMO = 50;
     private static final int MAX_AMMO = 250;
-    private static final int AMMO_PER_USE = 5;
+    private static final int AMMO_PER_USE = 0;
     private static final int PARTICLES_PER_USE = 20;
-    private static final int DAMAGE_PER_PARTICLE = 2;
-    private static final double PARTICLE_SPREAD = 20.0;
+    private static final int DAMAGE_PER_PARTICLE = 1;
+    private static final double PARTICLE_SPREAD = Math.toRadians(50.0);
     private static final int PARTICLE_LIFE = 800;
     
     // Member Variables
@@ -36,11 +38,18 @@ public class Flamethrower extends Weapon {
     
     @Override
     public void updateWeapon() {
-        // Update all particles and remove them if their life has expired.
-        for(SprayParticle s : this.particles) {
+        // Update all particles and remove them if their life has expired or they are out of bounds.
+        Iterator<SprayParticle> it = this.particles.iterator();
+        while(it.hasNext()) {
+            SprayParticle s = it.next();
             s.update();
             if(!s.isAlive()) {
-                this.particles.remove(s);
+                it.remove();
+                continue;
+            }
+            if(s.outOfBounds()) {
+                it.remove();
+                continue;
             }
         }
     }
@@ -49,6 +58,7 @@ public class Flamethrower extends Weapon {
     public void drawAmmo(Graphics2D g2d) {
         // Draw all particles whose life has not yet expired.
         if(this.particles.size() > 0) {
+            g2d.setColor(Color.ORANGE);
             for(SprayParticle s : this.particles) {
                 if(s.isAlive()) s.draw(g2d);
             }
@@ -78,12 +88,14 @@ public class Flamethrower extends Weapon {
     public int checkForDamage(Rectangle2D.Double rect) {
         int damage = 0;
         // Check all particles for collisions with the target rectangle.
-        for(SprayParticle s : this.particles) {
+        Iterator<SprayParticle> it = this.particles.iterator();
+        while(it.hasNext()) {
+            SprayParticle s = it.next();
             // If the particle is still alive and has collided with the target.
             if(s.isAlive() && rect.contains(s.getPos())) {
                 // Add the damage of the particle and remove it from the list.
                 damage += DAMAGE_PER_PARTICLE;
-                this.particles.remove(s);
+                it.remove();
             }
         }
         return damage;
