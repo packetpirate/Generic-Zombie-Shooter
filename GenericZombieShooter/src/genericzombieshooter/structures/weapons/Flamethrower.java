@@ -23,8 +23,8 @@ public class Flamethrower extends Weapon {
     private static final int AMMO_PER_USE = 0;
     private static final int PARTICLES_PER_USE = 20;
     private static final int DAMAGE_PER_PARTICLE = 1;
-    private static final double PARTICLE_SPREAD = Math.toRadians(50.0);
-    private static final int PARTICLE_LIFE = 800;
+    private static final double PARTICLE_SPREAD = Math.toRadians(100.0);
+    private static final int PARTICLE_LIFE = 1000;
     
     // Member Variables
     private List<SprayParticle> particles;
@@ -72,7 +72,7 @@ public class Flamethrower extends Weapon {
             Random r = new Random();
             // Generate new particles and add them to the list.
             for(int i = 0; i < PARTICLES_PER_USE; i++) {
-                int size = r.nextInt(5) + 1;
+                int size = r.nextInt(8) + 1;
                 this.particles.add(new SprayParticle(size, 
                                                      theta, 
                                                      PARTICLE_SPREAD, 

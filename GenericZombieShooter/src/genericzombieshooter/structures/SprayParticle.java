@@ -37,11 +37,11 @@ public class SprayParticle {
         
         // Determine if the angle of the particle will deviate from its set value.
         Random r = new Random();
-        boolean deviate = ((((r.nextInt(10) + 1) % 2) == 0)?true:false);
+        boolean deviate = r.nextBoolean();
         if(deviate) {
             boolean mod = r.nextBoolean();
             double spreadMod = r.nextDouble() * spread;
-            spread += (spreadMod * ((mod)?-1:1));
+            spread = (spreadMod * ((mod)?1:-1));
             this.theta += spread;
         }
     }
@@ -68,8 +68,8 @@ public class SprayParticle {
         if(this.isAlive()) {
             double dx = Math.sin(this.theta);
             double dy = Math.cos(this.theta);
-            this.pos.x += dx * 0.5;
-            this.pos.y += dy * 0.5;
+            this.pos.x += dx * 0.3;
+            this.pos.y += dy * 0.3;
         }
     }
     
