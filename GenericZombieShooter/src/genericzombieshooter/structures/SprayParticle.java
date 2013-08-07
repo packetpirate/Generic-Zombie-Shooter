@@ -3,6 +3,7 @@ package genericzombieshooter.structures;
 import java.awt.Graphics2D;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Point2D;
+import java.awt.geom.Rectangle2D;
 import java.util.Random;
 
 /**
@@ -15,6 +16,7 @@ public class SprayParticle {
     private double theta; // The angle that the particle moves in.
     private double spread; // The possible spread of the weapon. Is added or subtracted to the theta.
     private Point2D.Double pos; // The location of the particle on the screen.
+    public Point2D.Double getPos() { return this.pos; }
     private int life; // The current time left before the particle expires. Measured in MS / SLEEP TIME.
     public boolean isAlive() { return this.life > 0; }
     
@@ -60,7 +62,7 @@ public class SprayParticle {
      **/
     public void update() {
         // Age the particle.
-        --this.life;
+        if(this.life > 0) --this.life;
         // Update the position of the particle.
         if(this.isAlive()) {
             double dx = Math.sin(this.theta);
@@ -68,5 +70,12 @@ public class SprayParticle {
             this.pos.x += dx * 5;
             this.pos.y += dy * 5;
         }
+    }
+    
+    public boolean checkCollision(Rectangle2D.Double rect) {
+        if(rect.contains(pos)) {
+            this.life = 0;
+            return true;
+        } else return false;
     }
 }

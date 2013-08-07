@@ -1,5 +1,8 @@
 package genericzombieshooter.actors;
 
+import genericzombieshooter.misc.Globals;
+import genericzombieshooter.structures.weapons.Flamethrower;
+import genericzombieshooter.structures.weapons.Weapon;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
@@ -20,6 +23,7 @@ public class Player extends Rectangle2D.Double {
     private BufferedImage img;
     private int health;
     private int cooldown; // How many ticks before gun can be fired again.
+    private Weapon weapon;
 
     public Player(double x_, double y_, double w_, double h_) {
         super(x_, y_, w_, h_);
@@ -28,6 +32,7 @@ public class Player extends Rectangle2D.Double {
 
         health = 200;
         cooldown = WEAPON_CD;
+        weapon = new Flamethrower();
     }
 
     private void LoadImage() {
@@ -50,6 +55,13 @@ public class Player extends Rectangle2D.Double {
             cooldown = WEAPON_CD;
             return false;
         } else return true;
+    }
+    
+    public Weapon getWeapon() { return weapon; }
+    public void setWeapon(int w) {
+        if(w == 2) {
+            weapon = Globals.FLAMETHROWER;
+        }
     }
 
     // Shape manipulation.

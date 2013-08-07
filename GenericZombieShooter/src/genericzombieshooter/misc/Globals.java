@@ -1,5 +1,6 @@
 package genericzombieshooter.misc;
 
+import genericzombieshooter.structures.weapons.Flamethrower;
 import java.awt.Point;
 
 /**
@@ -21,4 +22,6 @@ public class Globals {
     public static boolean [] buttons; // The state of the game mouse button controls.
     
     public static Point mousePos; // The current position of the mouse on the screen.
+    
+    public static Flamethrower FLAMETHROWER = new Flamethrower();
 }

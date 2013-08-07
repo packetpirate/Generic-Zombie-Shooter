@@ -52,6 +52,8 @@ public class GZSCanvas extends JPanel {
         AffineTransform saved = g2d.getTransform();
 
         g2d.drawImage(background, 0, 0, null);
+        
+        Player player = framework.getPlayer();
 
         try {
             // If there are any projectiles left to draw...
@@ -62,14 +64,13 @@ public class GZSCanvas extends JPanel {
                     g2d.drawImage(p.getImage(), (int) p.x, (int) p.y, null);
                 }
             }
+            player.getWeapon().drawAmmo(g2d);
         } catch (RuntimeException r) {
         }
 
         { // Begin drawing the player.
-            Player p = framework.getPlayer();
-
             g2d.setTransform(framework.getPlayer().getTransform());
-            g2d.drawImage(p.getImage(), (int) p.x, (int) p.y, null);
+            g2d.drawImage(player.getImage(), (int) player.x, (int) player.y, null);
         } // End drawing the player.
 
         try {

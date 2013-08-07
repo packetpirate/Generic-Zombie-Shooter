@@ -80,6 +80,7 @@ public class GZSFramework {
                     if (k.getKeyCode() == KeyEvent.VK_A) Globals.keys[1] = false;
                     if (k.getKeyCode() == KeyEvent.VK_S) Globals.keys[2] = false;
                     if (k.getKeyCode() == KeyEvent.VK_D) Globals.keys[3] = false;
+                    if (k.getKeyCode() == Globals.FLAMETHROWER.getKey()) player.setWeapon(2);
                 }
             });
 
