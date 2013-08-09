@@ -1,5 +1,6 @@
 package genericzombieshooter.misc;
 
+import genericzombieshooter.structures.weapons.AssaultRifle;
 import genericzombieshooter.structures.weapons.Flamethrower;
 import java.awt.Point;
 
@@ -23,5 +24,6 @@ public class Globals {
     
     public static Point mousePos; // The current position of the mouse on the screen.
     
+    public static AssaultRifle ASSAULT_RIFLE = new AssaultRifle();
     public static Flamethrower FLAMETHROWER = new Flamethrower();
 }

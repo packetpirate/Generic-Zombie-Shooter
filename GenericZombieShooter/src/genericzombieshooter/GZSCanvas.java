@@ -3,7 +3,6 @@ package genericzombieshooter;
 import genericzombieshooter.actors.Player;
 import genericzombieshooter.actors.Zombie;
 import genericzombieshooter.misc.Globals;
-import genericzombieshooter.structures.Particle;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
@@ -55,7 +54,7 @@ public class GZSCanvas extends JPanel {
         
         Player player = framework.getPlayer();
 
-        try {
+        /*try {
             // If there are any projectiles left to draw...
             if (!framework.getProjectiles().isEmpty()) {
                 // Draw all projectiles in the projectiles list.
@@ -66,7 +65,9 @@ public class GZSCanvas extends JPanel {
             }
             player.getWeapon().drawAmmo(g2d);
         } catch (RuntimeException r) {
-        }
+        }*/
+        
+        player.getWeapon().drawAmmo(g2d);
 
         { // Begin drawing the player.
             g2d.setTransform(framework.getPlayer().getTransform());

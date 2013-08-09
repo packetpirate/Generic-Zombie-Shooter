@@ -59,7 +59,9 @@ public class Player extends Rectangle2D.Double {
     
     public Weapon getWeapon() { return weapon; }
     public void setWeapon(int w) {
-        if(w == 2) {
+        if(w == 1) {
+            weapon = Globals.ASSAULT_RIFLE;
+        } else if(w == 2) {
             weapon = Globals.FLAMETHROWER;
         }
     }

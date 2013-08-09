@@ -11,28 +11,26 @@ import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Random;
 
 /**
- * Used to represent the Flamethrower weapon.
+ * Used to represent the Assault Rifle weapon.
  * @author Darin Beaudreau
  */
-public class Flamethrower extends Weapon {
+public class AssaultRifle extends Weapon {
     // Final Variables
-    private static final int DEFAULT_AMMO = 50;
-    private static final int MAX_AMMO = 250;
+    private static final int DEFAULT_AMMO = 60;
+    private static final int MAX_AMMO = 300;
     private static final int AMMO_PER_USE = 0;
-    private static final int PARTICLES_PER_USE = 20;
-    private static final int DAMAGE_PER_PARTICLE = 1;
-    private static final double PARTICLE_SPREAD = Math.toRadians(100.0);
-    private static final int PARTICLE_LIFE = 800;
+    private static final int DAMAGE_PER_PARTICLE = 150;
+    private static final double PARTICLE_SPREAD = Math.toRadians(10.0);
+    private static final int PARTICLE_LIFE = 2000;
     
     // Member Variables
     private List<Particle> particles;
     public List<Particle> getParticles() { return this.particles; }
     
-    public Flamethrower() {
-        super("The Flammenwerfer", KeyEvent.VK_2, DEFAULT_AMMO, MAX_AMMO, AMMO_PER_USE, 0);
+    public AssaultRifle() {
+        super("RTPS", KeyEvent.VK_1, DEFAULT_AMMO, MAX_AMMO, AMMO_PER_USE, 10);
         this.particles = new ArrayList<Particle>();
     }
     
@@ -70,14 +68,12 @@ public class Flamethrower extends Weapon {
     public void fire(double theta, Point2D.Double pos) {
         // If there is enough ammo left...
         if(this.canFire()) {
-            Random r = new Random();
-            // Generate new particles and add them to the list.
-            for(int i = 0; i < PARTICLES_PER_USE; i++) {
-                int size = r.nextInt(8) + 1;
-                this.particles.add(new Particle(theta, PARTICLE_SPREAD, 0.3,
-                                                (PARTICLE_LIFE / (int)Globals.SLEEP_TIME), pos,
-                                                new Dimension(size, size)));
-            }
+            // Create a new bullet and add it to the list.
+            int width = 4;
+            int height = 10;
+            this.particles.add(new Particle(theta, PARTICLE_SPREAD, 5.0,
+                                            (PARTICLE_LIFE / (int)Globals.SLEEP_TIME), pos,
+                                            new Dimension(width, height)));
             // Use up ammo.
             this.consumeAmmo();
             this.resetCooldown();

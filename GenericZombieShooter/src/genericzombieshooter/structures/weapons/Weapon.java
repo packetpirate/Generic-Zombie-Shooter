@@ -19,7 +19,12 @@ public class Weapon {
     private int maxAmmo;
     private int ammoPerUse;
     
-    public boolean canFire() { return this.ammoLeft >= this.ammoPerUse; }
+    private int cooldown;
+    private int coolPeriod;
+    public void resetCooldown() { this.cooldown = this.coolPeriod; }
+    public void cool() { if(this.cooldown > 0) this.cooldown--; }
+    
+    public boolean canFire() { return (this.ammoLeft >= this.ammoPerUse) && (this.cooldown == 0); }
     public void addAmmo(int amount) { 
         if((this.ammoLeft + amount) > this.maxAmmo) this.ammoLeft = this.maxAmmo;
         else this.ammoLeft += amount;
@@ -30,16 +35,19 @@ public class Weapon {
     }
     
     public Weapon(String name, int key) {
-        this(name, key, 0, 100, 1);
+        this(name, key, 0, 100, 1, 0);
     }
     
-    public Weapon(String name, int key, int ammoLeft, int maxAmmo, int ammoPerUse) {
+    public Weapon(String name, int key, int ammoLeft, int maxAmmo, int ammoPerUse, int cooldown) {
         this.name = name;
         this.key = key;
         
         this.ammoLeft = ammoLeft;
         this.maxAmmo = maxAmmo;
         this.ammoPerUse = ammoPerUse;
+        
+        this.cooldown = cooldown;
+        this.coolPeriod = cooldown;
     }
     
     public void updateWeapon() {

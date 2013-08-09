@@ -82,6 +82,7 @@ public class GZSFramework {
                     if (k.getKeyCode() == KeyEvent.VK_A) Globals.keys[1] = false;
                     if (k.getKeyCode() == KeyEvent.VK_S) Globals.keys[2] = false;
                     if (k.getKeyCode() == KeyEvent.VK_D) Globals.keys[3] = false;
+                    if (k.getKeyCode() == Globals.ASSAULT_RIFLE.getKey()) player.setWeapon(1);
                     if (k.getKeyCode() == Globals.FLAMETHROWER.getKey()) player.setWeapon(2);
                 }
             });
@@ -136,9 +137,7 @@ public class GZSFramework {
         }
         
         // If the left mouse button is held down, create a new projectile.
-        if(Globals.buttons[0] /*&& !player.isOnCooldown()*/) {
-            /*createParticle(pAngle);
-            Sounds.RIFLE.play();*/
+        if(Globals.buttons[0]) {
             Point target = new Point(Globals.mousePos);
             Point2D.Double pos = new Point2D.Double((player.x + 28), (player.y - 8));
             double theta = Math.atan2((target.x - pos.x), (target.y - pos.y));
@@ -183,49 +182,6 @@ public class GZSFramework {
                 if(player.intersects(z)) player.takeDamage(z.getDamage());
             }
         }
-        
-        // Update all projectiles.
-        /*if(!projectiles.isEmpty()) {
-            for(int i = 0; i < projectiles.size(); i++) {
-                Particle p = projectiles.get(i);
-                
-                // Check if the projectile is out of bounds.
-                if((p.getCenterX() < 0)||
-                   (p.getCenterX() > Globals.W_WIDTH)||
-                   (p.getCenterY() < 0)||
-                   (p.getCenterY() > Globals.W_HEIGHT)) {
-                    projectiles.remove(i);
-                } else {
-                    // Otherwise, if the projectile has collided with a zombie...
-                    boolean collision = false;
-                    
-                    if(!zombies.isEmpty()) {
-                        for(Zombie z : zombies) {
-                            if(p.intersects(z)) {
-                                // Deal damage to the zombie. If it is dead, remove it. Then remove the particle.
-                                z.takeDamage(p.getDamage());
-                                if(z.isDead()) {
-                                    score += z.getScore();
-                                    zombies.remove(z);
-                                }
-                                projectiles.remove(i);
-                                collision = true;
-                                break;
-                            }
-                        }
-                    }
-                    
-                    // This check is to make sure you don't try to modify a projectile that has been deleted.
-                    if(!collision) {
-                        double dX = Math.sin(p.getFiringAngle());
-                        double dY = Math.cos(p.getFiringAngle());
-                        p.x += dX * 5;
-                        p.y += dY * 5;
-                        p.rotate(p.getPlayerAngle(), p.x, p.y);
-                    }
-                }
-            }
-        }*/
         // Update the player's weapon, including its ammo.
         player.getWeapon().updateWeapon();
         // Check for collisions between zombies and ammo.
@@ -241,36 +197,6 @@ public class GZSFramework {
                 }
             }
         }
-    }
-    
-    /**
-     * Creates a new projectile angled toward the mouse.
-     * @param angle The angle of the mouse in relation to the player's center position.
-     **/
-    private void createParticle(double angle) {
-        // Variables representing the position of the particle.
-        double x_ = player.x + 28;
-        double y_ = player.y - 8;
-        double w_ = 2;
-        double h_ = 10;
-        
-        // The position of the mouse and the particle, respectively.
-        Point target_ = new Point(Globals.mousePos);
-        Point pos_ = new Point((int)x_, (int)y_);
-        
-        // Get the angle of the particle relative to mouse position.
-        double fAngle = Math.atan2((target_.x - x_), (target_.y - y_));
-        
-        AffineTransform.getRotateInstance(angle, player.getCenterX(), player.getCenterY()).transform(pos_, pos_);
-        x_ = pos_.x;
-        y_ = pos_.y;
-        
-        String fileName_ = "/resources/images/GZS_Bullet.png";
-        
-        // Create the particle and add it to the list.
-        Particle p = new Particle(x_, y_, w_, h_, 10, target_, angle, fAngle, fileName_);
-        p.rotate(angle, player.getCenterX(), player.getCenterY());
-        projectiles.add(p);
     }
     
     /**
