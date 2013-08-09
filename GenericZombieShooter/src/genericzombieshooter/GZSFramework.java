@@ -17,7 +17,6 @@ import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Random;
 
 /**
  * Contains many of the methods used to update game objects and handles the game
@@ -28,7 +27,6 @@ import java.util.Random;
 public class GZSFramework {
     // Member variables.
     public GZSCanvas canvas;
-    private Random rand;
     
     private long zSpawn;
     public long getSpawnTime() { return zSpawn; }
@@ -54,8 +52,6 @@ public class GZSFramework {
             for (boolean b : Globals.buttons) b = false;
 
             Globals.mousePos = new Point(0, 0);
-
-            rand = new Random();
         } // End member variable initialization.
         
         zSpawn = Globals.SPAWN_TIME;
@@ -83,7 +79,8 @@ public class GZSFramework {
                     if (k.getKeyCode() == KeyEvent.VK_S) Globals.keys[2] = false;
                     if (k.getKeyCode() == KeyEvent.VK_D) Globals.keys[3] = false;
                     if (k.getKeyCode() == Globals.ASSAULT_RIFLE.getKey()) player.setWeapon(1);
-                    if (k.getKeyCode() == Globals.FLAMETHROWER.getKey()) player.setWeapon(2);
+                    if (k.getKeyCode() == Globals.SHOTGUN.getKey()) player.setWeapon(2);
+                    if (k.getKeyCode() == Globals.FLAMETHROWER.getKey()) player.setWeapon(3);
                 }
             });
 
@@ -204,7 +201,7 @@ public class GZSFramework {
      **/
     private void createZombie() {
         // Decide which side of the screen to spawn the zombie on.
-        int spawnSide = rand.nextInt(4) + 1;
+        int spawnSide = Globals.r.nextInt(4) + 1;
         
         double x_ = 0;
         double y_ = 0;
@@ -213,18 +210,18 @@ public class GZSFramework {
         
         switch(spawnSide) {
             case 1:
-                x_ = rand.nextInt((Globals.W_WIDTH - 40) + 1);
+                x_ = Globals.r.nextInt((Globals.W_WIDTH - 40) + 1);
                 break;
             case 2:
                 x_ = Globals.W_WIDTH - 40;
-                y_ = rand.nextInt((Globals.W_HEIGHT - 40) + 1);
+                y_ = Globals.r.nextInt((Globals.W_HEIGHT - 40) + 1);
                 break;
             case 3:
-                x_ = rand.nextInt((Globals.W_WIDTH - 40) + 1);
+                x_ = Globals.r.nextInt((Globals.W_WIDTH - 40) + 1);
                 y_ = Globals.W_HEIGHT - 40;
                 break;
             case 4:
-                y_ = rand.nextInt((Globals.W_HEIGHT - 40) + 1);
+                y_ = Globals.r.nextInt((Globals.W_HEIGHT - 40) + 1);
                 break;
         }
         

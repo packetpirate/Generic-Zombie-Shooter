@@ -13,24 +13,25 @@ import java.util.Iterator;
 import java.util.List;
 
 /**
- * Used to represent the Assault Rifle weapon.
+ * Used to represent the Shotgun weapon.
  * @author Darin Beaudreau
  */
-public class AssaultRifle extends Weapon {
+public class Shotgun extends Weapon {
     // Final Variables
-    private static final int DEFAULT_AMMO = 60;
-    private static final int MAX_AMMO = 300;
+    private static final int DEFAULT_AMMO = 24;
+    private static final int MAX_AMMO = 64;
     private static final int AMMO_PER_USE = 0;
-    private static final int DAMAGE_PER_PARTICLE = 150;
-    private static final double PARTICLE_SPREAD = 10.0;
-    private static final int PARTICLE_LIFE = 2000;
+    private static final int PARTICLES_PER_USE = 8;
+    private static final int DAMAGE_PER_PARTICLE = 20;
+    private static final double PARTICLE_SPREAD = 50.0;
+    private static final int PARTICLE_LIFE = 1000;
     
     // Member Variables
     private List<Particle> particles;
     public List<Particle> getParticles() { return this.particles; }
     
-    public AssaultRifle() {
-        super("RTPS", KeyEvent.VK_1, DEFAULT_AMMO, MAX_AMMO, AMMO_PER_USE, 10);
+    public Shotgun() {
+        super("Boomstick", KeyEvent.VK_2, DEFAULT_AMMO, MAX_AMMO, AMMO_PER_USE, 25);
         this.particles = new ArrayList<Particle>();
     }
     
@@ -57,7 +58,7 @@ public class AssaultRifle extends Weapon {
     public void drawAmmo(Graphics2D g2d) {
         // Draw all particles whose life has not yet expired.
         if(this.particles.size() > 0) {
-            g2d.setColor(Color.ORANGE);
+            g2d.setColor(Color.YELLOW);
             for(Particle p : this.particles) {
                 if(p.isAlive()) p.draw(g2d);
             }
@@ -68,12 +69,16 @@ public class AssaultRifle extends Weapon {
     public void fire(double theta, Point2D.Double pos) {
         // If there is enough ammo left...
         if(this.canFire()) {
-            // Create a new bullet and add it to the list.
-            int width = 4;
-            int height = 10;
-            this.particles.add(new Particle(theta, AssaultRifle.PARTICLE_SPREAD, 8.0,
-                                            (AssaultRifle.PARTICLE_LIFE / (int)Globals.SLEEP_TIME), pos,
-                                            new Dimension(width, height)));
+            // GenerSystem.out.println("(theta, spread, speed, life, pos, size)");ate new particles and add them to the list.
+            //System.out.println("(theta, spread, speed, life, pos, size)");
+            for(int i = 0; i < Shotgun.PARTICLES_PER_USE; i++) {
+                /*System.out.println("(" + theta + ", " + Shotgun.PARTICLE_SPREAD + 
+                                   ", " + 1.0 + ", " + (Shotgun.PARTICLE_LIFE / (int)Globals.SLEEP_TIME) + 
+                                   ", (" + pos.x + ", " + pos.y + "), " + 5 + ")");*/
+                this.particles.add(new Particle(theta, Shotgun.PARTICLE_SPREAD, 1.0,
+                                                (Shotgun.PARTICLE_LIFE / (int)Globals.SLEEP_TIME), pos,
+                                                new Dimension(5, 5)));
+            }
             // Use up ammo.
             this.consumeAmmo();
             this.resetCooldown();

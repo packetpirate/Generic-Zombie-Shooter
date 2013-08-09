@@ -32,7 +32,7 @@ public class Player extends Rectangle2D.Double {
 
         health = 200;
         cooldown = WEAPON_CD;
-        weapon = new Flamethrower();
+        weapon = Globals.ASSAULT_RIFLE;
     }
 
     private void LoadImage() {
@@ -59,11 +59,9 @@ public class Player extends Rectangle2D.Double {
     
     public Weapon getWeapon() { return weapon; }
     public void setWeapon(int w) {
-        if(w == 1) {
-            weapon = Globals.ASSAULT_RIFLE;
-        } else if(w == 2) {
-            weapon = Globals.FLAMETHROWER;
-        }
+        if(w == 1) weapon = Globals.ASSAULT_RIFLE;
+        else if(w == 2) weapon = Globals.SHOTGUN;
+        else if(w == 3) weapon = Globals.FLAMETHROWER;
     }
 
     // Shape manipulation.

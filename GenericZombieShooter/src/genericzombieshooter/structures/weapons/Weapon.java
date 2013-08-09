@@ -1,9 +1,11 @@
 package genericzombieshooter.structures.weapons;
 
+import genericzombieshooter.structures.Particle;
 import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
+import java.util.List;
 
 /**
  * Generic class to be extended for all weapons.

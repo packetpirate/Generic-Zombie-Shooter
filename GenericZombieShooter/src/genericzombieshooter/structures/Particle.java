@@ -6,10 +6,9 @@ import java.awt.Graphics2D;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
-import java.util.Random;
 
 /**
- *
+ * Used to represent the particles emitted from weapons.
  * @author Darin Beaudreau
  */
 public class Particle {
@@ -22,21 +21,29 @@ public class Particle {
     protected Dimension size;
     public Dimension getSize() { return this.size; }
     
-    public Particle(double theta, double spread, double speed, int life, Point2D.Double pos, Dimension size) {
-        this.theta = theta;
-        this.speed = speed;
-        this.life = life;
-        this.pos = pos;
-        this.size = size;
-        
+    /**
+     * Constructs a new Particle object.
+     * @param _theta The angle between the firing position and the mouse position when fired. Given in radians.
+     * @param _spread The maximum spread for this particle. Given in degrees.
+     * @param _speed The multiplier used when updating the particle position.
+     * @param _life Determines how long before the particle disappears.
+     * @param _pos The starting position of the particle.
+     * @param _size The size of the particle.
+     */
+    public Particle(double _theta, double _spread, double _speed, int _life, Point2D.Double _pos, Dimension _size) {
+        this.theta = _theta;
+        this.speed = _speed;
+        this.life = _life;
+        this.pos = _pos;
+        this.size = _size;
+
         // Determine if the angle of the particle will deviate from its set value.
-        Random r = new Random();
-        boolean deviate = r.nextBoolean();
+        boolean deviate = Globals.r.nextBoolean();
         if(deviate) {
-            boolean mod = r.nextBoolean();
-            double spreadMod = r.nextDouble() * spread;
-            spread = (spreadMod * ((mod)?1:-1));
-            this.theta += spread;
+            boolean mod = Globals.r.nextBoolean();
+            double spreadMod = Math.toRadians(Globals.r.nextDouble() * _spread);
+            if(mod) spreadMod = -spreadMod;
+            this.theta += spreadMod;
         }
     }
     
@@ -57,7 +64,7 @@ public class Particle {
      **/
     public void update() {
         // Age the particle.
-        if(this.life > 0) --this.life;
+        if(this.isAlive()) --this.life;
         // Update the position of the particle.
         if(this.isAlive()) {
             double dx = Math.sin(this.theta);

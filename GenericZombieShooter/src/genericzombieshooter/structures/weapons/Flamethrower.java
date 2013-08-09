@@ -11,7 +11,6 @@ import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Random;
 
 /**
  * Used to represent the Flamethrower weapon.
@@ -24,7 +23,7 @@ public class Flamethrower extends Weapon {
     private static final int AMMO_PER_USE = 0;
     private static final int PARTICLES_PER_USE = 20;
     private static final int DAMAGE_PER_PARTICLE = 1;
-    private static final double PARTICLE_SPREAD = Math.toRadians(100.0);
+    private static final double PARTICLE_SPREAD = 100.0;
     private static final int PARTICLE_LIFE = 800;
     
     // Member Variables
@@ -32,7 +31,7 @@ public class Flamethrower extends Weapon {
     public List<Particle> getParticles() { return this.particles; }
     
     public Flamethrower() {
-        super("The Flammenwerfer", KeyEvent.VK_2, DEFAULT_AMMO, MAX_AMMO, AMMO_PER_USE, 0);
+        super("The Flammenwerfer", KeyEvent.VK_3, DEFAULT_AMMO, MAX_AMMO, AMMO_PER_USE, 0);
         this.particles = new ArrayList<Particle>();
     }
     
@@ -70,12 +69,11 @@ public class Flamethrower extends Weapon {
     public void fire(double theta, Point2D.Double pos) {
         // If there is enough ammo left...
         if(this.canFire()) {
-            Random r = new Random();
             // Generate new particles and add them to the list.
-            for(int i = 0; i < PARTICLES_PER_USE; i++) {
-                int size = r.nextInt(8) + 1;
-                this.particles.add(new Particle(theta, PARTICLE_SPREAD, 0.3,
-                                                (PARTICLE_LIFE / (int)Globals.SLEEP_TIME), pos,
+            for(int i = 0; i < Flamethrower.PARTICLES_PER_USE; i++) {
+                int size = Globals.r.nextInt(8) + 1;
+                this.particles.add(new Particle(theta, Flamethrower.PARTICLE_SPREAD, 0.3,
+                                                (Flamethrower.PARTICLE_LIFE / (int)Globals.SLEEP_TIME), pos,
                                                 new Dimension(size, size)));
             }
             // Use up ammo.
