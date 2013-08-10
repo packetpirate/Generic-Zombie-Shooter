@@ -20,8 +20,8 @@ public class AssaultRifle extends Weapon {
     private static final int DEFAULT_AMMO = 60;
     private static final int MAX_AMMO = 300;
     private static final int AMMO_PER_USE = 0;
-    private static final int DAMAGE_PER_PARTICLE = 150;
-    private static final double PARTICLE_SPREAD = 10.0;
+    private static final int DAMAGE_PER_PARTICLE = 100;
+    private static final double PARTICLE_SPREAD = 5.0;
     private static final int PARTICLE_LIFE = 2000;
     
     public AssaultRifle() {
@@ -66,9 +66,10 @@ public class AssaultRifle extends Weapon {
             // Create a new bullet and add it to the list.
             int width = 4;
             int height = 10;
-            this.particles.add(new Particle(theta, AssaultRifle.PARTICLE_SPREAD, 8.0,
-                                            (AssaultRifle.PARTICLE_LIFE / (int)Globals.SLEEP_TIME), pos,
-                                            new Dimension(width, height)));
+                        Particle p = new Particle(theta, AssaultRifle.PARTICLE_SPREAD, 8.0,
+                                      (AssaultRifle.PARTICLE_LIFE / (int)Globals.SLEEP_TIME), new Point2D.Double(pos.x, pos.y),
+                                       new Dimension(width, height));
+            this.particles.add(p);
             // Use up ammo.
             this.consumeAmmo();
             this.resetCooldown();

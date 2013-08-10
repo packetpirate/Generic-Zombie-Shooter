@@ -21,8 +21,8 @@ public class Shotgun extends Weapon {
     private static final int MAX_AMMO = 64;
     private static final int AMMO_PER_USE = 0;
     private static final int PARTICLES_PER_USE = 8;
-    private static final int DAMAGE_PER_PARTICLE = 20;
-    private static final double PARTICLE_SPREAD = 25.0;
+    private static final int DAMAGE_PER_PARTICLE = 40;
+    private static final double PARTICLE_SPREAD = 20.0;
     private static final int PARTICLE_LIFE = 1000;
     
     public Shotgun() {
@@ -66,8 +66,8 @@ public class Shotgun extends Weapon {
         if(this.canFire()) {
             // Create new particles and add them to the list.
             for(int i = 0; i < Shotgun.PARTICLES_PER_USE; i++) {
-                Particle p = new Particle(theta, Shotgun.PARTICLE_SPREAD, 1.0,
-                                          (Shotgun.PARTICLE_LIFE / (int)Globals.SLEEP_TIME), pos,
+                Particle p = new Particle(theta, Shotgun.PARTICLE_SPREAD, 6.0,
+                                          (Shotgun.PARTICLE_LIFE / (int)Globals.SLEEP_TIME), new Point2D.Double(pos.x, pos.y),
                                            new Dimension(5, 5));
                 this.particles.add(p);
             }

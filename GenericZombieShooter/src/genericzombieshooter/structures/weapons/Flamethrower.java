@@ -20,9 +20,9 @@ public class Flamethrower extends Weapon {
     private static final int DEFAULT_AMMO = 50;
     private static final int MAX_AMMO = 250;
     private static final int AMMO_PER_USE = 0;
-    private static final int PARTICLES_PER_USE = 20;
-    private static final int DAMAGE_PER_PARTICLE = 1;
-    private static final double PARTICLE_SPREAD = 100.0;
+    private static final int PARTICLES_PER_USE = 8;
+    private static final int DAMAGE_PER_PARTICLE = 2;
+    private static final double PARTICLE_SPREAD = 25.0;
     private static final int PARTICLE_LIFE = 800;
     
     public Flamethrower() {
@@ -67,9 +67,10 @@ public class Flamethrower extends Weapon {
             // Generate new particles and add them to the list.
             for(int i = 0; i < Flamethrower.PARTICLES_PER_USE; i++) {
                 int size = Globals.r.nextInt(8) + 1;
-                this.particles.add(new Particle(theta, Flamethrower.PARTICLE_SPREAD, 0.3,
-                                                (Flamethrower.PARTICLE_LIFE / (int)Globals.SLEEP_TIME), pos,
-                                                new Dimension(size, size)));
+                Particle p = new Particle(theta, Flamethrower.PARTICLE_SPREAD, 4.0,
+                                      (Flamethrower.PARTICLE_LIFE / (int)Globals.SLEEP_TIME), new Point2D.Double(pos.x, pos.y),
+                                       new Dimension(size, size));
+                this.particles.add(p);
             }
             // Use up ammo.
             this.consumeAmmo();
