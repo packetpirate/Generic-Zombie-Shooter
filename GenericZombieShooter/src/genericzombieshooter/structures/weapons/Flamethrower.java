@@ -10,7 +10,6 @@ import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.List;
 
 /**
  * Used to represent the Flamethrower weapon.
@@ -25,10 +24,6 @@ public class Flamethrower extends Weapon {
     private static final int DAMAGE_PER_PARTICLE = 1;
     private static final double PARTICLE_SPREAD = 100.0;
     private static final int PARTICLE_LIFE = 800;
-    
-    // Member Variables
-    private List<Particle> particles;
-    public List<Particle> getParticles() { return this.particles; }
     
     public Flamethrower() {
         super("The Flammenwerfer", KeyEvent.VK_3, DEFAULT_AMMO, MAX_AMMO, AMMO_PER_USE, 0);

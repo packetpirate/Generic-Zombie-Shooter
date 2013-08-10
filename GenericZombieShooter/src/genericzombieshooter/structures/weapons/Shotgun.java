@@ -10,7 +10,6 @@ import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.List;
 
 /**
  * Used to represent the Shotgun weapon.
@@ -23,12 +22,8 @@ public class Shotgun extends Weapon {
     private static final int AMMO_PER_USE = 0;
     private static final int PARTICLES_PER_USE = 8;
     private static final int DAMAGE_PER_PARTICLE = 20;
-    private static final double PARTICLE_SPREAD = 50.0;
+    private static final double PARTICLE_SPREAD = 25.0;
     private static final int PARTICLE_LIFE = 1000;
-    
-    // Member Variables
-    private List<Particle> particles;
-    public List<Particle> getParticles() { return this.particles; }
     
     public Shotgun() {
         super("Boomstick", KeyEvent.VK_2, DEFAULT_AMMO, MAX_AMMO, AMMO_PER_USE, 25);
@@ -69,15 +64,12 @@ public class Shotgun extends Weapon {
     public void fire(double theta, Point2D.Double pos) {
         // If there is enough ammo left...
         if(this.canFire()) {
-            // GenerSystem.out.println("(theta, spread, speed, life, pos, size)");ate new particles and add them to the list.
-            //System.out.println("(theta, spread, speed, life, pos, size)");
+            // Create new particles and add them to the list.
             for(int i = 0; i < Shotgun.PARTICLES_PER_USE; i++) {
-                /*System.out.println("(" + theta + ", " + Shotgun.PARTICLE_SPREAD + 
-                                   ", " + 1.0 + ", " + (Shotgun.PARTICLE_LIFE / (int)Globals.SLEEP_TIME) + 
-                                   ", (" + pos.x + ", " + pos.y + "), " + 5 + ")");*/
-                this.particles.add(new Particle(theta, Shotgun.PARTICLE_SPREAD, 1.0,
-                                                (Shotgun.PARTICLE_LIFE / (int)Globals.SLEEP_TIME), pos,
-                                                new Dimension(5, 5)));
+                Particle p = new Particle(theta, Shotgun.PARTICLE_SPREAD, 1.0,
+                                          (Shotgun.PARTICLE_LIFE / (int)Globals.SLEEP_TIME), pos,
+                                           new Dimension(5, 5));
+                this.particles.add(p);
             }
             // Use up ammo.
             this.consumeAmmo();

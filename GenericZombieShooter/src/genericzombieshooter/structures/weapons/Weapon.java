@@ -5,6 +5,7 @@ import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -32,6 +33,9 @@ public class Weapon {
         else this.ammoLeft += amount;
     }
     
+    protected List<Particle> particles;
+    public List<Particle> getParticles() { return this.particles; }
+    
     public Weapon(String name) {
         this(name, KeyEvent.VK_1);
     }
@@ -50,6 +54,8 @@ public class Weapon {
         
         this.cooldown = cooldown;
         this.coolPeriod = cooldown;
+        
+        this.particles = new ArrayList<Particle>();
     }
     
     public void updateWeapon() {

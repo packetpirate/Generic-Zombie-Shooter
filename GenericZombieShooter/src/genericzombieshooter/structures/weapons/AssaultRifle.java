@@ -10,7 +10,6 @@ import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.List;
 
 /**
  * Used to represent the Assault Rifle weapon.
@@ -24,10 +23,6 @@ public class AssaultRifle extends Weapon {
     private static final int DAMAGE_PER_PARTICLE = 150;
     private static final double PARTICLE_SPREAD = 10.0;
     private static final int PARTICLE_LIFE = 2000;
-    
-    // Member Variables
-    private List<Particle> particles;
-    public List<Particle> getParticles() { return this.particles; }
     
     public AssaultRifle() {
         super("RTPS", KeyEvent.VK_1, DEFAULT_AMMO, MAX_AMMO, AMMO_PER_USE, 10);

@@ -4,7 +4,6 @@ import genericzombieshooter.actors.Player;
 import genericzombieshooter.actors.Zombie;
 import genericzombieshooter.misc.Globals;
 import genericzombieshooter.misc.Sounds;
-import genericzombieshooter.structures.Particle;
 import genericzombieshooter.structures.Vector2D;
 import java.awt.Point;
 import java.awt.event.KeyAdapter;
@@ -29,15 +28,12 @@ public class GZSFramework {
     public GZSCanvas canvas;
     
     private long zSpawn;
-    public long getSpawnTime() { return zSpawn; }
     
     // Game objects.
     private Player player; // The player character.
     public Player getPlayer() { return player; }
     private List<Zombie> zombies;
     public List<Zombie> getZombies() { return zombies; }
-    private List<Particle> projectiles;
-    public List<Particle> getProjectiles() { return projectiles; }
     
     private int score; // The player's current score.
     public int getScore() { return score; }
@@ -59,7 +55,6 @@ public class GZSFramework {
         { // Begin initializing game objects.
             player = new Player(((Globals.W_WIDTH / 2) - 20), ((Globals.W_HEIGHT / 2) - 20), 40, 40);
             zombies = new ArrayList<Zombie>();
-            projectiles = new ArrayList<Particle>();
         } // End game object initialization.
 
         { // Begin adding key and mouse listeners to canvas.
@@ -137,11 +132,10 @@ public class GZSFramework {
         if(Globals.buttons[0]) {
             Point target = new Point(Globals.mousePos);
             Point2D.Double pos = new Point2D.Double((player.x + 28), (player.y - 8));
-            double theta = Math.atan2((target.x - pos.x), (target.y - pos.y));
             AffineTransform.getRotateInstance(pAngle, player.getCenterX(), player.getCenterY()).transform(pos, pos);
+            double theta = Math.atan2((target.x - pos.x), (target.y - pos.y));
             player.getWeapon().fire(theta, pos);
         }
-        player.decCooldown();
         
         // Update zombie vectors and positions.
         if(!zombies.isEmpty()) {
@@ -171,7 +165,7 @@ public class GZSFramework {
         if(zSpawn == 0) {
             createZombie();
             zSpawn = Globals.SPAWN_TIME;
-        } else zSpawn -= 1;
+        } else zSpawn--;
         
         // If the player is touching a zombie, damage him according to the zombie's damage.
         if(!zombies.isEmpty()) {

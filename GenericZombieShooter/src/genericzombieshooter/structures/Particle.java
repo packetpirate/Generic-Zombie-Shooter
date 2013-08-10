@@ -38,13 +38,10 @@ public class Particle {
         this.size = _size;
 
         // Determine if the angle of the particle will deviate from its set value.
-        boolean deviate = Globals.r.nextBoolean();
-        if(deviate) {
-            boolean mod = Globals.r.nextBoolean();
-            double spreadMod = Math.toRadians(Globals.r.nextDouble() * _spread);
-            if(mod) spreadMod = -spreadMod;
-            this.theta += spreadMod;
-        }
+        boolean mod = Globals.r.nextBoolean();
+        double spreadMod = Math.toRadians(Globals.r.nextDouble() * _spread);
+        if(mod) spreadMod = -spreadMod;
+        this.theta += spreadMod;
     }
     
     /**
@@ -64,13 +61,11 @@ public class Particle {
      **/
     public void update() {
         // Age the particle.
-        if(this.isAlive()) --this.life;
+        if(this.isAlive()) this.life--;
         // Update the position of the particle.
         if(this.isAlive()) {
-            double dx = Math.sin(this.theta);
-            double dy = Math.cos(this.theta);
-            this.pos.x += dx * speed;
-            this.pos.y += dy * speed;
+            this.pos.x += this.speed * Math.sin(this.theta);
+            this.pos.y += this.speed * Math.cos(this.theta);
         }
     }
     
