@@ -26,7 +26,7 @@ public class Shotgun extends Weapon {
     private static final int PARTICLE_LIFE = 1000;
     
     public Shotgun() {
-        super("Boomstick", KeyEvent.VK_2, DEFAULT_AMMO, MAX_AMMO, AMMO_PER_USE, 40);
+        super("Boomstick", KeyEvent.VK_2, "/resources/images/GZS_Boomstick.png", DEFAULT_AMMO, MAX_AMMO, AMMO_PER_USE, 40);
         this.particles = new ArrayList<Particle>();
     }
     

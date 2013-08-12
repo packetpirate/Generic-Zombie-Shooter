@@ -5,8 +5,11 @@ import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import javax.imageio.ImageIO;
 
 /**
  * Generic class to be extended for all weapons.
@@ -17,6 +20,8 @@ public class Weapon {
     public String getName() { return this.name; }
     private int key;
     public int getKey() { return this.key; }
+    private BufferedImage image;
+    public BufferedImage getImage() { return this.image; }
     
     private int ammoLeft;
     private int maxAmmo;
@@ -41,12 +46,18 @@ public class Weapon {
     }
     
     public Weapon(String name, int key) {
-        this(name, key, 0, 100, 1, 0);
+        this(name, key, "", 0, 100, 1, 0);
     }
     
-    public Weapon(String name, int key, int ammoLeft, int maxAmmo, int ammoPerUse, int cooldown) {
+    public Weapon(String name, int key, String filename, int ammoLeft, int maxAmmo, int ammoPerUse, int cooldown) {
         this.name = name;
         this.key = key;
+        
+        if(!filename.equals("") && filename != null) {
+            try {
+                this.image = ImageIO.read(getClass().getResource(filename));
+            } catch(IOException io) { System.out.println("Error reading file: " + filename); }
+        }
         
         this.ammoLeft = ammoLeft;
         this.maxAmmo = maxAmmo;

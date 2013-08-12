@@ -61,7 +61,7 @@ public class GZSFramework {
             player = new Player(((Globals.W_WIDTH / 2) - 20), ((Globals.W_HEIGHT / 2) - 20), 40, 40);
             zombies = new ArrayList<Zombie>();
             score = 0;
-            loadout = new WeaponsLoadout();
+            loadout = new WeaponsLoadout(player);
         } // End game object initialization.
 
         { // Begin adding key and mouse listeners to canvas.

@@ -1,11 +1,13 @@
 package genericzombieshooter.structures.components;
 
+import genericzombieshooter.actors.Player;
 import genericzombieshooter.misc.Globals;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Stroke;
 import java.awt.geom.Rectangle2D;
+import java.awt.image.BufferedImage;
 
 /**
  * Used to draw the weapons loadout GUI component to the screen.
@@ -15,10 +17,12 @@ public class WeaponsLoadout {
     public static final double BAR_WIDTH = (10 * 48) + (11 * 4);
     public static final double BAR_HEIGHT = 56;
     
+    private Player player;
     private int currentWeapon;
     public void setCurrentWeapon(int w) { this.currentWeapon = w; }
     
-    public WeaponsLoadout() {
+    public WeaponsLoadout(Player p) {
+        this.player = p;
         this.currentWeapon = 1;
     }
     
@@ -46,6 +50,12 @@ public class WeaponsLoadout {
                 g2d.fill(rect);
                 g2d.setColor(Color.BLACK);
                 g2d.draw(rect);
+                if((s + 1) <= player.getAllWeapons().size()) { // Draw the weapon's icon.
+                    BufferedImage image = player.getWeapon(s + 1).getImage();
+                    double imageX = (x + 24) - (image.getWidth() / 2);
+                    double imageY = (y + 24) - (image.getHeight() / 2);
+                    g2d.drawImage(image, (int)imageX, (int)imageY, null);
+                } // End drawing of the weapon icon.
                 // If the current iteration is the slot of the currently equipped weapon...
                 if((s + 1) == this.currentWeapon) {
                     x += 3;

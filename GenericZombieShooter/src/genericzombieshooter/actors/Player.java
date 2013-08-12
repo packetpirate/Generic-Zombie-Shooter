@@ -53,6 +53,7 @@ public class Player extends Rectangle2D.Double {
     public int getHealth() { return health; }
     
     public Weapon getWeapon() { return weapons.get(this.currentWeapon - 1); }
+    public Weapon getWeapon(int w) { return weapons.get(w - 1); }
     public int getCurrentWeapon() { return this.currentWeapon; }
     public List<Weapon> getAllWeapons() { return this.weapons; }
     public void setWeapon(int w) { this.currentWeapon = w; }
