@@ -22,9 +22,9 @@ public class Flamethrower extends Weapon {
     private static final int AMMO_PER_USE = 0;
     private static final int PARTICLES_PER_USE = 8;
     private static final int DAMAGE_PER_PARTICLE = 2;
-    private static final double PARTICLE_SPREAD = 25.0;
-    private static final int PARTICLE_LIFE_MIN = 800;
-    private static final int PARTICLE_LIFE_MAX = 1000;
+    private static final double PARTICLE_SPREAD = 15.0;
+    private static final int PARTICLE_LIFE_MIN = 1000;
+    private static final int PARTICLE_LIFE_MAX = 1400;
     
     public Flamethrower() {
         super("The Flammenwerfer", KeyEvent.VK_3, DEFAULT_AMMO, MAX_AMMO, AMMO_PER_USE, 0);

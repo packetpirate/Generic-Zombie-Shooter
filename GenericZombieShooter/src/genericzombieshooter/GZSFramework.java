@@ -4,8 +4,8 @@ import genericzombieshooter.actors.Player;
 import genericzombieshooter.actors.Zombie;
 import genericzombieshooter.misc.Globals;
 import genericzombieshooter.misc.Sounds;
-import genericzombieshooter.structures.Particle;
 import genericzombieshooter.structures.Vector2D;
+import genericzombieshooter.structures.components.WeaponsLoadout;
 import genericzombieshooter.structures.weapons.Weapon;
 import java.awt.Point;
 import java.awt.event.KeyAdapter;
@@ -39,6 +39,9 @@ public class GZSFramework {
     
     private int score; // The player's current score.
     public int getScore() { return score; }
+    
+    private WeaponsLoadout loadout;
+    public WeaponsLoadout getLoadout() { return this.loadout; }
 
     public GZSFramework() {
         canvas = new GZSCanvas(this);
@@ -57,6 +60,8 @@ public class GZSFramework {
         { // Begin initializing game objects.
             player = new Player(((Globals.W_WIDTH / 2) - 20), ((Globals.W_HEIGHT / 2) - 20), 40, 40);
             zombies = new ArrayList<Zombie>();
+            score = 0;
+            loadout = new WeaponsLoadout();
         } // End game object initialization.
 
         { // Begin adding key and mouse listeners to canvas.
@@ -75,9 +80,18 @@ public class GZSFramework {
                     if (k.getKeyCode() == KeyEvent.VK_A) Globals.keys[1] = false;
                     if (k.getKeyCode() == KeyEvent.VK_S) Globals.keys[2] = false;
                     if (k.getKeyCode() == KeyEvent.VK_D) Globals.keys[3] = false;
-                    if (k.getKeyCode() == Globals.ASSAULT_RIFLE.getKey()) player.setWeapon(1);
-                    if (k.getKeyCode() == Globals.SHOTGUN.getKey()) player.setWeapon(2);
-                    if (k.getKeyCode() == Globals.FLAMETHROWER.getKey()) player.setWeapon(3);
+                    if (k.getKeyCode() == Globals.ASSAULT_RIFLE.getKey()) {
+                        player.setWeapon(1);
+                        loadout.setCurrentWeapon(1);
+                    }
+                    if (k.getKeyCode() == Globals.SHOTGUN.getKey()) {
+                        player.setWeapon(2);
+                        loadout.setCurrentWeapon(2);
+                    }
+                    if (k.getKeyCode() == Globals.FLAMETHROWER.getKey()) {
+                        player.setWeapon(3);
+                        loadout.setCurrentWeapon(3);
+                    }
                 }
             });
 

@@ -49,11 +49,11 @@ public class Particle {
      * @param g2d The graphics object used to draw the particle.
      **/
     public void draw(Graphics2D g2d) {
+        Rectangle2D.Double rect = new Rectangle2D.Double((this.pos.x - (this.size.width / 2)), 
+                                                          (this.pos.y - (this.size.height / 2)), 
+                                                           this.size.width, this.size.height);
         AffineTransform at = AffineTransform.getRotateInstance(this.theta, this.pos.x, this.pos.y);
-        g2d.setTransform(at);
-        g2d.fillRect(((int)this.pos.x - (this.size.width / 2)), 
-                     ((int)this.pos.y - (this.size.height / 2)), 
-                     this.size.width, this.size.height);
+        g2d.fill(at.createTransformedShape(rect));
     }
     
     /**

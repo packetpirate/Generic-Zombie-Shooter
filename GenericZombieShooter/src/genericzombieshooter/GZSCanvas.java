@@ -58,7 +58,7 @@ public class GZSCanvas extends JPanel {
             Iterator<Weapon> it = player.getAllWeapons().iterator();
             while(it.hasNext()) {
                 Weapon w = it.next();
-                w.drawAmmo(g2d);
+                w.drawAmmo((Graphics2D)g2d);
             }
             g2d.setTransform(framework.getPlayer().getTransform());
             g2d.drawImage(player.getImage(), (int) player.x, (int) player.y, null);
@@ -69,25 +69,27 @@ public class GZSCanvas extends JPanel {
             while(it.hasNext()) {
                 Zombie z = it.next();
                 g2d.setTransform(z.getTransform());
-                z.getImage().draw(g2d);
+                z.getImage().draw((Graphics2D)g2d);
             }
         } // End drawing zombies.
 
         g2d.setTransform(saved); // Restore original transform state.
 
-        { // Begin drawing the health bar.
-            // Draw the black bar behind the red health bar to act as a border.
-            g2d.setColor(Color.BLACK);
-            g2d.fillRect(10, 10, 204, 20);
+        { // Draw GUI elements.
+            { // Begin drawing the health bar.
+                // Draw the black bar behind the red health bar to act as a border.
+                g2d.setColor(Color.BLACK);
+                g2d.fillRect(10, 10, 204, 20);
 
-            // Only draw the red bar indicating health if player is still alive.
-            if (framework.getPlayer().getHealth() > 0) {
-                g2d.setColor(Color.RED);
-                g2d.fillRect(12, 12, framework.getPlayer().getHealth(), 16);
-            }
-        } // End drawing the health bar.
-        
-        g2d.setColor(Color.WHITE);
-        g2d.drawString(("Score: " + framework.getScore()), 10, 45);
+                // Only draw the red bar indicating health if player is still alive.
+                if (framework.getPlayer().getHealth() > 0) {
+                    g2d.setColor(Color.RED);
+                    g2d.fillRect(12, 12, framework.getPlayer().getHealth(), 16);
+                }
+            } // End drawing the health bar.
+            g2d.setColor(Color.WHITE);
+            g2d.drawString(("Score: " + framework.getScore()), 10, 45);
+            framework.getLoadout().draw((Graphics2D)g2d);
+        } // End drawing GUI elements.
     }
 }
