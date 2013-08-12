@@ -1,11 +1,13 @@
 package genericzombieshooter.structures;
 
+import genericzombieshooter.GZSFramework;
 import genericzombieshooter.misc.Globals;
 import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
+import java.awt.image.BufferedImage;
 
 /**
  * Used to represent the particles emitted from weapons.
@@ -21,6 +23,12 @@ public class Particle {
     protected Dimension size;
     public Dimension getSize() { return this.size; }
     
+    private BufferedImage image;
+    
+    public Particle(double _theta, double _spread, double _speed, int _life, Point2D.Double _pos, Dimension _size) {
+        this(_theta, _spread, _speed, _life, _pos, _size, null);
+    }
+    
     /**
      * Constructs a new Particle object.
      * @param _theta The angle between the firing position and the mouse position when fired. Given in radians.
@@ -30,12 +38,14 @@ public class Particle {
      * @param _pos The starting position of the particle.
      * @param _size The size of the particle.
      */
-    public Particle(double _theta, double _spread, double _speed, int _life, Point2D.Double _pos, Dimension _size) {
+    public Particle(double _theta, double _spread, double _speed, int _life, Point2D.Double _pos, Dimension _size, BufferedImage _image) {
         this.theta = _theta;
         this.speed = _speed;
         this.life = _life;
         this.pos = _pos;
         this.size = _size;
+        
+        this.image = _image;
 
         // Determine if the angle of the particle will deviate from its set value.
         boolean mod = Globals.r.nextBoolean();
@@ -53,7 +63,8 @@ public class Particle {
                                                           (this.pos.y - (this.size.height / 2)), 
                                                            this.size.width, this.size.height);
         AffineTransform at = AffineTransform.getRotateInstance(this.theta, this.pos.x, this.pos.y);
-        g2d.fill(at.createTransformedShape(rect));
+        if(this.image == null) g2d.fill(at.createTransformedShape(rect));
+        else g2d.drawImage(image, (int)rect.x, (int)rect.y, null);
     }
     
     /**

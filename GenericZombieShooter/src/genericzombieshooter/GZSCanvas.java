@@ -29,7 +29,7 @@ public class GZSCanvas extends JPanel {
         this.framework = framework;
 
         try {
-            background = ImageIO.read(getClass().getResource("/resources/images/GZS_Background.png"));
+            background = ImageIO.read(getClass().getResource("/resources/images/GZS_Background_2.png"));
         } catch (IOException io) {
             System.out.println("ERROR: File not found! Background image could not be loaded!");
         }

@@ -9,6 +9,7 @@ import java.awt.event.KeyEvent;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
+import java.util.ConcurrentModificationException;
 import java.util.Iterator;
 
 /**
@@ -50,9 +51,13 @@ public class Shotgun extends Weapon {
         // Draw all particles whose life has not yet expired.
         if(this.particles.size() > 0) {
             g2d.setColor(Color.YELLOW);
-            for(Particle p : this.particles) {
-                if(p.isAlive()) p.draw(g2d);
-            }
+            try {
+                Iterator<Particle> it = this.particles.iterator();
+                while(it.hasNext()) {
+                    Particle p = it.next();
+                    if(p.isAlive()) p.draw(g2d);
+                }
+            } catch(ConcurrentModificationException cme) {}
         }
     }
     

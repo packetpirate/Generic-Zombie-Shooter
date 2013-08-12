@@ -15,9 +15,12 @@ import java.awt.event.MouseEvent;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import javax.imageio.ImageIO;
 
 /**
  * Contains many of the methods used to update game objects and handles the game
@@ -249,6 +252,15 @@ public class GZSFramework {
         Rectangle2D.Double rect_ = new Rectangle2D.Double(x_, y_, w_, h_);
         Zombie z_ = new Zombie(rect_, 250, 1, 100, fileName_);
         zombies.add(z_);
+    }
+    
+    public static BufferedImage loadImage(String filename) {
+        try {
+            return ImageIO.read(GZSFramework.class.getResource(filename));
+        } catch(IOException io) {
+            System.out.println("Error reading file: " + filename);
+            return null;
+        }
     }
 
     /**

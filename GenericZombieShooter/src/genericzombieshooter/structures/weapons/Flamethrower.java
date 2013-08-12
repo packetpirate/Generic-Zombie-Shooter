@@ -1,6 +1,7 @@
 package genericzombieshooter.structures.weapons;
 
 import genericzombieshooter.misc.Globals;
+import genericzombieshooter.misc.Images;
 import genericzombieshooter.structures.Particle;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -9,6 +10,7 @@ import java.awt.event.KeyEvent;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
+import java.util.ConcurrentModificationException;
 import java.util.Iterator;
 
 /**
@@ -51,9 +53,13 @@ public class Flamethrower extends Weapon {
         // Draw all particles whose life has not yet expired.
         if(this.particles.size() > 0) {
             g2d.setColor(Color.ORANGE);
-            for(Particle p : this.particles) {
-                if(p.isAlive()) p.draw(g2d);
-            }
+            try {
+                Iterator<Particle> it = this.particles.iterator();
+                while(it.hasNext()) {
+                    Particle p = it.next();
+                    if(p.isAlive()) p.draw(g2d);
+                }
+            } catch(ConcurrentModificationException cme) {}
         }
     }
     
@@ -67,7 +73,7 @@ public class Flamethrower extends Weapon {
                 int size = Globals.r.nextInt(8) + 1;
                 Particle p = new Particle(theta, Flamethrower.PARTICLE_SPREAD, 4.0,
                                       (life / (int)Globals.SLEEP_TIME), new Point2D.Double(pos.x, pos.y),
-                                       new Dimension(size, size));
+                                       new Dimension(size, size), Images.FIRE_PARTICLE);
                 this.particles.add(p);
             }
             // Use up ammo.

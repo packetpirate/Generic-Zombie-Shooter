@@ -1,14 +1,13 @@
 package genericzombieshooter.actors;
 
+import genericzombieshooter.GZSFramework;
 import genericzombieshooter.misc.Globals;
 import genericzombieshooter.structures.weapons.Weapon;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import javax.imageio.ImageIO;
 
 /**
  * Represents the player character.
@@ -28,7 +27,7 @@ public class Player extends Rectangle2D.Double {
     public Player(double x_, double y_, double w_, double h_) {
         super(x_, y_, w_, h_);
         af = new AffineTransform();
-        LoadImage();
+        img = GZSFramework.loadImage("/resources/images/GZS_Player.png");
 
         health = 200;
         currentWeapon = 1;
@@ -36,14 +35,6 @@ public class Player extends Rectangle2D.Double {
         weapons.add(Globals.ASSAULT_RIFLE); // Weapon 1
         weapons.add(Globals.SHOTGUN); // Weapon 2
         weapons.add(Globals.FLAMETHROWER); // Weapon 3
-    }
-
-    private void LoadImage() {
-        try {
-            img = ImageIO.read(getClass().getResource("/resources/images/GZS_Player.png"));
-        } catch (IOException io) {
-            System.out.println("File not found!");
-        }
     }
 
     // Getter/Setter methods.
@@ -67,22 +58,10 @@ public class Player extends Rectangle2D.Double {
      * @param direction The direction to move in.
      **/
     public void move(int direction) {
-        switch (direction) {
-            case 0: // Up
-                y -= MOVE_SPEED;
-                break;
-            case 1: // Left
-                x -= MOVE_SPEED;
-                break;
-            case 2: // Down
-                y += MOVE_SPEED;
-                break;
-            case 3: // Right
-                x += MOVE_SPEED;
-                break;
-            default: // No direction.
-                break;
-        }
+        if(direction == 0) y -= MOVE_SPEED;
+        else if(direction == 1) x -= MOVE_SPEED;
+        else if(direction == 2) y += MOVE_SPEED;
+        else if(direction == 3) x += MOVE_SPEED;
     }
 
     public void takeDamage(int damage_) { health -= damage_; }
