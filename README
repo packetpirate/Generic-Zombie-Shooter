@@ -6,32 +6,45 @@ Version: 0.6.7
 Description:
 
 Generic Zombie Shooter is a simple overhead shooter game. Kill as many zombies as you can!
-This game was being created for Halloween, but I ran into some snags that delayed the project.
 
 Instructions:
 
 The game is not complete, so there is limited functionality. Here are the controls.
 
-W - Move up.
-A - Move left.
-S - Move down.
-D - Move right.
+WASD keys - Movement
+Left Click/Hold - Fire equipped weapon.
+1 - Select RTPS (Rooty Tooty Point & Shooty) Assault Rifle
+2 - Select Boomstick (Shotgun)
+3 - Select the Flammenwerfer (Flamethrower)
 
-Click/Hold Left Mouse - Shoot your primary gun. (Only one gun available so far.)
-
-The character will rotate to face your mouse cursor. Bullets will keep traveling in the direction
-you fire them until they hit a target or go out of bounds.
+Your character is always facing your mouse cursor, and particles will travel in the direction you fire until
+they either hit a target, or go out of bounds.
 
 Changes:
 
-- Added a basic sound system.
+- Generalized Particle class.
+- Created Weapon class and re-worked how weapons are handled.
+- Added AssaultRifle, Shotgun, and Flamethrower classes. These may be turned into a single class later on.
+- Optimized some code.
+- Increased zombie health from 20 to 250 to compensate for increase in weapon damage.
+- Disabled sound for now. Will be re-added at a later time.
 
 Known Issues:
 
-- Occasionally, the sound will drop out and no longer play when firing your weapon.
-- The sound for the gunshot is just... awful.
+- None
 
-For v0.7:
+TODO:
 
-- Will add a delay before zombies start spawning.
-- Will let the player 'die' and show a message when you die before exiting.
+- Add a GUI element for the weapons loadout so you can see what weapons you currently have,
+  how much ammo they have left, and which weapon you have equipped.
+- Implement player death.
+- Add a start screen so you're not just thrown into the middle of a game.
+- Add grenades.
+
+Planned Future Changes (Most likely post-1.0):
+- Add a lighting system so that you can only see directly in front of you, like a flashlight.
+- Add randomly generated terrain (buildings, etc) to make combat a bit more interesting.
+- Add pathing AI to make the aforementioned terrain possible.
+- Add level-based gameplay.
+- Create custom graphics. (least likely, considering I'm terrible at graphics work)
+- (Optional) Re-design game engine and migrate to LWJGL and Slick2D.
