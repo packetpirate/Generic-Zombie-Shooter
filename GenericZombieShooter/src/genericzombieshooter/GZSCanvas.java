@@ -3,6 +3,7 @@ package genericzombieshooter;
 import genericzombieshooter.actors.Player;
 import genericzombieshooter.actors.Zombie;
 import genericzombieshooter.misc.Globals;
+import genericzombieshooter.structures.weapons.Weapon;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
@@ -10,6 +11,7 @@ import java.awt.Graphics2D;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.util.Iterator;
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
@@ -47,46 +49,31 @@ public class GZSCanvas extends JPanel {
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         Graphics2D g2d = (Graphics2D) g;
-
         AffineTransform saved = g2d.getTransform();
 
         g2d.drawImage(background, 0, 0, null);
         
-        Player player = framework.getPlayer();
-
-        /*try {
-            // If there are any projectiles left to draw...
-            if (!framework.getProjectiles().isEmpty()) {
-                // Draw all projectiles in the projectiles list.
-                for (Particle p : framework.getProjectiles()) {
-                    g2d.setTransform(p.getTransform());
-                    g2d.drawImage(p.getImage(), (int) p.x, (int) p.y, null);
-                }
+        { // Begin drawing player and ammo.
+            Player player = framework.getPlayer();
+            Iterator<Weapon> it = player.getAllWeapons().iterator();
+            while(it.hasNext()) {
+                Weapon w = it.next();
+                w.drawAmmo(g2d);
             }
-            player.getWeapon().drawAmmo(g2d);
-        } catch (RuntimeException r) {
-        }*/
-        
-        player.getWeapon().drawAmmo(g2d);
-
-        { // Begin drawing the player.
             g2d.setTransform(framework.getPlayer().getTransform());
             g2d.drawImage(player.getImage(), (int) player.x, (int) player.y, null);
-        } // End drawing the player.
-
-        try {
-            // If there are any zombies left to draw...
-            if (!framework.getZombies().isEmpty()) {
-                // Draw all zombies within the zombies list.
-                for (Zombie z : framework.getZombies()) {
-                    g2d.setTransform(z.getTransform());
-                    z.getImage().draw(g2d);
-                }
+        } // End drawing player and ammo.
+        
+        { // Begin drawing zombies.
+            Iterator<Zombie> it = framework.getZombies().iterator();
+            while(it.hasNext()) {
+                Zombie z = it.next();
+                g2d.setTransform(z.getTransform());
+                z.getImage().draw(g2d);
             }
-        } catch (RuntimeException r) {
-        }
+        } // End drawing zombies.
 
-        g2d.setTransform(saved);
+        g2d.setTransform(saved); // Restore original transform state.
 
         { // Begin drawing the health bar.
             // Draw the black bar behind the red health bar to act as a border.

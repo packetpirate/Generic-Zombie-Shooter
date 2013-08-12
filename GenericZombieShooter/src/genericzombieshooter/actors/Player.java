@@ -6,6 +6,8 @@ import java.awt.geom.AffineTransform;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import javax.imageio.ImageIO;
 
 /**
@@ -20,7 +22,8 @@ public class Player extends Rectangle2D.Double {
     private AffineTransform af;
     private BufferedImage img;
     private int health;
-    private Weapon weapon;
+    private int currentWeapon;
+    private List<Weapon> weapons;
 
     public Player(double x_, double y_, double w_, double h_) {
         super(x_, y_, w_, h_);
@@ -28,7 +31,11 @@ public class Player extends Rectangle2D.Double {
         LoadImage();
 
         health = 200;
-        weapon = Globals.ASSAULT_RIFLE;
+        currentWeapon = 1;
+        weapons = new ArrayList<Weapon>();
+        weapons.add(Globals.ASSAULT_RIFLE); // Weapon 1
+        weapons.add(Globals.SHOTGUN); // Weapon 2
+        weapons.add(Globals.FLAMETHROWER); // Weapon 3
     }
 
     private void LoadImage() {
@@ -45,12 +52,9 @@ public class Player extends Rectangle2D.Double {
 
     public int getHealth() { return health; }
     
-    public Weapon getWeapon() { return weapon; }
-    public void setWeapon(int w) {
-        if(w == 1) weapon = Globals.ASSAULT_RIFLE;
-        else if(w == 2) weapon = Globals.SHOTGUN;
-        else if(w == 3) weapon = Globals.FLAMETHROWER;
-    }
+    public Weapon getWeapon() { return weapons.get(this.currentWeapon - 1); }
+    public List<Weapon> getAllWeapons() { return this.weapons; }
+    public void setWeapon(int w) { this.currentWeapon = w; }
 
     // Shape manipulation.
     public void rotate(double theta_) { af.setToRotation(theta_, getCenterX(), getCenterY()); }

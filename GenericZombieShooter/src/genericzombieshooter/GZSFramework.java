@@ -4,7 +4,9 @@ import genericzombieshooter.actors.Player;
 import genericzombieshooter.actors.Zombie;
 import genericzombieshooter.misc.Globals;
 import genericzombieshooter.misc.Sounds;
+import genericzombieshooter.structures.Particle;
 import genericzombieshooter.structures.Vector2D;
+import genericzombieshooter.structures.weapons.Weapon;
 import java.awt.Point;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
@@ -43,7 +45,7 @@ public class GZSFramework {
 
         { // Begin initializing member variables.
             Globals.keys = new boolean[4];
-            for (boolean b : Globals.keys) b = false;
+            for (boolean k : Globals.keys) k = false;
             Globals.buttons = new boolean[2];
             for (boolean b : Globals.buttons) b = false;
 
@@ -173,21 +175,30 @@ public class GZSFramework {
                 if(player.intersects(z)) player.takeDamage(z.getDamage());
             }
         }
-        // Update the player's weapon, including its ammo.
-        player.getWeapon().updateWeapon();
-        // Check for collisions between zombies and ammo.
-        Iterator<Zombie> it = this.zombies.iterator();
-        while(it.hasNext()) {
-            Zombie z = it.next();
-            int damage = player.getWeapon().checkForDamage(z);
-            if(damage > 0) {
-                z.takeDamage(damage);
-                if(z.isDead()) {
-                    score += z.getScore();
-                    it.remove();
+        
+        { // Begin weapon updates.
+            Iterator<Weapon> it = this.player.getAllWeapons().iterator();
+            while(it.hasNext()) {
+                Weapon w = it.next();
+                w.updateWeapon();
+            }
+        } // End weapon updates.
+        
+        { // Do zombie updates.
+            // Check for collisions between zombies and ammo.
+            Iterator<Zombie> it = this.zombies.iterator();
+            while(it.hasNext()) {
+                Zombie z = it.next();
+                int damage = player.getWeapon().checkForDamage(z);
+                if(damage > 0) {
+                    z.takeDamage(damage);
+                    if(z.isDead()) {
+                        score += z.getScore();
+                        it.remove();
+                    }
                 }
             }
-        }
+        } // End zombie updates.
     }
     
     /**

@@ -36,11 +36,7 @@ public class AssaultRifle extends Weapon {
         while(it.hasNext()) {
             Particle p = it.next();
             p.update();
-            if(!p.isAlive()) {
-                it.remove();
-                continue;
-            }
-            if(p.outOfBounds()) {
+            if(!p.isAlive() || p.outOfBounds()) {
                 it.remove();
                 continue;
             }
