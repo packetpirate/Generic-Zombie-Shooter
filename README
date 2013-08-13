@@ -35,7 +35,7 @@ Changes:
 
 Known Issues:
 
-- None
+- If you switch weapons while firing the Flamethrower, the Flamethrower sound will continue to play.
 
 TODO:
 
