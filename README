@@ -27,7 +27,6 @@ Changes:
 - Added AssaultRifle, Shotgun, and Flamethrower classes. These may be turned into a single class later on.
 - Optimized some code.
 - Increased zombie health from 20 to 250 to compensate for increase in weapon damage.
-- Disabled sound for now. Will be re-added at a later time.
 - Various graphical improvements have been made.
 - Added weapons loadout to show the weapons the player has and which one is currently equipped.
 - Start screen added. Simply click anywhere to start.
