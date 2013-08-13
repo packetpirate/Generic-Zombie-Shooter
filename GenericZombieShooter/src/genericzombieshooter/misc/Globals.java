@@ -21,6 +21,7 @@ public class Globals {
     // Non-Final
     public static Runnable animation; // The primary animation thread.
     public static boolean running; // Whether or not the game is currently running.
+    public static boolean started;
     
     public static boolean [] keys; // The state of the game key controls.
     public static boolean [] buttons; // The state of the game mouse button controls.

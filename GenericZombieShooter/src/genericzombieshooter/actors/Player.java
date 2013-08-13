@@ -2,6 +2,7 @@ package genericzombieshooter.actors;
 
 import genericzombieshooter.GZSFramework;
 import genericzombieshooter.misc.Globals;
+import genericzombieshooter.misc.Images;
 import genericzombieshooter.structures.weapons.Weapon;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Rectangle2D;
@@ -21,15 +22,17 @@ public class Player extends Rectangle2D.Double {
     private AffineTransform af;
     private BufferedImage img;
     private int health;
+    private int lives;
     private int currentWeapon;
     private List<Weapon> weapons;
 
     public Player(double x_, double y_, double w_, double h_) {
         super(x_, y_, w_, h_);
         af = new AffineTransform();
-        img = GZSFramework.loadImage("/resources/images/GZS_Player.png");
+        img = Images.PLAYER;
 
         health = 200;
+        lives = 3;
         currentWeapon = 1;
         weapons = new ArrayList<Weapon>();
         weapons.add(Globals.ASSAULT_RIFLE); // Weapon 1
@@ -42,6 +45,19 @@ public class Player extends Rectangle2D.Double {
     public BufferedImage getImage() { return img; }
 
     public int getHealth() { return health; }
+    public boolean isAlive() { return health > 0; }
+    public int getLives() { return lives; }
+    public void die() { 
+        lives--;
+        if(lives > 0) reset();
+    }
+    public void reset() {
+        health = 200;
+        if(lives == 0) lives = 3;
+        currentWeapon = 1;
+        this.x = (Globals.W_WIDTH / 2) - (this.width / 2);
+        this.y = (Globals.W_HEIGHT / 2) - (this.height / 2);
+    }
     
     public Weapon getWeapon() { return weapons.get(this.currentWeapon - 1); }
     public Weapon getWeapon(int w) { return weapons.get(w - 1); }

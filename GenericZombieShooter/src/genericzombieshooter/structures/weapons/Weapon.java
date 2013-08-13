@@ -1,15 +1,14 @@
 package genericzombieshooter.structures.weapons;
 
+import genericzombieshooter.GZSFramework;
 import genericzombieshooter.structures.Particle;
 import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import javax.imageio.ImageIO;
 
 /**
  * Generic class to be extended for all weapons.
@@ -37,6 +36,9 @@ public class Weapon {
         if((this.ammoLeft + amount) > this.maxAmmo) this.ammoLeft = this.maxAmmo;
         else this.ammoLeft += amount;
     }
+    public void resetAmmo() {
+        this.particles = new ArrayList<Particle>();
+    }
     
     protected List<Particle> particles;
     public List<Particle> getParticles() { return this.particles; }
@@ -53,11 +55,7 @@ public class Weapon {
         this.name = name;
         this.key = key;
         
-        if(!filename.equals("") && filename != null) {
-            try {
-                this.image = ImageIO.read(getClass().getResource(filename));
-            } catch(IOException io) { System.out.println("Error reading file: " + filename); }
-        }
+        this.image = GZSFramework.loadImage(filename);
         
         this.ammoLeft = ammoLeft;
         this.maxAmmo = maxAmmo;

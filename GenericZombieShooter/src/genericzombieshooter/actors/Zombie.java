@@ -1,12 +1,11 @@
 package genericzombieshooter.actors;
 
+import genericzombieshooter.GZSFramework;
 import genericzombieshooter.interfaces.Enemy;
 import genericzombieshooter.structures.Animation;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
-import java.io.IOException;
-import javax.imageio.ImageIO;
 
 /**
  *
@@ -14,7 +13,7 @@ import javax.imageio.ImageIO;
  */
 public class Zombie extends Rectangle2D.Double implements Enemy {
     // Constant variables.
-    private static final double MOVE_SPEED = 1;
+    private static final double MOVE_SPEED = 0.5;
     // Member variables.
     private AffineTransform af;
     private Animation img;
@@ -26,20 +25,15 @@ public class Zombie extends Rectangle2D.Double implements Enemy {
     public Zombie(Rectangle2D.Double rect_, int health_, int damage_, int score_, String fileName_) {
         super(rect_.x, rect_.y, rect_.width, rect_.height);
         af = new AffineTransform();
-        LoadImage(fileName_);
+        
+        /* Load the image provided of the zombie.
+           This is not pre-loaded because of the different zombie types. */
+        BufferedImage i = GZSFramework.loadImage(fileName_);
+        img = new Animation(i, 40, 40, 2, (int)x, (int)y, 200, 0, true);
         
         health = health_;
         damage = damage_;
         scoreValue = score_;
-    }
-    
-    private void LoadImage(String fileName_) {
-        BufferedImage i;
-        try {
-            i = ImageIO.read(getClass().getResource(fileName_));
-            img = new Animation(i, 40, 40, 2, (int)x, (int)y, 200, 0, true);
-        } catch(IOException io) {
-        }
     }
     
     // Getter/Setter methods.

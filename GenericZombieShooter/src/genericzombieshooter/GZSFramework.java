@@ -3,7 +3,6 @@ package genericzombieshooter;
 import genericzombieshooter.actors.Player;
 import genericzombieshooter.actors.Zombie;
 import genericzombieshooter.misc.Globals;
-import genericzombieshooter.misc.Sounds;
 import genericzombieshooter.structures.Vector2D;
 import genericzombieshooter.structures.components.WeaponsLoadout;
 import genericzombieshooter.structures.weapons.Weapon;
@@ -48,6 +47,7 @@ public class GZSFramework {
 
     public GZSFramework() {
         canvas = new GZSCanvas(this);
+        Globals.started = false;
 
         { // Begin initializing member variables.
             Globals.keys = new boolean[4];
@@ -71,63 +71,81 @@ public class GZSFramework {
             canvas.addKeyListener(new KeyAdapter() {
                 @Override
                 public void keyPressed(KeyEvent k) {
-                    if (k.getKeyCode() == KeyEvent.VK_W) Globals.keys[0] = true;
-                    if (k.getKeyCode() == KeyEvent.VK_A) Globals.keys[1] = true;
-                    if (k.getKeyCode() == KeyEvent.VK_S) Globals.keys[2] = true;
-                    if (k.getKeyCode() == KeyEvent.VK_D) Globals.keys[3] = true;
+                    if(Globals.started) {
+                        if (k.getKeyCode() == KeyEvent.VK_W) Globals.keys[0] = true;
+                        if (k.getKeyCode() == KeyEvent.VK_A) Globals.keys[1] = true;
+                        if (k.getKeyCode() == KeyEvent.VK_S) Globals.keys[2] = true;
+                        if (k.getKeyCode() == KeyEvent.VK_D) Globals.keys[3] = true;
+                    }
                 }
 
                 @Override
                 public void keyReleased(KeyEvent k) {
-                    if (k.getKeyCode() == KeyEvent.VK_W) Globals.keys[0] = false;
-                    if (k.getKeyCode() == KeyEvent.VK_A) Globals.keys[1] = false;
-                    if (k.getKeyCode() == KeyEvent.VK_S) Globals.keys[2] = false;
-                    if (k.getKeyCode() == KeyEvent.VK_D) Globals.keys[3] = false;
-                    if (k.getKeyCode() == Globals.ASSAULT_RIFLE.getKey()) {
-                        player.setWeapon(1);
-                        loadout.setCurrentWeapon(1);
-                    }
-                    if (k.getKeyCode() == Globals.SHOTGUN.getKey()) {
-                        player.setWeapon(2);
-                        loadout.setCurrentWeapon(2);
-                    }
-                    if (k.getKeyCode() == Globals.FLAMETHROWER.getKey()) {
-                        player.setWeapon(3);
-                        loadout.setCurrentWeapon(3);
+                    if(Globals.started) {
+                        if (k.getKeyCode() == KeyEvent.VK_W) Globals.keys[0] = false;
+                        if (k.getKeyCode() == KeyEvent.VK_A) Globals.keys[1] = false;
+                        if (k.getKeyCode() == KeyEvent.VK_S) Globals.keys[2] = false;
+                        if (k.getKeyCode() == KeyEvent.VK_D) Globals.keys[3] = false;
+                        if (k.getKeyCode() == Globals.ASSAULT_RIFLE.getKey()) {
+                            player.setWeapon(1);
+                            loadout.setCurrentWeapon(1);
+                        }
+                        if (k.getKeyCode() == Globals.SHOTGUN.getKey()) {
+                            player.setWeapon(2);
+                            loadout.setCurrentWeapon(2);
+                        }
+                        if (k.getKeyCode() == Globals.FLAMETHROWER.getKey()) {
+                            player.setWeapon(3);
+                            loadout.setCurrentWeapon(3);
+                        }
                     }
                 }
             });
 
             canvas.addMouseListener(new MouseAdapter() {
                 @Override
+                public void mouseClicked(MouseEvent m) {
+                    if((m.getButton() == MouseEvent.BUTTON1) && (!Globals.started)) {
+                        Globals.started = true;
+                    }
+                }
+                @Override
                 public void mousePressed(MouseEvent m) {
-                    if (m.getButton() == MouseEvent.BUTTON1) Globals.buttons[0] = true;
-                    if (m.getButton() == MouseEvent.BUTTON3) Globals.buttons[1] = true;
+                    if(Globals.started) {
+                        if (m.getButton() == MouseEvent.BUTTON1) Globals.buttons[0] = true;
+                        if (m.getButton() == MouseEvent.BUTTON3) Globals.buttons[1] = true;
+                    }
                 }
 
                 @Override
                 public void mouseReleased(MouseEvent m) {
-                    if (m.getButton() == MouseEvent.BUTTON1) Globals.buttons[0] = false;
-                    if (m.getButton() == MouseEvent.BUTTON3) Globals.buttons[1] = false;
+                    if(Globals.started) {
+                        if (m.getButton() == MouseEvent.BUTTON1) Globals.buttons[0] = false;
+                        if (m.getButton() == MouseEvent.BUTTON3) Globals.buttons[1] = false;
+                    }
                 }
             });
 
             canvas.addMouseMotionListener(new MouseAdapter() {
                 @Override
                 public void mouseMoved(MouseEvent m) {
-                    Globals.mousePos.x = m.getX();
-                    Globals.mousePos.y = m.getY();
+                    if(Globals.started) {
+                        Globals.mousePos.x = m.getX();
+                        Globals.mousePos.y = m.getY();
+                    }
                 }
 
                 @Override
                 public void mouseDragged(MouseEvent m) {
-                    Globals.mousePos.x = m.getX();
-                    Globals.mousePos.y = m.getY();
+                    if(Globals.started) {
+                        Globals.mousePos.x = m.getX();
+                        Globals.mousePos.y = m.getY();
+                    }
                 }
             });
         } // End adding key and mouse listeners to canvas.
 
-        Sounds.init();
+        //Sounds.init();
         initializeThread();
         startThread();
     }
@@ -136,86 +154,104 @@ public class GZSFramework {
      * Updates the game objects in the animation loop.
      **/
     public void update() {
-        // Calculate the player's angle based on the mouse position.
-        double cX = player.getCenterX();
-        double cY = player.getCenterY();
-        double pAngle = Math.atan2((cY - Globals.mousePos.y), (cX - Globals.mousePos.x)) - Math.PI / 2;
-        player.rotate(pAngle);
-        
-        // Move the player according to which keys are being held down.
-        for(int i = 0; i < Globals.keys.length; i++)  {
-            if(Globals.keys[i]) player.move(i);
-        }
-        
-        // If the left mouse button is held down, create a new projectile.
-        if(Globals.buttons[0]) {
-            Point target = new Point(Globals.mousePos);
-            Point2D.Double pos = new Point2D.Double((player.x + 28), (player.y - 8));
-            AffineTransform.getRotateInstance(pAngle, player.getCenterX(), player.getCenterY()).transform(pos, pos);
-            double theta = Math.atan2((target.x - pos.x), (target.y - pos.y));
-            player.getWeapon().fire(theta, pos);
-        }
-        
-        // Update zombie vectors and positions.
-        if(!zombies.isEmpty()) {
-            for(Zombie z : zombies) {
-                // Update the zombie animation.
-                z.getImage().update();
-                
-                // Update the zombie's movement vector.
-                Vector2D v_ = new Vector2D((player.getCenterX() - z.getCenterX()), 
-                                           (player.getCenterY() - z.getCenterY()));
-                Vector2D n_ = v_.normalize();
-                if(v_.getLength() >= 5) {
-                    // Update the zombie's position on the screen.
-                    z.x += n_.x;
-                    z.y += n_.y;
-                    z.getImage().move((int)z.x, (int)z.y);
-                    
-                    // Update the zombie's rotation toward the player.
-                    double angle = Math.atan2((z.getCenterY() - player.getCenterY()), 
-                                              (z.getCenterX() - player.getCenterX())) - Math.PI / 2;
-                    z.rotate(angle);
-                }
+        if(Globals.started) {
+            // Calculate the player's angle based on the mouse position.
+            double cX = player.getCenterX();
+            double cY = player.getCenterY();
+            double pAngle = Math.atan2((cY - Globals.mousePos.y), (cX - Globals.mousePos.x)) - Math.PI / 2;
+            player.rotate(pAngle);
+
+            // Move the player according to which keys are being held down.
+            for(int i = 0; i < Globals.keys.length; i++)  {
+                if(Globals.keys[i]) player.move(i);
             }
-        }
-        
-        // If the zombie spawn counter has reached 0, spawn a new zombie.
-        if(zSpawn == 0) {
-            createZombie();
-            zSpawn = Globals.SPAWN_TIME;
-        } else zSpawn--;
-        
-        // If the player is touching a zombie, damage him according to the zombie's damage.
-        if(!zombies.isEmpty()) {
-            for(Zombie z : zombies) {
-                if(player.intersects(z)) player.takeDamage(z.getDamage());
+
+            // If the left mouse button is held down, create a new projectile.
+            if(Globals.buttons[0]) {
+                Point target = new Point(Globals.mousePos);
+                Point2D.Double pos = new Point2D.Double((player.x + 28), (player.y - 8));
+                AffineTransform.getRotateInstance(pAngle, player.getCenterX(), player.getCenterY()).transform(pos, pos);
+                double theta = Math.atan2((target.x - pos.x), (target.y - pos.y));
+                player.getWeapon().fire(theta, pos);
             }
-        }
-        
-        { // Begin weapon updates.
-            Iterator<Weapon> it = this.player.getAllWeapons().iterator();
-            while(it.hasNext()) {
-                Weapon w = it.next();
-                w.updateWeapon();
-            }
-        } // End weapon updates.
-        
-        { // Do zombie updates.
-            // Check for collisions between zombies and ammo.
-            Iterator<Zombie> it = this.zombies.iterator();
-            while(it.hasNext()) {
-                Zombie z = it.next();
-                int damage = player.getWeapon().checkForDamage(z);
-                if(damage > 0) {
-                    z.takeDamage(damage);
-                    if(z.isDead()) {
-                        score += z.getScore();
-                        it.remove();
+
+            // Update zombie vectors and positions.
+            if(!zombies.isEmpty()) {
+                for(Zombie z : zombies) {
+                    // Update the zombie animation.
+                    z.getImage().update();
+
+                    // Update the zombie's movement vector.
+                    Vector2D v_ = new Vector2D((player.getCenterX() - z.getCenterX()), 
+                                               (player.getCenterY() - z.getCenterY()));
+                    Vector2D n_ = v_.normalize();
+                    if(v_.getLength() >= 5) {
+                        // Update the zombie's position on the screen.
+                        z.x += n_.x;
+                        z.y += n_.y;
+                        z.getImage().move((int)z.x, (int)z.y);
+
+                        // Update the zombie's rotation toward the player.
+                        double angle = Math.atan2((z.getCenterY() - player.getCenterY()), 
+                                                  (z.getCenterX() - player.getCenterX())) - Math.PI / 2;
+                        z.rotate(angle);
                     }
                 }
             }
-        } // End zombie updates.
+
+            // If the zombie spawn counter has reached 0, spawn a new zombie.
+            if(zSpawn == 0) {
+                createZombie();
+                zSpawn = Globals.SPAWN_TIME;
+            } else zSpawn--;
+
+            // If the player is touching a zombie, damage him according to the zombie's damage.
+            if(!zombies.isEmpty()) {
+                for(Zombie z : zombies) {
+                    if(player.intersects(z)) player.takeDamage(z.getDamage());
+                }
+            }
+            
+            // Check to see if the player is still alive. If not, take away a life and reset.
+            if(!player.isAlive()) {
+                player.die();
+                if(player.getLives() == 0) {
+                    // Reset the game.
+                    Globals.started = false;
+                    player.reset();
+                    zombies = new ArrayList<Zombie>();
+                    Iterator<Weapon> it = player.getAllWeapons().iterator();
+                    while(it.hasNext()) {
+                        Weapon w = it.next();
+                        w.resetAmmo();
+                    }
+                }
+            }
+
+            { // Begin weapon updates.
+                Iterator<Weapon> it = this.player.getAllWeapons().iterator();
+                while(it.hasNext()) {
+                    Weapon w = it.next();
+                    w.updateWeapon();
+                }
+            } // End weapon updates.
+
+            { // Do zombie updates.
+                // Check for collisions between zombies and ammo.
+                Iterator<Zombie> it = this.zombies.iterator();
+                while(it.hasNext()) {
+                    Zombie z = it.next();
+                    int damage = player.getWeapon().checkForDamage(z);
+                    if(damage > 0) {
+                        z.takeDamage(damage);
+                        if(z.isDead()) {
+                            score += z.getScore();
+                            it.remove();
+                        }
+                    }
+                }
+            } // End zombie updates.
+        }
     }
     
     /**

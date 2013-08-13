@@ -8,5 +8,7 @@ import java.awt.image.BufferedImage;
  * @author Darin Beaudreau
  */
 public class Images {
+    public static final BufferedImage START_SCREEN = GZSFramework.loadImage("/resources/images/GZS_Splash.png");
+    public static final BufferedImage PLAYER = GZSFramework.loadImage("/resources/images/GZS_Player.png");
     public static final BufferedImage FIRE_PARTICLE = GZSFramework.loadImage("/resources/images/GZS_FireParticle.png");
 }
