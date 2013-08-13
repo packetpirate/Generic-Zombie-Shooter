@@ -1,6 +1,6 @@
 -----------------------
 Author: Darin Beaudreau
-Version: 0.6.7
+Version: 0.7
 -----------------------
 
 Description:
@@ -28,6 +28,11 @@ Changes:
 - Optimized some code.
 - Increased zombie health from 20 to 250 to compensate for increase in weapon damage.
 - Disabled sound for now. Will be re-added at a later time.
+- Various graphical improvements have been made.
+- Added weapons loadout to show the weapons the player has and which one is currently equipped.
+- Start screen added. Simply click anywhere to start.
+- Player death added. Player has three lives. When you die, you are moved back to the center of the screen.
+  After losing all three lives, the game ends and the start screen re-appears.
 
 Known Issues:
 
@@ -35,11 +40,10 @@ Known Issues:
 
 TODO:
 
-- Add a GUI element for the weapons loadout so you can see what weapons you currently have,
-  how much ammo they have left, and which weapon you have equipped.
-- Implement player death.
-- Add a start screen so you're not just thrown into the middle of a game.
-- Add grenades.
+- Add grenades and more weapons.
+- Add item and ammo drops and enable ammo usage.
+- Change gameplay so that "waves" of zombies appear all at once. This will be temporary until
+  post 1.0 release, at which point I will work on level-based gameplay.
 
 Planned Future Changes (Most likely post-1.0):
 - Add a lighting system so that you can only see directly in front of you, like a flashlight.
