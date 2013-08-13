@@ -2,6 +2,7 @@ package genericzombieshooter.structures.weapons;
 
 import genericzombieshooter.misc.Globals;
 import genericzombieshooter.misc.Images;
+import genericzombieshooter.misc.Sounds;
 import genericzombieshooter.structures.Particle;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -79,6 +80,7 @@ public class Flamethrower extends Weapon {
             // Use up ammo.
             this.consumeAmmo();
             this.resetCooldown();
+            Sounds.FLAMETHROWER.play();
         }
     }
     

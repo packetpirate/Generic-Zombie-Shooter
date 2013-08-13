@@ -1,6 +1,7 @@
 package genericzombieshooter.structures.weapons;
 
 import genericzombieshooter.misc.Globals;
+import genericzombieshooter.misc.Sounds;
 import genericzombieshooter.structures.Particle;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -74,6 +75,7 @@ public class AssaultRifle extends Weapon {
             // Use up ammo.
             this.consumeAmmo();
             this.resetCooldown();
+            Sounds.RTPS.play();
         }
     }
     

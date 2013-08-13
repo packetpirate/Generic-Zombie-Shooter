@@ -3,6 +3,7 @@ package genericzombieshooter;
 import genericzombieshooter.actors.Player;
 import genericzombieshooter.actors.Zombie;
 import genericzombieshooter.misc.Globals;
+import genericzombieshooter.misc.Sounds;
 import genericzombieshooter.structures.Vector2D;
 import genericzombieshooter.structures.components.WeaponsLoadout;
 import genericzombieshooter.structures.weapons.Weapon;
@@ -120,7 +121,10 @@ public class GZSFramework {
                 @Override
                 public void mouseReleased(MouseEvent m) {
                     if(Globals.started) {
-                        if (m.getButton() == MouseEvent.BUTTON1) Globals.buttons[0] = false;
+                        if (m.getButton() == MouseEvent.BUTTON1) {
+                            Globals.buttons[0] = false;
+                            if(player.getCurrentWeapon() == 3) Sounds.FLAMETHROWER.reset();
+                        }
                         if (m.getButton() == MouseEvent.BUTTON3) Globals.buttons[1] = false;
                     }
                 }
@@ -145,7 +149,7 @@ public class GZSFramework {
             });
         } // End adding key and mouse listeners to canvas.
 
-        //Sounds.init();
+        Sounds.init();
         initializeThread();
         startThread();
     }
@@ -226,6 +230,7 @@ public class GZSFramework {
                         w.resetAmmo();
                     }
                 }
+                loadout.setCurrentWeapon(1);
             }
 
             { // Begin weapon updates.
@@ -294,6 +299,7 @@ public class GZSFramework {
         try {
             return ImageIO.read(GZSFramework.class.getResource(filename));
         } catch(IOException io) {
+            System.out.println(io.getMessage());
             System.out.println("Error reading file: " + filename);
             return null;
         }

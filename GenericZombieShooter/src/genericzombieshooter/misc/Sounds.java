@@ -17,15 +17,20 @@ import javax.sound.sampled.UnsupportedAudioFileException;
  *
  */
 public enum Sounds {
-    RIFLE("rifle_fire.wav");
+    RTPS("shoot1.wav", false),
+    BOOMSTICK("shotgun1.wav", false),
+    FLAMETHROWER("flamethrower2.wav", true),
+    EXPLOSION("explosion.wav", false),
+    POWERUP("powerup.wav", false);
     
     private Clip clip;
+    private boolean looped;
 
-    Sounds(String filename) {
-        openClip(filename);
+    Sounds(String filename, boolean loop) {
+        openClip(filename, loop);
     }
 
-    private synchronized void openClip(String filename) {
+    private synchronized void openClip(String filename, boolean loop) {
         try {
             URL audioFile = Sounds.class.getResource("/resources/sounds/" + filename);
 
@@ -42,19 +47,25 @@ public enum Sounds {
         } catch (LineUnavailableException lue) {
             System.out.println(lue);
         }
+        looped = loop;
     }
 
     public synchronized void play() {
         Runnable soundPlay = new Runnable() {
             @Override
             public void run() {
-                synchronized(clip) { clip.stop(); }
                 //if(clip.isRunning()) clip.stop();
-                clip.setFramePosition(0);
-                clip.start();
+                if(!looped) reset();
+                clip.loop((looped)?Clip.LOOP_CONTINUOUSLY:0);
+                
             }
         };
         new Thread(soundPlay).start();
+    }
+    
+    public synchronized void reset() {
+        synchronized(clip) { clip.stop(); }
+        clip.setFramePosition(0);
     }
 
     public static void init() {
