@@ -20,18 +20,17 @@ Left Click/Hold - Fire equipped weapon.
 Your character is always facing your mouse cursor, and particles will travel in the direction you fire until
 they either hit a target, or go out of bounds.
 
+Copyright Information:
+
+Generic Zombie Shooter is distributed under the GNU Public License. A copy of this license can be found along with
+the project on Github, or at http://www.gnu.org/licenses/gpl.txt
+
 Changes:
 
-- Generalized Particle class.
-- Created Weapon class and re-worked how weapons are handled.
-- Added AssaultRifle, Shotgun, and Flamethrower classes. These may be turned into a single class later on.
-- Optimized some code.
-- Increased zombie health from 20 to 250 to compensate for increase in weapon damage.
-- Various graphical improvements have been made.
-- Added weapons loadout to show the weapons the player has and which one is currently equipped.
-- Start screen added. Simply click anywhere to start.
-- Player death added. Player has three lives. When you die, you are moved back to the center of the screen.
-  After losing all three lives, the game ends and the start screen re-appears.
+- Added item drops. (health and ammo so far)
+- Added sound for item pickup.
+- Re-enabled ammo usage.
+- Added GNU Public License.
 
 Known Issues:
 
