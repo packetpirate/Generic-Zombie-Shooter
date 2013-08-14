@@ -1,6 +1,6 @@
 -----------------------
 Author: Darin Beaudreau
-Version: 0.7
+Version: 0.7.1
 -----------------------
 
 Description:
@@ -36,11 +36,11 @@ Changes:
 Known Issues:
 
 - If you switch weapons while firing the Flamethrower, the Flamethrower sound will continue to play.
+- The player retains his ammo values from a previous game if he returns to the start screen after death.
 
 TODO:
 
 - Add grenades and more weapons.
-- Add item and ammo drops and enable ammo usage.
 - Change gameplay so that "waves" of zombies appear all at once. This will be temporary until
   post 1.0 release, at which point I will work on level-based gameplay.
 
