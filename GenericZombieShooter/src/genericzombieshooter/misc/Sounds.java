@@ -19,7 +19,7 @@ import javax.sound.sampled.UnsupportedAudioFileException;
 public enum Sounds {
     RTPS("shoot1.wav", false),
     BOOMSTICK("shotgun1.wav", false),
-    FLAMETHROWER("flamethrower2.wav", true),
+    FLAMETHROWER("flamethrower.wav", true),
     EXPLOSION("explosion.wav", false),
     POWERUP("powerup.wav", false);
     

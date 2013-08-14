@@ -4,6 +4,7 @@ import genericzombieshooter.actors.Player;
 import genericzombieshooter.actors.Zombie;
 import genericzombieshooter.misc.Globals;
 import genericzombieshooter.misc.Images;
+import genericzombieshooter.structures.Item;
 import genericzombieshooter.structures.weapons.Weapon;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -11,9 +12,7 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
-import java.io.IOException;
 import java.util.Iterator;
-import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
 /**
@@ -28,12 +27,7 @@ public class GZSCanvas extends JPanel {
 
     public GZSCanvas(GZSFramework framework) {
         this.framework = framework;
-
-        try {
-            background = ImageIO.read(getClass().getResource("/resources/images/GZS_Background_2.png"));
-        } catch (IOException io) {
-            System.out.println("ERROR: File not found! Background image could not be loaded!");
-        }
+        this.background = Images.BACKGROUND;
 
         setBackground(Color.WHITE);
         setPreferredSize(new Dimension(Globals.W_WIDTH, Globals.W_HEIGHT));
@@ -53,16 +47,24 @@ public class GZSCanvas extends JPanel {
         AffineTransform saved = g2d.getTransform();
 
         if(Globals.started) {
+            Player player = framework.getPlayer();
             g2d.drawImage(background, 0, 0, null);
+            
+            { // Begin drawing items.
+                Iterator<Item> it = framework.getItems().iterator();
+                while(it.hasNext()) {
+                    Item i = it.next();
+                    i.draw(g2d);
+                }
+            } // End drawing items.
 
             { // Begin drawing player and ammo.
-                Player player = framework.getPlayer();
                 Iterator<Weapon> it = player.getAllWeapons().iterator();
                 while(it.hasNext()) {
                     Weapon w = it.next();
                     w.drawAmmo((Graphics2D)g2d);
                 }
-                g2d.setTransform(framework.getPlayer().getTransform());
+                g2d.setTransform(player.getTransform());
                 g2d.drawImage(player.getImage(), (int) player.x, (int) player.y, null);
             } // End drawing player and ammo.
 
@@ -81,22 +83,24 @@ public class GZSCanvas extends JPanel {
                 { // Begin drawing the health bar.
                     // Draw the gray box under the HUD.
                     g2d.setColor(Color.LIGHT_GRAY);
-                    g2d.fillRect(2, 2, 220, 58);
+                    g2d.fillRect(2, 2, (Player.MAX_HEALTH + 20), 71);
                     g2d.setColor(Color.BLACK);
-                    g2d.drawRect(2, 2, 220, 58);
+                    g2d.drawRect(2, 2, (Player.MAX_HEALTH + 20), 71);
                     // Draw the black bar behind the red health bar to act as a border.
                     g2d.setColor(Color.BLACK);
-                    g2d.fillRect(10, 10, 204, 20);
+                    g2d.fillRect(10, 10, (Player.MAX_HEALTH + 4), 20);
 
                     // Only draw the red bar indicating health if player is still alive.
-                    if (framework.getPlayer().getHealth() > 0) {
+                    if (player.getHealth() > 0) {
                         g2d.setColor(Color.RED);
-                        g2d.fillRect(12, 12, framework.getPlayer().getHealth(), 16);
+                        g2d.fillRect(12, 12, player.getHealth(), 16);
                     }
                 } // End drawing the health bar.
                 g2d.setColor(Color.BLACK);
-                g2d.drawString(("Lives: " + framework.getPlayer().getLives()), 10, 42);
-                g2d.drawString(("Score: " + framework.getScore()), 10, 55);
+                g2d.drawString(("Score: " + framework.getScore()), 10, 42);
+                g2d.drawString(("Lives: " + player.getLives()), 10, 55);
+                g2d.drawString(("Ammo: " + player.getWeapon().getAmmoLeft() + "/" + player.getWeapon().getMaxAmmo()),
+                                10, 68);
                 framework.getLoadout().draw((Graphics2D)g2d);
             } // End drawing GUI elements.
         } else {

@@ -23,7 +23,9 @@ public class Weapon {
     public BufferedImage getImage() { return this.image; }
     
     private int ammoLeft;
+    public int getAmmoLeft() { return this.ammoLeft; }
     private int maxAmmo;
+    public int getMaxAmmo() { return this.maxAmmo; }
     private int ammoPerUse;
     
     private int cooldown;
@@ -32,12 +34,20 @@ public class Weapon {
     public void cool() { if(this.cooldown > 0) this.cooldown--; }
     
     public boolean canFire() { return (this.ammoLeft >= this.ammoPerUse) && (this.cooldown == 0); }
+    public boolean ammoFull() { return this.ammoLeft == this.maxAmmo; }
     public void addAmmo(int amount) { 
         if((this.ammoLeft + amount) > this.maxAmmo) this.ammoLeft = this.maxAmmo;
         else this.ammoLeft += amount;
     }
+    public int getAmmoPackAmount() {
+        // To be overridden...
+        return 0;
+    }
     public void resetAmmo() {
         this.particles = new ArrayList<Particle>();
+    }
+    public void reload() {
+        // Needs moar code...
     }
     
     protected List<Particle> particles;

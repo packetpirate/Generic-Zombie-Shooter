@@ -1,8 +1,8 @@
 package genericzombieshooter.actors;
 
-import genericzombieshooter.GZSFramework;
 import genericzombieshooter.misc.Globals;
 import genericzombieshooter.misc.Images;
+import genericzombieshooter.misc.Sounds;
 import genericzombieshooter.structures.weapons.Weapon;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Rectangle2D;
@@ -16,6 +16,7 @@ import java.util.List;
  **/
 public class Player extends Rectangle2D.Double {
     // Final variables.
+    public static final int MAX_HEALTH = 150;
     private static final double MOVE_SPEED = 2; // How many pixels per tick the player moves.
     
     // Member variables.
@@ -28,45 +29,54 @@ public class Player extends Rectangle2D.Double {
 
     public Player(double x_, double y_, double w_, double h_) {
         super(x_, y_, w_, h_);
-        af = new AffineTransform();
-        img = Images.PLAYER;
+        this.af = new AffineTransform();
+        this.img = Images.PLAYER;
 
-        health = 200;
-        lives = 3;
-        currentWeapon = 1;
-        weapons = new ArrayList<Weapon>();
-        weapons.add(Globals.ASSAULT_RIFLE); // Weapon 1
-        weapons.add(Globals.SHOTGUN); // Weapon 2
-        weapons.add(Globals.FLAMETHROWER); // Weapon 3
+        this.health = Player.MAX_HEALTH;
+        this.lives = 3;
+        this.currentWeapon = 1;
+        this.weapons = new ArrayList<Weapon>();
+        this.weapons.add(Globals.ASSAULT_RIFLE); // Weapon 1
+        this.weapons.add(Globals.SHOTGUN); // Weapon 2
+        this.weapons.add(Globals.FLAMETHROWER); // Weapon 3
     }
 
     // Getter/Setter methods.
-    public AffineTransform getTransform() { return af; }
-    public BufferedImage getImage() { return img; }
+    public AffineTransform getTransform() { return this.af; }
+    public BufferedImage getImage() { return this.img; }
 
-    public int getHealth() { return health; }
-    public boolean isAlive() { return health > 0; }
-    public int getLives() { return lives; }
+    public int getHealth() { return this.health; }
+    public void addHealth(int amount) { 
+        if((this.health + amount) > Player.MAX_HEALTH) this.health = Player.MAX_HEALTH;
+        else this.health += amount;
+    }
+    public boolean isAlive() { return this.health > 0; }
+    public int getLives() { return this.lives; }
     public void die() { 
-        lives--;
-        if(lives > 0) reset();
+        this.lives--;
+        if(this.lives > 0) reset();
     }
     public void reset() {
-        health = 200;
-        if(lives == 0) lives = 3;
-        currentWeapon = 1;
+        this.health = Player.MAX_HEALTH;
+        if(this.lives == 0) this.lives = 3;
+        this.currentWeapon = 1;
         this.x = (Globals.W_WIDTH / 2) - (this.width / 2);
         this.y = (Globals.W_HEIGHT / 2) - (this.height / 2);
     }
     
-    public Weapon getWeapon() { return weapons.get(this.currentWeapon - 1); }
-    public Weapon getWeapon(int w) { return weapons.get(w - 1); }
+    public Weapon getWeapon() { return this.weapons.get(this.currentWeapon - 1); }
+    public Weapon getWeapon(int w) { return this.weapons.get(w - 1); }
     public int getCurrentWeapon() { return this.currentWeapon; }
     public List<Weapon> getAllWeapons() { return this.weapons; }
-    public void setWeapon(int w) { this.currentWeapon = w; }
+    public void setWeapon(int w) { 
+        this.currentWeapon = w;
+        Sounds.RTPS.reset();
+        Sounds.BOOMSTICK.reset();
+        Sounds.FLAMETHROWER.reset();
+    }
 
     // Shape manipulation.
-    public void rotate(double theta_) { af.setToRotation(theta_, getCenterX(), getCenterY()); }
+    public void rotate(double theta_) { this.af.setToRotation(theta_, getCenterX(), getCenterY()); }
 
     // Player manipulation.
     /**
@@ -74,11 +84,11 @@ public class Player extends Rectangle2D.Double {
      * @param direction The direction to move in.
      **/
     public void move(int direction) {
-        if(direction == 0) y -= MOVE_SPEED;
-        else if(direction == 1) x -= MOVE_SPEED;
-        else if(direction == 2) y += MOVE_SPEED;
-        else if(direction == 3) x += MOVE_SPEED;
+        if(direction == 0) y -= Player.MOVE_SPEED;
+        else if(direction == 1) x -= Player.MOVE_SPEED;
+        else if(direction == 2) y += Player.MOVE_SPEED;
+        else if(direction == 3) x += Player.MOVE_SPEED;
     }
 
-    public void takeDamage(int damage_) { health -= damage_; }
+    public void takeDamage(int damage_) { this.health -= damage_; }
 }

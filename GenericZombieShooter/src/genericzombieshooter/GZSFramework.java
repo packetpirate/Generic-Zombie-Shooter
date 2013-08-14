@@ -4,8 +4,11 @@ import genericzombieshooter.actors.Player;
 import genericzombieshooter.actors.Zombie;
 import genericzombieshooter.misc.Globals;
 import genericzombieshooter.misc.Sounds;
+import genericzombieshooter.structures.Item;
 import genericzombieshooter.structures.Vector2D;
 import genericzombieshooter.structures.components.WeaponsLoadout;
+import genericzombieshooter.structures.items.Ammo;
+import genericzombieshooter.structures.items.HealthPack;
 import genericzombieshooter.structures.weapons.Weapon;
 import java.awt.Point;
 import java.awt.event.KeyAdapter;
@@ -39,6 +42,8 @@ public class GZSFramework {
     public Player getPlayer() { return player; }
     private List<Zombie> zombies;
     public List<Zombie> getZombies() { return zombies; }
+    private List<Item> items;
+    public List<Item> getItems() { return this.items; }
     
     private int score; // The player's current score.
     public int getScore() { return score; }
@@ -64,6 +69,7 @@ public class GZSFramework {
         { // Begin initializing game objects.
             player = new Player(((Globals.W_WIDTH / 2) - 20), ((Globals.W_HEIGHT / 2) - 20), 40, 40);
             zombies = new ArrayList<Zombie>();
+            items = new ArrayList<Item>();
             score = 0;
             loadout = new WeaponsLoadout(player);
         } // End game object initialization.
@@ -216,6 +222,17 @@ public class GZSFramework {
                 }
             }
             
+            { // Check to see if the player has collected any items.
+                Iterator<Item> it = this.items.iterator();
+                while(it.hasNext()) {
+                    Item i = it.next();
+                    if(this.player.contains(i)) {
+                        i.applyEffect(this.player);
+                        it.remove();
+                    }
+                }
+            } // End checking for item collisions.
+            
             // Check to see if the player is still alive. If not, take away a life and reset.
             if(!player.isAlive()) {
                 player.die();
@@ -295,6 +312,23 @@ public class GZSFramework {
         zombies.add(z_);
     }
     
+    private void createHealthPack() {
+        int healAmount = Globals.r.nextInt(75 - 50 + 1) + 50;
+        double x = Globals.r.nextInt((Globals.W_WIDTH - 20) - 20 + 1) + 20;
+        double y = Globals.r.nextInt((int)((Globals.W_HEIGHT - (WeaponsLoadout.BAR_HEIGHT + 10)) - 20 + 1)) + 20;
+        this.items.add(new HealthPack(healAmount, new Point2D.Double(x, y)));
+    }
+    
+    private void createAmmoPack() {
+        int numOfWeapons = this.player.getAllWeapons().size();
+        int w = Globals.r.nextInt(numOfWeapons) + 1;
+        if(this.player.getWeapon(w).ammoFull()) createAmmoPack();
+        int ammo = this.player.getWeapon(w).getAmmoPackAmount();
+        double x = Globals.r.nextInt((Globals.W_WIDTH - 20) - 20 + 1) + 20;
+        double y = Globals.r.nextInt((int)((Globals.W_HEIGHT - (WeaponsLoadout.BAR_HEIGHT + 10)) - 20 + 1)) + 20;
+        this.items.add(new Ammo(w, ammo, new Point2D.Double(x, y)));
+    }
+    
     public static BufferedImage loadImage(String filename) {
         try {
             return ImageIO.read(GZSFramework.class.getResource(filename));
@@ -320,10 +354,38 @@ public class GZSFramework {
                     try {
                         Thread.sleep(Globals.SLEEP_TIME);
                     } catch (InterruptedException ie) {
-                        System.out.println("ERROR: Problem occured in main thread.");
+                        System.out.println("Error occurred in main thread...");
                     }
                 }
                 System.exit(0);
+            }
+        };
+        Globals.health = new Runnable() {
+            @Override
+            public void run() {
+                while(Globals.running) {
+                    if(Globals.started) createHealthPack();
+                    
+                    try {
+                        Thread.sleep(HealthPack.SPAWN_TIME);
+                    } catch(InterruptedException ie) {
+                        System.out.println("Error occurred in HealthPack thread...");
+                    }
+                } 
+            }
+        };
+        Globals.ammo = new Runnable() {
+            @Override
+            public void run() {
+                while(Globals.running) {
+                    if(Globals.started) createAmmoPack();
+
+                    try {
+                        Thread.sleep(Ammo.SPAWN_TIME);
+                    } catch(InterruptedException ie) {
+                        System.out.println("Error occurred in AmmoPack thread...");
+                    }
+                }
             }
         };
     }
@@ -333,6 +395,8 @@ public class GZSFramework {
      **/
     private void startThread() {
         new Thread(Globals.animation).start();
+        new Thread(Globals.health).start();
+        new Thread(Globals.ammo).start();
     }
 
     /**

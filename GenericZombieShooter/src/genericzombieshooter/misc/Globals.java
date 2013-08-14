@@ -20,6 +20,8 @@ public class Globals {
     
     // Non-Final
     public static Runnable animation; // The primary animation thread.
+    public static Runnable health; // The thread for spawning health packs.
+    public static Runnable ammo; // The thread for spawning ammo packs.
     public static boolean running; // Whether or not the game is currently running.
     public static boolean started;
     

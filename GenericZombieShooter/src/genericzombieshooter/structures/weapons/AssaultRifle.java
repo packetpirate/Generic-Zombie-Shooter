@@ -21,7 +21,7 @@ public class AssaultRifle extends Weapon {
     // Final Variables
     private static final int DEFAULT_AMMO = 60;
     private static final int MAX_AMMO = 300;
-    private static final int AMMO_PER_USE = 0;
+    private static final int AMMO_PER_USE = 1;
     private static final int DAMAGE_PER_PARTICLE = 100;
     private static final double PARTICLE_SPREAD = 5.0;
     private static final int PARTICLE_LIFE = 2000;
@@ -94,5 +94,10 @@ public class AssaultRifle extends Weapon {
             }
         }
         return damage;
+    }
+    
+    @Override
+    public int getAmmoPackAmount() {
+        return AssaultRifle.DEFAULT_AMMO;
     }
 }

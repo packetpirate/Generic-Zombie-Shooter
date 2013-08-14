@@ -21,7 +21,7 @@ public class Shotgun extends Weapon {
     // Final Variables
     private static final int DEFAULT_AMMO = 24;
     private static final int MAX_AMMO = 64;
-    private static final int AMMO_PER_USE = 0;
+    private static final int AMMO_PER_USE = 1;
     private static final int PARTICLES_PER_USE = 8;
     private static final int DAMAGE_PER_PARTICLE = 50;
     private static final double PARTICLE_SPREAD = 20.0;
@@ -95,5 +95,10 @@ public class Shotgun extends Weapon {
             }
         }
         return damage;
+    }
+    
+    @Override
+    public int getAmmoPackAmount() {
+        return Shotgun.DEFAULT_AMMO;
     }
 }

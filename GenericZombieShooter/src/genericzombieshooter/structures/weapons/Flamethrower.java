@@ -20,9 +20,9 @@ import java.util.Iterator;
  */
 public class Flamethrower extends Weapon {
     // Final Variables
-    private static final int DEFAULT_AMMO = 50;
-    private static final int MAX_AMMO = 250;
-    private static final int AMMO_PER_USE = 0;
+    private static final int DEFAULT_AMMO = 100;
+    private static final int MAX_AMMO = 300;
+    private static final int AMMO_PER_USE = 1;
     private static final int PARTICLES_PER_USE = 8;
     private static final int DAMAGE_PER_PARTICLE = 2;
     private static final double PARTICLE_SPREAD = 15.0;
@@ -99,5 +99,10 @@ public class Flamethrower extends Weapon {
             }
         }
         return damage;
+    }
+    
+    @Override
+    public int getAmmoPackAmount() {
+        return Flamethrower.DEFAULT_AMMO;
     }
 }
