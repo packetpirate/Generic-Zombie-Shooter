@@ -39,7 +39,7 @@ public class Particle {
     protected Dimension size;
     public Dimension getSize() { return this.size; }
     
-    private BufferedImage image;
+    protected BufferedImage image;
     
     public Particle(double _theta, double _spread, double _speed, int _life, Point2D.Double _pos, Dimension _size) {
         this(_theta, _spread, _speed, _life, _pos, _size, null);
@@ -76,7 +76,9 @@ public class Particle {
      **/
     public void draw(Graphics2D g2d) {
         try {
-            AffineTransform saved = g2d.getTransform();    
+            AffineTransform saved = g2d.getTransform();
+            /* Had to create the inverse of this transformation because I noticed that everything was rotating
+               in the opposite direction of the theta. Then I noticed the image was backwards, so I flipped it 180 degrees. */
             AffineTransform at = AffineTransform.getRotateInstance((this.theta - Math.PI), this.pos.x, this.pos.y).createInverse();
             double x = this.pos.x - (this.size.width / 2);
             double y = this.pos.y - (this.size.height / 2);

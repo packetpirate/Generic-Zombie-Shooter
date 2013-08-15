@@ -26,7 +26,6 @@ import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
-import java.util.ArrayList;
 import java.util.ConcurrentModificationException;
 import java.util.Iterator;
 
@@ -47,7 +46,6 @@ public class Flamethrower extends Weapon {
     
     public Flamethrower() {
         super("The Flammenwerfer", KeyEvent.VK_3, "/resources/images/GZS_Flamethrower.png", DEFAULT_AMMO, MAX_AMMO, AMMO_PER_USE, 0);
-        this.particles = new ArrayList<Particle>();
     }
     
     @Override

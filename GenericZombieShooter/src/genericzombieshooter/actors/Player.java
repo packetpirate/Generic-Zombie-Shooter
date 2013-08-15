@@ -55,6 +55,7 @@ public class Player extends Rectangle2D.Double {
         this.weapons.add(Globals.ASSAULT_RIFLE); // Weapon 1
         this.weapons.add(Globals.SHOTGUN); // Weapon 2
         this.weapons.add(Globals.FLAMETHROWER); // Weapon 3
+        this.weapons.add(Globals.GRENADE); // Weapon 4
     }
 
     // Getter/Setter methods.

@@ -94,6 +94,10 @@ public class Animation {
         this.y = y;
     }
     
+    public boolean isActive() {
+        return this.active;
+    }
+    
     /* Checks to see if it's time for the next frame in the animation.
      * Also checks if the animation is finished.
      */

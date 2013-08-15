@@ -26,7 +26,6 @@ import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
-import java.util.ArrayList;
 import java.util.ConcurrentModificationException;
 import java.util.Iterator;
 
@@ -45,7 +44,6 @@ public class AssaultRifle extends Weapon {
     
     public AssaultRifle() {
         super("RTPS", KeyEvent.VK_1, "/resources/images/GZS_RTPS.png", DEFAULT_AMMO, MAX_AMMO, AMMO_PER_USE, 10);
-        this.particles = new ArrayList<Particle>();
     }
     
     @Override

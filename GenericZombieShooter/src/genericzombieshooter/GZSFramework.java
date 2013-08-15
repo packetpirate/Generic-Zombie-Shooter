@@ -132,6 +132,10 @@ public class GZSFramework {
                             player.setWeapon(3);
                             loadout.setCurrentWeapon(3);
                         }
+                        if (k.getKeyCode() == Globals.GRENADE.getKey()) {
+                            player.setWeapon(4);
+                            loadout.setCurrentWeapon(4);
+                        }
                     }
                 }
             });
@@ -354,6 +358,7 @@ public class GZSFramework {
         double x = Globals.r.nextInt((Globals.W_WIDTH - 20) - 20 + 1) + 20;
         double y = Globals.r.nextInt((int)((Globals.W_HEIGHT - (WeaponsLoadout.BAR_HEIGHT + 10)) - 20 + 1)) + 20;
         this.items.add(new Ammo(w, ammo, new Point2D.Double(x, y)));
+        System.out.println("Created ammo pack for " + this.player.getWeapon(w).getName() + " with amount: " + ammo + "!");
     }
     
     public static BufferedImage loadImage(String filename) {
