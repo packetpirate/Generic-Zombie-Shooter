@@ -37,7 +37,9 @@ public enum Sounds {
     BOOMSTICK("shotgun1.wav", false),
     FLAMETHROWER("flamethrower.wav", true),
     EXPLOSION("explosion.wav", false),
-    POWERUP("powerup.wav", false);
+    POWERUP("powerup.wav", false),
+    PAUSE("pause.wav", false),
+    UNPAUSE("unpause.wav", false);
     
     private Clip clip;
     private boolean looped;

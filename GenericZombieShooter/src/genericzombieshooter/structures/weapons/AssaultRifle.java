@@ -17,6 +17,7 @@
 package genericzombieshooter.structures.weapons;
 
 import genericzombieshooter.misc.Globals;
+import genericzombieshooter.misc.Images;
 import genericzombieshooter.misc.Sounds;
 import genericzombieshooter.structures.Particle;
 import java.awt.Color;
@@ -86,7 +87,7 @@ public class AssaultRifle extends Weapon {
             int height = 10;
                         Particle p = new Particle(theta, AssaultRifle.PARTICLE_SPREAD, 8.0,
                                       (AssaultRifle.PARTICLE_LIFE / (int)Globals.SLEEP_TIME), new Point2D.Double(pos.x, pos.y),
-                                       new Dimension(width, height));
+                                       new Dimension(width, height), Images.RTPS_BULLET);
             this.particles.add(p);
             // Use up ammo.
             this.consumeAmmo();

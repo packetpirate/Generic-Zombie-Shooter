@@ -70,6 +70,7 @@ public class GZSFramework {
     public GZSFramework() {
         canvas = new GZSCanvas(this);
         Globals.started = false;
+        Globals.paused = false;
 
         { // Begin initializing member variables.
             Globals.keys = new boolean[4];
@@ -109,6 +110,16 @@ public class GZSFramework {
                         if (k.getKeyCode() == KeyEvent.VK_A) Globals.keys[1] = false;
                         if (k.getKeyCode() == KeyEvent.VK_S) Globals.keys[2] = false;
                         if (k.getKeyCode() == KeyEvent.VK_D) Globals.keys[3] = false;
+                        if (k.getKeyCode() == KeyEvent.VK_P) {
+                            if(Globals.paused) {
+                                Globals.paused = false;
+                                Sounds.UNPAUSE.play();
+                            }
+                            else {
+                                Globals.paused = true;
+                                Sounds.PAUSE.play();
+                            }
+                        }
                         if (k.getKeyCode() == Globals.ASSAULT_RIFLE.getKey()) {
                             player.setWeapon(1);
                             loadout.setCurrentWeapon(1);
@@ -180,7 +191,7 @@ public class GZSFramework {
      * Updates the game objects in the animation loop.
      **/
     public void update() {
-        if(Globals.started) {
+        if(Globals.started && !Globals.paused) {
             // Calculate the player's angle based on the mouse position.
             double cX = player.getCenterX();
             double cY = player.getCenterY();
@@ -380,7 +391,7 @@ public class GZSFramework {
             @Override
             public void run() {
                 while(Globals.running) {
-                    if(Globals.started) createHealthPack();
+                    if(Globals.started && !Globals.paused) createHealthPack();
                     
                     try {
                         Thread.sleep(HealthPack.SPAWN_TIME);
@@ -394,7 +405,7 @@ public class GZSFramework {
             @Override
             public void run() {
                 while(Globals.running) {
-                    if(Globals.started) createAmmoPack();
+                    if(Globals.started && !Globals.paused) createAmmoPack();
 
                     try {
                         Thread.sleep(Ammo.SPAWN_TIME);

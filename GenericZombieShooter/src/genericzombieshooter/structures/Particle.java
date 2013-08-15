@@ -20,6 +20,7 @@ import genericzombieshooter.misc.Globals;
 import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.geom.AffineTransform;
+import java.awt.geom.NoninvertibleTransformException;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
@@ -74,12 +75,22 @@ public class Particle {
      * @param g2d The graphics object used to draw the particle.
      **/
     public void draw(Graphics2D g2d) {
-        Rectangle2D.Double rect = new Rectangle2D.Double((this.pos.x - (this.size.width / 2)), 
-                                                          (this.pos.y - (this.size.height / 2)), 
-                                                           this.size.width, this.size.height);
-        AffineTransform at = AffineTransform.getRotateInstance(this.theta, this.pos.x, this.pos.y);
-        if(this.image == null) g2d.fill(at.createTransformedShape(rect));
-        else g2d.drawImage(image, (int)rect.x, (int)rect.y, null);
+        try {
+            AffineTransform saved = g2d.getTransform();    
+            AffineTransform at = AffineTransform.getRotateInstance((this.theta - Math.PI), this.pos.x, this.pos.y).createInverse();
+            double x = this.pos.x - (this.size.width / 2);
+            double y = this.pos.y - (this.size.height / 2);
+            g2d.setTransform(at);
+            if(this.image == null) {
+                double w = this.size.width;
+                double h = this.size.height;
+                Rectangle2D.Double rect = new Rectangle2D.Double(x, y, w, h);
+                g2d.fill(at.createTransformedShape(rect));
+            } else {
+                g2d.drawImage(this.image, (int)x, (int)y, null);
+            }
+            g2d.setTransform(saved);
+        } catch(NoninvertibleTransformException nte) {}
     }
     
     /**

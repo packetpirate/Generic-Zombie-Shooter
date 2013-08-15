@@ -40,6 +40,7 @@ public class Globals {
     public static Runnable ammo; // The thread for spawning ammo packs.
     public static boolean running; // Whether or not the game is currently running.
     public static boolean started;
+    public static boolean paused;
     
     public static boolean [] keys; // The state of the game key controls.
     public static boolean [] buttons; // The state of the game mouse button controls.
