@@ -1,6 +1,6 @@
 -----------------------
 Author: Darin Beaudreau
-Version: 0.7.1
+Version: 0.7.5
 -----------------------
 
 Description:
@@ -16,6 +16,7 @@ Left Click/Hold - Fire equipped weapon.
 1 - Select RTPS (Rooty Tooty Point & Shooty) Assault Rifle
 2 - Select Boomstick (Shotgun)
 3 - Select the Flammenwerfer (Flamethrower)
+4 - Select Nades (Grenades)
 
 Your character is always facing your mouse cursor, and particles will travel in the direction you fire until
 they either hit a target, or go out of bounds.
@@ -31,15 +32,18 @@ Changes:
 - Added sound for item pickup.
 - Re-enabled ammo usage.
 - Added GNU Public License.
+- Added grenades.
 
 Known Issues:
 
 - If you switch weapons while firing the Flamethrower, the Flamethrower sound will continue to play.
 - The player retains his ammo values from a previous game if he returns to the start screen after death.
+- While not a "bug", the method used for removing the black background from the explosion sprite sheet
+  is inaccurate and results in a somewhat ugly explosion animation. It needs refinement.
 
 TODO:
 
-- Add grenades and more weapons.
+- Add more weapons.
 - Change gameplay so that "waves" of zombies appear all at once. This will be temporary until
   post 1.0 release, at which point I will work on level-based gameplay.
 
