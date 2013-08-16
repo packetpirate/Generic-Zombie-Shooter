@@ -44,7 +44,7 @@ public class Zombie extends Rectangle2D.Double implements Enemy {
         
         /* Load the image provided of the zombie.
            This is not pre-loaded because of the different zombie types. */
-        BufferedImage i = GZSFramework.loadImage(fileName_);
+        BufferedImage i = GZSFramework.loadImage(fileName_, false);
         img = new Animation(i, 40, 40, 2, (int)x, (int)y, 200, 0, true);
         
         health = health_;

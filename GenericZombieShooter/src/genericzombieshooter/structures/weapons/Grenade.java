@@ -1,6 +1,24 @@
+/**
+    This file is part of Generic Zombie Shooter.
+
+    Generic Zombie Shooter is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Generic Zombie Shooter is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Generic Zombie Shooter.  If not, see <http://www.gnu.org/licenses/>.
+ **/
 package genericzombieshooter.structures.weapons;
 
+import genericzombieshooter.misc.Globals;
 import genericzombieshooter.misc.Images;
+import genericzombieshooter.misc.Sounds;
 import genericzombieshooter.structures.Explosion;
 import genericzombieshooter.structures.Particle;
 import java.awt.Dimension;
@@ -22,7 +40,7 @@ public class Grenade extends Weapon {
     private static final int DEFAULT_AMMO = 1;
     private static final int MAX_AMMO = 3;
     private static final int AMMO_PER_USE = 1;
-    private static final int DAMAGE_PER_PARTICLE = 0;
+    private static final int DAMAGE_PER_EXPLOSION = 500;
     private static final double PARTICLE_SPREAD = 5.0;
     private static final int THROWING_DISTANCE = 1500;
     
@@ -44,6 +62,7 @@ public class Grenade extends Weapon {
                 p.update();
                 if(!p.isAlive()) {
                     this.explosions.add(new Explosion(Images.EXPLOSION_SHEET, p.getPos()));
+                    Sounds.EXPLOSION.play();
                     it.remove();
                     continue;
                 }
@@ -60,6 +79,7 @@ public class Grenade extends Weapon {
                 e.getImage().update();
                 if(!e.getImage().isActive()) {
                     it.remove();
+                    continue;
                 }
             }
         } // End explosion updates.
@@ -107,32 +127,29 @@ public class Grenade extends Weapon {
     public int checkForDamage(Rectangle2D.Double rect) {
         /* The grenade particle itself does nothing. Upon contact with a zombie,
            it stops moving, and once its timer goes off, it explodes. */
-        return 0;
-    }
-    
-    /**
-     * Creates a new grenade particle via an anonymous inner class so custom
-     * update and draw behavior can be used.
-     * @param theta The angle to throw the grenade along.
-     * @param pos The starting position of the grenade.
-     * @return 
-     **/
-    private Particle createGrenadeParticle(double theta, Point2D.Double pos) {
-        Dimension size = new Dimension(16, 16);
-        Particle p = new Particle(theta, PARTICLE_SPREAD, 5.0, THROWING_DISTANCE,
-                                  pos, size, Images.GRENADE_PARTICLE) {
-            @Override
-            public void draw(Graphics2D g2d) {
-                if(this.image != null) {
-                    double x = this.pos.x - (this.size.width / 2);
-                    double y = this.pos.y - (this.size.height / 2);
-                    g2d.drawImage(this.image, (int)x, (int)y, null);
+        int damage = 0;
+        if(this.explosions.size() > 0) {
+            Iterator<Explosion> it = this.explosions.iterator();
+            while(it.hasNext()) {
+                Explosion e = it.next();
+                if(e.getImage().isActive()) {
+                    Rectangle2D.Double expRect = new Rectangle2D.Double((e.x - (e.getSize().width / 2)), (e.y - (e.getSize().height / 2)),
+                                                                         e.getSize().width, e.getSize().height);
+                    if(rect.intersects(expRect)) damage += Grenade.DAMAGE_PER_EXPLOSION;
                 }
             }
-            
+        }
+        return damage;
+    }
+    
+    public Particle createGrenadeParticle(double theta, Point2D.Double pos) {
+        Particle p = new Particle(theta, PARTICLE_SPREAD, 5.0, (Grenade.THROWING_DISTANCE / (int)Globals.SLEEP_TIME),
+                                  pos, new Dimension(16, 16), Images.GRENADE_PARTICLE) {
             @Override
-            public void update() {
-                
+            public void draw(Graphics2D g2d) {
+                double x = this.pos.x - (this.size.width / 2);
+                double y = this.pos.y - (this.size.height / 2);
+                g2d.drawImage(this.image, (int)x, (int)y, null);
             }
         };
         

@@ -90,6 +90,7 @@ public class Player extends Rectangle2D.Double {
         Sounds.RTPS.reset();
         Sounds.BOOMSTICK.reset();
         Sounds.FLAMETHROWER.reset();
+        Sounds.EXPLOSION.reset();
     }
 
     // Shape manipulation.

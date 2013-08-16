@@ -26,6 +26,7 @@ import genericzombieshooter.structures.components.WeaponsLoadout;
 import genericzombieshooter.structures.items.Ammo;
 import genericzombieshooter.structures.items.HealthPack;
 import genericzombieshooter.structures.weapons.Weapon;
+import java.awt.Color;
 import java.awt.Point;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
@@ -361,9 +362,25 @@ public class GZSFramework {
         System.out.println("Created ammo pack for " + this.player.getWeapon(w).getName() + " with amount: " + ammo + "!");
     }
     
-    public static BufferedImage loadImage(String filename) {
+    public static BufferedImage loadImage(String filename, boolean removeBlack) {
         try {
-            return ImageIO.read(GZSFramework.class.getResource(filename));
+            BufferedImage img = ImageIO.read(GZSFramework.class.getResource(filename));
+            if(removeBlack) {
+                int pixel, red, green, blue;
+                for(int w = 0; w < img.getWidth(); w++) {
+                    for(int h = 0; h < img.getHeight(); h++) {
+                        pixel = img.getRGB(w, h);
+                        Color c = new Color(pixel);
+                        red = c.getRed();
+                        green = c.getGreen();
+                        blue = c.getBlue();
+                        if(red == Color.BLACK.getRed() && green == Color.BLACK.getGreen() && blue == Color.BLACK.getBlue()) {
+                            img.setRGB(w, h, Color.TRANSLUCENT);
+                        }
+                    }
+                }
+            }
+            return img;
         } catch(IOException io) {
             System.out.println(io.getMessage());
             System.out.println("Error reading file: " + filename);

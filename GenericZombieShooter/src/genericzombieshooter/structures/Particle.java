@@ -96,15 +96,17 @@ public class Particle {
     }
     
     /**
-     * Updates the state of the spray particle.
+     * Updates the state of the particle.
      **/
     public void update() {
-        // Age the particle.
-        if(this.isAlive()) this.life--;
-        // Update the position of the particle.
         if(this.isAlive()) {
+            // Age the particle.
+            this.life--;
+            // Update the position.
             this.pos.x += this.speed * Math.sin(this.theta);
             this.pos.y += this.speed * Math.cos(this.theta);
+        } else {
+            System.out.println("Particle died...");
         }
     }
     

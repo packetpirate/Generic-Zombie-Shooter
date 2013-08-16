@@ -25,27 +25,27 @@ import java.awt.image.BufferedImage;
  */
 public class Animation {
     // Member variables.
-    private BufferedImage img; // The animation sheet.
-    private int frameWidth; // The width of each frame in the animation.
-    private int frameHeight; // The height of each frame in the animation.
-    private int frameCount; // The number of frames in the animation.
+    protected BufferedImage img; // The animation sheet.
+    protected int frameWidth; // The width of each frame in the animation.
+    protected int frameHeight; // The height of each frame in the animation.
+    protected int frameCount; // The number of frames in the animation.
     
-    private long frameTime; // Time between frames, in milliseconds.
-    private long startingFrameTime; // Time when the frame started showing.
-    private long nextFrameTime; // Time when to show the next frame.
-    private long delay; // How long to wait before starting and displaying animation.
-    private long timeCreated; // The time in milliseconds that the animation was created.
+    protected long frameTime; // Time between frames, in milliseconds.
+    protected long startingFrameTime; // Time when the frame started showing.
+    protected long nextFrameTime; // Time when to show the next frame.
+    protected long delay; // How long to wait before starting and displaying animation.
+    protected long timeCreated; // The time in milliseconds that the animation was created.
     
-    private int currentFrame; // Current frame in the animation.
+    protected int currentFrame; // Current frame in the animation.
     
-    private int x; // x coordinate of the animation on the screen.
-    private int y; // y coordinate of the animation on the screen.
+    protected int x; // x coordinate of the animation on the screen.
+    protected int y; // y coordinate of the animation on the screen.
     
-    private int startX; // Starting X coordinate of current frame in animation.
-    private int endX; // Ending X coordinate of current frame in animation.
+    protected int startX; // Starting X coordinate of current frame in animation.
+    protected int endX; // Ending X coordinate of current frame in animation.
     
-    private boolean loop; // Determines if the animation is looped.
-    private boolean active; // Determines if the animation is active.
+    protected boolean loop; // Determines if the animation is looped.
+    protected boolean active; // Determines if the animation is active.
     
     /*
      * @param img The source image for the animation.
