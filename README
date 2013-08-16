@@ -36,7 +36,6 @@ Changes:
 
 Known Issues:
 
-- If you switch weapons while firing the Flamethrower, the Flamethrower sound will continue to play.
 - The player retains his ammo values from a previous game if he returns to the start screen after death.
 - While not a "bug", the method used for removing the black background from the explosion sprite sheet
   is inaccurate and results in a somewhat ugly explosion animation. It needs refinement.
