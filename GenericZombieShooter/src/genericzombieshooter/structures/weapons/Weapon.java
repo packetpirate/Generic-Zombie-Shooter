@@ -38,7 +38,7 @@ public class Weapon {
     private BufferedImage image;
     public BufferedImage getImage() { return this.image; }
     
-    private int ammoLeft;
+    protected int ammoLeft;
     public int getAmmoLeft() { return this.ammoLeft; }
     private int maxAmmo;
     public int getMaxAmmo() { return this.maxAmmo; }

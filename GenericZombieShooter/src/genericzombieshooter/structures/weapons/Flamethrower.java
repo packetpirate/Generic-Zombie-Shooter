@@ -116,6 +116,12 @@ public class Flamethrower extends Weapon {
     }
     
     @Override
+    public void resetAmmo() {
+        super.resetAmmo();
+        this.ammoLeft = DEFAULT_AMMO;
+    }
+    
+    @Override
     public int getAmmoPackAmount() {
         return Flamethrower.DEFAULT_AMMO;
     }

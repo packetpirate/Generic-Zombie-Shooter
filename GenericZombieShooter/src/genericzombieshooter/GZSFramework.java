@@ -296,6 +296,7 @@ public class GZSFramework {
                     Globals.started = false;
                     player.reset();
                     zombies = new ArrayList<Zombie>();
+                    items = new ArrayList<Item>();
                     Iterator<Weapon> it = player.getAllWeapons().iterator();
                     while(it.hasNext()) {
                         Weapon w = it.next();

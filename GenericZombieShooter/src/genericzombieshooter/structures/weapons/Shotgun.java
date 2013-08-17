@@ -112,6 +112,12 @@ public class Shotgun extends Weapon {
     }
     
     @Override
+    public void resetAmmo() {
+        super.resetAmmo();
+        this.ammoLeft = DEFAULT_AMMO;
+    }
+    
+    @Override
     public int getAmmoPackAmount() {
         return Shotgun.DEFAULT_AMMO;
     }

@@ -155,4 +155,11 @@ public class Grenade extends Weapon {
         
         return p;
     }
+    
+    @Override
+    public void resetAmmo() {
+        super.resetAmmo();
+        this.explosions = new ArrayList<Explosion>();
+        this.ammoLeft = DEFAULT_AMMO;
+    }
 }
