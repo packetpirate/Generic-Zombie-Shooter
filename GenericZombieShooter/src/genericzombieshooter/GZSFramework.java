@@ -32,6 +32,7 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseWheelEvent;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
@@ -182,6 +183,28 @@ public class GZSFramework {
                     if(Globals.started) {
                         Globals.mousePos.x = m.getX();
                         Globals.mousePos.y = m.getY();
+                    }
+                }
+            });
+            
+            canvas.addMouseWheelListener(new MouseAdapter() {
+                @Override
+                public void mouseWheelMoved(MouseWheelEvent mw) {
+                    int notches = mw.getWheelRotation();
+                    if(notches < 0) { // Wheel scrolled up.
+                        // Move weapon selection to the left.
+                        int w = player.getCurrentWeapon();
+                        if(w == 1) w = player.getAllWeapons().size();
+                        else w--;
+                        player.setWeapon(w);
+                        loadout.setCurrentWeapon(w);
+                    } else { // Wheel scrolled down.
+                        // Move weapon selection to the right.
+                        int w = player.getCurrentWeapon();
+                        if(w == player.getAllWeapons().size()) w = 1;
+                        else w++;
+                        player.setWeapon(w);
+                        loadout.setCurrentWeapon(w);
                     }
                 }
             });
@@ -359,7 +382,6 @@ public class GZSFramework {
         double x = Globals.r.nextInt((Globals.W_WIDTH - 20) - 20 + 1) + 20;
         double y = Globals.r.nextInt((int)((Globals.W_HEIGHT - (WeaponsLoadout.BAR_HEIGHT + 10)) - 20 + 1)) + 20;
         this.items.add(new Ammo(w, ammo, new Point2D.Double(x, y)));
-        System.out.println("Created ammo pack for " + this.player.getWeapon(w).getName() + " with amount: " + ammo + "!");
     }
     
     public static BufferedImage loadImage(String filename, boolean removeBlack) {
