@@ -36,10 +36,10 @@ Changes:
 - Added grenades.
 - Added scroll wheel support. Scrolling up scrolls the weapon selection to the left. Scrolling down scrolls the
   weapon selection to the right.
+- Fixed issue where player would retain the amount of ammo he had from a previous game after dying and restarting.
 
 Known Issues:
 
-- The player retains his ammo values from a previous game if he returns to the start screen after death.
 - While not a "bug", the method used for removing the black background from the explosion sprite sheet
   is inaccurate and results in a somewhat ugly explosion animation. It needs refinement.
 
