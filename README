@@ -17,6 +17,7 @@ Left Click/Hold - Fire equipped weapon.
 2 - Select Boomstick (Shotgun)
 3 - Select the Flammenwerfer (Flamethrower)
 4 - Select Nades (Grenades)
+Mouse Scroll Wheel - Quick Select Weapon (Up = Left, Down = Right)
 
 Your character is always facing your mouse cursor, and particles will travel in the direction you fire until
 they either hit a target, or go out of bounds.
@@ -33,6 +34,8 @@ Changes:
 - Re-enabled ammo usage.
 - Added GNU Public License.
 - Added grenades.
+- Added scroll wheel support. Scrolling up scrolls the weapon selection to the left. Scrolling down scrolls the
+  weapon selection to the right.
 
 Known Issues:
 
