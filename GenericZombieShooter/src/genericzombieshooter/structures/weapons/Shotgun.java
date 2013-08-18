@@ -16,6 +16,7 @@
  **/
 package genericzombieshooter.structures.weapons;
 
+import genericzombieshooter.actors.Zombie;
 import genericzombieshooter.misc.Globals;
 import genericzombieshooter.misc.Sounds;
 import genericzombieshooter.structures.Particle;
@@ -27,6 +28,7 @@ import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import java.util.ConcurrentModificationException;
 import java.util.Iterator;
+import java.util.List;
 
 /**
  * Used to represent the Shotgun weapon.
@@ -47,7 +49,7 @@ public class Shotgun extends Weapon {
     }
     
     @Override
-    public void updateWeapon() {
+    public void updateWeapon(List<Zombie> zombies) {
         // Update all particles and remove them if their life has expired or they are out of bounds.
         Iterator<Particle> it = this.particles.iterator();
         while(it.hasNext()) {

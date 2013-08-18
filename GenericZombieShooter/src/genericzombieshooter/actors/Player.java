@@ -56,6 +56,7 @@ public class Player extends Rectangle2D.Double {
         this.weapons.add(Globals.SHOTGUN); // Weapon 2
         this.weapons.add(Globals.FLAMETHROWER); // Weapon 3
         this.weapons.add(Globals.GRENADE); // Weapon 4
+        this.weapons.add(Globals.LANDMINE); // Weapon 5
     }
 
     // Getter/Setter methods.
@@ -87,10 +88,7 @@ public class Player extends Rectangle2D.Double {
     public List<Weapon> getAllWeapons() { return this.weapons; }
     public void setWeapon(int w) { 
         this.currentWeapon = w;
-        Sounds.RTPS.reset();
-        Sounds.BOOMSTICK.reset();
         Sounds.FLAMETHROWER.reset();
-        Sounds.EXPLOSION.reset();
     }
 
     // Shape manipulation.

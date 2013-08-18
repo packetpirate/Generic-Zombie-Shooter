@@ -64,10 +64,12 @@ public class Particle {
         this.image = _image;
 
         // Determine if the angle of the particle will deviate from its set value.
-        boolean mod = Globals.r.nextBoolean();
-        double spreadMod = Math.toRadians(Globals.r.nextDouble() * _spread);
-        if(mod) spreadMod = -spreadMod;
-        this.theta += spreadMod;
+        if(_spread > 0) {
+            boolean mod = Globals.r.nextBoolean();
+            double spreadMod = Math.toRadians(Globals.r.nextDouble() * _spread);
+            if(mod) spreadMod = -spreadMod;
+            this.theta += spreadMod;
+        }
     }
     
     /**
@@ -105,8 +107,6 @@ public class Particle {
             // Update the position.
             this.pos.x += this.speed * Math.sin(this.theta);
             this.pos.y += this.speed * Math.cos(this.theta);
-        } else {
-            System.out.println("Particle died...");
         }
     }
     

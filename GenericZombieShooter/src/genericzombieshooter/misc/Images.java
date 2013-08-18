@@ -32,5 +32,6 @@ public class Images {
     public static final BufferedImage RTPS_BULLET = GZSFramework.loadImage("/resources/images/GZS_Bullet2.png", false);
     public static final BufferedImage FIRE_PARTICLE = GZSFramework.loadImage("/resources/images/GZS_FireParticle.png", false);
     public static final BufferedImage GRENADE_PARTICLE = GZSFramework.loadImage("/resources/images/GZS_GrenadeParticle.png", false);
+    public static final BufferedImage LANDMINE_PARTICLE = GZSFramework.loadImage("/resources/images/GZS_LandmineParticle.png", false);
     public static final BufferedImage EXPLOSION_SHEET = GZSFramework.loadImage("/resources/images/GZS_Explosion2.png", true);
 }

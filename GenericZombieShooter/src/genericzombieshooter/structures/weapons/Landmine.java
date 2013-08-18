@@ -33,32 +33,28 @@ import java.util.Iterator;
 import java.util.List;
 
 /**
- * Used to represent the grenade weapon.
+ * Used to represent a landmine weapon.
  * @author Darin Beaudreau
  */
-public class Grenade extends Weapon {
+public class Landmine extends Weapon {
     // Final Variables
     private static final int DEFAULT_AMMO = 1;
     private static final int MAX_AMMO = 3;
     private static final int AMMO_PER_USE = 1;
     private static final int DAMAGE_PER_EXPLOSION = 500;
-    private static final double PARTICLE_SPREAD = 5.0;
-    private static final int THROWING_DISTANCE = 1000;
+    private static final int PARTICLE_LIFE = 3 * 60 * 1000;
     
-    // Member Variables
+    // Member variables.
     private List<Explosion> explosions;
     public List<Explosion> getExplosions() { return this.explosions; }
     
-    public Grenade() {
-        super("Nade", KeyEvent.VK_4, "/resources/images/GZS_Grenade.png", DEFAULT_AMMO, MAX_AMMO, AMMO_PER_USE, 100);
+    public Landmine() {
+        super("Hopper", KeyEvent.VK_5, "/resources/images/GZS_Landmine.png", DEFAULT_AMMO, MAX_AMMO, AMMO_PER_USE, 50);
         this.explosions = new ArrayList<Explosion>();
     }
     
     @Override
-    public int getAmmoPackAmount() {
-        return DEFAULT_AMMO;
-    }
-    
+    public int getAmmoPackAmount() { return Landmine.DEFAULT_AMMO; }
     
     @Override
     public void resetAmmo() {
@@ -84,10 +80,6 @@ public class Grenade extends Weapon {
                 if(!p.isAlive() || collision) {
                     this.explosions.add(new Explosion(Images.EXPLOSION_SHEET, p.getPos()));
                     Sounds.EXPLOSION.play();
-                    it.remove();
-                    continue;
-                }
-                if(p.outOfBounds()) {
                     it.remove();
                     continue;
                 }
@@ -132,16 +124,21 @@ public class Grenade extends Weapon {
     @Override
     public void fire(double theta, Point2D.Double pos) {
         if(this.canFire()) {
-            Particle p = createGrenadeParticle(theta, pos);
+            Particle p = createLandmineParticle(theta, pos);
             this.particles.add(p);
             this.consumeAmmo();
             this.resetCooldown();
         }
     }
     
-    public Particle createGrenadeParticle(double theta, Point2D.Double pos) {
-        Particle p = new Particle(theta, PARTICLE_SPREAD, 5.0, (Grenade.THROWING_DISTANCE / (int)Globals.SLEEP_TIME),
-                                  pos, new Dimension(16, 16), Images.GRENADE_PARTICLE) {
+    private Particle createLandmineParticle(double theta, Point2D.Double pos) {
+        Particle p = new Particle(theta, 0.0, 0.0, (Landmine.PARTICLE_LIFE / (int)Globals.SLEEP_TIME),
+                                  pos, new Dimension(24, 24), Images.LANDMINE_PARTICLE) {
+            @Override
+            public void update() {
+                if(this.isAlive()) this.life--;
+            }
+            
             @Override
             public void draw(Graphics2D g2d) {
                 double x = this.pos.x - (this.size.width / 2);
@@ -155,8 +152,6 @@ public class Grenade extends Weapon {
     
     @Override
     public int checkForDamage(Rectangle2D.Double rect) {
-        /* The grenade particle itself does nothing. Upon contact with a zombie,
-           it stops moving, and once its timer goes off, it explodes. */
         int damage = 0;
         if(this.explosions.size() > 0) {
             Iterator<Explosion> it = this.explosions.iterator();
@@ -165,7 +160,7 @@ public class Grenade extends Weapon {
                 if(e.getImage().isActive()) {
                     Rectangle2D.Double expRect = new Rectangle2D.Double((e.x - (e.getSize().width / 2)), (e.y - (e.getSize().height / 2)),
                                                                          e.getSize().width, e.getSize().height);
-                    if(rect.intersects(expRect)) damage += Grenade.DAMAGE_PER_EXPLOSION;
+                    if(rect.intersects(expRect)) damage += Landmine.DAMAGE_PER_EXPLOSION;
                 }
             }
         }

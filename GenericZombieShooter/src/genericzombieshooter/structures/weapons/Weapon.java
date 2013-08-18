@@ -17,6 +17,7 @@
 package genericzombieshooter.structures.weapons;
 
 import genericzombieshooter.GZSFramework;
+import genericzombieshooter.actors.Zombie;
 import genericzombieshooter.structures.Particle;
 import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
@@ -93,7 +94,7 @@ public class Weapon {
         this.particles = new ArrayList<Particle>();
     }
     
-    public void updateWeapon() {
+    public void updateWeapon(List<Zombie> zombies) {
         // To be overridden.
     }
     

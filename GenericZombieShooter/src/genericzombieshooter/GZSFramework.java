@@ -98,21 +98,23 @@ public class GZSFramework {
                 @Override
                 public void keyPressed(KeyEvent k) {
                     if(Globals.started) {
-                        if (k.getKeyCode() == KeyEvent.VK_W) Globals.keys[0] = true;
-                        if (k.getKeyCode() == KeyEvent.VK_A) Globals.keys[1] = true;
-                        if (k.getKeyCode() == KeyEvent.VK_S) Globals.keys[2] = true;
-                        if (k.getKeyCode() == KeyEvent.VK_D) Globals.keys[3] = true;
+                        int key = k.getKeyCode();
+                        if (key == KeyEvent.VK_W) Globals.keys[0] = true;
+                        if (key == KeyEvent.VK_A) Globals.keys[1] = true;
+                        if (key == KeyEvent.VK_S) Globals.keys[2] = true;
+                        if (key == KeyEvent.VK_D) Globals.keys[3] = true;
                     }
                 }
 
                 @Override
                 public void keyReleased(KeyEvent k) {
                     if(Globals.started) {
-                        if (k.getKeyCode() == KeyEvent.VK_W) Globals.keys[0] = false;
-                        if (k.getKeyCode() == KeyEvent.VK_A) Globals.keys[1] = false;
-                        if (k.getKeyCode() == KeyEvent.VK_S) Globals.keys[2] = false;
-                        if (k.getKeyCode() == KeyEvent.VK_D) Globals.keys[3] = false;
-                        if (k.getKeyCode() == KeyEvent.VK_P) {
+                        int key = k.getKeyCode();
+                        if (key == KeyEvent.VK_W) Globals.keys[0] = false;
+                        if (key == KeyEvent.VK_A) Globals.keys[1] = false;
+                        if (key == KeyEvent.VK_S) Globals.keys[2] = false;
+                        if (key == KeyEvent.VK_D) Globals.keys[3] = false;
+                        if (key == KeyEvent.VK_P) {
                             if(Globals.paused) {
                                 Globals.paused = false;
                                 Sounds.UNPAUSE.play();
@@ -122,21 +124,25 @@ public class GZSFramework {
                                 Sounds.PAUSE.play();
                             }
                         }
-                        if (k.getKeyCode() == Globals.ASSAULT_RIFLE.getKey()) {
+                        if (key == Globals.ASSAULT_RIFLE.getKey()) {
                             player.setWeapon(1);
                             loadout.setCurrentWeapon(1);
                         }
-                        if (k.getKeyCode() == Globals.SHOTGUN.getKey()) {
+                        if (key == Globals.SHOTGUN.getKey()) {
                             player.setWeapon(2);
                             loadout.setCurrentWeapon(2);
                         }
-                        if (k.getKeyCode() == Globals.FLAMETHROWER.getKey()) {
+                        if (key == Globals.FLAMETHROWER.getKey()) {
                             player.setWeapon(3);
                             loadout.setCurrentWeapon(3);
                         }
-                        if (k.getKeyCode() == Globals.GRENADE.getKey()) {
+                        if (key == Globals.GRENADE.getKey()) {
                             player.setWeapon(4);
                             loadout.setCurrentWeapon(4);
+                        }
+                        if (key == Globals.LANDMINE.getKey()) {
+                            player.setWeapon(5);
+                            loadout.setCurrentWeapon(5);
                         }
                     }
                 }
@@ -326,7 +332,7 @@ public class GZSFramework {
                 Iterator<Weapon> it = this.player.getAllWeapons().iterator();
                 while(it.hasNext()) {
                     Weapon w = it.next();
-                    w.updateWeapon();
+                    w.updateWeapon(this.zombies);
                 }
             } // End weapon updates.
         }
@@ -474,7 +480,9 @@ public class GZSFramework {
     /**
      * Stops the animation thread.
      **/
-    private void stopThread() {
+    private void stopThreads() {
         Globals.animation = null;
+        Globals.health = null;
+        Globals.ammo = null;
     }
 }

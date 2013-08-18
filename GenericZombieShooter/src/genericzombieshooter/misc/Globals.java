@@ -19,6 +19,7 @@ package genericzombieshooter.misc;
 import genericzombieshooter.structures.weapons.AssaultRifle;
 import genericzombieshooter.structures.weapons.Flamethrower;
 import genericzombieshooter.structures.weapons.Grenade;
+import genericzombieshooter.structures.weapons.Landmine;
 import genericzombieshooter.structures.weapons.Shotgun;
 import java.awt.Point;
 import java.util.Random;
@@ -52,4 +53,5 @@ public class Globals {
     public static Shotgun SHOTGUN = new Shotgun();
     public static Flamethrower FLAMETHROWER = new Flamethrower();
     public static Grenade GRENADE = new Grenade();
+    public static Landmine LANDMINE = new Landmine();
 }
