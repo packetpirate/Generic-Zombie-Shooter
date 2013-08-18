@@ -40,12 +40,16 @@ Changes:
 
 Known Issues:
 
+- Sometimes, explosions do not "hit" zombies. (Fix submitted, but unconfirmed)
 - While not a "bug", the method used for removing the black background from the explosion sprite sheet
   is inaccurate and results in a somewhat ugly explosion animation. It needs refinement.
 
 TODO:
 
-- Add more weapons.
+- Fix method for removing black background pixels from explosion sprite sheet, or find a way to remove them in Photoshop.
+- Add more weapons. (Landmines, etc)
+- Add new zombie types. (Fast Zombie Dogs, "Spitter"-type Zombies, Bulky Zombies that explode into
+  4-5 regular zombies after a certain time interval)
 - Change gameplay so that "waves" of zombies appear all at once. This will be temporary until
   post 1.0 release, at which point I will work on level-based gameplay.
 
