@@ -49,9 +49,11 @@ Known Issues:
 TODO:
 
   - Fix method for removing black background pixels from explosion sprite sheet, or find a way to remove them in Photoshop.
-  - Add more weapons. (Landmines, etc)
+  - Add more weapons. (Melee, etc)
   - Add new zombie types. (Fast Zombie Dogs, "Spitter"-type Zombies, Bulky Zombies that explode into
   4-5 regular zombies after a certain time interval)
+  - Change gameplay so you do not start with all weapons automatically. Add store system so you can
+  "buy" the weapons with your score points.
   - Change gameplay so that "waves" of zombies appear all at once. This will be temporary until
   post 1.0 release, at which point I will work on level-based gameplay.
 
