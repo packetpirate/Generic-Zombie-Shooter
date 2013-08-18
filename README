@@ -1,6 +1,6 @@
 -----------------------
 Author: Darin Beaudreau
-Version: 0.7.5
+Version: 0.7.6
 -----------------------
 
 Description:
@@ -17,6 +17,7 @@ Left Click/Hold - Fire equipped weapon.
 2 - Select Boomstick (Shotgun)
 3 - Select the Flammenwerfer (Flamethrower)
 4 - Select Nades (Grenades)
+5 - Select Hoppers (Landmines)
 Mouse Scroll Wheel - Quick Select Weapon (Up = Left, Down = Right)
 
 Your character is always facing your mouse cursor, and particles will travel in the direction you fire until
@@ -37,6 +38,7 @@ Changes:
 - Added scroll wheel support. Scrolling up scrolls the weapon selection to the left. Scrolling down scrolls the
   weapon selection to the right.
 - Fixed issue where player would retain the amount of ammo he had from a previous game after dying and restarting.
+- Added landmines.
 
 Known Issues:
 
