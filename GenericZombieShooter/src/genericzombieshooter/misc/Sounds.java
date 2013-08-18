@@ -36,6 +36,8 @@ public enum Sounds {
     RTPS("shoot1.wav", false),
     BOOMSTICK("shotgun1.wav", false),
     FLAMETHROWER("flamethrower.wav", true),
+    LANDMINE_ARMED("landmine_armed.wav", false),
+    THROW("throw.wav", false),
     EXPLOSION("explosion.wav", false),
     POWERUP("powerup.wav", false),
     PAUSE("pause.wav", false),

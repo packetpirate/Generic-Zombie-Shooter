@@ -136,6 +136,7 @@ public class Grenade extends Weapon {
             this.particles.add(p);
             this.consumeAmmo();
             this.resetCooldown();
+            Sounds.THROW.play();
         }
     }
     

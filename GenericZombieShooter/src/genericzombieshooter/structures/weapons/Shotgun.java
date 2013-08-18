@@ -49,6 +49,17 @@ public class Shotgun extends Weapon {
     }
     
     @Override
+    public int getAmmoPackAmount() {
+        return Shotgun.DEFAULT_AMMO;
+    }
+    
+    @Override
+    public void resetAmmo() {
+        super.resetAmmo();
+        this.ammoLeft = DEFAULT_AMMO;
+    }
+    
+    @Override
     public void updateWeapon(List<Zombie> zombies) {
         // Update all particles and remove them if their life has expired or they are out of bounds.
         Iterator<Particle> it = this.particles.iterator();
@@ -111,16 +122,5 @@ public class Shotgun extends Weapon {
             }
         }
         return damage;
-    }
-    
-    @Override
-    public void resetAmmo() {
-        super.resetAmmo();
-        this.ammoLeft = DEFAULT_AMMO;
-    }
-    
-    @Override
-    public int getAmmoPackAmount() {
-        return Shotgun.DEFAULT_AMMO;
     }
 }

@@ -128,6 +128,7 @@ public class Landmine extends Weapon {
             this.particles.add(p);
             this.consumeAmmo();
             this.resetCooldown();
+            Sounds.LANDMINE_ARMED.play();
         }
     }
     
