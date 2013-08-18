@@ -42,7 +42,7 @@ public class Grenade extends Weapon {
     private static final int AMMO_PER_USE = 1;
     private static final int DAMAGE_PER_EXPLOSION = 500;
     private static final double PARTICLE_SPREAD = 5.0;
-    private static final int THROWING_DISTANCE = 1500;
+    private static final int THROWING_DISTANCE = 1000;
     
     // Member Variables
     private List<Explosion> explosions;

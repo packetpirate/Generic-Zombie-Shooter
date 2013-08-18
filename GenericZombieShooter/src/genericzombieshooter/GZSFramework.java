@@ -305,15 +305,7 @@ public class GZSFramework {
                 }
                 loadout.setCurrentWeapon(1);
             }
-
-            { // Begin weapon updates.
-                Iterator<Weapon> it = this.player.getAllWeapons().iterator();
-                while(it.hasNext()) {
-                    Weapon w = it.next();
-                    w.updateWeapon();
-                }
-            } // End weapon updates.
-
+            
             { // Do zombie updates.
                 // Check for collisions between zombies and ammo.
                 Iterator<Zombie> it = this.zombies.iterator();
@@ -329,6 +321,14 @@ public class GZSFramework {
                     }
                 }
             } // End zombie updates.
+
+            { // Begin weapon updates.
+                Iterator<Weapon> it = this.player.getAllWeapons().iterator();
+                while(it.hasNext()) {
+                    Weapon w = it.next();
+                    w.updateWeapon();
+                }
+            } // End weapon updates.
         }
     }
     
