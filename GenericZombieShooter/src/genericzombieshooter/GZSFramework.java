@@ -317,12 +317,16 @@ public class GZSFramework {
                 Iterator<Zombie> it = this.zombies.iterator();
                 while(it.hasNext()) {
                     Zombie z = it.next();
-                    int damage = player.getWeapon().checkForDamage(z);
-                    if(damage > 0) {
-                        z.takeDamage(damage);
-                        if(z.isDead()) {
-                            score += z.getScore();
-                            it.remove();
+                    Iterator<Weapon> wit = player.getAllWeapons().iterator();
+                    while(wit.hasNext()) {
+                        Weapon w = wit.next();
+                        int damage = w.checkForDamage(z);
+                        if(damage > 0) {
+                            z.takeDamage(damage);
+                            if(z.isDead()) {
+                                score += z.getScore();
+                                it.remove();
+                            }
                         }
                     }
                 }

@@ -28,7 +28,6 @@ import java.awt.event.KeyEvent;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
-import java.util.ConcurrentModificationException;
 import java.util.Iterator;
 import java.util.List;
 
@@ -40,7 +39,7 @@ public class Grenade extends Weapon {
     // Final Variables
     private static final int DEFAULT_AMMO = 1;
     private static final int MAX_AMMO = 3;
-    private static final int AMMO_PER_USE = 1;
+    private static final int AMMO_PER_USE = 0;
     private static final int DAMAGE_PER_EXPLOSION = 500;
     private static final double PARTICLE_SPREAD = 5.0;
     private static final int THROWING_DISTANCE = 1000;
@@ -110,22 +109,18 @@ public class Grenade extends Weapon {
     @Override
     public void drawAmmo(Graphics2D g2d) {
         if(this.particles.size() > 0) {
-            try {
-                Iterator<Particle> it = this.particles.iterator();
-                while(it.hasNext()) {
-                    Particle p = it.next();
-                    if(p.isAlive()) p.draw(g2d);
-                }
-            } catch(ConcurrentModificationException cme) {}
+            Iterator<Particle> it = this.particles.iterator();
+            while(it.hasNext()) {
+                Particle p = it.next();
+                if(p.isAlive()) p.draw(g2d);
+            }
         }
         if(this.explosions.size() > 0) {
-            try {
-                Iterator<Explosion> it = this.explosions.iterator();
-                while(it.hasNext()) {
-                    Explosion e = it.next();
-                    if(e.getImage().isActive()) e.draw(g2d);
-                }
-            } catch(ConcurrentModificationException cme) {}
+            Iterator<Explosion> it = this.explosions.iterator();
+            while(it.hasNext()) {
+                Explosion e = it.next();
+                if(e.getImage().isActive()) e.draw(g2d);
+            }
         }
     }
     

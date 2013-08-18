@@ -27,7 +27,6 @@ import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
-import java.util.ConcurrentModificationException;
 import java.util.Iterator;
 import java.util.List;
 
@@ -81,13 +80,11 @@ public class Flamethrower extends Weapon {
         // Draw all particles whose life has not yet expired.
         if(this.particles.size() > 0) {
             g2d.setColor(Color.ORANGE);
-            try {
-                Iterator<Particle> it = this.particles.iterator();
-                while(it.hasNext()) {
-                    Particle p = it.next();
-                    if(p.isAlive()) p.draw(g2d);
-                }
-            } catch(ConcurrentModificationException cme) {}
+            Iterator<Particle> it = this.particles.iterator();
+            while(it.hasNext()) {
+                Particle p = it.next();
+                if(p.isAlive()) p.draw(g2d);
+            }
         }
     }
     
