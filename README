@@ -62,6 +62,7 @@ TODO:
 
 Planned Future Changes (Most likely post-1.0):
   - Add a lighting system so that you can only see directly in front of you, like a flashlight.
+    (Addendum) Add a day-night cycle so you need your flashlight at night and possibly flares you can throw around.
   - Add randomly generated terrain (buildings, etc) to make combat a bit more interesting.
   - Add pathing AI to make the aforementioned terrain possible.
   - Add level-based gameplay.
