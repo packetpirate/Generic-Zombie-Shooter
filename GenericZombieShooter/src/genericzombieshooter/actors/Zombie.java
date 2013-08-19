@@ -16,62 +16,57 @@
  **/
 package genericzombieshooter.actors;
 
-import genericzombieshooter.GZSFramework;
-import genericzombieshooter.interfaces.Enemy;
 import genericzombieshooter.structures.Animation;
 import java.awt.geom.AffineTransform;
+import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
-import java.awt.image.BufferedImage;
 
 /**
- *
+ * Used to represent the various types of zombies.
  * @author Darin Beaudreau
  */
-public class Zombie extends Rectangle2D.Double implements Enemy {
-    // Constant variables.
-    private static final double MOVE_SPEED = 0.5;
+public class Zombie extends Point2D.Double {
     // Member variables.
     private AffineTransform af;
     private Animation img;
     
     private int health; // How much health the zombie has.
     private int damage; // How much damage the zombie does per tick to the player.
+    private double speed; // How fast the zombie moves.
     private int scoreValue; // How many points the zombie is worth.
     
-    public Zombie(Rectangle2D.Double rect_, int health_, int damage_, int score_, String fileName_) {
-        super(rect_.x, rect_.y, rect_.width, rect_.height);
-        af = new AffineTransform();
+    public Zombie(Point2D.Double p_, int health_, int damage_, double speed_, int score_, Animation animation_) {
+        super(p_.x, p_.y);
+        this.af = new AffineTransform();
+        this.img = animation_;
         
-        /* Load the image provided of the zombie.
-           This is not pre-loaded because of the different zombie types. */
-        BufferedImage i = GZSFramework.loadImage(fileName_, false);
-        img = new Animation(i, 40, 40, 2, (int)x, (int)y, 200, 0, true);
-        
-        health = health_;
-        damage = damage_;
-        scoreValue = score_;
+        this.health = health_;
+        this.damage = damage_;
+        this.speed = speed_;
+        this.scoreValue = score_;
     }
     
     // Getter/Setter methods.
-    public int getHealth() { return health; }
-    public int getDamage() { return damage; }
-    public int getScore() { return scoreValue; }
-    public AffineTransform getTransform() { return af; }
-    public Animation getImage() { return img; }
-    
-    public boolean isDead() { return health <= 0; }
-    
-    // Shape manipulation.
-    public void rotate(double theta_) { af.setToRotation(theta_, getCenterX(), getCenterY()); }
-    
-    // Implemented interface methods.
-    @Override
-    public void move(double x_, double y_) {
-        x += x_ * MOVE_SPEED;
-        y += y_ * MOVE_SPEED;
-        img.move((int)x, (int)y);
+    public int getHealth() { return this.health; }
+    public void takeDamage(int damage_) { this.health -= damage_; }
+    public int getDamage() { return this.damage; }
+    public int getScore() { return this.scoreValue; }
+    public AffineTransform getTransform() { return this.af; }
+    public Animation getImage() { return this.img; }
+    public Rectangle2D.Double getRect() {
+        double width = this.getImage().getWidth();
+        double height = this.getImage().getHeight();
+        return new Rectangle2D.Double((this.x - (width / 2)), (this.y - (height / 2)), width, height); 
     }
     
-    @Override
-    public void takeDamage(int damage_) { health -= damage_; }
+    public boolean isDead() { return this.health <= 0; }
+    
+    // Shape manipulation.
+    public void rotate(double theta_) { this.af.setToRotation(theta_, this.x, this.y); }
+    
+    public void move(double theta_) {
+        this.x += this.speed * Math.cos(theta_ - (Math.PI / 2));
+        this.y += this.speed * Math.sin(theta_ - (Math.PI / 2));
+        this.img.move((int)this.x, (int)this.y);
+    }
 }

@@ -105,8 +105,8 @@ public class Particle {
             // Age the particle.
             this.life--;
             // Update the position.
-            this.pos.x += this.speed * Math.sin(this.theta);
-            this.pos.y += this.speed * Math.cos(this.theta);
+            this.pos.x += this.speed * Math.cos(-this.theta + (Math.PI / 2));
+            this.pos.y += this.speed * Math.sin(-this.theta + (Math.PI / 2));
         }
     }
     

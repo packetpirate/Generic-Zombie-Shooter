@@ -19,9 +19,10 @@ package genericzombieshooter;
 import genericzombieshooter.actors.Player;
 import genericzombieshooter.actors.Zombie;
 import genericzombieshooter.misc.Globals;
+import genericzombieshooter.misc.Images;
 import genericzombieshooter.misc.Sounds;
+import genericzombieshooter.structures.Animation;
 import genericzombieshooter.structures.Item;
-import genericzombieshooter.structures.Vector2D;
 import genericzombieshooter.structures.components.WeaponsLoadout;
 import genericzombieshooter.structures.items.Ammo;
 import genericzombieshooter.structures.items.HealthPack;
@@ -35,7 +36,6 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseWheelEvent;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Point2D;
-import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -52,8 +52,6 @@ import javax.imageio.ImageIO;
 public class GZSFramework {
     // Member variables.
     public GZSCanvas canvas;
-    
-    private long zSpawn;
     
     // Game objects.
     private Player player; // The player character.
@@ -82,8 +80,6 @@ public class GZSFramework {
 
             Globals.mousePos = new Point(0, 0);
         } // End member variable initialization.
-        
-        zSpawn = Globals.SPAWN_TIME;
 
         { // Begin initializing game objects.
             player = new Player(((Globals.W_WIDTH / 2) - 20), ((Globals.W_HEIGHT / 2) - 20), 40, 40);
@@ -248,38 +244,25 @@ public class GZSFramework {
 
             // Update zombie vectors and positions.
             if(!zombies.isEmpty()) {
-                for(Zombie z : zombies) {
+                Iterator<Zombie> it = zombies.iterator();
+                while(it.hasNext()) {
+                    Zombie z = it.next();
+                    
                     // Update the zombie animation.
                     z.getImage().update();
-
+                    
                     // Update the zombie's movement vector.
-                    Vector2D v_ = new Vector2D((player.getCenterX() - z.getCenterX()), 
-                                               (player.getCenterY() - z.getCenterY()));
-                    Vector2D n_ = v_.normalize();
-                    if(v_.getLength() >= 5) {
-                        // Update the zombie's position on the screen.
-                        z.x += n_.x;
-                        z.y += n_.y;
-                        z.getImage().move((int)z.x, (int)z.y);
-
-                        // Update the zombie's rotation toward the player.
-                        double angle = Math.atan2((z.getCenterY() - player.getCenterY()), 
-                                                  (z.getCenterX() - player.getCenterX())) - Math.PI / 2;
-                        z.rotate(angle);
-                    }
+                    double theta_ = Math.atan2((player.getCenterY() - z.y), 
+                                               (player.getCenterX() - z.x)) + Math.PI / 2;
+                    z.rotate(theta_);
+                    z.move(theta_);
                 }
             }
-
-            // If the zombie spawn counter has reached 0, spawn a new zombie.
-            if(zSpawn == 0) {
-                createZombie();
-                zSpawn = Globals.SPAWN_TIME;
-            } else zSpawn--;
 
             // If the player is touching a zombie, damage him according to the zombie's damage.
             if(!zombies.isEmpty()) {
                 for(Zombie z : zombies) {
-                    if(player.intersects(z)) player.takeDamage(z.getDamage());
+                    if(player.intersects(z.getRect())) player.takeDamage(z.getDamage());
                 }
             }
             
@@ -320,7 +303,7 @@ public class GZSFramework {
                     Iterator<Weapon> wit = player.getAllWeapons().iterator();
                     while(wit.hasNext()) {
                         Weapon w = wit.next();
-                        int damage = w.checkForDamage(z);
+                        int damage = w.checkForDamage(z.getRect());
                         if(damage > 0) {
                             z.takeDamage(damage);
                             if(z.isDead()) {
@@ -345,14 +328,12 @@ public class GZSFramework {
     /**
      * Creates a new zombie on the screen.
      **/
-    private void createZombie() {
+    private void createZombie(int type) {
         // Decide which side of the screen to spawn the zombie on.
         int spawnSide = Globals.r.nextInt(4) + 1;
         
         double x_ = 0;
         double y_ = 0;
-        double w_ = 40;
-        double h_ = 40;
         
         switch(spawnSide) {
             case 1:
@@ -372,10 +353,18 @@ public class GZSFramework {
         }
         
         // Create the zombie.
-        String fileName_ = "/resources/images/GZS_Zombie_2.png";
-        Rectangle2D.Double rect_ = new Rectangle2D.Double(x_, y_, w_, h_);
-        Zombie z_ = new Zombie(rect_, 250, 1, 100, fileName_);
-        zombies.add(z_);
+        Point2D.Double p_ = new Point2D.Double(x_, y_);
+        if(type == Globals.ZOMBIE_REGULAR_TYPE) {
+            // Regular Zombie
+            Animation a_ = new Animation(Images.ZOMBIE_REGULAR, 40, 40, 2, (int)p_.x, (int)p_.y, 200, 0, true);
+            Zombie z_ = new Zombie(p_, 250, 1, 1, 100, a_);
+            zombies.add(z_);
+        } else if(type == Globals.ZOMBIE_DOG_TYPE) {
+            // Fast Zombie Dog
+            Animation a_ = new Animation(Images.ZOMBIE_DOG, 48, 48, 4, (int)p_.x, (int)p_.y, 100, 0, true);
+            Zombie z_ = new Zombie(p_, 100, 3, 3, 150, a_);
+            zombies.add(z_);
+        }
     }
     
     private void createHealthPack() {
@@ -444,6 +433,37 @@ public class GZSFramework {
                 System.exit(0);
             }
         };
+        Globals.zombieSpawns = new ArrayList<Runnable>();
+        Globals.zombieSpawns.add(new Runnable() {
+            // Regular Zombie Spawn
+            @Override
+            public void run() {
+                while(Globals.running) {
+                    if(Globals.started && !Globals.paused) createZombie(Globals.ZOMBIE_REGULAR_TYPE);
+                    
+                    try {
+                        Thread.sleep(Globals.ZOMBIE_REGULAR_SPAWN);
+                    } catch(InterruptedException ie) {
+                        System.out.println("Regular zombie thread interrupted...");
+                    }
+                }
+            }
+        });
+        Globals.zombieSpawns.add(new Runnable() {
+            // Zombie Dog Spawn
+            @Override
+            public void run() {
+                while(Globals.running) {
+                    if(Globals.started && !Globals.paused) createZombie(Globals.ZOMBIE_DOG_TYPE);
+                    
+                    try {
+                        Thread.sleep(Globals.ZOMBIE_DOG_SPAWN);
+                    } catch(InterruptedException ie) {
+                        System.out.println("Zombie Dog thread interrupted...");
+                    }
+                }
+            }
+        });
         Globals.health = new Runnable() {
             @Override
             public void run() {
@@ -479,6 +499,7 @@ public class GZSFramework {
      **/
     private void startThread() {
         new Thread(Globals.animation).start();
+        for(Runnable r : Globals.zombieSpawns) new Thread(r).start();
         new Thread(Globals.health).start();
         new Thread(Globals.ammo).start();
     }

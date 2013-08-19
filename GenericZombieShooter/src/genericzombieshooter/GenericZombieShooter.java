@@ -27,7 +27,7 @@ import javax.swing.JFrame;
  * @author Darin Beaudreau
  */
 public class GenericZombieShooter extends JApplet {
-    private static final float VERSION = 0.76f;
+    private static final float VERSION = 0.78f;
     
     public static void main(String[] args) {
         JFrame frame = new JFrame("Generic Zombie Shooter v" + VERSION);

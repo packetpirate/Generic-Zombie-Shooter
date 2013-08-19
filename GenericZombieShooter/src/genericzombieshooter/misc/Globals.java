@@ -22,6 +22,7 @@ import genericzombieshooter.structures.weapons.Grenade;
 import genericzombieshooter.structures.weapons.Landmine;
 import genericzombieshooter.structures.weapons.Shotgun;
 import java.awt.Point;
+import java.util.List;
 import java.util.Random;
 
 /**
@@ -36,8 +37,14 @@ public class Globals {
     public static final long SPAWN_TIME = 50; // The time it takes zombies to spawn. (SLEEP_TIME * SPAWN_TIME)
     public static final Random r = new Random();
     
+    public static final int ZOMBIE_REGULAR_TYPE = 1;
+    public static final long ZOMBIE_REGULAR_SPAWN = 1000;
+    public static final int ZOMBIE_DOG_TYPE = 2;
+    public static final long ZOMBIE_DOG_SPAWN = 5000;
+    
     // Non-Final
     public static Runnable animation; // The primary animation thread.
+    public static List<Runnable> zombieSpawns; // A list containing the threads that spawn zombies.
     public static Runnable health; // The thread for spawning health packs.
     public static Runnable ammo; // The thread for spawning ammo packs.
     public static boolean running; // Whether or not the game is currently running.

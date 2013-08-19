@@ -27,7 +27,9 @@ public class Animation {
     // Member variables.
     protected BufferedImage img; // The animation sheet.
     protected int frameWidth; // The width of each frame in the animation.
+    public int getWidth() { return this.frameWidth; }
     protected int frameHeight; // The height of each frame in the animation.
+    public int getHeight() { return this.frameHeight; }
     protected int frameCount; // The number of frames in the animation.
     
     protected long frameTime; // Time between frames, in milliseconds.
@@ -124,7 +126,9 @@ public class Animation {
      */
     public void draw(Graphics2D g2d) {
         if((this.timeCreated + this.delay) <= System.currentTimeMillis()) {
-            g2d.drawImage(img, x, y, (x + frameWidth), (y + frameHeight), startX, 0, endX, frameHeight, null);
+            g2d.drawImage(img, (x - (frameWidth / 2)), (y - (frameHeight / 2)), 
+                         (x + (frameWidth / 2)), (y + (frameHeight / 2)), 
+                         startX, 0, endX, frameHeight, null);
         }
     }
 }

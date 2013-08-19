@@ -64,6 +64,7 @@ public class Player extends Rectangle2D.Double {
     public BufferedImage getImage() { return this.img; }
 
     public int getHealth() { return this.health; }
+    public void takeDamage(int damage_) { this.health -= damage_; }
     public void addHealth(int amount) { 
         if((this.health + amount) > Player.MAX_HEALTH) this.health = Player.MAX_HEALTH;
         else this.health += amount;
@@ -105,6 +106,4 @@ public class Player extends Rectangle2D.Double {
         else if(direction == 2) y += Player.MOVE_SPEED;
         else if(direction == 3) x += Player.MOVE_SPEED;
     }
-
-    public void takeDamage(int damage_) { this.health -= damage_; }
 }
