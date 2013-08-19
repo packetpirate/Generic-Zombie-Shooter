@@ -39,8 +39,10 @@ import java.awt.geom.Point2D;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
+import java.util.ListIterator;
 import javax.imageio.ImageIO;
 
 /**
@@ -83,7 +85,8 @@ public class GZSFramework {
 
         { // Begin initializing game objects.
             player = new Player(((Globals.W_WIDTH / 2) - 20), ((Globals.W_HEIGHT / 2) - 20), 40, 40);
-            zombies = new ArrayList<Zombie>();
+            //zombies = new ArrayList<Zombie>();
+            zombies = Collections.synchronizedList(new ArrayList<Zombie>());
             items = new ArrayList<Item>();
             score = 0;
             loadout = new WeaponsLoadout(player);
@@ -244,27 +247,31 @@ public class GZSFramework {
 
             // Update zombie vectors and positions.
             if(!zombies.isEmpty()) {
-                Iterator<Zombie> it = zombies.iterator();
-                while(it.hasNext()) {
-                    Zombie z = it.next();
-                    
-                    // Update the zombie animation.
-                    z.getImage().update();
-                    
-                    // Update the zombie's movement vector.
-                    double theta_ = Math.atan2((player.getCenterY() - z.y), 
-                                               (player.getCenterX() - z.x)) + Math.PI / 2;
-                    z.rotate(theta_);
-                    z.move(theta_);
+                synchronized(zombies) {
+                    Iterator<Zombie> it = zombies.iterator();
+                    while(it.hasNext()) {
+                        Zombie z = it.next();
+
+                        // Update the zombie animation.
+                        z.getImage().update();
+
+                        // Update the zombie's movement vector.
+                        double theta_ = Math.atan2((player.getCenterY() - z.y), 
+                                                   (player.getCenterX() - z.x)) + Math.PI / 2;
+                        z.rotate(theta_);
+                        z.move(theta_);
+                    }
                 }
             }
 
             // If the player is touching a zombie, damage him according to the zombie's damage.
             if(!zombies.isEmpty()) {
-                Iterator<Zombie> it = zombies.iterator();
-                while(it.hasNext()) {
-                    Zombie z = it.next();
-                    if(player.intersects(z.getRect())) player.takeDamage(z.getDamage());
+                synchronized(zombies) {
+                    Iterator<Zombie> it = zombies.iterator();
+                    while(it.hasNext()) {
+                        Zombie z = it.next();
+                        if(player.intersects(z.getRect())) player.takeDamage(z.getDamage());
+                    }
                 }
             }
             
@@ -286,7 +293,7 @@ public class GZSFramework {
                     // Reset the game.
                     Globals.started = false;
                     player.reset();
-                    zombies = new ArrayList<Zombie>();
+                    zombies = Collections.synchronizedList(new ArrayList<Zombie>());
                     items = new ArrayList<Item>();
                     Iterator<Weapon> it = player.getAllWeapons().iterator();
                     while(it.hasNext()) {
@@ -299,18 +306,20 @@ public class GZSFramework {
             
             { // Do zombie updates.
                 // Check for collisions between zombies and ammo.
-                Iterator<Zombie> it = this.zombies.iterator();
-                while(it.hasNext()) {
-                    Zombie z = it.next();
-                    Iterator<Weapon> wit = player.getAllWeapons().iterator();
-                    while(wit.hasNext()) {
-                        Weapon w = wit.next();
-                        int damage = w.checkForDamage(z.getRect());
-                        if(damage > 0) {
-                            z.takeDamage(damage);
-                            if(z.isDead()) {
-                                score += z.getScore();
-                                it.remove();
+                synchronized(zombies) {
+                    Iterator<Zombie> it = zombies.iterator();
+                    while(it.hasNext()) {
+                        Zombie z = it.next();
+                        Iterator<Weapon> wit = player.getAllWeapons().iterator();
+                        while(wit.hasNext()) {
+                            Weapon w = wit.next();
+                            int damage = w.checkForDamage(z.getRect());
+                            if(damage > 0) {
+                                z.takeDamage(damage);
+                                if(z.isDead()) {
+                                    score += z.getScore();
+                                    it.remove();
+                                }
                             }
                         }
                     }

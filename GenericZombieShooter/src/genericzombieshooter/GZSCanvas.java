@@ -85,11 +85,13 @@ public class GZSCanvas extends JPanel {
             } // End drawing player and ammo.
 
             { // Begin drawing zombies.
-                Iterator<Zombie> it = framework.getZombies().iterator();
-                while(it.hasNext()) {
-                    Zombie z = it.next();
-                    g2d.setTransform(z.getTransform());
-                    z.getImage().draw((Graphics2D)g2d);
+                synchronized(framework.getZombies()) {
+                    Iterator<Zombie> it = framework.getZombies().iterator();
+                    while(it.hasNext()) {
+                        Zombie z = it.next();
+                        g2d.setTransform(z.getTransform());
+                        z.getImage().draw((Graphics2D)g2d);
+                    }
                 }
             } // End drawing zombies.
 
