@@ -1,6 +1,6 @@
 -----------------------
 Author: Darin Beaudreau
-Version: 0.7.6
+Version: 0.7.8
 -----------------------
 
 Description:
@@ -40,6 +40,9 @@ Changes:
   weapon selection to the right.
   - Fixed issue where player would retain the amount of ammo he had from a previous game after dying and restarting.
   - Added landmines.
+  - Added new zombie type: the zombie dog. It moves fast and is very vicious, but very weak.
+  - Changed method used to spawn zombies. They still spawn continuously, but now the different types are on different
+  "timers" via threads.
 
 Known Issues:
 
@@ -50,7 +53,7 @@ TODO:
 
   - Fix method for removing black background pixels from explosion sprite sheet, or find a way to remove them in Photoshop.
   - Add more weapons. (Melee, etc)
-  - Add new zombie types. (Fast Zombie Dogs, "Spitter"-type Zombies, Bulky Zombies that explode into
+  - Add new zombie types. ("Spitter"-type Zombies, Bulky Zombies that explode into
   4-5 regular zombies after a certain time interval)
   - Change gameplay so you do not start with all weapons automatically. Add store system so you can
   "buy" the weapons with your score points.
