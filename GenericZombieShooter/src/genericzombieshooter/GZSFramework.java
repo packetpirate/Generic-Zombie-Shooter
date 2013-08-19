@@ -261,7 +261,9 @@ public class GZSFramework {
 
             // If the player is touching a zombie, damage him according to the zombie's damage.
             if(!zombies.isEmpty()) {
-                for(Zombie z : zombies) {
+                Iterator<Zombie> it = zombies.iterator();
+                while(it.hasNext()) {
+                    Zombie z = it.next();
                     if(player.intersects(z.getRect())) player.takeDamage(z.getDamage());
                 }
             }
@@ -361,7 +363,7 @@ public class GZSFramework {
             zombies.add(z_);
         } else if(type == Globals.ZOMBIE_DOG_TYPE) {
             // Fast Zombie Dog
-            Animation a_ = new Animation(Images.ZOMBIE_DOG, 50, 50, 4, (int)p_.x, (int)p_.y, 100, 0, true);
+            Animation a_ = new Animation(Images.ZOMBIE_DOG, 50, 50, 4, (int)p_.x, (int)p_.y, 80, 0, true);
             Zombie z_ = new Zombie(p_, 100, 3, 3, 150, a_);
             zombies.add(z_);
         }
