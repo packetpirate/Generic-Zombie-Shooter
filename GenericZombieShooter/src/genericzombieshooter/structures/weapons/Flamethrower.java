@@ -40,7 +40,7 @@ public class Flamethrower extends Weapon {
     private static final int MAX_AMMO = 300;
     private static final int AMMO_PER_USE = 1;
     private static final int PARTICLES_PER_USE = 8;
-    private static final int DAMAGE_PER_PARTICLE = 2;
+    private static final int DAMAGE_PER_PARTICLE = 3;
     private static final double PARTICLE_SPREAD = 15.0;
     private static final int PARTICLE_LIFE_MIN = 1000;
     private static final int PARTICLE_LIFE_MAX = 1400;

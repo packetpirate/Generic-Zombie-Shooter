@@ -389,10 +389,12 @@ public class GZSFramework {
         int numOfWeapons = this.player.getAllWeapons().size();
         int w = Globals.r.nextInt(numOfWeapons) + 1;
         if(this.player.getWeapon(w).ammoFull()) createAmmoPack();
-        int ammo = this.player.getWeapon(w).getAmmoPackAmount();
-        double x = Globals.r.nextInt((Globals.W_WIDTH - 20) - 20 + 1) + 20;
-        double y = Globals.r.nextInt((int)((Globals.W_HEIGHT - (WeaponsLoadout.BAR_HEIGHT + 10)) - 20 + 1)) + 20;
-        this.items.add(new Ammo(w, ammo, new Point2D.Double(x, y)));
+        else {
+            int ammo = this.player.getWeapon(w).getAmmoPackAmount();
+            double x = Globals.r.nextInt((Globals.W_WIDTH - 20) - 20 + 1) + 20;
+            double y = Globals.r.nextInt((int)((Globals.W_HEIGHT - (WeaponsLoadout.BAR_HEIGHT + 10)) - 20 + 1)) + 20;
+            this.items.add(new Ammo(w, ammo, new Point2D.Double(x, y)));
+        }
     }
     
     public static BufferedImage loadImage(String filename, boolean removeBlack) {
