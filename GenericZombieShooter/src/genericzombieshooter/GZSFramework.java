@@ -16,6 +16,7 @@
  **/
 package genericzombieshooter;
 
+import genericzombieshooter.actors.AcidZombie;
 import genericzombieshooter.actors.Player;
 import genericzombieshooter.actors.Zombie;
 import genericzombieshooter.misc.Globals;
@@ -23,6 +24,7 @@ import genericzombieshooter.misc.Images;
 import genericzombieshooter.misc.Sounds;
 import genericzombieshooter.structures.Animation;
 import genericzombieshooter.structures.Item;
+import genericzombieshooter.structures.Particle;
 import genericzombieshooter.structures.components.WeaponsLoadout;
 import genericzombieshooter.structures.items.Ammo;
 import genericzombieshooter.structures.items.HealthPack;
@@ -42,7 +44,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
-import java.util.ListIterator;
 import javax.imageio.ImageIO;
 
 /**
@@ -260,6 +261,7 @@ public class GZSFramework {
                                                    (player.getCenterX() - z.x)) + Math.PI / 2;
                         z.rotate(theta_);
                         z.move(theta_);
+                        z.update(player);
                     }
                 }
             }
@@ -271,6 +273,13 @@ public class GZSFramework {
                     while(it.hasNext()) {
                         Zombie z = it.next();
                         if(player.intersects(z.getRect())) player.takeDamage(z.getDamage());
+                        if(z.getParticles() != null) {
+                            Iterator<Particle> pit = z.getParticles().iterator();
+                            while(pit.hasNext()) {
+                                Particle p = pit.next();
+                                if(p.checkCollision(player)) player.takeDamage(z.getParticleDamage());
+                            }
+                        }
                     }
                 }
             }
@@ -375,6 +384,11 @@ public class GZSFramework {
             Animation a_ = new Animation(Images.ZOMBIE_DOG, 50, 50, 4, (int)p_.x, (int)p_.y, 80, 0, true);
             Zombie z_ = new Zombie(p_, 100, 3, 3, 150, a_);
             zombies.add(z_);
+        } else if(type == Globals.ZOMBIE_ACID_TYPE) {
+            // Acid Zombie
+            Animation a_ = new Animation(Images.ZOMBIE_ACID, 64, 64, 2, (int)p_.x, (int)p_.y, 200, 0, true);
+            AcidZombie z_ = new AcidZombie(p_, 300, 1, 1, 400, a_);
+            zombies.add(z_);
         }
     }
     
@@ -471,6 +485,21 @@ public class GZSFramework {
                         Thread.sleep(Globals.ZOMBIE_DOG_SPAWN);
                     } catch(InterruptedException ie) {
                         System.out.println("Zombie Dog thread interrupted...");
+                    }
+                }
+            }
+        });
+        Globals.zombieSpawns.add(new Runnable() {
+            // Acid Zombie Spawn
+            @Override
+            public void run() {
+                while(Globals.running) {
+                    if(Globals.started && !Globals.paused) createZombie(Globals.ZOMBIE_ACID_TYPE);
+
+                    try {
+                        Thread.sleep(Globals.ZOMBIE_ACID_SPAWN);
+                    } catch(InterruptedException ie) {
+                        System.out.println("Acid Zombie thread interrupted...");
                     }
                 }
             }

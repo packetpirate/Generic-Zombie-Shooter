@@ -25,6 +25,7 @@ import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -61,7 +62,7 @@ public class Weapon {
         return 0;
     }
     public void resetAmmo() {
-        this.particles = new ArrayList<Particle>();
+        this.particles = Collections.synchronizedList(new ArrayList<Particle>());
     }
     public void reload() {
         // Needs moar code...
@@ -91,7 +92,7 @@ public class Weapon {
         this.cooldown = cooldown;
         this.coolPeriod = cooldown;
         
-        this.particles = new ArrayList<Particle>();
+        this.particles = Collections.synchronizedList(new ArrayList<Particle>());
     }
     
     public void updateWeapon(List<Zombie> zombies) {

@@ -28,6 +28,7 @@ import java.awt.event.KeyEvent;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
@@ -50,7 +51,7 @@ public class Grenade extends Weapon {
     
     public Grenade() {
         super("Nade", KeyEvent.VK_4, "/resources/images/GZS_Grenade.png", DEFAULT_AMMO, MAX_AMMO, AMMO_PER_USE, 100);
-        this.explosions = new ArrayList<Explosion>();
+        this.explosions = Collections.synchronizedList(new ArrayList<Explosion>());
     }
     
     @Override
@@ -62,47 +63,53 @@ public class Grenade extends Weapon {
     @Override
     public void resetAmmo() {
         super.resetAmmo();
-        this.explosions = new ArrayList<Explosion>();
+        this.explosions = Collections.synchronizedList(new ArrayList<Explosion>());
         this.ammoLeft = DEFAULT_AMMO;
     }
     
     @Override
     public void updateWeapon(List<Zombie> zombies) {
         { // Update particles.
-            Iterator<Particle> it = this.particles.iterator();
-            while(it.hasNext()) {
-                Particle p = it.next();
-                p.update();
-                
-                boolean collision = false;
-                Iterator<Zombie> zit = zombies.iterator();
-                while(zit.hasNext()) {
-                    Zombie z = zit.next();
-                    double width = z.getImage().getWidth();
-                    double height = z.getImage().getHeight();
-                    Rectangle2D.Double rect = new Rectangle2D.Double((z.x - (width / 2)), (z.y - (height / 2)), width, height);
-                    if(p.checkCollision(rect)) collision = true;
-                }
-                if(!p.isAlive() || collision) {
-                    this.explosions.add(new Explosion(Images.EXPLOSION_SHEET, p.getPos()));
-                    Sounds.EXPLOSION.play();
-                    it.remove();
-                    continue;
-                }
-                if(p.outOfBounds()) {
-                    it.remove();
-                    continue;
+            synchronized(this.particles) {
+                Iterator<Particle> it = this.particles.iterator();
+                while(it.hasNext()) {
+                    Particle p = it.next();
+                    p.update();
+
+                    boolean collision = false;
+                    synchronized(zombies) {
+                        Iterator<Zombie> zit = zombies.iterator();
+                        while(zit.hasNext()) {
+                            Zombie z = zit.next();
+                            double width = z.getImage().getWidth();
+                            double height = z.getImage().getHeight();
+                            Rectangle2D.Double rect = new Rectangle2D.Double((z.x - (width / 2)), (z.y - (height / 2)), width, height);
+                            if(p.checkCollision(rect)) collision = true;
+                        }
+                    }
+                    if(!p.isAlive() || collision) {
+                        this.explosions.add(new Explosion(Images.EXPLOSION_SHEET, p.getPos()));
+                        Sounds.EXPLOSION.play();
+                        it.remove();
+                        continue;
+                    }
+                    if(p.outOfBounds()) {
+                        it.remove();
+                        continue;
+                    }
                 }
             }
         } // End particle updates.
         { // Update explosions.
-            Iterator<Explosion> it = this.explosions.iterator();
-            while(it.hasNext()) {
-                Explosion e = it.next();
-                e.getImage().update();
-                if(!e.getImage().isActive()) {
-                    it.remove();
-                    continue;
+            synchronized(this.explosions) {
+                Iterator<Explosion> it = this.explosions.iterator();
+                while(it.hasNext()) {
+                    Explosion e = it.next();
+                    e.getImage().update();
+                    if(!e.getImage().isActive()) {
+                        it.remove();
+                        continue;
+                    }
                 }
             }
         } // End explosion updates.
@@ -111,30 +118,36 @@ public class Grenade extends Weapon {
     
     @Override
     public void drawAmmo(Graphics2D g2d) {
-        if(this.particles.size() > 0) {
-            Iterator<Particle> it = this.particles.iterator();
-            while(it.hasNext()) {
-                Particle p = it.next();
-                if(p.isAlive()) p.draw(g2d);
+        synchronized(this.particles) {
+            if(!this.particles.isEmpty()) {
+                Iterator<Particle> it = this.particles.iterator();
+                while(it.hasNext()) {
+                    Particle p = it.next();
+                    if(p.isAlive()) p.draw(g2d);
+                }
             }
         }
-        if(this.explosions.size() > 0) {
-            Iterator<Explosion> it = this.explosions.iterator();
-            while(it.hasNext()) {
-                Explosion e = it.next();
-                if(e.getImage().isActive()) e.draw(g2d);
+        synchronized(this.explosions) {
+            if(!this.explosions.isEmpty()) {
+                Iterator<Explosion> it = this.explosions.iterator();
+                while(it.hasNext()) {
+                    Explosion e = it.next();
+                    if(e.getImage().isActive()) e.draw(g2d);
+                }
             }
         }
     }
     
     @Override
     public void fire(double theta, Point2D.Double pos) {
-        if(this.canFire()) {
-            Particle p = createGrenadeParticle(theta, pos);
-            this.particles.add(p);
-            this.consumeAmmo();
-            this.resetCooldown();
-            Sounds.THROW.play();
+        synchronized(this.particles) {
+            if(this.canFire()) {
+                Particle p = createGrenadeParticle(theta, pos);
+                this.particles.add(p);
+                this.consumeAmmo();
+                this.resetCooldown();
+                Sounds.THROW.play();
+            }
         }
     }
     
@@ -154,20 +167,22 @@ public class Grenade extends Weapon {
     
     @Override
     public int checkForDamage(Rectangle2D.Double rect) {
-        /* The grenade particle itself does nothing. Upon contact with a zombie,
-           it stops moving, and once its timer goes off, it explodes. */
-        int damage = 0;
-        if(this.explosions.size() > 0) {
-            Iterator<Explosion> it = this.explosions.iterator();
-            while(it.hasNext()) {
-                Explosion e = it.next();
-                if(e.getImage().isActive()) {
-                    Rectangle2D.Double expRect = new Rectangle2D.Double((e.x - (e.getSize().width / 2)), (e.y - (e.getSize().height / 2)),
-                                                                         e.getSize().width, e.getSize().height);
-                    if(rect.intersects(expRect)) damage += Grenade.DAMAGE_PER_EXPLOSION;
+        synchronized(this.explosions) {
+            /* The grenade particle itself does nothing. Upon contact with a zombie,
+               it stops moving, and once its timer goes off, it explodes. */
+            int damage = 0;
+            if(!this.explosions.isEmpty()) {
+                Iterator<Explosion> it = this.explosions.iterator();
+                while(it.hasNext()) {
+                    Explosion e = it.next();
+                    if(e.getImage().isActive()) {
+                        Rectangle2D.Double expRect = new Rectangle2D.Double((e.x - (e.getSize().width / 2)), (e.y - (e.getSize().height / 2)),
+                                                                             e.getSize().width, e.getSize().height);
+                        if(rect.intersects(expRect)) damage += Grenade.DAMAGE_PER_EXPLOSION;
+                    }
                 }
             }
+            return damage;
         }
-        return damage;
     }
 }

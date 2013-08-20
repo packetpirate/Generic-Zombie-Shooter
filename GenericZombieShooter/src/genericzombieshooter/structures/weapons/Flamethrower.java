@@ -63,65 +63,73 @@ public class Flamethrower extends Weapon {
     @Override
     public void updateWeapon(List<Zombie> zombies) {
         // Update all particles and remove them if their life has expired or they are out of bounds.
-        Iterator<Particle> it = this.particles.iterator();
-        while(it.hasNext()) {
-            Particle p = it.next();
-            p.update();
-            if(!p.isAlive() || p.outOfBounds()) {
-                it.remove();
-                continue;
+        synchronized(this.particles) {
+            Iterator<Particle> it = this.particles.iterator();
+            while(it.hasNext()) {
+                Particle p = it.next();
+                p.update();
+                if(!p.isAlive() || p.outOfBounds()) {
+                    it.remove();
+                    continue;
+                }
             }
+            this.cool();
         }
-        this.cool();
     }
     
     @Override
     public void drawAmmo(Graphics2D g2d) {
         // Draw all particles whose life has not yet expired.
-        if(this.particles.size() > 0) {
-            g2d.setColor(Color.ORANGE);
-            Iterator<Particle> it = this.particles.iterator();
-            while(it.hasNext()) {
-                Particle p = it.next();
-                if(p.isAlive()) p.draw(g2d);
+        synchronized(this.particles) {
+            if(!this.particles.isEmpty()) {
+                g2d.setColor(Color.ORANGE);
+                Iterator<Particle> it = this.particles.iterator();
+                while(it.hasNext()) {
+                    Particle p = it.next();
+                    if(p.isAlive()) p.draw(g2d);
+                }
             }
         }
     }
     
     @Override
     public void fire(double theta, Point2D.Double pos) {
-        // If there is enough ammo left...
-        if(this.canFire()) {
-            // Generate new particles and add them to the list.
-            for(int i = 0; i < Flamethrower.PARTICLES_PER_USE; i++) {
-                int life = Flamethrower.PARTICLE_LIFE_MIN + (int)(Globals.r.nextInt((Flamethrower.PARTICLE_LIFE_MAX - Flamethrower.PARTICLE_LIFE_MIN) + 1));
-                int size = Globals.r.nextInt(8) + 1;
-                Particle p = new Particle(theta, Flamethrower.PARTICLE_SPREAD, 4.0,
-                                      (life / (int)Globals.SLEEP_TIME), new Point2D.Double(pos.x, pos.y),
-                                       new Dimension(size, size), Images.FIRE_PARTICLE);
-                this.particles.add(p);
+        synchronized(this.particles) {
+            // If there is enough ammo left...
+            if(this.canFire()) {
+                // Generate new particles and add them to the list.
+                for(int i = 0; i < Flamethrower.PARTICLES_PER_USE; i++) {
+                    int life = Flamethrower.PARTICLE_LIFE_MIN + (int)(Globals.r.nextInt((Flamethrower.PARTICLE_LIFE_MAX - Flamethrower.PARTICLE_LIFE_MIN) + 1));
+                    int size = Globals.r.nextInt(8) + 1;
+                    Particle p = new Particle(theta, Flamethrower.PARTICLE_SPREAD, 4.0,
+                                          (life / (int)Globals.SLEEP_TIME), new Point2D.Double(pos.x, pos.y),
+                                           new Dimension(size, size), Images.FIRE_PARTICLE);
+                    this.particles.add(p);
+                }
+                // Use up ammo.
+                this.consumeAmmo();
+                this.resetCooldown();
+                Sounds.FLAMETHROWER.play();
             }
-            // Use up ammo.
-            this.consumeAmmo();
-            this.resetCooldown();
-            Sounds.FLAMETHROWER.play();
         }
     }
     
     @Override
     public int checkForDamage(Rectangle2D.Double rect) {
-        int damage = 0;
-        // Check all particles for collisions with the target rectangle.
-        Iterator<Particle> it = this.particles.iterator();
-        while(it.hasNext()) {
-            Particle p = it.next();
-            // If the particle is still alive and has collided with the target.
-            if(p.isAlive() && rect.contains(p.getPos())) {
-                // Add the damage of the particle and remove it from the list.
-                damage += DAMAGE_PER_PARTICLE;
-                it.remove();
+        synchronized(this.particles) {
+            int damage = 0;
+            // Check all particles for collisions with the target rectangle.
+            Iterator<Particle> it = this.particles.iterator();
+            while(it.hasNext()) {
+                Particle p = it.next();
+                // If the particle is still alive and has collided with the target.
+                if(p.isAlive() && rect.contains(p.getPos())) {
+                    // Add the damage of the particle and remove it from the list.
+                    damage += DAMAGE_PER_PARTICLE;
+                    it.remove();
+                }
             }
+            return damage;
         }
-        return damage;
     }
 }

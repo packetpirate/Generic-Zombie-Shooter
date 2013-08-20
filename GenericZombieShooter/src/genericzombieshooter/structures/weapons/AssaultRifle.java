@@ -93,9 +93,9 @@ public class AssaultRifle extends Weapon {
             // Create a new bullet and add it to the list.
             int width = 4;
             int height = 10;
-                        Particle p = new Particle(theta, AssaultRifle.PARTICLE_SPREAD, 8.0,
-                                      (AssaultRifle.PARTICLE_LIFE / (int)Globals.SLEEP_TIME), new Point2D.Double(pos.x, pos.y),
-                                       new Dimension(width, height), Images.RTPS_BULLET);
+            Particle p = new Particle(theta, AssaultRifle.PARTICLE_SPREAD, 8.0,
+                          (AssaultRifle.PARTICLE_LIFE / (int)Globals.SLEEP_TIME), new Point2D.Double(pos.x, pos.y),
+                           new Dimension(width, height), Images.RTPS_BULLET);
             this.particles.add(p);
             // Use up ammo.
             this.consumeAmmo();

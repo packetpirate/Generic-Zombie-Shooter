@@ -91,6 +91,9 @@ public class GZSCanvas extends JPanel {
                         Zombie z = it.next();
                         g2d.setTransform(z.getTransform());
                         z.getImage().draw((Graphics2D)g2d);
+                        if(z.getParticles() != null) {
+                            z.drawParticles(g2d);
+                        }
                     }
                 }
             } // End drawing zombies.

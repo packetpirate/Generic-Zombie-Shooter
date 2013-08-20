@@ -40,7 +40,9 @@ public class Globals {
     public static final int ZOMBIE_REGULAR_TYPE = 1;
     public static final long ZOMBIE_REGULAR_SPAWN = 1000;
     public static final int ZOMBIE_DOG_TYPE = 2;
-    public static final long ZOMBIE_DOG_SPAWN = 5000;
+    public static final long ZOMBIE_DOG_SPAWN = 10000;
+    public static final int ZOMBIE_ACID_TYPE = 3;
+    public static final long ZOMBIE_ACID_SPAWN = 30000;
     
     // Non-Final
     public static Runnable animation; // The primary animation thread.

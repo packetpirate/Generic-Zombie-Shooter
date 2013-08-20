@@ -17,9 +17,12 @@
 package genericzombieshooter.actors;
 
 import genericzombieshooter.structures.Animation;
+import genericzombieshooter.structures.Particle;
+import java.awt.Graphics2D;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
+import java.util.List;
 
 /**
  * Used to represent the various types of zombies.
@@ -68,5 +71,23 @@ public class Zombie extends Point2D.Double {
         this.x += this.speed * Math.cos(theta_ - (Math.PI / 2));
         this.y += this.speed * Math.sin(theta_ - (Math.PI / 2));
         this.img.move((int)this.x, (int)this.y);
+    }
+    
+    public void update(Player p) {
+        // To be overridden.
+    }
+    
+    public List<Particle> getParticles() {
+        // To be overridden.
+        return null;
+    }
+    
+    public void drawParticles(Graphics2D g2d) {
+        // To be overridden.
+    }
+    
+    public int getParticleDamage() { 
+        // To be overridden.
+        return 0;
     }
 }
