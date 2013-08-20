@@ -83,7 +83,7 @@ public class Weapon {
         this.name = name;
         this.key = key;
         
-        this.image = GZSFramework.loadImage(filename, false);
+        this.image = GZSFramework.loadImage(filename);
         
         this.ammoLeft = ammoLeft;
         this.maxAmmo = maxAmmo;
