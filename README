@@ -41,6 +41,7 @@ Changes:
   - Fixed issue where player would retain the amount of ammo he had from a previous game after dying and restarting.
   - Added landmines.
   - Added new zombie type: the zombie dog. It moves fast and is very vicious, but very weak.
+  - Added new zombie type: the acid zombie. It's slightly more durable than normal zombies, but can spit acid at you!
   - Changed method used to spawn zombies. They still spawn continuously, but now the different types are on different
   "timers" via threads.
 
@@ -48,6 +49,8 @@ Known Issues:
 
   - While not a "bug", the method used for removing the black background from the explosion sprite sheet
   is inaccurate and results in a somewhat ugly explosion animation. It needs refinement.
+  - Numerous concurrency issues have arisen as of late due to my multi-threading. While I am quite sure
+  that they have been subdued for the moment, I would like to find a better way to handle this.
 
 TODO:
 
