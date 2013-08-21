@@ -153,8 +153,6 @@ public class GZSFramework {
                 public void mouseClicked(MouseEvent m) {
                     if((m.getButton() == MouseEvent.BUTTON1) && (!Globals.started)) {
                         Globals.started = true;
-                        startItemSpawns();
-                        startZombieSpawns();
                     }
                 }
                 @Override
@@ -311,7 +309,6 @@ public class GZSFramework {
                         Weapon w = it.next();
                         w.resetAmmo();
                     }
-                    stopThreads();
                 }
                 loadout.setCurrentWeapon(1);
             }
@@ -457,75 +454,53 @@ public class GZSFramework {
                 System.exit(0);
             }
         };
-    }
-
-    /**
-     * Creates a new thread from the animation Runnable and then starts it.
-     **/
-    private void startThread() {
-        new Thread(Globals.animation).start();
-    }
-
-    /**
-     * Stops the animation thread.
-     **/
-    private void stopThreads() {
-        stopItemSpawns();
-        stopZombieSpawns();
-    }
-    
-    private void startItemSpawns() {
         Globals.health = new Runnable() {
             @Override
             public void run() {
                 while(Globals.running) {
-                    try {
-                        Thread.sleep(HealthPack.SPAWN_TIME);
-                    } catch(InterruptedException ie) {
-                        System.out.println("Error occurred in HealthPack thread...");
+                    if(Globals.started && !Globals.paused) {
+                        try {
+                            Thread.sleep(HealthPack.SPAWN_TIME);
+                        } catch(InterruptedException ie) {
+                            System.out.println("Error occurred in HealthPack thread...");
+                        }
+
+                        createHealthPack();
                     }
-                    
-                    if(Globals.started && !Globals.paused) createHealthPack();
                 } 
             }
         };
-        new Thread(Globals.health).start();
         Globals.ammo = new Runnable() {
             @Override
             public void run() {
                 while(Globals.running) {
-                    try {
-                        Thread.sleep(Ammo.SPAWN_TIME);
-                    } catch(InterruptedException ie) {
-                        System.out.println("Error occurred in AmmoPack thread...");
+                    if(Globals.started && !Globals.paused) {
+                        try {
+                            Thread.sleep(Ammo.SPAWN_TIME);
+                        } catch(InterruptedException ie) {
+                            System.out.println("Error occurred in AmmoPack thread...");
+                        }
+
+                        createAmmoPack();
                     }
-                    
-                    if(Globals.started && !Globals.paused) createAmmoPack();
                 }
             }
         };
-        new Thread(Globals.ammo).start();
-    }
-    
-    private void stopItemSpawns() {
-        Globals.health = null;
-        Globals.ammo = null;
-    }
-    
-    private void startZombieSpawns() {
         Globals.zombieSpawns = new ArrayList<Runnable>();
         Globals.zombieSpawns.add(new Runnable() {
             // Regular Zombie Spawn
             @Override
             public void run() {
                 while(Globals.running) {
-                    try {
-                        Thread.sleep(Globals.ZOMBIE_REGULAR_SPAWN);
-                    } catch(InterruptedException ie) {
-                        System.out.println("Regular zombie thread interrupted...");
+                    if(Globals.started && !Globals.paused) {
+                        try {
+                            Thread.sleep(Globals.ZOMBIE_REGULAR_SPAWN);
+                        } catch(InterruptedException ie) {
+                            System.out.println("Regular zombie thread interrupted...");
+                        }
+
+                        createZombie(Globals.ZOMBIE_REGULAR_TYPE);
                     }
-                    
-                    if(Globals.started && !Globals.paused) createZombie(Globals.ZOMBIE_REGULAR_TYPE);
                 }
             }
         });
@@ -534,13 +509,15 @@ public class GZSFramework {
             @Override
             public void run() {
                 while(Globals.running) {
-                    try {
-                        Thread.sleep(Globals.ZOMBIE_DOG_SPAWN);
-                    } catch(InterruptedException ie) {
-                        System.out.println("Zombie Dog thread interrupted...");
+                    if(Globals.started && !Globals.paused) {
+                        try {
+                            Thread.sleep(Globals.ZOMBIE_DOG_SPAWN);
+                        } catch(InterruptedException ie) {
+                            System.out.println("Zombie Dog thread interrupted...");
+                        }
+
+                        createZombie(Globals.ZOMBIE_DOG_TYPE);
                     }
-                    
-                    if(Globals.started && !Globals.paused) createZombie(Globals.ZOMBIE_DOG_TYPE);
                 }
             }
         });
@@ -549,13 +526,15 @@ public class GZSFramework {
             @Override
             public void run() {
                 while(Globals.running) {
-                    try {
-                        Thread.sleep(Globals.ZOMBIE_ACID_SPAWN);
-                    } catch(InterruptedException ie) {
-                        System.out.println("Acid Zombie thread interrupted...");
+                    if(Globals.started && !Globals.paused) {
+                        try {
+                            Thread.sleep(Globals.ZOMBIE_ACID_SPAWN);
+                        } catch(InterruptedException ie) {
+                            System.out.println("Acid Zombie thread interrupted...");
+                        }
+
+                        createZombie(Globals.ZOMBIE_ACID_TYPE);
                     }
-                    
-                    if(Globals.started && !Globals.paused) createZombie(Globals.ZOMBIE_ACID_TYPE);
                 }
             }
         });
@@ -564,20 +543,27 @@ public class GZSFramework {
             @Override
             public void run() {
                 while(Globals.running) {
-                    try {
-                        Thread.sleep(Globals.ZOMBIE_EXPLOSIVE_SPAWN);
-                    } catch(InterruptedException ie) {
-                        System.out.println("Explosive Zombie thread interrupted...");
+                    if(Globals.started && !Globals.paused) {
+                        try {
+                            Thread.sleep(Globals.ZOMBIE_EXPLOSIVE_SPAWN);
+                        } catch(InterruptedException ie) {
+                            System.out.println("Explosive Zombie thread interrupted...");
+                        }
+
+                        createZombie(Globals.ZOMBIE_EXPLOSIVE_TYPE);
                     }
-                    
-                    if(Globals.started && !Globals.paused) createZombie(Globals.ZOMBIE_EXPLOSIVE_TYPE);
                 }
             }
         });
-        for(Runnable r : Globals.zombieSpawns) new Thread(r).start();
     }
-    
-    private void stopZombieSpawns() {
-        Globals.zombieSpawns = null;
+
+    /**
+     * Creates a new thread from the animation Runnable and then starts it.
+     **/
+    private void startThread() {
+        new Thread(Globals.animation).start();
+        new Thread(Globals.health).start();
+        new Thread(Globals.ammo).start();
+        for(Runnable r : Globals.zombieSpawns) new Thread(r).start();
     }
 }
