@@ -42,6 +42,8 @@ Changes:
   - Added landmines.
   - Added new zombie type: the zombie dog. It moves fast and is very vicious, but very weak.
   - Added new zombie type: the acid zombie. It's slightly more durable than normal zombies, but can spit acid at you!
+  - Added new zombie type: the explosive zombie. It's almost identical to the normal zombies, except for a slight
+  greenish tint to their clothing... and the fact that they explode when you shoot them! Be careful!
   - Changed method used to spawn zombies. They still spawn continuously, but now the different types are on different
   "timers" via threads.
 
@@ -49,12 +51,12 @@ Known Issues:
 
   - Numerous concurrency issues have arisen as of late due to my multi-threading. While I am quite sure
   that they have been subdued for the moment, I would like to find a better way to handle this.
+  - There are some issues to work out with the threads that handle zombie creation.
 
 TODO:
 
   - Add more weapons. (Melee, etc)
-  - Add new zombie types. ("Spitter"-type Zombies, Bulky Zombies that explode into
-  4-5 regular zombies after a certain time interval)
+  - Add new zombie types. (Bulky zombies that explode into 10-20 tiny, fast zombies if not killed fast enough.)
   - Change gameplay so you do not start with all weapons automatically. Add store system so you can
   "buy" the weapons with your score points.
   - Change gameplay so that "waves" of zombies appear all at once. This will be temporary until
