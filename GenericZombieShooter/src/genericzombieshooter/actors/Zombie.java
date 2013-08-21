@@ -73,8 +73,14 @@ public class Zombie extends Point2D.Double {
         this.img.move((int)this.x, (int)this.y);
     }
     
-    public void update(Player p) {
+    public void update(Player player) {
         // To be overridden.
+    }
+    
+    public void draw(Graphics2D g2d) {
+        // Can be overridden.
+        g2d.setTransform(this.af);
+        this.img.draw((Graphics2D)g2d);
     }
     
     public List<Particle> getParticles() {

@@ -33,18 +33,17 @@ public class Explosion extends Point2D.Double {
     
     public Explosion(BufferedImage bi, Point2D.Double p) {
         super(p.x, p.y);
-        this.img = new Animation(bi, 128, 128, 8, (int)p.x, (int)p.y, 50, 0, false) {
+        this.size = new Dimension(128, 128);
+        this.img = new Animation(bi, this.size.width, this.size.height, 8, (int)p.x, (int)p.y, 50, 0, false) {
             @Override
             public void draw(Graphics2D g2d) {
                 if((this.timeCreated + this.delay) <= System.currentTimeMillis()) {
-                    
-                    g2d.drawImage(this.img, (this.x - 64), (this.y - 64),
+                    g2d.drawImage(this.img, (this.x - (this.frameWidth / 2)), (this.y - (this.frameHeight / 2)),
                                  (this.x + this.frameWidth), (this.y + this.frameHeight),
                                   this.startX, 0, this.endX, this.frameHeight, null);
                 }
             }
         };
-        this.size = new Dimension(128, 128);
     }
     
     public void draw(Graphics2D g2d) {

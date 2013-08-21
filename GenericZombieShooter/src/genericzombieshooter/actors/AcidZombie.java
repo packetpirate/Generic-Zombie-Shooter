@@ -91,6 +91,13 @@ public class AcidZombie extends Zombie {
         } else this.cooldown--;
     }
     
+    @Override
+    public void draw(Graphics2D g2d) {
+        g2d.setTransform(this.getTransform());
+        this.getImage().draw((Graphics2D)g2d);
+        if(!this.particles.isEmpty()) drawParticles(g2d);
+    }
+    
     private void fire(Point2D.Double playerPos) {
         double theta = Math.atan2((playerPos.y - this.y), (playerPos.x - this.x)) - Math.PI;
         Particle p = new Particle(theta, 0.0, 8.0, (AcidZombie.PARTICLE_LIFE / (int)Globals.SLEEP_TIME),

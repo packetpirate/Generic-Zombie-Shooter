@@ -17,6 +17,7 @@
 package genericzombieshooter;
 
 import genericzombieshooter.actors.AcidZombie;
+import genericzombieshooter.actors.ExplosiveZombie;
 import genericzombieshooter.actors.Player;
 import genericzombieshooter.actors.Zombie;
 import genericzombieshooter.misc.Globals;
@@ -29,7 +30,6 @@ import genericzombieshooter.structures.components.WeaponsLoadout;
 import genericzombieshooter.structures.items.Ammo;
 import genericzombieshooter.structures.items.HealthPack;
 import genericzombieshooter.structures.weapons.Weapon;
-import java.awt.Color;
 import java.awt.Point;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
@@ -153,6 +153,8 @@ public class GZSFramework {
                 public void mouseClicked(MouseEvent m) {
                     if((m.getButton() == MouseEvent.BUTTON1) && (!Globals.started)) {
                         Globals.started = true;
+                        startItemSpawns();
+                        startZombieSpawns();
                     }
                 }
                 @Override
@@ -252,10 +254,8 @@ public class GZSFramework {
                     Iterator<Zombie> it = zombies.iterator();
                     while(it.hasNext()) {
                         Zombie z = it.next();
-
                         // Update the zombie animation.
                         z.getImage().update();
-
                         // Update the zombie's movement vector.
                         double theta_ = Math.atan2((player.getCenterY() - z.y), 
                                                    (player.getCenterX() - z.x)) + Math.PI / 2;
@@ -304,11 +304,14 @@ public class GZSFramework {
                     player.reset();
                     zombies = Collections.synchronizedList(new ArrayList<Zombie>());
                     items = new ArrayList<Item>();
+                    for(boolean k : Globals.keys) k = false;
+                    for(boolean b : Globals.buttons) b = false;
                     Iterator<Weapon> it = player.getAllWeapons().iterator();
                     while(it.hasNext()) {
                         Weapon w = it.next();
                         w.resetAmmo();
                     }
+                    stopThreads();
                 }
                 loadout.setCurrentWeapon(1);
             }
@@ -319,15 +322,20 @@ public class GZSFramework {
                     Iterator<Zombie> it = zombies.iterator();
                     while(it.hasNext()) {
                         Zombie z = it.next();
-                        Iterator<Weapon> wit = player.getAllWeapons().iterator();
-                        while(wit.hasNext()) {
-                            Weapon w = wit.next();
-                            int damage = w.checkForDamage(z.getRect());
-                            if(damage > 0) {
-                                z.takeDamage(damage);
-                                if(z.isDead()) {
-                                    score += z.getScore();
-                                    it.remove();
+                        if(z.isDead()) {
+                            it.remove();
+                            continue;
+                        } else {
+                            Iterator<Weapon> wit = player.getAllWeapons().iterator();
+                            while(wit.hasNext()) {
+                                Weapon w = wit.next();
+                                int damage = w.checkForDamage(z.getRect());
+                                if(damage > 0) {
+                                    z.takeDamage(damage);
+                                    if(z.isDead()) {
+                                        score += z.getScore();
+                                        it.remove();
+                                    }
                                 }
                             }
                         }
@@ -349,46 +357,53 @@ public class GZSFramework {
      * Creates a new zombie on the screen.
      **/
     private void createZombie(int type) {
-        // Decide which side of the screen to spawn the zombie on.
-        int spawnSide = Globals.r.nextInt(4) + 1;
-        
-        double x_ = 0;
-        double y_ = 0;
-        
-        switch(spawnSide) {
-            case 1:
-                x_ = Globals.r.nextInt((Globals.W_WIDTH - 40) + 1);
-                break;
-            case 2:
-                x_ = Globals.W_WIDTH - 40;
-                y_ = Globals.r.nextInt((Globals.W_HEIGHT - 40) + 1);
-                break;
-            case 3:
-                x_ = Globals.r.nextInt((Globals.W_WIDTH - 40) + 1);
-                y_ = Globals.W_HEIGHT - 40;
-                break;
-            case 4:
-                y_ = Globals.r.nextInt((Globals.W_HEIGHT - 40) + 1);
-                break;
-        }
-        
-        // Create the zombie.
-        Point2D.Double p_ = new Point2D.Double(x_, y_);
-        if(type == Globals.ZOMBIE_REGULAR_TYPE) {
-            // Regular Zombie
-            Animation a_ = new Animation(Images.ZOMBIE_REGULAR, 40, 40, 2, (int)p_.x, (int)p_.y, 200, 0, true);
-            Zombie z_ = new Zombie(p_, 250, 1, 1, 100, a_);
-            zombies.add(z_);
-        } else if(type == Globals.ZOMBIE_DOG_TYPE) {
-            // Fast Zombie Dog
-            Animation a_ = new Animation(Images.ZOMBIE_DOG, 50, 50, 4, (int)p_.x, (int)p_.y, 80, 0, true);
-            Zombie z_ = new Zombie(p_, 100, 3, 3, 150, a_);
-            zombies.add(z_);
-        } else if(type == Globals.ZOMBIE_ACID_TYPE) {
-            // Acid Zombie
-            Animation a_ = new Animation(Images.ZOMBIE_ACID, 64, 64, 2, (int)p_.x, (int)p_.y, 200, 0, true);
-            AcidZombie z_ = new AcidZombie(p_, 300, 1, 1, 400, a_);
-            zombies.add(z_);
+        synchronized(zombies) {
+            // Decide which side of the screen to spawn the zombie on.
+            int spawnSide = Globals.r.nextInt(4) + 1;
+
+            double x_ = 0;
+            double y_ = 0;
+
+            switch(spawnSide) {
+                case 1:
+                    x_ = Globals.r.nextInt((Globals.W_WIDTH - 40) + 1);
+                    break;
+                case 2:
+                    x_ = Globals.W_WIDTH - 40;
+                    y_ = Globals.r.nextInt((Globals.W_HEIGHT - 40) + 1);
+                    break;
+                case 3:
+                    x_ = Globals.r.nextInt((Globals.W_WIDTH - 40) + 1);
+                    y_ = Globals.W_HEIGHT - 40;
+                    break;
+                case 4:
+                    y_ = Globals.r.nextInt((Globals.W_HEIGHT - 40) + 1);
+                    break;
+            }
+
+            // Create the zombie.
+            Point2D.Double p_ = new Point2D.Double(x_, y_);
+            if(type == Globals.ZOMBIE_REGULAR_TYPE) {
+                // Regular Zombie
+                Animation a_ = new Animation(Images.ZOMBIE_REGULAR, 40, 40, 2, (int)p_.x, (int)p_.y, 200, 0, true);
+                Zombie z_ = new Zombie(p_, 250, 1, 1, 100, a_);
+                zombies.add(z_);
+            } else if(type == Globals.ZOMBIE_DOG_TYPE) {
+                // Fast Zombie Dog
+                Animation a_ = new Animation(Images.ZOMBIE_DOG, 50, 50, 4, (int)p_.x, (int)p_.y, 80, 0, true);
+                Zombie z_ = new Zombie(p_, 100, 3, 3, 150, a_);
+                zombies.add(z_);
+            } else if(type == Globals.ZOMBIE_ACID_TYPE) {
+                // Acid Zombie
+                Animation a_ = new Animation(Images.ZOMBIE_ACID, 64, 64, 2, (int)p_.x, (int)p_.y, 200, 0, true);
+                AcidZombie z_ = new AcidZombie(p_, 300, 1, 1, 400, a_);
+                zombies.add(z_);
+            } else if(type == Globals.ZOMBIE_EXPLOSIVE_TYPE) {
+                // Explosive Zombie
+                Animation a_ = new Animation(Images.ZOMBIE_EXPLOSIVE, 40, 40, 2, (int)p_.x, (int)p_.y, 100, 0, true);
+                ExplosiveZombie ez_ = new ExplosiveZombie(p_, 250, 1, 2, 200, a_);
+                zombies.add(ez_);
+            }
         }
     }
     
@@ -442,52 +457,24 @@ public class GZSFramework {
                 System.exit(0);
             }
         };
-        Globals.zombieSpawns = new ArrayList<Runnable>();
-        Globals.zombieSpawns.add(new Runnable() {
-            // Regular Zombie Spawn
-            @Override
-            public void run() {
-                while(Globals.running) {
-                    if(Globals.started && !Globals.paused) createZombie(Globals.ZOMBIE_REGULAR_TYPE);
-                    
-                    try {
-                        Thread.sleep(Globals.ZOMBIE_REGULAR_SPAWN);
-                    } catch(InterruptedException ie) {
-                        System.out.println("Regular zombie thread interrupted...");
-                    }
-                }
-            }
-        });
-        Globals.zombieSpawns.add(new Runnable() {
-            // Zombie Dog Spawn
-            @Override
-            public void run() {
-                while(Globals.running) {
-                    if(Globals.started && !Globals.paused) createZombie(Globals.ZOMBIE_DOG_TYPE);
-                    
-                    try {
-                        Thread.sleep(Globals.ZOMBIE_DOG_SPAWN);
-                    } catch(InterruptedException ie) {
-                        System.out.println("Zombie Dog thread interrupted...");
-                    }
-                }
-            }
-        });
-        Globals.zombieSpawns.add(new Runnable() {
-            // Acid Zombie Spawn
-            @Override
-            public void run() {
-                while(Globals.running) {
-                    if(Globals.started && !Globals.paused) createZombie(Globals.ZOMBIE_ACID_TYPE);
+    }
 
-                    try {
-                        Thread.sleep(Globals.ZOMBIE_ACID_SPAWN);
-                    } catch(InterruptedException ie) {
-                        System.out.println("Acid Zombie thread interrupted...");
-                    }
-                }
-            }
-        });
+    /**
+     * Creates a new thread from the animation Runnable and then starts it.
+     **/
+    private void startThread() {
+        new Thread(Globals.animation).start();
+    }
+
+    /**
+     * Stops the animation thread.
+     **/
+    private void stopThreads() {
+        stopItemSpawns();
+        stopZombieSpawns();
+    }
+    
+    private void startItemSpawns() {
         Globals.health = new Runnable() {
             @Override
             public void run() {
@@ -502,6 +489,7 @@ public class GZSFramework {
                 } 
             }
         };
+        new Thread(Globals.health).start();
         Globals.ammo = new Runnable() {
             @Override
             public void run() {
@@ -516,24 +504,80 @@ public class GZSFramework {
                 }
             }
         };
-    }
-
-    /**
-     * Creates a new thread from the animation Runnable and then starts it.
-     **/
-    private void startThread() {
-        new Thread(Globals.animation).start();
-        for(Runnable r : Globals.zombieSpawns) new Thread(r).start();
-        new Thread(Globals.health).start();
         new Thread(Globals.ammo).start();
     }
-
-    /**
-     * Stops the animation thread.
-     **/
-    private void stopThreads() {
-        Globals.animation = null;
+    
+    private void stopItemSpawns() {
         Globals.health = null;
         Globals.ammo = null;
+    }
+    
+    private void startZombieSpawns() {
+        Globals.zombieSpawns = new ArrayList<Runnable>();
+        Globals.zombieSpawns.add(new Runnable() {
+            // Regular Zombie Spawn
+            @Override
+            public void run() {
+                while(Globals.running) {
+                    try {
+                        Thread.sleep(Globals.ZOMBIE_REGULAR_SPAWN);
+                    } catch(InterruptedException ie) {
+                        System.out.println("Regular zombie thread interrupted...");
+                    }
+                    
+                    if(Globals.started && !Globals.paused) createZombie(Globals.ZOMBIE_REGULAR_TYPE);
+                }
+            }
+        });
+        Globals.zombieSpawns.add(new Runnable() {
+            // Zombie Dog Spawn
+            @Override
+            public void run() {
+                while(Globals.running) {
+                    try {
+                        Thread.sleep(Globals.ZOMBIE_DOG_SPAWN);
+                    } catch(InterruptedException ie) {
+                        System.out.println("Zombie Dog thread interrupted...");
+                    }
+                    
+                    if(Globals.started && !Globals.paused) createZombie(Globals.ZOMBIE_DOG_TYPE);
+                }
+            }
+        });
+        Globals.zombieSpawns.add(new Runnable() {
+            // Acid Zombie Spawn
+            @Override
+            public void run() {
+                while(Globals.running) {
+                    try {
+                        Thread.sleep(Globals.ZOMBIE_ACID_SPAWN);
+                    } catch(InterruptedException ie) {
+                        System.out.println("Acid Zombie thread interrupted...");
+                    }
+                    
+                    if(Globals.started && !Globals.paused) createZombie(Globals.ZOMBIE_ACID_TYPE);
+                }
+            }
+        });
+        Globals.zombieSpawns.add(new Runnable() {
+            // Explosive Zombie Spawn
+            @Override
+            public void run() {
+                while(Globals.running) {
+                    try {
+                        Thread.sleep(Globals.ZOMBIE_EXPLOSIVE_SPAWN);
+                    } catch(InterruptedException ie) {
+                        System.out.println("Explosive Zombie thread interrupted...");
+                    }
+                    
+                    if(Globals.started && !Globals.paused) createZombie(Globals.ZOMBIE_EXPLOSIVE_TYPE);
+                }
+            }
+        });
+        for(Runnable r : Globals.zombieSpawns) new Thread(r).start();
+    }
+    
+    private void stopZombieSpawns() {
+        Globals.zombieSpawns = null;
     }
 }

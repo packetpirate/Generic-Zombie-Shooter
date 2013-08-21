@@ -30,6 +30,7 @@ public class Images {
     public static final BufferedImage ZOMBIE_REGULAR = GZSFramework.loadImage("/resources/images/GZS_Zombie_2.png");
     public static final BufferedImage ZOMBIE_DOG = GZSFramework.loadImage("/resources/images/GZS_ZombieDog2.png");
     public static final BufferedImage ZOMBIE_ACID = GZSFramework.loadImage("/resources/images/GZS_AcidZombie.png");
+    public static final BufferedImage ZOMBIE_EXPLOSIVE = GZSFramework.loadImage("/resources/images/GZS_ZombieExplosive.png");
     public static final BufferedImage HEALTH_PACK = GZSFramework.loadImage("/resources/images/GZS_Health.png");
     public static final BufferedImage AMMO_PACK = GZSFramework.loadImage("/resources/images/GZS_Ammo.png");
     public static final BufferedImage RTPS_BULLET = GZSFramework.loadImage("/resources/images/GZS_Bullet2.png");

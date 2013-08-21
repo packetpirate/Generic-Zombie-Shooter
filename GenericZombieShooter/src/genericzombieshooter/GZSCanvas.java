@@ -84,16 +84,15 @@ public class GZSCanvas extends JPanel {
                 g2d.drawImage(player.getImage(), (int) player.x, (int) player.y, null);
             } // End drawing player and ammo.
 
+            g2d.setTransform(saved);
+            
             { // Begin drawing zombies.
                 synchronized(framework.getZombies()) {
                     Iterator<Zombie> it = framework.getZombies().iterator();
                     while(it.hasNext()) {
                         Zombie z = it.next();
-                        g2d.setTransform(z.getTransform());
-                        z.getImage().draw((Graphics2D)g2d);
-                        if(z.getParticles() != null) {
-                            z.drawParticles(g2d);
-                        }
+                        z.draw(g2d);
+                        g2d.setTransform(saved);
                     }
                 }
             } // End drawing zombies.
@@ -115,6 +114,8 @@ public class GZSCanvas extends JPanel {
                     if (player.getHealth() > 0) {
                         g2d.setColor(Color.RED);
                         g2d.fillRect(12, 12, player.getHealth(), 16);
+                        g2d.setColor(Color.WHITE);
+                        g2d.drawString(("HP: " + player.getHealth() + "/" + Player.MAX_HEALTH), 15, 25);
                     }
                 } // End drawing the health bar.
                 g2d.setColor(Color.BLACK);
