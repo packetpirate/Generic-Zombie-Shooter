@@ -458,14 +458,14 @@ public class GZSFramework {
             @Override
             public void run() {
                 while(Globals.running) {
-                    if(Globals.started && !Globals.paused) {
+                    if(Globals.started) {
                         try {
                             Thread.sleep(HealthPack.SPAWN_TIME);
                         } catch(InterruptedException ie) {
                             System.out.println("Error occurred in HealthPack thread...");
                         }
 
-                        createHealthPack();
+                        if(!Globals.paused) createHealthPack();
                     }
                 } 
             }
@@ -474,14 +474,14 @@ public class GZSFramework {
             @Override
             public void run() {
                 while(Globals.running) {
-                    if(Globals.started && !Globals.paused) {
+                    if(Globals.started) {
                         try {
                             Thread.sleep(Ammo.SPAWN_TIME);
                         } catch(InterruptedException ie) {
                             System.out.println("Error occurred in AmmoPack thread...");
                         }
 
-                        createAmmoPack();
+                        if(!Globals.paused) createAmmoPack();
                     }
                 }
             }
@@ -492,14 +492,14 @@ public class GZSFramework {
             @Override
             public void run() {
                 while(Globals.running) {
-                    if(Globals.started && !Globals.paused) {
+                    if(Globals.started) {
                         try {
                             Thread.sleep(Globals.ZOMBIE_REGULAR_SPAWN);
                         } catch(InterruptedException ie) {
                             System.out.println("Regular zombie thread interrupted...");
                         }
 
-                        createZombie(Globals.ZOMBIE_REGULAR_TYPE);
+                        if(!Globals.paused) createZombie(Globals.ZOMBIE_REGULAR_TYPE);
                     }
                 }
             }
@@ -509,14 +509,14 @@ public class GZSFramework {
             @Override
             public void run() {
                 while(Globals.running) {
-                    if(Globals.started && !Globals.paused) {
+                    if(Globals.started) {
                         try {
                             Thread.sleep(Globals.ZOMBIE_DOG_SPAWN);
                         } catch(InterruptedException ie) {
                             System.out.println("Zombie Dog thread interrupted...");
                         }
 
-                        createZombie(Globals.ZOMBIE_DOG_TYPE);
+                        if(!Globals.paused) createZombie(Globals.ZOMBIE_DOG_TYPE);
                     }
                 }
             }
@@ -526,14 +526,14 @@ public class GZSFramework {
             @Override
             public void run() {
                 while(Globals.running) {
-                    if(Globals.started && !Globals.paused) {
+                    if(Globals.started) {
                         try {
                             Thread.sleep(Globals.ZOMBIE_ACID_SPAWN);
                         } catch(InterruptedException ie) {
                             System.out.println("Acid Zombie thread interrupted...");
                         }
 
-                        createZombie(Globals.ZOMBIE_ACID_TYPE);
+                        if(!Globals.paused) createZombie(Globals.ZOMBIE_ACID_TYPE);
                     }
                 }
             }
@@ -543,14 +543,14 @@ public class GZSFramework {
             @Override
             public void run() {
                 while(Globals.running) {
-                    if(Globals.started && !Globals.paused) {
+                    if(Globals.started) {
                         try {
                             Thread.sleep(Globals.ZOMBIE_EXPLOSIVE_SPAWN);
                         } catch(InterruptedException ie) {
                             System.out.println("Explosive Zombie thread interrupted...");
                         }
 
-                        createZombie(Globals.ZOMBIE_EXPLOSIVE_TYPE);
+                        if(!Globals.paused) createZombie(Globals.ZOMBIE_EXPLOSIVE_TYPE);
                     }
                 }
             }
