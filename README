@@ -44,8 +44,7 @@ Changes:
   - Added new zombie type: the acid zombie. It's slightly more durable than normal zombies, but can spit acid at you!
   - Added new zombie type: the poison fog zombie. It looks almost identical to the normal zombies with the exception
   of its slight greenish tint. They move faster than normal zombies and will explode into a cloud of poisonous gas
-  when killed. This gas will poison the player, doing damage over time. (poison effect not yet implemented, does straight
-  damage for now.)
+  when killed. This gas will poison the player, doing damage over time.
   - Changed method used to spawn zombies. They still spawn continuously, but now the different types are on different
   "timers" via threads.
 
