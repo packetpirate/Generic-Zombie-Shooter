@@ -39,6 +39,7 @@ public enum Sounds {
     LANDMINE_ARMED("landmine_armed.wav", false),
     THROW("throw.wav", false),
     EXPLOSION("explosion.wav", false),
+    POISONCLOUD("poison_cloud.wav", false),
     POWERUP("powerup.wav", false),
     PAUSE("pause.wav", false),
     UNPAUSE("unpause.wav", false);

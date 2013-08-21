@@ -26,7 +26,7 @@ public class ExplosiveZombie extends Zombie {
     
     public ExplosiveZombie(Point2D.Double p_, int health_, int damage_, double speed_, int score_, Animation animation_) {
         super(p_, health_, damage_, speed_, score_, animation_);
-        this.explosion = new Explosion(Images.EXPLOSION_SHEET, new Point2D.Double(this.x, this.y));
+        this.explosion = new Explosion(Images.POISON_GAS_SHEET, new Point2D.Double(this.x, this.y));
         this.exploded = false;
         this.damageDone = false;
     }
@@ -57,8 +57,8 @@ public class ExplosiveZombie extends Zombie {
         // If the zombie has been shot and killed, set exploded to true.
         if(this.getHealth() <= 0 && !this.exploded) {
             this.exploded = true;
-            this.explosion = new Explosion(Images.EXPLOSION_SHEET, new Point2D.Double(this.x, this.y));
-            Sounds.EXPLOSION.play();
+            this.explosion = new Explosion(Images.POISON_GAS_SHEET, new Point2D.Double(this.x, this.y));
+            Sounds.POISONCLOUD.play();
         }
         if(this.exploded) { // Otherwise...
             // Update the explosion animation and damage the player if he is touching it.
