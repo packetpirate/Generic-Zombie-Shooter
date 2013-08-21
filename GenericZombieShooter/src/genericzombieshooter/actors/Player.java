@@ -78,6 +78,7 @@ public class Player extends Rectangle2D.Double {
     public void reset() {
         this.health = Player.MAX_HEALTH;
         if(this.lives == 0) this.lives = 3;
+        if(this.isPoisoned()) this.removePoison();
         this.currentWeapon = 1;
         this.x = (Globals.W_WIDTH / 2) - (this.width / 2);
         this.y = (Globals.W_HEIGHT / 2) - (this.height / 2);
@@ -106,4 +107,42 @@ public class Player extends Rectangle2D.Double {
         else if(direction == 2) y += Player.MOVE_SPEED;
         else if(direction == 3) x += Player.MOVE_SPEED;
     }
+    
+    private boolean poisoned;
+    public boolean isPoisoned() { return this.poisoned; }
+    private long lastPoisoned;
+    private long endTime;
+    public long getPoisonEndTime() { return this.endTime; }
+    private int poisonDamage;
+    public void poison(long length, int dps) {
+        /* If the player is not already poisoned, set the current time as
+           the last time the player was poisoned, set the boolean poisoned
+           flag to true, and set the end time of the poison effect to the
+           current time plus the length specified. Also, set the poison damage. */
+        long startTime = System.currentTimeMillis();
+        if(!this.poisoned) {
+            this.poisoned = true;
+            this.endTime = startTime + length;
+            this.poisonDamage = dps;
+        } else {
+            /* If the player is already poisoned, simply refresh the duration to
+               the current time plus the length and set the damage in case
+               it has changed. */
+            this.endTime = startTime + length;
+            this.poisonDamage = dps;
+        }
+        this.lastPoisoned = startTime;
+    }
+    public void takePoisonDamage() {
+        /* If it has been at least one second since the last time the player
+           took poison damage, deal poison damage again. If the duration has
+           run its course, set the poisoned boolean flag to false. */
+        long currentTime = System.currentTimeMillis();
+        if(currentTime >= (this.lastPoisoned + 1000)) {
+            this.takeDamage(this.poisonDamage);
+            this.lastPoisoned = currentTime;
+        }
+        if(currentTime >= this.endTime) this.poisoned = false;
+    }
+    public void removePoison() { this.poisoned = false; }
 }

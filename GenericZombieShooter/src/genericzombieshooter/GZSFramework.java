@@ -264,23 +264,25 @@ public class GZSFramework {
                 }
             }
 
-            // If the player is touching a zombie, damage him according to the zombie's damage.
-            if(!zombies.isEmpty()) {
-                synchronized(zombies) {
-                    Iterator<Zombie> it = zombies.iterator();
-                    while(it.hasNext()) {
-                        Zombie z = it.next();
-                        if(player.intersects(z.getRect())) player.takeDamage(z.getDamage());
-                        if(z.getParticles() != null) {
-                            Iterator<Particle> pit = z.getParticles().iterator();
-                            while(pit.hasNext()) {
-                                Particle p = pit.next();
-                                if(p.checkCollision(player)) player.takeDamage(z.getParticleDamage());
+            { // Check for damage against the player. (touching zombies, projectiles, explosions, etc...)
+                if(!zombies.isEmpty()) {
+                    synchronized(zombies) {
+                        Iterator<Zombie> it = zombies.iterator();
+                        while(it.hasNext()) {
+                            Zombie z = it.next();
+                            if(player.intersects(z.getRect())) player.takeDamage(z.getDamage());
+                            if(z.getParticles() != null) {
+                                Iterator<Particle> pit = z.getParticles().iterator();
+                                while(pit.hasNext()) {
+                                    Particle p = pit.next();
+                                    if(p.checkCollision(player)) player.takeDamage(z.getParticleDamage());
+                                }
                             }
                         }
                     }
                 }
-            }
+                if(player.isPoisoned()) player.takePoisonDamage();
+            } // End checking player for damage sources.
             
             { // Check to see if the player has collected any items.
                 Iterator<Item> it = this.items.iterator();

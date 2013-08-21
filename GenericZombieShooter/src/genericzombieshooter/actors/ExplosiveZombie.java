@@ -18,7 +18,7 @@ import java.awt.geom.Rectangle2D;
  */
 public class ExplosiveZombie extends Zombie {
     // Final Variables
-    private static final int EXPLOSION_DAMAGE = 80;
+    private static final int POISON_DAMAGE = 5;
     // Member Variables
     private Explosion explosion;
     private boolean exploded;
@@ -63,7 +63,7 @@ public class ExplosiveZombie extends Zombie {
         if(this.exploded) { // Otherwise...
             // Update the explosion animation and damage the player if he is touching it.
             if(collidesWithExplosion(player) && !this.damageDone) { 
-                player.takeDamage(ExplosiveZombie.EXPLOSION_DAMAGE);
+                player.poison((20 * 1000), ExplosiveZombie.POISON_DAMAGE);
                 this.damageDone = true;
             }
             if(this.explosion.getImage().isActive()) this.explosion.getImage().update();
