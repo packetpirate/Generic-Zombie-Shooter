@@ -479,13 +479,13 @@ public class GZSFramework {
             @Override
             public void run() {
                 while(Globals.running) {
-                    if(Globals.started && !Globals.paused) createHealthPack();
-                    
                     try {
                         Thread.sleep(HealthPack.SPAWN_TIME);
                     } catch(InterruptedException ie) {
                         System.out.println("Error occurred in HealthPack thread...");
                     }
+                    
+                    if(Globals.started && !Globals.paused) createHealthPack();
                 } 
             }
         };
@@ -494,13 +494,13 @@ public class GZSFramework {
             @Override
             public void run() {
                 while(Globals.running) {
-                    if(Globals.started && !Globals.paused) createAmmoPack();
-
                     try {
                         Thread.sleep(Ammo.SPAWN_TIME);
                     } catch(InterruptedException ie) {
                         System.out.println("Error occurred in AmmoPack thread...");
                     }
+                    
+                    if(Globals.started && !Globals.paused) createAmmoPack();
                 }
             }
         };
