@@ -71,6 +71,10 @@ Planned Future Changes (Most likely post-1.0):
   - Add randomly generated terrain (buildings, etc) to make combat a bit more interesting.
   - Add pathing AI to make the aforementioned terrain possible.
   - Add level-based gameplay.
+      - Level based gameplay could revolved around a map with areas that are unexplored. Each day, you can
+      choose to explore an area and fight the zombies in it and rescue survivors and do other things. You
+      could travel at night, but it would be dark and there would be less visible (lighting system) and chances
+      of more dangerous zombies and in larger numbers.
   - Change enemy AI so they attack when you are in their line of sight. Also will make player give off
   "footsteps" so zombies can detect you at a certain distance. Any zombies that detect you will make
   "noise" that will attract any zombies near that zombie to attack as well, creating "hordes".
