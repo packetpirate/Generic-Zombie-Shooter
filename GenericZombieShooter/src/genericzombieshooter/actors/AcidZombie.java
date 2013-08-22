@@ -64,7 +64,7 @@ public class AcidZombie extends Zombie {
     }
     
     @Override
-    public void update(Player player) {
+    public void update(Player player, List<Zombie> zombies) {
         // Update the zombie's acid particles.
         if(!this.particles.isEmpty()) {
             synchronized(this.particles) {

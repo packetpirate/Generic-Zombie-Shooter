@@ -73,7 +73,7 @@ public class Zombie extends Point2D.Double {
         this.img.move((int)this.x, (int)this.y);
     }
     
-    public void update(Player player) {
+    public void update(Player player, List<Zombie> zombies) {
         // To be overridden.
     }
     

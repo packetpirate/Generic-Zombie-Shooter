@@ -17,9 +17,10 @@
 package genericzombieshooter;
 
 import genericzombieshooter.actors.AcidZombie;
-import genericzombieshooter.actors.ExplosiveZombie;
 import genericzombieshooter.actors.Player;
+import genericzombieshooter.actors.PoisonFogZombie;
 import genericzombieshooter.actors.Zombie;
+import genericzombieshooter.actors.ZombieMatron;
 import genericzombieshooter.misc.Globals;
 import genericzombieshooter.misc.Images;
 import genericzombieshooter.misc.Sounds;
@@ -61,6 +62,7 @@ public class GZSFramework {
     public Player getPlayer() { return player; }
     private List<Zombie> zombies;
     public List<Zombie> getZombies() { return zombies; }
+    private List<Zombie> zombiesToAdd;
     private List<Item> items;
     public List<Item> getItems() { return this.items; }
     
@@ -88,6 +90,7 @@ public class GZSFramework {
             player = new Player(((Globals.W_WIDTH / 2) - 20), ((Globals.W_HEIGHT / 2) - 20), 40, 40);
             //zombies = new ArrayList<Zombie>();
             zombies = Collections.synchronizedList(new ArrayList<Zombie>());
+            zombiesToAdd = Collections.synchronizedList(new ArrayList<Zombie>());
             items = new ArrayList<Item>();
             score = 0;
             loadout = new WeaponsLoadout(player);
@@ -259,7 +262,7 @@ public class GZSFramework {
                                                    (player.getCenterX() - z.x)) + Math.PI / 2;
                         z.rotate(theta_);
                         z.move(theta_);
-                        z.update(player);
+                        z.update(player, zombiesToAdd);
                     }
                 }
             }
@@ -303,6 +306,7 @@ public class GZSFramework {
                     Globals.started = false;
                     player.reset();
                     zombies = Collections.synchronizedList(new ArrayList<Zombie>());
+                    zombiesToAdd = Collections.synchronizedList(new ArrayList<Zombie>());
                     items = new ArrayList<Item>();
                     for(boolean k : Globals.keys) k = false;
                     for(boolean b : Globals.buttons) b = false;
@@ -349,6 +353,13 @@ public class GZSFramework {
                     w.updateWeapon(this.zombies);
                 }
             } // End weapon updates.
+            
+            { // Add any zombies in the toAdd list.
+                if(!zombiesToAdd.isEmpty()) {
+                    zombies.addAll(zombiesToAdd);
+                    zombiesToAdd.clear();
+                }
+            } // End adding new zombies.
         }
     }
     
@@ -390,18 +401,23 @@ public class GZSFramework {
             } else if(type == Globals.ZOMBIE_DOG_TYPE) {
                 // Fast Zombie Dog
                 Animation a_ = new Animation(Images.ZOMBIE_DOG, 50, 50, 4, (int)p_.x, (int)p_.y, 80, 0, true);
-                Zombie z_ = new Zombie(p_, 100, 3, 3, 150, a_);
+                Zombie z_ = new Zombie(p_, 100, 3, 2, 150, a_);
                 zombies.add(z_);
             } else if(type == Globals.ZOMBIE_ACID_TYPE) {
                 // Acid Zombie
                 Animation a_ = new Animation(Images.ZOMBIE_ACID, 64, 64, 2, (int)p_.x, (int)p_.y, 200, 0, true);
                 AcidZombie z_ = new AcidZombie(p_, 300, 1, 1, 400, a_);
                 zombies.add(z_);
-            } else if(type == Globals.ZOMBIE_EXPLOSIVE_TYPE) {
+            } else if(type == Globals.ZOMBIE_POISONFOG_TYPE) {
                 // Explosive Zombie
-                Animation a_ = new Animation(Images.ZOMBIE_EXPLOSIVE, 40, 40, 2, (int)p_.x, (int)p_.y, 100, 0, true);
-                ExplosiveZombie ez_ = new ExplosiveZombie(p_, 250, 1, 2, 200, a_);
+                Animation a_ = new Animation(Images.ZOMBIE_POISONFOG, 40, 40, 2, (int)p_.x, (int)p_.y, 100, 0, true);
+                PoisonFogZombie ez_ = new PoisonFogZombie(p_, 250, 1, 2, 200, a_);
                 zombies.add(ez_);
+            } else if(type == Globals.ZOMBIE_MATRON_TYPE) {
+                // Zombie Matron
+                Animation a_ = new Animation(Images.ZOMBIE_MATRON, 48, 48, 2, (int)p_.x, (int)p_.y, 200, 0, true);
+                ZombieMatron zm_ = new ZombieMatron(p_, 500, 1, 1, 1000, a_);
+                zombies.add(zm_);
             }
         }
     }
@@ -547,12 +563,29 @@ public class GZSFramework {
                 while(Globals.running) {
                     if(Globals.started) {
                         try {
-                            Thread.sleep(Globals.ZOMBIE_EXPLOSIVE_SPAWN);
+                            Thread.sleep(Globals.ZOMBIE_POISONFOG_SPAWN);
                         } catch(InterruptedException ie) {
                             System.out.println("Explosive Zombie thread interrupted...");
                         }
 
-                        if(!Globals.paused) createZombie(Globals.ZOMBIE_EXPLOSIVE_TYPE);
+                        if(!Globals.paused) createZombie(Globals.ZOMBIE_POISONFOG_TYPE);
+                    }
+                }
+            }
+        });
+        Globals.zombieSpawns.add(new Runnable() {
+            // Zombie Matron Spawn
+            @Override
+            public void run() {
+                while(Globals.running) {
+                    if(Globals.started) {
+                        try {
+                            Thread.sleep(Globals.ZOMBIE_MATRON_SPAWN);
+                        } catch(InterruptedException ie) {
+                            System.out.println("Zombie Matron thread interrupted...");
+                        }
+                        
+                        if(!Globals.paused) createZombie(Globals.ZOMBIE_MATRON_TYPE);
                     }
                 }
             }
