@@ -19,6 +19,7 @@
  **/
 package genericzombieshooter;
 
+import genericzombieshooter.misc.Globals;
 import javax.swing.JApplet;
 import javax.swing.JFrame;
 
@@ -27,11 +28,9 @@ import javax.swing.JFrame;
  * @author Darin Beaudreau
  */
 public class GenericZombieShooter extends JApplet {
-    private static final float VERSION = 0.8f;
-    
     public static void main(String[] args) {
-        JFrame frame = new JFrame("Generic Zombie Shooter v" + VERSION);
-        GZSFramework framework = new GZSFramework();
+        JFrame frame = new JFrame("Generic Zombie Shooter v" + Globals.VERSION);
+        GZSFramework framework = new GZSFramework(frame);
         
         frame.add(framework.canvas);
         

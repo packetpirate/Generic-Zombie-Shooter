@@ -31,6 +31,7 @@ import java.util.Random;
  */
 public class Globals {
     // Final
+    public static final String VERSION = "0.8";
     public static final int W_WIDTH = 800; // The width of the game window.
     public static final int W_HEIGHT = 640; // The height of the game window.
     public static final long SLEEP_TIME = 20; // The sleep time of the animation thread.
@@ -55,6 +56,7 @@ public class Globals {
     public static Runnable ammo; // The thread for spawning ammo packs.
     public static boolean running; // Whether or not the game is currently running.
     public static boolean started;
+    public static boolean crashed; // Tells the game whether or not there was a crash.
     public static boolean paused;
     
     public static boolean [] keys; // The state of the game key controls.
