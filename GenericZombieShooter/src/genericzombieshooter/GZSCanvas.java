@@ -44,20 +44,13 @@ public class GZSCanvas extends JPanel {
     private BufferedImage background;
 
     public GZSCanvas(GZSFramework framework) {
-        try {
-            this.framework = framework;
-            this.background = Images.BACKGROUND;
+        this.framework = framework;
+        this.background = Images.BACKGROUND;
 
-            //Cursor cursor = Toolkit.getDefaultToolkit().createCustomCursor(Images.CROSSHAIR, Globals.mousePos, "Crosshair");
-
-            //setCursor(cursor);
-            setBackground(Color.WHITE);
-            setPreferredSize(new Dimension(Globals.W_WIDTH, Globals.W_HEIGHT));
-            setFocusable(true);
-            requestFocus();
-        } catch(Exception e) {
-            this.framework.createErrorWindow(e);
-        }
+        setBackground(Color.WHITE);
+        setPreferredSize(new Dimension(Globals.W_WIDTH, Globals.W_HEIGHT));
+        setFocusable(true);
+        requestFocus();
     }
 
     @Override
