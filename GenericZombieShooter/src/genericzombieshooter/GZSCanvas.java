@@ -23,9 +23,11 @@ import genericzombieshooter.misc.Images;
 import genericzombieshooter.structures.Item;
 import genericzombieshooter.structures.weapons.Weapon;
 import java.awt.Color;
+import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Toolkit;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 import java.util.Iterator;
@@ -42,13 +44,20 @@ public class GZSCanvas extends JPanel {
     private BufferedImage background;
 
     public GZSCanvas(GZSFramework framework) {
-        this.framework = framework;
-        this.background = Images.BACKGROUND;
+        try {
+            this.framework = framework;
+            this.background = Images.BACKGROUND;
 
-        setBackground(Color.WHITE);
-        setPreferredSize(new Dimension(Globals.W_WIDTH, Globals.W_HEIGHT));
-        setFocusable(true);
-        requestFocus();
+            //Cursor cursor = Toolkit.getDefaultToolkit().createCustomCursor(Images.CROSSHAIR, Globals.mousePos, "Crosshair");
+
+            //setCursor(cursor);
+            setBackground(Color.WHITE);
+            setPreferredSize(new Dimension(Globals.W_WIDTH, Globals.W_HEIGHT));
+            setFocusable(true);
+            requestFocus();
+        } catch(Exception e) {
+            this.framework.createErrorWindow(e);
+        }
     }
 
     @Override

@@ -464,7 +464,7 @@ public class GZSFramework {
         }
     }
     
-    private void createErrorWindow(Exception e) {
+    public void createErrorWindow(Exception e) {
         ErrorWindow error = new ErrorWindow(e);
         Globals.crashed = true;
         frame.getContentPane().removeAll();

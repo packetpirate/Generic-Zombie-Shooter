@@ -27,6 +27,7 @@ public class Images {
     public static final BufferedImage START_SCREEN = GZSFramework.loadImage("/resources/images/GZS_Splash.png");
     public static final BufferedImage BACKGROUND = GZSFramework.loadImage("/resources/images/GZS_Background_2.png");
     public static final BufferedImage PLAYER = GZSFramework.loadImage("/resources/images/GZS_Player.png");
+    public static final BufferedImage CROSSHAIR = GZSFramework.loadImage("/resources/images/GZS_Crosshair.png");
     public static final BufferedImage ZOMBIE_REGULAR = GZSFramework.loadImage("/resources/images/GZS_Zombie_2.png");
     public static final BufferedImage ZOMBIE_DOG = GZSFramework.loadImage("/resources/images/GZS_ZombieDog2.png");
     public static final BufferedImage ZOMBIE_ACID = GZSFramework.loadImage("/resources/images/GZS_AcidZombie.png");

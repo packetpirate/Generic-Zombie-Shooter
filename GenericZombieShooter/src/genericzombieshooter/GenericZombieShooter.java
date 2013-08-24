@@ -20,6 +20,9 @@
 package genericzombieshooter;
 
 import genericzombieshooter.misc.Globals;
+import genericzombieshooter.misc.Images;
+import java.awt.Cursor;
+import java.awt.Toolkit;
 import javax.swing.JApplet;
 import javax.swing.JFrame;
 
@@ -33,6 +36,11 @@ public class GenericZombieShooter extends JApplet {
         GZSFramework framework = new GZSFramework(frame);
         
         frame.add(framework.canvas);
+        
+        Toolkit toolkit = Toolkit.getDefaultToolkit();
+        Cursor cursor = toolkit.createCustomCursor(Images.CROSSHAIR, Globals.mousePos, "Crosshair");
+        
+        frame.setCursor(cursor);
         
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLocationRelativeTo(null);
