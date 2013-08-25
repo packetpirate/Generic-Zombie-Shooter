@@ -279,12 +279,14 @@ public class GZSFramework {
                             Iterator<Zombie> it = zombies.iterator();
                             while(it.hasNext()) {
                                 Zombie z = it.next();
-                                if(player.intersects(z.getRect())) player.takeDamage(z.getDamage());
-                                if(z.getParticles() != null) {
-                                    Iterator<Particle> pit = z.getParticles().iterator();
-                                    while(pit.hasNext()) {
-                                        Particle p = pit.next();
-                                        if(p.checkCollision(player)) player.takeDamage(z.getParticleDamage());
+                                if(!player.isInvincible()) {
+                                    if(player.intersects(z.getRect())) player.takeDamage(z.getDamage());
+                                    if(z.getParticles() != null) {
+                                        Iterator<Particle> pit = z.getParticles().iterator();
+                                        while(pit.hasNext()) {
+                                            Particle p = pit.next();
+                                            if(p.checkCollision(player)) player.takeDamage(z.getParticleDamage());
+                                        }
                                     }
                                 }
                             }
@@ -292,6 +294,14 @@ public class GZSFramework {
                     }
                     if(player.isPoisoned()) player.takePoisonDamage();
                 } // End checking player for damage sources.
+                
+                { // If the player's invincibility timer has run out, remove it.
+                    if(player.isInvincible()) {
+                        long startTime = player.getInvincibilityStartTime();
+                        long currentTime = System.currentTimeMillis();
+                        if(currentTime >= (startTime + Player.INVINCIBILITY_LENGTH)) player.removeInvincibility(); 
+                    }
+                } // End removing player invincibility.
 
                 { // Check to see if the player has collected any items.
                     Iterator<Item> it = this.items.iterator();

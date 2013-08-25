@@ -33,6 +33,7 @@ import java.util.List;
 public class Player extends Rectangle2D.Double {
     // Final variables.
     public static final int MAX_HEALTH = 150;
+    public static final long INVINCIBILITY_LENGTH = 3000;
     private static final double MOVE_SPEED = 2; // How many pixels per tick the player moves.
     
     // Member variables.
@@ -40,6 +41,8 @@ public class Player extends Rectangle2D.Double {
     private BufferedImage img;
     private int health;
     private int lives;
+    private boolean invincible;
+    private long invincibleStartTime;
     private int currentWeapon;
     private List<Weapon> weapons;
 
@@ -50,6 +53,8 @@ public class Player extends Rectangle2D.Double {
 
         this.health = Player.MAX_HEALTH;
         this.lives = 3;
+        this.invincible = false;
+        this.invincibleStartTime = System.currentTimeMillis();
         this.currentWeapon = 1;
         this.weapons = new ArrayList<Weapon>();
         this.weapons.add(Globals.ASSAULT_RIFLE); // Weapon 1
@@ -70,6 +75,9 @@ public class Player extends Rectangle2D.Double {
         else this.health += amount;
     }
     public boolean isAlive() { return this.health > 0; }
+    public boolean isInvincible() { return this.invincible; }
+    public long getInvincibilityStartTime() { return this.invincibleStartTime; }
+    public void removeInvincibility() { this.invincible = false; }
     public int getLives() { return this.lives; }
     public void die() { 
         this.lives--;
@@ -78,6 +86,10 @@ public class Player extends Rectangle2D.Double {
     public void reset() {
         this.health = Player.MAX_HEALTH;
         if(this.lives == 0) this.lives = 3;
+        else {
+            this.invincible = true;
+            this.invincibleStartTime = System.currentTimeMillis();
+        }
         if(this.isPoisoned()) this.removePoison();
         this.currentWeapon = 1;
         this.x = (Globals.W_WIDTH / 2) - (this.width / 2);

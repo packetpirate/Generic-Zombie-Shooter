@@ -23,12 +23,11 @@ import genericzombieshooter.misc.Images;
 import genericzombieshooter.structures.Item;
 import genericzombieshooter.structures.weapons.Weapon;
 import java.awt.Color;
-import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.Toolkit;
 import java.awt.geom.AffineTransform;
+import java.awt.geom.Ellipse2D;
 import java.awt.image.BufferedImage;
 import java.util.Iterator;
 import javax.swing.JPanel;
@@ -84,6 +83,12 @@ public class GZSCanvas extends JPanel {
                 }
                 g2d.setTransform(player.getTransform());
                 g2d.drawImage(player.getImage(), (int) player.x, (int) player.y, null);
+                if(player.isInvincible()) {
+                    g2d.setColor(Color.WHITE);
+                    Ellipse2D.Double halo = new Ellipse2D.Double((player.x - 10), (player.y - 10), 
+                                                                 (player.width + 20), (player.height + 20));
+                    g2d.draw(halo);
+                }
             } // End drawing player and ammo.
 
             g2d.setTransform(saved);
