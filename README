@@ -38,6 +38,8 @@ Changes:
   may be lingering near the spawn point as you die. This gives you a few seconds to get away from the swarm without
   worrying about dying again. It lasts three seconds. Currently, the graphical effect is just a circle, which I
   intend to change. I may also change the effect so firing your weapon removes the effect.
+  - Added Wave class, which will be used to store zombies. Each wave, a new zombie set will be added to it and the
+  update() method will be called on the wave to update all zombies.
 
 Known Issues:
 
