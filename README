@@ -54,8 +54,6 @@ TODO:
   "buy" the weapons with your score points.
   - Change gameplay so that "waves" of zombies appear all at once. This will be temporary until
   post 1.0 release, at which point I will work on level-based gameplay.
-  - Add a respawn timer for player invincibility so the player isn't immediately killed after respawning
-  if there are a lot of zombies around the spawn point.
 
 Planned Future Changes (Most likely post-1.0):
   - Add a lighting system so that you can only see directly in front of you, like a flashlight.
