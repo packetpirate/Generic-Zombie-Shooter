@@ -77,7 +77,7 @@ public class Grenade extends Weapon {
                     p.update();
 
                     boolean collision = false;
-                    synchronized(zombies) {
+                    //synchronized(zombies) {
                         Iterator<Zombie> zit = zombies.iterator();
                         while(zit.hasNext()) {
                             Zombie z = zit.next();
@@ -86,7 +86,7 @@ public class Grenade extends Weapon {
                             Rectangle2D.Double rect = new Rectangle2D.Double((z.x - (width / 2)), (z.y - (height / 2)), width, height);
                             if(p.checkCollision(rect)) collision = true;
                         }
-                    }
+                    //}
                     if(!p.isAlive() || collision) {
                         this.explosions.add(new Explosion(Images.EXPLOSION_SHEET, p.getPos()));
                         Sounds.EXPLOSION.play();

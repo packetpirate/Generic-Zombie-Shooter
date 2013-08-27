@@ -24,6 +24,7 @@ import genericzombieshooter.structures.Item;
 import genericzombieshooter.structures.weapons.Weapon;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.geom.AffineTransform;
@@ -94,13 +95,18 @@ public class GZSCanvas extends JPanel {
             g2d.setTransform(saved);
             
             { // Begin drawing zombies.
-                synchronized(framework.getZombies()) {
+                /*synchronized(framework.getZombies()) {
                     Iterator<Zombie> it = framework.getZombies().iterator();
                     while(it.hasNext()) {
                         Zombie z = it.next();
                         z.draw(g2d);
                         g2d.setTransform(saved);
                     }
+                }*/
+                Iterator<Zombie> it = framework.getWave().getZombies().iterator();
+                while(it.hasNext()) {
+                    Zombie z = it.next();
+                    z.draw(g2d);
                 }
             } // End drawing zombies.
 
@@ -137,6 +143,14 @@ public class GZSCanvas extends JPanel {
                     g2d.drawString(("Poisoned for " + (timeLeft / 1000) + "s!"), 10, 81);
                 }
                 framework.getLoadout().draw((Graphics2D)g2d);
+                
+                if(!Globals.waveInProgress) {
+                    long timeLeft = Globals.nextWave - System.currentTimeMillis();
+                    g2d.setColor(Color.WHITE);
+                    g2d.setFont(new Font("Impact", Font.PLAIN, 14));
+                    g2d.drawString(("Next wave in " + ((timeLeft / 1000) + 1) + "..."), (Globals.W_WIDTH - 100), 18);
+                    g2d.setFont(null);
+                }
             } // End drawing GUI elements.
         } else {
             g2d.drawImage(Images.START_SCREEN, 0, 0, null);

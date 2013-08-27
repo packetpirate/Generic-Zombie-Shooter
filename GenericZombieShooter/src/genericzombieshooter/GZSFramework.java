@@ -16,17 +16,11 @@
  **/
 package genericzombieshooter;
 
-import genericzombieshooter.actors.AcidZombie;
 import genericzombieshooter.actors.Player;
-import genericzombieshooter.actors.PoisonFogZombie;
-import genericzombieshooter.actors.Zombie;
-import genericzombieshooter.actors.ZombieMatron;
 import genericzombieshooter.misc.Globals;
-import genericzombieshooter.misc.Images;
 import genericzombieshooter.misc.Sounds;
-import genericzombieshooter.structures.Animation;
 import genericzombieshooter.structures.Item;
-import genericzombieshooter.structures.Particle;
+import genericzombieshooter.structures.ZombieWave;
 import genericzombieshooter.structures.components.ErrorWindow;
 import genericzombieshooter.structures.components.WeaponsLoadout;
 import genericzombieshooter.structures.items.Ammo;
@@ -43,7 +37,6 @@ import java.awt.geom.Point2D;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import javax.imageio.ImageIO;
@@ -63,9 +56,12 @@ public class GZSFramework {
     // Game objects.
     private Player player; // The player character.
     public Player getPlayer() { return player; }
-    private List<Zombie> zombies;
-    public List<Zombie> getZombies() { return zombies; }
-    private List<Zombie> zombiesToAdd;
+    //private List<Zombie> zombies;
+    //public List<Zombie> getZombies() { return zombies; }
+    //private List<Zombie> zombiesToAdd;
+    private int currentWave;
+    private ZombieWave wave;
+    public ZombieWave getWave() { return this.wave; }
     private List<Item> items;
     public List<Item> getItems() { return this.items; }
     
@@ -81,6 +77,8 @@ public class GZSFramework {
         Globals.started = false;
         Globals.paused = false;
         Globals.crashed = false;
+        Globals.waveInProgress = false;
+        Globals.nextWave = System.currentTimeMillis() + 3000;
 
         { // Begin initializing member variables.
             Globals.keys = new boolean[4];
@@ -94,8 +92,10 @@ public class GZSFramework {
         { // Begin initializing game objects.
             player = new Player(((Globals.W_WIDTH / 2) - 20), ((Globals.W_HEIGHT / 2) - 20), 40, 40);
             //zombies = new ArrayList<Zombie>();
-            zombies = Collections.synchronizedList(new ArrayList<Zombie>());
-            zombiesToAdd = Collections.synchronizedList(new ArrayList<Zombie>());
+            //zombies = Collections.synchronizedList(new ArrayList<Zombie>());
+            //zombiesToAdd = Collections.synchronizedList(new ArrayList<Zombie>());
+            currentWave = 0;
+            wave = new ZombieWave(currentWave);
             items = new ArrayList<Item>();
             score = 0;
             loadout = new WeaponsLoadout(player);
@@ -254,9 +254,14 @@ public class GZSFramework {
                     double theta = Math.atan2((target.x - pos.x), (target.y - pos.y));
                     player.getWeapon().fire(theta, pos);
                 }
+                
+                if(!Globals.waveInProgress) {
+                    // If the player is in between waves, check if the countdown has reached zero.
+                    if(System.currentTimeMillis() >= Globals.nextWave) createWave();
+                }
 
                 // Update zombie vectors and positions.
-                if(!zombies.isEmpty()) {
+                /*if(!zombies.isEmpty()) {
                     synchronized(zombies) {
                         Iterator<Zombie> it = zombies.iterator();
                         while(it.hasNext()) {
@@ -271,10 +276,12 @@ public class GZSFramework {
                             z.update(player, zombiesToAdd);
                         }
                     }
-                }
+                }*/
+                // Update all zombies in the current wave.
+                if(Globals.waveInProgress) this.wave.update(player);
 
                 { // Check for damage against the player. (touching zombies, projectiles, explosions, etc...)
-                    if(!zombies.isEmpty()) {
+                    /*if(!zombies.isEmpty()) {
                         synchronized(zombies) {
                             Iterator<Zombie> it = zombies.iterator();
                             while(it.hasNext()) {
@@ -292,8 +299,10 @@ public class GZSFramework {
                             }
                         }
                     }
-                    if(player.isPoisoned()) player.takePoisonDamage();
+                    if(player.isPoisoned()) player.takePoisonDamage();*/
                 } // End checking player for damage sources.
+                // Check player for damage.
+                if(Globals.waveInProgress) this.wave.checkPlayerDamage(player);
                 
                 { // If the player's invincibility timer has run out, remove it.
                     if(player.isInvincible()) {
@@ -321,8 +330,10 @@ public class GZSFramework {
                         // Reset the game.
                         Globals.started = false;
                         player.reset();
-                        zombies = Collections.synchronizedList(new ArrayList<Zombie>());
-                        zombiesToAdd = Collections.synchronizedList(new ArrayList<Zombie>());
+                        //zombies = Collections.synchronizedList(new ArrayList<Zombie>());
+                        //zombiesToAdd = Collections.synchronizedList(new ArrayList<Zombie>());
+                        currentWave = 1;
+                        wave = new ZombieWave(currentWave);
                         items = new ArrayList<Item>();
                         for(boolean k : Globals.keys) k = false;
                         for(boolean b : Globals.buttons) b = false;
@@ -336,6 +347,7 @@ public class GZSFramework {
                 }
 
                 { // Do zombie updates.
+                    /*
                     // Check for collisions between zombies and ammo.
                     synchronized(zombies) {
                         Iterator<Zombie> it = zombies.iterator();
@@ -359,23 +371,30 @@ public class GZSFramework {
                                 }
                             }
                         }
-                    }
+                    }*/
                 } // End zombie updates.
 
                 { // Begin weapon updates.
                     Iterator<Weapon> it = this.player.getAllWeapons().iterator();
                     while(it.hasNext()) {
                         Weapon w = it.next();
-                        w.updateWeapon(this.zombies);
+                        w.updateWeapon(this.wave.getZombies());
                     }
                 } // End weapon updates.
 
-                { // Add any zombies in the toAdd list.
+                /*{ // Add any zombies in the toAdd list.
                     if(!zombiesToAdd.isEmpty()) {
                         zombies.addAll(zombiesToAdd);
                         zombiesToAdd.clear();
                     }
-                } // End adding new zombies.
+                } // End adding new zombies.*/
+                
+                // Check for end of wave.
+                if(Globals.waveInProgress && this.wave.waveFinished()) {
+                    System.out.println("Wave over. Waiting for new wave...");
+                    Globals.waveInProgress = false;
+                    Globals.nextWave = System.currentTimeMillis() + (10 * 1000);
+                }
             } catch(Exception e) {
                 createErrorWindow(e);
             }
@@ -385,7 +404,7 @@ public class GZSFramework {
     /**
      * Creates a new zombie on the screen.
      **/
-    private void createZombie(int type) {
+    /*private void createZombie(int type) {
         try {
             synchronized(zombies) {
                 // Decide which side of the screen to spawn the zombie on.
@@ -443,7 +462,7 @@ public class GZSFramework {
         } catch(Exception e) {
             createErrorWindow(e);
         }
-    }
+    }*/
     
     private void createHealthPack() {
         int healAmount = Globals.r.nextInt(75 - 50 + 1) + 50;
@@ -462,6 +481,13 @@ public class GZSFramework {
             double y = Globals.r.nextInt((int)((Globals.W_HEIGHT - (WeaponsLoadout.BAR_HEIGHT + 10)) - 20 + 1)) + 20;
             this.items.add(new Ammo(w, ammo, new Point2D.Double(x, y)));
         }
+    }
+    
+    private void createWave() {
+        System.out.println("Creating new wave...");
+        this.currentWave++;
+        this.wave = new ZombieWave(this.currentWave);
+        Globals.waveInProgress = true;
     }
     
     public static BufferedImage loadImage(String filename) {
@@ -499,6 +525,7 @@ public class GZSFramework {
                         Thread.sleep(Globals.SLEEP_TIME);
                     } catch (InterruptedException ie) {
                         System.out.println("Error occurred in main thread...");
+                        createErrorWindow(ie);
                     }
                 }
                 System.exit(0);
@@ -513,6 +540,7 @@ public class GZSFramework {
                             Thread.sleep(HealthPack.SPAWN_TIME);
                         } catch(InterruptedException ie) {
                             System.out.println("Error occurred in HealthPack thread...");
+                            createErrorWindow(ie);
                         }
 
                         if(!Globals.paused) createHealthPack();
@@ -529,6 +557,7 @@ public class GZSFramework {
                             Thread.sleep(Ammo.SPAWN_TIME);
                         } catch(InterruptedException ie) {
                             System.out.println("Error occurred in AmmoPack thread...");
+                            createErrorWindow(ie);
                         }
 
                         if(!Globals.paused) createAmmoPack();
@@ -536,7 +565,7 @@ public class GZSFramework {
                 }
             }
         };
-        Globals.zombieSpawns = new ArrayList<Runnable>();
+        /*Globals.zombieSpawns = new ArrayList<Runnable>();
         Globals.zombieSpawns.add(new Runnable() {
             // Regular Zombie Spawn
             @Override
@@ -621,7 +650,7 @@ public class GZSFramework {
                     }
                 }
             }
-        });
+        });*/
     }
 
     /**
@@ -631,6 +660,6 @@ public class GZSFramework {
         new Thread(Globals.animation).start();
         new Thread(Globals.health).start();
         new Thread(Globals.ammo).start();
-        for(Runnable r : Globals.zombieSpawns) new Thread(r).start();
+        //for(Runnable r : Globals.zombieSpawns) new Thread(r).start();
     }
 }

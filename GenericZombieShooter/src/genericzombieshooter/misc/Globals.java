@@ -35,7 +35,7 @@ public class Globals {
     public static final int W_WIDTH = 800; // The width of the game window.
     public static final int W_HEIGHT = 640; // The height of the game window.
     public static final long SLEEP_TIME = 20; // The sleep time of the animation thread.
-    public static final long SPAWN_TIME = 50; // The time it takes zombies to spawn. (SLEEP_TIME * SPAWN_TIME)
+    public static final long WAVE_BREAK_TIME = 30 * 1000;
     public static final Random r = new Random();
     
     public static final int ZOMBIE_REGULAR_TYPE = 1;
@@ -51,13 +51,15 @@ public class Globals {
     
     // Non-Final
     public static Runnable animation; // The primary animation thread.
-    public static List<Runnable> zombieSpawns; // A list containing the threads that spawn zombies.
+    //public static List<Runnable> zombieSpawns; // A list containing the threads that spawn zombies.
     public static Runnable health; // The thread for spawning health packs.
     public static Runnable ammo; // The thread for spawning ammo packs.
     public static boolean running; // Whether or not the game is currently running.
     public static boolean started;
     public static boolean crashed; // Tells the game whether or not there was a crash.
     public static boolean paused;
+    public static boolean waveInProgress; // Whether the player is fighting or waiting for another wave.
+    public static long nextWave;
     
     public static boolean [] keys; // The state of the game key controls.
     public static boolean [] buttons; // The state of the game mouse button controls.
