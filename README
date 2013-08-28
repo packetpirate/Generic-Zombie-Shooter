@@ -51,6 +51,9 @@ Known Issues:
   If resumed after it hits 0, it will immediately start a new wave.
   - There was one particular case of an IllegalStateException after killing a tiny zombie from a matron horde, but
   I have no been able to replicate it, and am not sure what the cause was.
+  - Once one matron detonates, they all seem to detonate upon spawning, which leads me to believe they're sharing
+  variables. Also, because of the nature of how zombies are spawned now, the tiny zombies that should appear in swarms
+  now only appear after everything else has been spawned.
   - If called from outside the framework class, the exception window seems to disappear immediately after being
   created and is replaced by a small blank window. I am thinking of making the framework variable global to solve this
   and some other issues.
