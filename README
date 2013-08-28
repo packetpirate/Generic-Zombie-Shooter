@@ -1,6 +1,6 @@
 -----------------------
 Author: Darin Beaudreau
-Version: 0.8
+Version: 0.8.5
 -----------------------
 
 Description:
@@ -43,17 +43,12 @@ Changes:
 
 Known Issues:
 
-  - Due in part to the migration from continuous spawning to wave based gameplay, somewhere along the way, I managed
-  to break something, and now poison fog zombie explosions don't always show in the right spot. I have to assume
-  this is caused by me passing a reference to a Point object, rather than a new Point object somewhere, but I'm not sure.
-  I am not sure if this is the case for zombie Matrons as well.
   - Pausing the game during a wave countdown does not stop the countdown, and it will continue to count while paused.
   If resumed after it hits 0, it will immediately start a new wave.
   - There was one particular case of an IllegalStateException after killing a tiny zombie from a matron horde, but
   I have no been able to replicate it, and am not sure what the cause was.
   - Once one matron detonates, they all seem to detonate upon spawning, which leads me to believe they're sharing
-  variables. Also, because of the nature of how zombies are spawned now, the tiny zombies that should appear in swarms
-  now only appear after everything else has been spawned.
+  variables.
   - If called from outside the framework class, the exception window seems to disappear immediately after being
   created and is replaced by a small blank window. I am thinking of making the framework variable global to solve this
   and some other issues.
