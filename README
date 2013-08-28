@@ -43,9 +43,17 @@ Changes:
 
 Known Issues:
 
-  - Numerous concurrency issues have arisen as of late due to my multi-threading. While I am quite sure
-  that they have been subdued for the moment, I would like to find a better way to handle this.
-  - There are some issues to work out with the threads that handle zombie creation.
+  - Due in part to the migration from continuous spawning to wave based gameplay, somewhere along the way, I managed
+  to break something, and now poison fog zombie explosions don't always show in the right spot. I have to assume
+  this is caused by me passing a reference to a Point object, rather than a new Point object somewhere, but I'm not sure.
+  I am not sure if this is the case for zombie Matrons as well.
+  - Pausing the game during a wave countdown does not stop the countdown, and it will continue to count while paused.
+  If resumed after it hits 0, it will immediately start a new wave.
+  - There was one particular case of an IllegalStateException after killing a tiny zombie from a matron horde, but
+  I have no been able to replicate it, and am not sure what the cause was.
+  - If called from outside the framework class, the exception window seems to disappear immediately after being
+  created and is replaced by a small blank window. I am thinking of making the framework variable global to solve this
+  and some other issues.
 
 TODO:
 
