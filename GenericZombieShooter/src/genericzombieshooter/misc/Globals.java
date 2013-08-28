@@ -22,7 +22,6 @@ import genericzombieshooter.structures.weapons.Grenade;
 import genericzombieshooter.structures.weapons.Landmine;
 import genericzombieshooter.structures.weapons.Shotgun;
 import java.awt.Point;
-import java.util.List;
 import java.util.Random;
 
 /**
@@ -31,7 +30,7 @@ import java.util.Random;
  */
 public class Globals {
     // Final
-    public static final String VERSION = "0.8";
+    public static final String VERSION = "0.8.5";
     public static final int W_WIDTH = 800; // The width of the game window.
     public static final int W_HEIGHT = 640; // The height of the game window.
     public static final long SLEEP_TIME = 20; // The sleep time of the animation thread.
@@ -48,6 +47,7 @@ public class Globals {
     public static final long ZOMBIE_POISONFOG_SPAWN = 20000;
     public static final int ZOMBIE_MATRON_TYPE = 5;
     public static final long ZOMBIE_MATRON_SPAWN = 50000;
+    public static final int ZOMBIE_TINY_TYPE = 6;
     
     // Non-Final
     public static Runnable animation; // The primary animation thread.

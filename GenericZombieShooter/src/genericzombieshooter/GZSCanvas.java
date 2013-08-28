@@ -103,10 +103,13 @@ public class GZSCanvas extends JPanel {
                         g2d.setTransform(saved);
                     }
                 }*/
-                Iterator<Zombie> it = framework.getWave().getZombies().iterator();
-                while(it.hasNext()) {
-                    Zombie z = it.next();
-                    z.draw(g2d);
+                synchronized(framework.getWave().getZombies()) {
+                    Iterator<Zombie> it = framework.getWave().getZombies().iterator();
+                    while(it.hasNext()) {
+                        Zombie z = it.next();
+                        z.draw(g2d);
+                        g2d.setTransform(saved);
+                    }
                 }
             } // End drawing zombies.
 
@@ -147,8 +150,8 @@ public class GZSCanvas extends JPanel {
                 if(!Globals.waveInProgress) {
                     long timeLeft = Globals.nextWave - System.currentTimeMillis();
                     g2d.setColor(Color.WHITE);
-                    g2d.setFont(new Font("Impact", Font.PLAIN, 14));
-                    g2d.drawString(("Next wave in " + ((timeLeft / 1000) + 1) + "..."), (Globals.W_WIDTH - 100), 18);
+                    g2d.setFont(new Font("Impact", Font.PLAIN, 20));
+                    g2d.drawString(("Next wave in " + ((timeLeft / 1000) + 1) + "..."), (Globals.W_WIDTH - 140), 24);
                     g2d.setFont(null);
                 }
             } // End drawing GUI elements.

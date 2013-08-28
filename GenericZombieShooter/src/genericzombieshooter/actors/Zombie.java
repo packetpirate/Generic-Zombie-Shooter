@@ -33,16 +33,18 @@ public class Zombie extends Point2D.Double {
     private AffineTransform af;
     private Animation img;
     
+    private int type;
     private int health; // How much health the zombie has.
     private int damage; // How much damage the zombie does per tick to the player.
     private double speed; // How fast the zombie moves.
     private int scoreValue; // How many points the zombie is worth.
     
-    public Zombie(Point2D.Double p_, int health_, int damage_, double speed_, int score_, Animation animation_) {
+    public Zombie(Point2D.Double p_, int type_,  int health_, int damage_, double speed_, int score_, Animation animation_) {
         super(p_.x, p_.y);
         this.af = new AffineTransform();
         this.img = animation_;
         
+        this.type = type_;
         this.health = health_;
         this.damage = damage_;
         this.speed = speed_;
@@ -50,6 +52,7 @@ public class Zombie extends Point2D.Double {
     }
     
     // Getter/Setter methods.
+    public int getType() { return this.type; }
     public int getHealth() { return this.health; }
     public void takeDamage(int damage_) { this.health -= damage_; }
     public int getDamage() { return this.damage; }

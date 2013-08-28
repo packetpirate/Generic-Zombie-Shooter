@@ -47,7 +47,7 @@ public class AcidZombie extends Zombie {
     public boolean canFire() { return this.cooldown == 0; }
     
     public AcidZombie(Point2D.Double p_, int health_, int damage_, double speed_, int score_, Animation animation_) {
-        super(p_, health_, damage_, speed_, score_, animation_);
+        super(p_, Globals.ZOMBIE_ACID_TYPE, health_, damage_, speed_, score_, animation_);
         this.particles = new ArrayList<Particle>();
         this.cooldown = AcidZombie.COOL_TIME;
     }

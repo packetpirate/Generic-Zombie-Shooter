@@ -27,6 +27,7 @@ public class ZombieWave {
     private List<Zombie> zombiesAlive;
     private List<Zombie> zombiesToDie;
     private long nextZombieSpawn;
+    public List<Zombie> getUnbornZombies() { return this.zombiesUnborn; }
     public List<Zombie> getZombies() { return this.zombiesAlive; }
     public boolean waveFinished() { return (this.zombiesAlive.isEmpty() && this.zombiesUnborn.isEmpty()); }
     
@@ -35,8 +36,6 @@ public class ZombieWave {
         this.zombiesAlive = new ArrayList<Zombie>();
         this.zombiesToDie = new ArrayList<Zombie>();
         this.nextZombieSpawn = System.currentTimeMillis() + ZombieWave.ZOMBIE_SPAWN_TIME;
-        
-        System.out.println("New wave created with " + this.zombiesUnborn.size() + " zombies!");
     }
     
     private List<Zombie> constructWave(int currentWave) {
@@ -69,12 +68,12 @@ public class ZombieWave {
             if(zombieType == Globals.ZOMBIE_REGULAR_TYPE) {
                 // Regular zombie.
                 Animation a_ = new Animation(Images.ZOMBIE_REGULAR, 40, 40, 2, (int)p.x, (int)p.y, 200, 0, true);
-                Zombie z_ = new Zombie(p, 250, 1, 1, 100, a_);
+                Zombie z_ = new Zombie(p, Globals.ZOMBIE_REGULAR_TYPE, 250, 1, 1, 100, a_);
                 wave.add(z_);
             } else if(zombieType == Globals.ZOMBIE_DOG_TYPE) {
                 // Zombie Dog
                 Animation a_ = new Animation(Images.ZOMBIE_DOG, 50, 50, 4, (int)p.x, (int)p.y, 80, 0, true);
-                Zombie z_ = new Zombie(p, 100, 3, 2, 150, a_);
+                Zombie z_ = new Zombie(p, Globals.ZOMBIE_DOG_TYPE, 100, 3, 2, 150, a_);
                 wave.add(z_);
             } else if(zombieType == Globals.ZOMBIE_ACID_TYPE) {
                 // Acid Zombie
@@ -111,10 +110,20 @@ public class ZombieWave {
         if(!this.zombiesToDie.isEmpty()) this.zombiesAlive.removeAll(this.zombiesToDie);
         // If the spawn timer is up, spawn a new zombie.
         if(!this.zombiesUnborn.isEmpty() && (System.currentTimeMillis() >= this.nextZombieSpawn)) {
-            //this.zombiesAlive.addAll(this.zombiesUnborn);
-            //this.zombiesUnborn.clear();
             this.zombiesAlive.add(this.zombiesUnborn.remove(0));
             this.nextZombieSpawn = System.currentTimeMillis() + ZombieWave.ZOMBIE_SPAWN_TIME;
+            
+        }
+        if(!this.zombiesUnborn.isEmpty()) {
+            // If there are any tiny zombies in the list, add them all at once.
+            Iterator<Zombie> it = this.zombiesUnborn.iterator();
+            while(it.hasNext()) {
+                Zombie z = it.next();
+                if(z.getType() == Globals.ZOMBIE_TINY_TYPE) {
+                    this.zombiesAlive.add(z);
+                    it.remove();
+                }
+            }
         }
         // Update "living" zombies.
         Iterator<Zombie> it = this.zombiesAlive.iterator();

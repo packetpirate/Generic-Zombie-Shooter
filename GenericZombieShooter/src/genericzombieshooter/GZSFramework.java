@@ -313,12 +313,14 @@ public class GZSFramework {
                 } // End removing player invincibility.
 
                 { // Check to see if the player has collected any items.
-                    Iterator<Item> it = this.items.iterator();
-                    while(it.hasNext()) {
-                        Item i = it.next();
-                        if(this.player.contains(i)) {
-                            i.applyEffect(this.player);
-                            it.remove();
+                    synchronized(this.items) {
+                        Iterator<Item> it = this.items.iterator();
+                        while(it.hasNext()) {
+                            Item i = it.next();
+                            if(this.player.contains(i)) {
+                                i.applyEffect(this.player);
+                                it.remove();
+                            }
                         }
                     }
                 } // End checking for item collisions.
@@ -465,29 +467,49 @@ public class GZSFramework {
     }*/
     
     private void createHealthPack() {
-        int healAmount = Globals.r.nextInt(75 - 50 + 1) + 50;
-        double x = Globals.r.nextInt((Globals.W_WIDTH - 20) - 20 + 1) + 20;
-        double y = Globals.r.nextInt((int)((Globals.W_HEIGHT - (WeaponsLoadout.BAR_HEIGHT + 10)) - 20 + 1)) + 20;
-        this.items.add(new HealthPack(healAmount, new Point2D.Double(x, y)));
+        try {
+            int healAmount = Globals.r.nextInt(75 - 50 + 1) + 50;
+            double x = Globals.r.nextInt((Globals.W_WIDTH - 20) - 20 + 1) + 20;
+            double y = Globals.r.nextInt((int)((Globals.W_HEIGHT - (WeaponsLoadout.BAR_HEIGHT + 10)) - 20 + 1)) + 20;
+            this.items.add(new HealthPack(healAmount, new Point2D.Double(x, y)));
+        } catch(Exception e) {
+            createErrorWindow(e);
+        }
     }
     
     private void createAmmoPack() {
-        int numOfWeapons = this.player.getAllWeapons().size();
-        int w = Globals.r.nextInt(numOfWeapons) + 1;
-        if(this.player.getWeapon(w).ammoFull()) createAmmoPack();
-        else {
-            int ammo = this.player.getWeapon(w).getAmmoPackAmount();
-            double x = Globals.r.nextInt((Globals.W_WIDTH - 20) - 20 + 1) + 20;
-            double y = Globals.r.nextInt((int)((Globals.W_HEIGHT - (WeaponsLoadout.BAR_HEIGHT + 10)) - 20 + 1)) + 20;
-            this.items.add(new Ammo(w, ammo, new Point2D.Double(x, y)));
+        try {
+            boolean nonFullWeaponDetected = false;
+            Iterator<Weapon> it = this.player.getAllWeapons().iterator();
+            while(it.hasNext()) {
+                Weapon weapon = it.next();
+                if(!weapon.ammoFull()) nonFullWeaponDetected = true;
+            }
+            if(nonFullWeaponDetected) {
+                int numOfWeapons = this.player.getAllWeapons().size();
+                int w = Globals.r.nextInt(numOfWeapons) + 1;
+                if(this.player.getWeapon(w).ammoFull()) createAmmoPack();
+                else {
+                    int ammo = this.player.getWeapon(w).getAmmoPackAmount();
+                    double x = Globals.r.nextInt((Globals.W_WIDTH - 20) - 20 + 1) + 20;
+                    double y = Globals.r.nextInt((int)((Globals.W_HEIGHT - (WeaponsLoadout.BAR_HEIGHT + 10)) - 20 + 1)) + 20;
+                    this.items.add(new Ammo(w, ammo, new Point2D.Double(x, y)));
+                }
+            }
+        } catch(Exception e) {
+            createErrorWindow(e);
         }
     }
     
     private void createWave() {
-        System.out.println("Creating new wave...");
-        this.currentWave++;
-        this.wave = new ZombieWave(this.currentWave);
-        Globals.waveInProgress = true;
+        try {
+            this.currentWave++;
+            this.wave = new ZombieWave(this.currentWave);
+            Globals.waveInProgress = true;
+            System.out.println("Wave " + this.currentWave + ": " + this.wave.getUnbornZombies().size() + " zombies!");
+        } catch(Exception e) {
+            createErrorWindow(e);
+        }
     }
     
     public static BufferedImage loadImage(String filename) {
