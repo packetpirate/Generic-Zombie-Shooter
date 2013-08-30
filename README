@@ -38,8 +38,8 @@ Changes:
   may be lingering near the spawn point as you die. This gives you a few seconds to get away from the swarm without
   worrying about dying again. It lasts three seconds. Currently, the graphical effect is just a circle, which I
   intend to change. I may also change the effect so firing your weapon removes the effect.
-  - Added Wave class, which will be used to store zombies. Each wave, a new zombie set will be added to it and the
-  update() method will be called on the wave to update all zombies.
+  - Changed gameplay to wave based gameplay. Random zombies are created each wave. After each wave, there is a ten
+  second delay before the next wave. The current wave generation method seems a little unbalanced, and needs refinement.
 
 Known Issues:
 
@@ -47,8 +47,6 @@ Known Issues:
   If resumed after it hits 0, it will immediately start a new wave.
   - There was one particular case of an IllegalStateException after killing a tiny zombie from a matron horde, but
   I have no been able to replicate it, and am not sure what the cause was.
-  - Once one matron detonates, they all seem to detonate upon spawning, which leads me to believe they're sharing
-  variables.
   - If called from outside the framework class, the exception window seems to disappear immediately after being
   created and is replaced by a small blank window. I am thinking of making the framework variable global to solve this
   and some other issues.
@@ -58,8 +56,6 @@ TODO:
   - Add more weapons. (Melee, etc)
   - Change gameplay so you do not start with all weapons automatically. Add store system so you can
   "buy" the weapons with your score points.
-  - Change gameplay so that "waves" of zombies appear all at once. This will be temporary until
-  post 1.0 release, at which point I will work on level-based gameplay.
 
 Planned Future Changes (Most likely post-1.0):
   - Add a lighting system so that you can only see directly in front of you, like a flashlight.
