@@ -34,7 +34,7 @@ import java.util.List;
  */
 public class ZombieMatron extends Zombie {
     // Final Variables
-    private static final long TIME_TO_BURST = 8000;
+    public static final long TIME_TO_BURST = 8000;
     private static final int MIN_ZOMBIES = 5;
     private static final int MAX_ZOMBIES = 10;
     private static final int MIN_RADIUS = 50;
@@ -54,6 +54,11 @@ public class ZombieMatron extends Zombie {
         this.explosion = new Explosion(Images.BLOOD_SHEET, new Point2D.Double(this.x, this.y));
         this.spawnTime = System.currentTimeMillis();
         this.burstTime = spawnTime + ZombieMatron.TIME_TO_BURST;
+    }
+    
+    @Override
+    public void set(int id, long value) {
+        if(id == 0) this.burstTime = value;
     }
     
     @Override

@@ -52,6 +52,9 @@ public class Zombie extends Point2D.Double {
     }
     
     // Getter/Setter methods.
+    public void set(int id, long value) {
+        // To be overridden.
+    }
     public int getType() { return this.type; }
     public int getHealth() { return this.health; }
     public void takeDamage(int damage_) { this.health -= damage_; }
