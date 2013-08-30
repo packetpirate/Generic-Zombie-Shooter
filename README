@@ -56,6 +56,12 @@ TODO:
   - Add more weapons. (Melee, etc)
   - Change gameplay so you do not start with all weapons automatically. Add store system so you can
   "buy" the weapons with your score points.
+  - Balance wave generation.
+  - Put ammo and health drops on timers instead of threads.
+  - Add powerups (speed, firing rate, unlimited ammo?, extra life, etc)
+  - Add "boss" waves every 20 waves or so where the entire wave is just one big boss monster with a special power.
+  - Add background music or ambient sounds so the game isn't as quiet. Maybe add zombie noises.
+  - Add end screen showing final zombie kill count after player dies.
 
 Planned Future Changes (Most likely post-1.0):
   - Add a lighting system so that you can only see directly in front of you, like a flashlight.
