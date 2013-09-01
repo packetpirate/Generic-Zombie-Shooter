@@ -69,11 +69,12 @@ public class GZSCanvas extends JPanel {
             g2d.drawImage(background, 0, 0, null);
             
             { // Begin drawing items.
-                Iterator<Item> it = framework.getItems().iterator();
+                /*Iterator<Item> it = framework.getItems().iterator();
                 while(it.hasNext()) {
                     Item i = it.next();
                     i.draw(g2d);
-                }
+                }*/
+                framework.getItemFactory().draw(g2d);
             } // End drawing items.
 
             { // Begin drawing player and ammo.
