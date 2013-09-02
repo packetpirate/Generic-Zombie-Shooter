@@ -21,6 +21,18 @@ The game is not complete, so there is limited functionality. Here are the contro
   5 - Select Hoppers (Landmines)
   Mouse Scroll Wheel - Quick Select Weapon (Up = Left, Down = Right)
   P - Pause Game
+  
+Zombie Types:
+
+  - Zumby, the most basic zombie. It's the slowest of the zombies and does minimal damage. But if they swarm you,
+    they can be very formidable.
+  - Rotdog, a fast zombie dog that moves twice as fast as normal zombies and does 3x the damage.
+  - Upchuck, a hideous hulking green zombie that spits blobs of acid at you.
+  - Gasbag, a zombie that is twice as fast as normal zombies and explodes into a cloud of poisonous gas when
+    killed that does poison damage over time. Grab a medkit to heal!
+  - Big Mama, an ugly pale creature resembling a Wight that, if not killed fast enough, will burst into a
+    swarm of tiny zombies. The burst of blood also does damage, so watch out for these!
+  - Tiny Zumby, a much smaller and faster version of the Zumby, but weaker.
 
 Copyright Information:
 
