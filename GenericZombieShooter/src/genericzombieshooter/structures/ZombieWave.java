@@ -66,27 +66,27 @@ public class ZombieWave {
             
             int zombieType = Globals.r.nextInt(difficulty) + 1;
             if(zombieType == Globals.ZOMBIE_REGULAR_TYPE) {
-                // Regular zombie.
+                // Zumby
                 Animation a_ = new Animation(Images.ZOMBIE_REGULAR, 40, 40, 2, (int)p_.x, (int)p_.y, 200, 0, true);
                 Zombie z_ = new Zombie(p_, Globals.ZOMBIE_REGULAR_TYPE, 250, 1, 1, 100, a_);
                 wave.add(z_);
             } else if(zombieType == Globals.ZOMBIE_DOG_TYPE) {
-                // Zombie Dog
+                // Rotdog
                 Animation a_ = new Animation(Images.ZOMBIE_DOG, 50, 50, 4, (int)p_.x, (int)p_.y, 80, 0, true);
                 Zombie z_ = new Zombie(p_, Globals.ZOMBIE_DOG_TYPE, 100, 3, 2, 150, a_);
                 wave.add(z_);
             } else if(zombieType == Globals.ZOMBIE_ACID_TYPE) {
-                // Acid Zombie
+                // Up-Chuck
                 Animation a_ = new Animation(Images.ZOMBIE_ACID, 64, 64, 2, (int)p_.x, (int)p_.y, 200, 0, true);
                 AcidZombie z_ = new AcidZombie(p_, 300, 1, 1, 400, a_);
                 wave.add(z_);
             } else if(zombieType == Globals.ZOMBIE_POISONFOG_TYPE) {
-                // Poison Fog Zombie
+                // Gasbag
                 Animation a_ = new Animation(Images.ZOMBIE_POISONFOG, 40, 40, 2, (int)p_.x, (int)p_.y, 100, 0, true);
                 PoisonFogZombie pfz_ = new PoisonFogZombie(p_, 250, 1, 2, 200, a_);
                 wave.add(pfz_);
             } else if(zombieType == Globals.ZOMBIE_MATRON_TYPE) {
-                // Zombie Matron
+                // Big Mama
                 Animation a_ = new Animation(Images.ZOMBIE_MATRON, 48, 48, 2, (int)p_.x, (int)p_.y, 200, 0, true);
                 ZombieMatron zm_ = new ZombieMatron(p_, 500, 1, 1, 1000, a_);
                 wave.add(zm_);

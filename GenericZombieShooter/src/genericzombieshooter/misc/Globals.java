@@ -26,7 +26,7 @@ import java.util.Random;
 
 /**
  * Contains publicly accessible variables for the entire project.
- * @author packetpirate
+ * @author Darin Beaudreau
  */
 public class Globals {
     // Final

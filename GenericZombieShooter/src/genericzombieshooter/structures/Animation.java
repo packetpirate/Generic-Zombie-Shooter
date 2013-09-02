@@ -20,7 +20,7 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
 /**
- *
+ * Used to animate sprite sheets.
  * @author Darin Beaudreau
  */
 public class Animation {

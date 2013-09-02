@@ -20,7 +20,6 @@ import genericzombieshooter.actors.Player;
 import genericzombieshooter.actors.Zombie;
 import genericzombieshooter.misc.Globals;
 import genericzombieshooter.misc.Images;
-import genericzombieshooter.structures.Item;
 import genericzombieshooter.structures.weapons.Weapon;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -68,14 +67,8 @@ public class GZSCanvas extends JPanel {
             Player player = framework.getPlayer();
             g2d.drawImage(background, 0, 0, null);
             
-            { // Begin drawing items.
-                /*Iterator<Item> it = framework.getItems().iterator();
-                while(it.hasNext()) {
-                    Item i = it.next();
-                    i.draw(g2d);
-                }*/
-                framework.getItemFactory().draw(g2d);
-            } // End drawing items.
+            // Draw Items
+            framework.getItemFactory().draw(g2d);
 
             { // Begin drawing player and ammo.
                 Iterator<Weapon> it = player.getAllWeapons().iterator();
@@ -96,14 +89,6 @@ public class GZSCanvas extends JPanel {
             g2d.setTransform(saved);
             
             { // Begin drawing zombies.
-                /*synchronized(framework.getZombies()) {
-                    Iterator<Zombie> it = framework.getZombies().iterator();
-                    while(it.hasNext()) {
-                        Zombie z = it.next();
-                        z.draw(g2d);
-                        g2d.setTransform(saved);
-                    }
-                }*/
                 synchronized(framework.getWave().getZombies()) {
                     Iterator<Zombie> it = framework.getWave().getZombies().iterator();
                     while(it.hasNext()) {

@@ -22,7 +22,7 @@ import java.awt.geom.Point2D;
 import java.awt.image.BufferedImage;
 
 /**
- *
+ * Used to create explosions from weapons or zombies.
  * @author Darin Beaudreau
  */
 public class Explosion extends Point2D.Double {

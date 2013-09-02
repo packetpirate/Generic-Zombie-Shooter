@@ -19,7 +19,6 @@ package genericzombieshooter;
 import genericzombieshooter.actors.Player;
 import genericzombieshooter.misc.Globals;
 import genericzombieshooter.misc.Sounds;
-import genericzombieshooter.structures.Item;
 import genericzombieshooter.structures.ItemFactory;
 import genericzombieshooter.structures.ZombieWave;
 import genericzombieshooter.structures.components.ErrorWindow;
@@ -35,9 +34,7 @@ import java.awt.geom.AffineTransform;
 import java.awt.geom.Point2D;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.List;
 import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 
@@ -55,14 +52,9 @@ public class GZSFramework {
     // Game objects.
     private Player player; // The player character.
     public Player getPlayer() { return player; }
-    //private List<Zombie> zombies;
-    //public List<Zombie> getZombies() { return zombies; }
-    //private List<Zombie> zombiesToAdd;
     private int currentWave;
     private ZombieWave wave;
     public ZombieWave getWave() { return this.wave; }
-    /*private List<Item> items;
-    public List<Item> getItems() { return this.items; }*/
     
     private int score; // The player's current score.
     public int getScore() { return score; }
@@ -93,12 +85,8 @@ public class GZSFramework {
 
         { // Begin initializing game objects.
             player = new Player(((Globals.W_WIDTH / 2) - 20), ((Globals.W_HEIGHT / 2) - 20), 40, 40);
-            //zombies = new ArrayList<Zombie>();
-            //zombies = Collections.synchronizedList(new ArrayList<Zombie>());
-            //zombiesToAdd = Collections.synchronizedList(new ArrayList<Zombie>());
             currentWave = 0;
             wave = new ZombieWave(currentWave);
-            //items = new ArrayList<Item>();
             score = 0;
             loadout = new WeaponsLoadout(player);
             itemFactory = new ItemFactory();
@@ -262,48 +250,10 @@ public class GZSFramework {
                     // If the player is in between waves, check if the countdown has reached zero.
                     if(System.currentTimeMillis() >= Globals.nextWave) createWave();
                 }
-
-                // Update zombie vectors and positions.
-                /*if(!zombies.isEmpty()) {
-                    synchronized(zombies) {
-                        Iterator<Zombie> it = zombies.iterator();
-                        while(it.hasNext()) {
-                            Zombie z = it.next();
-                            // Update the zombie animation.
-                            z.getImage().update();
-                            // Update the zombie's movement vector.
-                            double theta_ = Math.atan2((player.getCenterY() - z.y), 
-                                                       (player.getCenterX() - z.x)) + Math.PI / 2;
-                            z.rotate(theta_);
-                            z.move(theta_);
-                            z.update(player, zombiesToAdd);
-                        }
-                    }
-                }*/
+                
                 // Update all zombies in the current wave.
                 if(Globals.waveInProgress) this.wave.update(player);
 
-                { // Check for damage against the player. (touching zombies, projectiles, explosions, etc...)
-                    /*if(!zombies.isEmpty()) {
-                        synchronized(zombies) {
-                            Iterator<Zombie> it = zombies.iterator();
-                            while(it.hasNext()) {
-                                Zombie z = it.next();
-                                if(!player.isInvincible()) {
-                                    if(player.intersects(z.getRect())) player.takeDamage(z.getDamage());
-                                    if(z.getParticles() != null) {
-                                        Iterator<Particle> pit = z.getParticles().iterator();
-                                        while(pit.hasNext()) {
-                                            Particle p = pit.next();
-                                            if(p.checkCollision(player)) player.takeDamage(z.getParticleDamage());
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                    if(player.isPoisoned()) player.takePoisonDamage();*/
-                } // End checking player for damage sources.
                 // Check player for damage.
                 if(Globals.waveInProgress) this.wave.checkPlayerDamage(player);
                 
@@ -315,19 +265,8 @@ public class GZSFramework {
                     }
                 } // End removing player invincibility.
 
-                { // Check to see if the player has collected any items.
-                    /*synchronized(this.items) {
-                        Iterator<Item> it = this.items.iterator();
-                        while(it.hasNext()) {
-                            Item i = it.next();
-                            if(this.player.contains(i)) {
-                                i.applyEffect(this.player);
-                                it.remove();
-                            }
-                        }
-                    }*/
-                    itemFactory.update(player);
-                } // End checking for item collisions.
+                // Update Items
+                itemFactory.update(player);
 
                 // Check to see if the player is still alive. If not, take away a life and reset.
                 if(!player.isAlive()) {
@@ -336,11 +275,8 @@ public class GZSFramework {
                         // Reset the game.
                         Globals.started = false;
                         player.reset();
-                        //zombies = Collections.synchronizedList(new ArrayList<Zombie>());
-                        //zombiesToAdd = Collections.synchronizedList(new ArrayList<Zombie>());
                         currentWave = 1;
                         wave = new ZombieWave(currentWave);
-                        //items = new ArrayList<Item>();
                         for(boolean k : Globals.keys) k = false;
                         for(boolean b : Globals.buttons) b = false;
                         Iterator<Weapon> it = player.getAllWeapons().iterator();
@@ -352,34 +288,6 @@ public class GZSFramework {
                     loadout.setCurrentWeapon(1);
                 }
 
-                { // Do zombie updates.
-                    /*
-                    // Check for collisions between zombies and ammo.
-                    synchronized(zombies) {
-                        Iterator<Zombie> it = zombies.iterator();
-                        while(it.hasNext()) {
-                            Zombie z = it.next();
-                            if(z.isDead()) {
-                                it.remove();
-                                continue;
-                            } else {
-                                Iterator<Weapon> wit = player.getAllWeapons().iterator();
-                                while(wit.hasNext()) {
-                                    Weapon w = wit.next();
-                                    int damage = w.checkForDamage(z.getRect());
-                                    if(damage > 0) {
-                                        z.takeDamage(damage);
-                                        if(z.isDead()) {
-                                            score += z.getScore();
-                                            it.remove();
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }*/
-                } // End zombie updates.
-
                 { // Begin weapon updates.
                     Iterator<Weapon> it = this.player.getAllWeapons().iterator();
                     while(it.hasNext()) {
@@ -387,13 +295,6 @@ public class GZSFramework {
                         w.updateWeapon(this.wave.getZombies());
                     }
                 } // End weapon updates.
-
-                /*{ // Add any zombies in the toAdd list.
-                    if(!zombiesToAdd.isEmpty()) {
-                        zombies.addAll(zombiesToAdd);
-                        zombiesToAdd.clear();
-                    }
-                } // End adding new zombies.*/
                 
                 // Check for end of wave.
                 if(Globals.waveInProgress && this.wave.waveFinished()) {
@@ -406,104 +307,6 @@ public class GZSFramework {
             }
         }
     }
-    
-    /**
-     * Creates a new zombie on the screen.
-     **/
-    /*private void createZombie(int type) {
-        try {
-            synchronized(zombies) {
-                // Decide which side of the screen to spawn the zombie on.
-                int spawnSide = Globals.r.nextInt(4) + 1;
-
-                double x_ = 0;
-                double y_ = 0;
-
-                switch(spawnSide) {
-                    case 1:
-                        x_ = Globals.r.nextInt((Globals.W_WIDTH - 40) + 1);
-                        break;
-                    case 2:
-                        x_ = Globals.W_WIDTH - 40;
-                        y_ = Globals.r.nextInt((Globals.W_HEIGHT - 40) + 1);
-                        break;
-                    case 3:
-                        x_ = Globals.r.nextInt((Globals.W_WIDTH - 40) + 1);
-                        y_ = Globals.W_HEIGHT - 40;
-                        break;
-                    case 4:
-                        y_ = Globals.r.nextInt((Globals.W_HEIGHT - 40) + 1);
-                        break;
-                }
-
-                // Create the zombie.
-                Point2D.Double p_ = new Point2D.Double(x_, y_);
-                if(type == Globals.ZOMBIE_REGULAR_TYPE) {
-                    // Regular Zombie
-                    Animation a_ = new Animation(Images.ZOMBIE_REGULAR, 40, 40, 2, (int)p_.x, (int)p_.y, 200, 0, true);
-                    Zombie z_ = new Zombie(p_, 250, 1, 1, 100, a_);
-                    zombies.add(z_);
-                } else if(type == Globals.ZOMBIE_DOG_TYPE) {
-                    // Fast Zombie Dog
-                    Animation a_ = new Animation(Images.ZOMBIE_DOG, 50, 50, 4, (int)p_.x, (int)p_.y, 80, 0, true);
-                    Zombie z_ = new Zombie(p_, 100, 3, 2, 150, a_);
-                    zombies.add(z_);
-                } else if(type == Globals.ZOMBIE_ACID_TYPE) {
-                    // Acid Zombie
-                    Animation a_ = new Animation(Images.ZOMBIE_ACID, 64, 64, 2, (int)p_.x, (int)p_.y, 200, 0, true);
-                    AcidZombie z_ = new AcidZombie(p_, 300, 1, 1, 400, a_);
-                    zombies.add(z_);
-                } else if(type == Globals.ZOMBIE_POISONFOG_TYPE) {
-                    // Explosive Zombie
-                    Animation a_ = new Animation(Images.ZOMBIE_POISONFOG, 40, 40, 2, (int)p_.x, (int)p_.y, 100, 0, true);
-                    PoisonFogZombie ez_ = new PoisonFogZombie(p_, 250, 1, 2, 200, a_);
-                    zombies.add(ez_);
-                } else if(type == Globals.ZOMBIE_MATRON_TYPE) {
-                    // Zombie Matron
-                    Animation a_ = new Animation(Images.ZOMBIE_MATRON, 48, 48, 2, (int)p_.x, (int)p_.y, 200, 0, true);
-                    ZombieMatron zm_ = new ZombieMatron(p_, 500, 1, 1, 1000, a_);
-                    zombies.add(zm_);
-                }
-            }
-        } catch(Exception e) {
-            createErrorWindow(e);
-        }
-    }*/
-    
-    /*private void createHealthPack() {
-        try {
-            int healAmount = Globals.r.nextInt(75 - 50 + 1) + 50;
-            double x = Globals.r.nextInt((Globals.W_WIDTH - 20) - 20 + 1) + 20;
-            double y = Globals.r.nextInt((int)((Globals.W_HEIGHT - (WeaponsLoadout.BAR_HEIGHT + 10)) - 20 + 1)) + 20;
-            this.items.add(new HealthPack(healAmount, new Point2D.Double(x, y)));
-        } catch(Exception e) {
-            createErrorWindow(e);
-        }
-    }
-    
-    private void createAmmoPack() {
-        try {
-            boolean nonFullWeaponDetected = false;
-            Iterator<Weapon> it = this.player.getAllWeapons().iterator();
-            while(it.hasNext()) {
-                Weapon weapon = it.next();
-                if(!weapon.ammoFull()) nonFullWeaponDetected = true;
-            }
-            if(nonFullWeaponDetected) {
-                int numOfWeapons = this.player.getAllWeapons().size();
-                int w = Globals.r.nextInt(numOfWeapons) + 1;
-                if(this.player.getWeapon(w).ammoFull()) createAmmoPack();
-                else {
-                    int ammo = this.player.getWeapon(w).getAmmoPackAmount();
-                    double x = Globals.r.nextInt((Globals.W_WIDTH - 20) - 20 + 1) + 20;
-                    double y = Globals.r.nextInt((int)((Globals.W_HEIGHT - (WeaponsLoadout.BAR_HEIGHT + 10)) - 20 + 1)) + 20;
-                    this.items.add(new Ammo(w, ammo, new Point2D.Double(x, y)));
-                }
-            }
-        } catch(Exception e) {
-            createErrorWindow(e);
-        }
-    }*/
     
     private void createWave() {
         try {
@@ -534,10 +337,7 @@ public class GZSFramework {
         frame.pack();
         frame.setVisible(true);
     }
-
-    /**
-     * Initializes the main animation thread.
-     **/
+    
     private void initializeThread() {
         Globals.animation = new Runnable() {
             @Override
@@ -557,135 +357,9 @@ public class GZSFramework {
                 System.exit(0);
             }
         };
-        /*Globals.health = new Runnable() {
-            @Override
-            public void run() {
-                while(Globals.running) {
-                    if(Globals.started) {
-                        try {
-                            Thread.sleep(HealthPack.SPAWN_TIME);
-                        } catch(InterruptedException ie) {
-                            System.out.println("Error occurred in HealthPack thread...");
-                            createErrorWindow(ie);
-                        }
-
-                        if(!Globals.paused) createHealthPack();
-                    }
-                } 
-            }
-        };
-        Globals.ammo = new Runnable() {
-            @Override
-            public void run() {
-                while(Globals.running) {
-                    if(Globals.started) {
-                        try {
-                            Thread.sleep(Ammo.SPAWN_TIME);
-                        } catch(InterruptedException ie) {
-                            System.out.println("Error occurred in AmmoPack thread...");
-                            createErrorWindow(ie);
-                        }
-
-                        if(!Globals.paused) createAmmoPack();
-                    }
-                }
-            }
-        };
-        Globals.zombieSpawns = new ArrayList<Runnable>();
-        Globals.zombieSpawns.add(new Runnable() {
-            // Regular Zombie Spawn
-            @Override
-            public void run() {
-                while(Globals.running) {
-                    if(Globals.started) {
-                        try {
-                            Thread.sleep(Globals.ZOMBIE_REGULAR_SPAWN);
-                        } catch(InterruptedException ie) {
-                            System.out.println("Regular zombie thread interrupted...");
-                        }
-
-                        if(!Globals.paused) createZombie(Globals.ZOMBIE_REGULAR_TYPE);
-                    }
-                }
-            }
-        });
-        Globals.zombieSpawns.add(new Runnable() {
-            // Zombie Dog Spawn
-            @Override
-            public void run() {
-                while(Globals.running) {
-                    if(Globals.started) {
-                        try {
-                            Thread.sleep(Globals.ZOMBIE_DOG_SPAWN);
-                        } catch(InterruptedException ie) {
-                            System.out.println("Zombie Dog thread interrupted...");
-                        }
-
-                        if(!Globals.paused) createZombie(Globals.ZOMBIE_DOG_TYPE);
-                    }
-                }
-            }
-        });
-        Globals.zombieSpawns.add(new Runnable() {
-            // Acid Zombie Spawn
-            @Override
-            public void run() {
-                while(Globals.running) {
-                    if(Globals.started) {
-                        try {
-                            Thread.sleep(Globals.ZOMBIE_ACID_SPAWN);
-                        } catch(InterruptedException ie) {
-                            System.out.println("Acid Zombie thread interrupted...");
-                        }
-
-                        if(!Globals.paused) createZombie(Globals.ZOMBIE_ACID_TYPE);
-                    }
-                }
-            }
-        });
-        Globals.zombieSpawns.add(new Runnable() {
-            // Explosive Zombie Spawn
-            @Override
-            public void run() {
-                while(Globals.running) {
-                    if(Globals.started) {
-                        try {
-                            Thread.sleep(Globals.ZOMBIE_POISONFOG_SPAWN);
-                        } catch(InterruptedException ie) {
-                            System.out.println("Explosive Zombie thread interrupted...");
-                        }
-
-                        if(!Globals.paused) createZombie(Globals.ZOMBIE_POISONFOG_TYPE);
-                    }
-                }
-            }
-        });
-        Globals.zombieSpawns.add(new Runnable() {
-            // Zombie Matron Spawn
-            @Override
-            public void run() {
-                while(Globals.running) {
-                    if(Globals.started) {
-                        try {
-                            Thread.sleep(Globals.ZOMBIE_MATRON_SPAWN);
-                        } catch(InterruptedException ie) {
-                            System.out.println("Zombie Matron thread interrupted...");
-                        }
-                        
-                        if(!Globals.paused) createZombie(Globals.ZOMBIE_MATRON_TYPE);
-                    }
-                }
-            }
-        });*/
     }
-
-    /**
-     * Creates a new thread from the animation Runnable and then starts it.
-     **/
+    
     private void startThread() {
         new Thread(Globals.animation).start();
-        //new Thread(Globals.health).start();
-        //new Thread(Globals.ammo).start();
-        //for(Runnable r : Globals.zombieSpawns) new Thread(r).start();
     }
 }

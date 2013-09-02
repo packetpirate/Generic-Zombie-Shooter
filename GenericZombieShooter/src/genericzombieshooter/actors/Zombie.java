@@ -16,8 +16,10 @@
  **/
 package genericzombieshooter.actors;
 
+import genericzombieshooter.misc.Globals;
 import genericzombieshooter.structures.Animation;
 import genericzombieshooter.structures.Particle;
+import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Point2D;
@@ -86,6 +88,16 @@ public class Zombie extends Point2D.Double {
     public void draw(Graphics2D g2d) {
         // Can be overridden.
         g2d.setTransform(this.af);
+        { // Draw zombie's shadow.
+            int width = this.img.getWidth();
+            int height = this.img.getHeight();
+            if(this.type == Globals.ZOMBIE_REGULAR_TYPE) height /= 2;
+            else if(this.type == Globals.ZOMBIE_DOG_TYPE) width /= 2;
+            int xPos = (int)(this.x - (width / 2));
+            int yPos = (int)(this.y - (height / 2));
+            g2d.setColor(new Color(0, 0, 0, 100));
+            g2d.fillOval(xPos, yPos, width, height);
+        } // End drawing zombie's shadow.
         this.img.draw((Graphics2D)g2d);
     }
     

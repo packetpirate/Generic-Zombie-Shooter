@@ -28,9 +28,7 @@ import javax.sound.sampled.UnsupportedAudioFileException;
 
 /**
  * Contains all pre-loaded sounds.
- *
- * @author packetpirate
- *
+ * @author Darin Beaudreau
  */
 public enum Sounds {
     RTPS("shoot1.wav", false),
