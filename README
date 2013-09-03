@@ -57,6 +57,8 @@ Changes:
   - Added "shadows" under the player and zombies, which are basically just transparent ovals.
   - Balanced wave generation somewhat. Now, up to 25% of zombies spawned each wave can be "specials", referring
     to the Upchuck, Gasbag, and Big Mama type zombies.
+  - Changed score value to cash value and changed zombie cash values to reflect this change.
+  - Added text to show current wave number while a wave is in progress.
 
 Known Issues:
 
