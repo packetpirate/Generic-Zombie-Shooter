@@ -42,35 +42,37 @@ the project on Github, or at http://www.gnu.org/licenses/gpl.txt
 Changes:
 
   - Added ErrorWindow class. In the event of a fatal error, the program will display a screen to the user
-  informing them of the error, along with the stack trace of the exception, and instructions on how to
-  email the details to me so I can fix the problem.
+    informing them of the error, along with the stack trace of the exception, and instructions on how to
+    email the details to me so I can fix the problem.
   - Added new splash screen.
   - Added crosshair cursor.
   - Added player invincibility period for when the player respawns. This is so you don't get swarmed by zombies that
-  may be lingering near the spawn point as you die. This gives you a few seconds to get away from the swarm without
-  worrying about dying again. It lasts three seconds. Currently, the graphical effect is just a circle, which I
-  intend to change. I may also change the effect so firing your weapon removes the effect.
+    may be lingering near the spawn point as you die. This gives you a few seconds to get away from the swarm without
+    worrying about dying again. It lasts three seconds. Currently, the graphical effect is just a circle, which I
+    intend to change. I may also change the effect so firing your weapon removes the effect.
   - Changed gameplay to wave based gameplay. Random zombies are created each wave. After each wave, there is a ten
-  second delay before the next wave. The current wave generation method seems a little unbalanced, and needs refinement.
+    second delay before the next wave. The current wave generation method seems a little unbalanced, and needs refinement.
   - Items now spawn on timers, rather than threads to try to cut down on thread usage. They are now spawned via an
-  "ItemFactory" class.
+    "ItemFactory" class.
+  - Added "shadows" under the player and zombies, which are basically just transparent ovals.
+  - Balanced wave generation somewhat. Now, up to 25% of zombies spawned each wave can be "specials", referring
+    to the Upchuck, Gasbag, and Big Mama type zombies.
 
 Known Issues:
 
   - Pausing the game during a wave countdown does not stop the countdown, and it will continue to count while paused.
-  If resumed after it hits 0, it will immediately start a new wave.
+    If resumed after it hits 0, it will immediately start a new wave.
   - There was one particular case of an IllegalStateException after killing a tiny zombie from a matron horde, but
-  I have no been able to replicate it, and am not sure what the cause was.
+    I have no been able to replicate it, and am not sure what the cause was.
   - If called from outside the framework class, the exception window seems to disappear immediately after being
-  created and is replaced by a small blank window. I am thinking of making the framework variable global to solve this
-  and some other issues.
+    created and is replaced by a small blank window. I am thinking of making the framework variable global to solve this
+    and some other issues.
 
 TODO:
 
   - Add more weapons. (Melee, etc)
   - Change gameplay so you do not start with all weapons automatically. Add store system so you can
-  "buy" the weapons with your score points.
-  - Balance wave generation.
+    "buy" the weapons with your score points.
   - Add powerups (speed, firing rate, unlimited ammo?, extra life, etc)
   - Add "boss" waves every 20 waves or so where the entire wave is just one big boss monster with a special power.
   - Add background music or ambient sounds so the game isn't as quiet. Maybe add zombie noises.
@@ -83,11 +85,11 @@ Planned Future Changes (Most likely post-1.0):
   - Add pathing AI to make the aforementioned terrain possible.
   - Add level-based gameplay.
       - Level based gameplay could revolve around a map with areas that are unexplored. Each day, you can
-      choose to explore an area and fight the zombies in it and rescue survivors and do other things. You
-      could travel at night, but it would be dark and there would be less visible (lighting system) and chances
-      of more dangerous zombies and in larger numbers.
+        choose to explore an area and fight the zombies in it and rescue survivors and do other things. You
+        could travel at night, but it would be dark and there would be less visible (lighting system) and chances
+        of more dangerous zombies and in larger numbers.
   - Change enemy AI so they attack when you are in their line of sight. Also will make player give off
-  "footsteps" so zombies can detect you at a certain distance. Any zombies that detect you will make
-  "noise" that will attract any zombies near that zombie to attack as well, creating "hordes".
+    "footsteps" so zombies can detect you at a certain distance. Any zombies that detect you will make
+    "noise" that will attract any zombies near that zombie to attack as well, creating "hordes".
   - Create custom graphics. (least likely, considering I'm terrible at graphics work)
   - (Optional) Re-design game engine and migrate to LWJGL and Slick2D.
