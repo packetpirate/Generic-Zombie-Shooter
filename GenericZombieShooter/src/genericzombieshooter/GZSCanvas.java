@@ -24,10 +24,10 @@ import genericzombieshooter.structures.weapons.Weapon;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.geom.AffineTransform;
-import java.awt.geom.Ellipse2D;
 import java.awt.image.BufferedImage;
 import java.util.Iterator;
 import javax.swing.JPanel;
@@ -115,7 +115,7 @@ public class GZSCanvas extends JPanel {
                 } // End drawing the health bar.
                 // Draw status messages.
                 g2d.setColor(Color.BLACK);
-                g2d.drawString(("Score: " + framework.getScore()), 10, 42);
+                g2d.drawString(("Cash: $" + player.getCash()), 10, 42);
                 g2d.drawString(("Lives: " + player.getLives()), 10, 55);
                 g2d.drawString(("Ammo: " + player.getWeapon().getAmmoLeft() + "/" + player.getWeapon().getMaxAmmo()),
                                 10, 68);
@@ -126,13 +126,21 @@ public class GZSCanvas extends JPanel {
                 }
                 framework.getLoadout().draw((Graphics2D)g2d);
                 
+                g2d.setColor(Color.WHITE);
+                Font font = new Font("Impact", Font.PLAIN, 20);
+                FontMetrics metrics = g2d.getFontMetrics(font);
+                g2d.setFont(font);
                 if(!Globals.waveInProgress) {
                     long timeLeft = Globals.nextWave - System.currentTimeMillis();
-                    g2d.setColor(Color.WHITE);
-                    g2d.setFont(new Font("Impact", Font.PLAIN, 20));
-                    g2d.drawString(("Next wave in " + ((timeLeft / 1000) + 1) + "..."), (Globals.W_WIDTH - 140), 24);
-                    g2d.setFont(null);
+                    String s = "Next wave in " + ((timeLeft / 1000) + 1) + "...";
+                    int w = metrics.stringWidth(s);
+                    g2d.drawString(s, (Globals.W_WIDTH - (w + 20)), 24);
+                } else {
+                    String s = "Current Wave: " + framework.getWave().getWaveNumber();
+                    int w = metrics.stringWidth(s);
+                    g2d.drawString(s, (Globals.W_WIDTH - (w + 20)), 24);
                 }
+                g2d.setFont(null);
             } // End drawing GUI elements.
         } else {
             g2d.drawImage(Images.START_SCREEN, 0, 0, null);

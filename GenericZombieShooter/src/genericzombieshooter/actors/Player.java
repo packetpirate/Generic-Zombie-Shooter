@@ -43,6 +43,7 @@ public class Player extends Rectangle2D.Double {
     private AffineTransform af;
     private BufferedImage img;
     private int health;
+    private int cash;
     private int lives;
     private boolean invincible;
     private long invincibleStartTime;
@@ -55,6 +56,7 @@ public class Player extends Rectangle2D.Double {
         this.img = Images.PLAYER;
 
         this.health = Player.MAX_HEALTH;
+        this.cash = 0;
         this.lives = 3;
         this.invincible = false;
         this.invincibleStartTime = System.currentTimeMillis();
@@ -72,6 +74,8 @@ public class Player extends Rectangle2D.Double {
     public BufferedImage getImage() { return this.img; }
 
     public int getHealth() { return this.health; }
+    public int getCash() { return this.cash; }
+    public void addCash(int amount) { this.cash += amount; }
     public void takeDamage(int damage_) { this.health -= damage_; }
     public void addHealth(int amount) { 
         if((this.health + amount) > Player.MAX_HEALTH) this.health = Player.MAX_HEALTH;
@@ -88,7 +92,10 @@ public class Player extends Rectangle2D.Double {
     }
     public void reset() {
         this.health = Player.MAX_HEALTH;
-        if(this.lives == 0) this.lives = 3;
+        if(this.lives == 0) {
+            this.cash = 0;
+            this.lives = 3;
+        }
         else {
             this.invincible = true;
             this.invincibleStartTime = System.currentTimeMillis();

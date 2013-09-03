@@ -23,15 +23,18 @@ public class ZombieWave {
     private static final long ZOMBIE_SPAWN_TIME = 1000;
     private static final int ZOMBIES_PER_WAVE = 3;
     // Member Variables
+    private int waveNumber;
     private List<Zombie> zombiesUnborn;
     private List<Zombie> zombiesAlive;
     private List<Zombie> zombiesToDie;
     private long nextZombieSpawn;
+    public int getWaveNumber() { return this.waveNumber; }
     public List<Zombie> getUnbornZombies() { return this.zombiesUnborn; }
     public List<Zombie> getZombies() { return this.zombiesAlive; }
     public boolean waveFinished() { return (this.zombiesAlive.isEmpty() && this.zombiesUnborn.isEmpty()); }
     
     public ZombieWave(int wave) {
+        this.waveNumber = wave;
         this.zombiesUnborn = constructWave(wave);
         this.zombiesAlive = new ArrayList<Zombie>();
         this.zombiesToDie = new ArrayList<Zombie>();
@@ -49,7 +52,6 @@ public class ZombieWave {
         int enemyCount = currentWave * ZombieWave.ZOMBIES_PER_WAVE;
         int specialsThisWave = (int)(enemyCount / 4);
         int specialsSpawned = 0;
-        System.out.println("Specials This Wave: " + specialsThisWave);
         for(int i = 0; i < enemyCount; i++) {
             // Decide which side of the screen to spawn the zombie on.
             double x = 0;
@@ -72,29 +74,29 @@ public class ZombieWave {
             if(zombieType == Globals.ZOMBIE_REGULAR_TYPE) {
                 // Zumby
                 Animation a_ = new Animation(Images.ZOMBIE_REGULAR, 40, 40, 2, (int)p_.x, (int)p_.y, 200, 0, true);
-                Zombie z_ = new Zombie(p_, Globals.ZOMBIE_REGULAR_TYPE, 250, 1, 1, 100, a_);
+                Zombie z_ = new Zombie(p_, Globals.ZOMBIE_REGULAR_TYPE, 250, 1, 1, 10, a_);
                 wave.add(z_);
             } else if(zombieType == Globals.ZOMBIE_DOG_TYPE) {
                 // Rotdog
                 Animation a_ = new Animation(Images.ZOMBIE_DOG, 50, 50, 4, (int)p_.x, (int)p_.y, 80, 0, true);
-                Zombie z_ = new Zombie(p_, Globals.ZOMBIE_DOG_TYPE, 100, 3, 2, 150, a_);
+                Zombie z_ = new Zombie(p_, Globals.ZOMBIE_DOG_TYPE, 100, 3, 2, 20, a_);
                 wave.add(z_);
             } else if(zombieType == Globals.ZOMBIE_ACID_TYPE) {
                 // Up-Chuck
                 Animation a_ = new Animation(Images.ZOMBIE_ACID, 64, 64, 2, (int)p_.x, (int)p_.y, 200, 0, true);
-                AcidZombie z_ = new AcidZombie(p_, 300, 1, 1, 400, a_);
+                AcidZombie z_ = new AcidZombie(p_, 300, 1, 1, 50, a_);
                 wave.add(z_);
                 specialsSpawned++;
             } else if(zombieType == Globals.ZOMBIE_POISONFOG_TYPE) {
                 // Gasbag
                 Animation a_ = new Animation(Images.ZOMBIE_POISONFOG, 40, 40, 2, (int)p_.x, (int)p_.y, 100, 0, true);
-                PoisonFogZombie pfz_ = new PoisonFogZombie(p_, 250, 1, 2, 200, a_);
+                PoisonFogZombie pfz_ = new PoisonFogZombie(p_, 250, 1, 2, 80, a_);
                 wave.add(pfz_);
                 specialsSpawned++;
             } else if(zombieType == Globals.ZOMBIE_MATRON_TYPE) {
                 // Big Mama
                 Animation a_ = new Animation(Images.ZOMBIE_MATRON, 48, 48, 2, (int)p_.x, (int)p_.y, 200, 0, true);
-                ZombieMatron zm_ = new ZombieMatron(p_, 500, 1, 1, 1000, a_);
+                ZombieMatron zm_ = new ZombieMatron(p_, 500, 1, 1, 150, a_);
                 wave.add(zm_);
                 specialsSpawned++;
             }
@@ -160,7 +162,8 @@ public class ZombieWave {
                         if(damage > 0) {
                             z.takeDamage(damage);
                             if(z.isDead()) {
-                                // Add to score.
+                                // Give the player some cash.
+                                player.addCash(z.getCashValue());
                             }
                         }
                     }

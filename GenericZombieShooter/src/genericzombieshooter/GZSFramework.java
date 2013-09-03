@@ -56,9 +56,6 @@ public class GZSFramework {
     private ZombieWave wave;
     public ZombieWave getWave() { return this.wave; }
     
-    private int score; // The player's current score.
-    public int getScore() { return score; }
-    
     private WeaponsLoadout loadout;
     public WeaponsLoadout getLoadout() { return this.loadout; }
     
@@ -87,7 +84,6 @@ public class GZSFramework {
             player = new Player(((Globals.W_WIDTH / 2) - 20), ((Globals.W_HEIGHT / 2) - 20), 40, 40);
             currentWave = 0;
             wave = new ZombieWave(currentWave);
-            score = 0;
             loadout = new WeaponsLoadout(player);
             itemFactory = new ItemFactory();
         } // End game object initialization.
@@ -298,7 +294,6 @@ public class GZSFramework {
                 
                 // Check for end of wave.
                 if(Globals.waveInProgress && this.wave.waveFinished()) {
-                    System.out.println("Wave over. Waiting for new wave...");
                     Globals.waveInProgress = false;
                     Globals.nextWave = System.currentTimeMillis() + (10 * 1000);
                 }
@@ -313,7 +308,6 @@ public class GZSFramework {
             this.currentWave++;
             this.wave = new ZombieWave(this.currentWave);
             Globals.waveInProgress = true;
-            System.out.println("Wave " + this.currentWave + ": " + this.wave.getUnbornZombies().size() + " zombies!");
         } catch(Exception e) {
             createErrorWindow(e);
         }
