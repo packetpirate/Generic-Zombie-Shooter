@@ -89,8 +89,7 @@ public class PoisonFogZombie extends Zombie {
     public void draw(Graphics2D g2d) {
         if(!this.exploded) {
             // If the zombie has not been shot yet, continue drawing the zombie.
-            g2d.setTransform(this.getTransform());
-            this.getImage().draw((Graphics2D)g2d);
+            super.draw(g2d);
         } else {
             // Otherwise, draw the explosion.
             if(this.explosion.getImage().isActive()) this.explosion.draw(g2d);

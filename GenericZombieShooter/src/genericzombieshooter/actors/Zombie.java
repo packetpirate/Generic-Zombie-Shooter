@@ -93,6 +93,10 @@ public class Zombie extends Point2D.Double {
             int height = this.img.getHeight();
             if(this.type == Globals.ZOMBIE_REGULAR_TYPE) height /= 2;
             else if(this.type == Globals.ZOMBIE_DOG_TYPE) width /= 2;
+            else {
+                width /= 2;
+                height /= 2;
+            }
             int xPos = (int)(this.x - (width / 2));
             int yPos = (int)(this.y - (height / 2));
             g2d.setColor(new Color(0, 0, 0, 100));

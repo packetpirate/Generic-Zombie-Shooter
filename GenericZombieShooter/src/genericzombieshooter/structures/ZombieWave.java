@@ -47,6 +47,9 @@ public class ZombieWave {
         if(currentWave >= 20) difficulty++;
         
         int enemyCount = currentWave * ZombieWave.ZOMBIES_PER_WAVE;
+        int specialsThisWave = (int)(enemyCount / 4);
+        int specialsSpawned = 0;
+        System.out.println("Specials This Wave: " + specialsThisWave);
         for(int i = 0; i < enemyCount; i++) {
             // Decide which side of the screen to spawn the zombie on.
             double x = 0;
@@ -64,6 +67,7 @@ public class ZombieWave {
             
             Point2D.Double p_ = new Point2D.Double(x, y);
             
+            if(specialsSpawned >= specialsThisWave) difficulty = 2;
             int zombieType = Globals.r.nextInt(difficulty) + 1;
             if(zombieType == Globals.ZOMBIE_REGULAR_TYPE) {
                 // Zumby
@@ -80,16 +84,19 @@ public class ZombieWave {
                 Animation a_ = new Animation(Images.ZOMBIE_ACID, 64, 64, 2, (int)p_.x, (int)p_.y, 200, 0, true);
                 AcidZombie z_ = new AcidZombie(p_, 300, 1, 1, 400, a_);
                 wave.add(z_);
+                specialsSpawned++;
             } else if(zombieType == Globals.ZOMBIE_POISONFOG_TYPE) {
                 // Gasbag
                 Animation a_ = new Animation(Images.ZOMBIE_POISONFOG, 40, 40, 2, (int)p_.x, (int)p_.y, 100, 0, true);
                 PoisonFogZombie pfz_ = new PoisonFogZombie(p_, 250, 1, 2, 200, a_);
                 wave.add(pfz_);
+                specialsSpawned++;
             } else if(zombieType == Globals.ZOMBIE_MATRON_TYPE) {
                 // Big Mama
                 Animation a_ = new Animation(Images.ZOMBIE_MATRON, 48, 48, 2, (int)p_.x, (int)p_.y, 200, 0, true);
                 ZombieMatron zm_ = new ZombieMatron(p_, 500, 1, 1, 1000, a_);
                 wave.add(zm_);
+                specialsSpawned++;
             }
         }
         

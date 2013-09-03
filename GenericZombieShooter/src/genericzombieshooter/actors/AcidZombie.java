@@ -93,8 +93,7 @@ public class AcidZombie extends Zombie {
     
     @Override
     public void draw(Graphics2D g2d) {
-        g2d.setTransform(this.getTransform());
-        this.getImage().draw((Graphics2D)g2d);
+        super.draw(g2d);
         if(!this.particles.isEmpty()) drawParticles(g2d);
     }
     

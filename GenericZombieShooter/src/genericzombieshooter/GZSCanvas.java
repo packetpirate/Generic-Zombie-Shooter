@@ -76,14 +76,7 @@ public class GZSCanvas extends JPanel {
                     Weapon w = it.next();
                     w.drawAmmo((Graphics2D)g2d);
                 }
-                g2d.setTransform(player.getTransform());
-                g2d.drawImage(player.getImage(), (int) player.x, (int) player.y, null);
-                if(player.isInvincible()) {
-                    g2d.setColor(Color.WHITE);
-                    Ellipse2D.Double halo = new Ellipse2D.Double((player.x - 10), (player.y - 10), 
-                                                                 (player.width + 20), (player.height + 20));
-                    g2d.draw(halo);
-                }
+                player.draw(g2d);
             } // End drawing player and ammo.
 
             g2d.setTransform(saved);

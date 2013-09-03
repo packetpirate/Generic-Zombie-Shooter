@@ -20,7 +20,10 @@ import genericzombieshooter.misc.Globals;
 import genericzombieshooter.misc.Images;
 import genericzombieshooter.misc.Sounds;
 import genericzombieshooter.structures.weapons.Weapon;
+import java.awt.Color;
+import java.awt.Graphics2D;
 import java.awt.geom.AffineTransform;
+import java.awt.geom.Ellipse2D;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
@@ -103,6 +106,25 @@ public class Player extends Rectangle2D.Double {
     public void setWeapon(int w) { 
         this.currentWeapon = w;
         Sounds.FLAMETHROWER.reset();
+    }
+    
+    public void draw(Graphics2D g2d) {
+        g2d.setTransform(this.af);
+        { // Draw player shadow.
+            int w = this.img.getWidth();
+            int h = this.img.getHeight();
+            int xPos = (int)(this.getCenterX() - (w / 2));
+            int yPos = (int)(this.getCenterY() - (h / 2) + 5);
+            g2d.setColor(new Color(0, 0, 0, 100));
+            g2d.fillOval(xPos, yPos, w, h);
+        } // End drawing player shadow.
+        g2d.drawImage(this.img, (int) this.x, (int) this.y, null);
+        if(this.isInvincible()) {
+            g2d.setColor(Color.WHITE);
+            Ellipse2D.Double halo = new Ellipse2D.Double((this.x - 10), (this.y - 10), 
+                                                         (this.width + 20), (this.height + 20));
+            g2d.draw(halo);
+        }
     }
 
     // Shape manipulation.
