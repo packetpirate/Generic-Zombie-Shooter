@@ -61,12 +61,14 @@ public class Player extends Rectangle2D.Double {
         this.invincible = false;
         this.invincibleStartTime = System.currentTimeMillis();
         this.currentWeapon = 1;
+        
         this.weapons = new ArrayList<Weapon>();
-        this.weapons.add(Globals.ASSAULT_RIFLE); // Weapon 1
-        this.weapons.add(Globals.SHOTGUN); // Weapon 2
-        this.weapons.add(Globals.FLAMETHROWER); // Weapon 3
-        this.weapons.add(Globals.GRENADE); // Weapon 4
-        this.weapons.add(Globals.LANDMINE); // Weapon 5
+        this.weapons.add(Globals.HANDGUN); // Weapon 1
+        this.weapons.add(Globals.ASSAULT_RIFLE); // Weapon 2
+        this.weapons.add(Globals.SHOTGUN); // Weapon 3
+        this.weapons.add(Globals.FLAMETHROWER); // Weapon 4
+        this.weapons.add(Globals.GRENADE); // Weapon 5
+        this.weapons.add(Globals.LANDMINE); // Weapon 6
     }
 
     // Getter/Setter methods.

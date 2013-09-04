@@ -119,25 +119,29 @@ public class GZSFramework {
                                 Sounds.PAUSE.play();
                             }
                         }
-                        if (key == Globals.ASSAULT_RIFLE.getKey()) {
+                        if (key == Globals.HANDGUN.getKey()) {
                             player.setWeapon(1);
                             loadout.setCurrentWeapon(1);
                         }
-                        if (key == Globals.SHOTGUN.getKey()) {
+                        if (key == Globals.ASSAULT_RIFLE.getKey()) {
                             player.setWeapon(2);
                             loadout.setCurrentWeapon(2);
                         }
-                        if (key == Globals.FLAMETHROWER.getKey()) {
+                        if (key == Globals.SHOTGUN.getKey()) {
                             player.setWeapon(3);
                             loadout.setCurrentWeapon(3);
                         }
-                        if (key == Globals.GRENADE.getKey()) {
+                        if (key == Globals.FLAMETHROWER.getKey()) {
                             player.setWeapon(4);
                             loadout.setCurrentWeapon(4);
                         }
-                        if (key == Globals.LANDMINE.getKey()) {
+                        if (key == Globals.GRENADE.getKey()) {
                             player.setWeapon(5);
                             loadout.setCurrentWeapon(5);
+                        }
+                        if (key == Globals.LANDMINE.getKey()) {
+                            player.setWeapon(6);
+                            loadout.setCurrentWeapon(6);
                         }
                     }
                 }

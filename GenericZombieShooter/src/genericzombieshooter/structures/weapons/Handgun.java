@@ -31,31 +31,32 @@ import java.util.Iterator;
 import java.util.List;
 
 /**
- * Used to represent the Assault Rifle weapon.
+ * Used to handle the Handgun weapon.
  * @author Darin Beaudreau
  */
-public class AssaultRifle extends Weapon {
+public class Handgun extends Weapon{
     // Final Variables
-    private static final int DEFAULT_AMMO = 60;
-    private static final int MAX_AMMO = 300;
-    private static final int AMMO_PER_USE = 1;
-    private static final int DAMAGE_PER_PARTICLE = 100;
-    private static final double PARTICLE_SPREAD = 5.0;
-    private static final int PARTICLE_LIFE = 2000;
+    private static final int DEFAULT_AMMO = 0;
+    private static final int MAX_AMMO = 0;
+    private static final int AMMO_PER_USE = 0;
+    private static final int DAMAGE_PER_PARTICLE = 50;
+    private static final double PARTICLE_SPREAD = 3.0;
+    private static final int PARTICLE_LIFE = 1000;
     
-    public AssaultRifle() {
-        super("RTPS", KeyEvent.VK_2, "/resources/images/GZS_RTPS.png", DEFAULT_AMMO, MAX_AMMO, AMMO_PER_USE, 10);
+    public Handgun() {
+        super("Popgun", KeyEvent.VK_1, "/resources/images/GZS_Popgun.png", 
+              Handgun.DEFAULT_AMMO, Handgun.MAX_AMMO, Handgun.AMMO_PER_USE, 5);
     }
     
     @Override
     public int getAmmoPackAmount() {
-        return AssaultRifle.DEFAULT_AMMO;
+        return Handgun.DEFAULT_AMMO;
     }
     
     @Override
     public void resetAmmo() {
         super.resetAmmo();
-        this.ammoLeft = DEFAULT_AMMO;
+        this.ammoLeft = Handgun.DEFAULT_AMMO;
     }
     
     @Override
@@ -93,14 +94,14 @@ public class AssaultRifle extends Weapon {
             // Create a new bullet and add it to the list.
             int width = 4;
             int height = 10;
-            Particle p = new Particle(theta, AssaultRifle.PARTICLE_SPREAD, 8.0,
-                          (AssaultRifle.PARTICLE_LIFE / (int)Globals.SLEEP_TIME), new Point2D.Double(pos.x, pos.y),
-                           new Dimension(width, height), Images.RTPS_BULLET);
+            Particle p = new Particle(theta, Handgun.PARTICLE_SPREAD, 8.0,
+                          (Handgun.PARTICLE_LIFE / (int)Globals.SLEEP_TIME), new Point2D.Double(pos.x, pos.y),
+                           new Dimension(width, height), Images.POPGUN_BULLET);
             this.particles.add(p);
             // Use up ammo.
             this.consumeAmmo();
             this.resetCooldown();
-            Sounds.RTPS.play();
+            Sounds.POPGUN.play();
         }
     }
     
@@ -114,7 +115,7 @@ public class AssaultRifle extends Weapon {
             // If the particle is still alive and has collided with the target.
             if(p.isAlive() && rect.contains(p.getPos())) {
                 // Add the damage of the particle and remove it from the list.
-                damage += DAMAGE_PER_PARTICLE;
+                damage += Handgun.DAMAGE_PER_PARTICLE;
                 it.remove();
             }
         }

@@ -50,7 +50,7 @@ public class Grenade extends Weapon {
     public List<Explosion> getExplosions() { return this.explosions; }
     
     public Grenade() {
-        super("Nade", KeyEvent.VK_4, "/resources/images/GZS_Grenade.png", DEFAULT_AMMO, MAX_AMMO, AMMO_PER_USE, 100);
+        super("Nade", KeyEvent.VK_5, "/resources/images/GZS_Grenade.png", DEFAULT_AMMO, MAX_AMMO, AMMO_PER_USE, 100);
         this.explosions = Collections.synchronizedList(new ArrayList<Explosion>());
     }
     

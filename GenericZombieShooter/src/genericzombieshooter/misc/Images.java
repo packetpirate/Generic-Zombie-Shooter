@@ -36,6 +36,7 @@ public class Images {
     public static final BufferedImage ZOMBIE_TINY = GZSFramework.loadImage("/resources/images/GZS_ZombieTiny.png");
     public static final BufferedImage HEALTH_PACK = GZSFramework.loadImage("/resources/images/GZS_Health.png");
     public static final BufferedImage AMMO_PACK = GZSFramework.loadImage("/resources/images/GZS_Ammo.png");
+    public static final BufferedImage POPGUN_BULLET = GZSFramework.loadImage("/resources/images/GZS_Bullet.png");
     public static final BufferedImage RTPS_BULLET = GZSFramework.loadImage("/resources/images/GZS_Bullet2.png");
     public static final BufferedImage FIRE_PARTICLE = GZSFramework.loadImage("/resources/images/GZS_FireParticle.png");
     public static final BufferedImage ACID_PARTICLE = GZSFramework.loadImage("/resources/images/GZS_AcidParticle.png");

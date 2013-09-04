@@ -49,7 +49,7 @@ public class Landmine extends Weapon {
     public List<Explosion> getExplosions() { return this.explosions; }
     
     public Landmine() {
-        super("Hopper", KeyEvent.VK_5, "/resources/images/GZS_Landmine.png", DEFAULT_AMMO, MAX_AMMO, AMMO_PER_USE, 50);
+        super("Hopper", KeyEvent.VK_6, "/resources/images/GZS_Landmine.png", DEFAULT_AMMO, MAX_AMMO, AMMO_PER_USE, 50);
         this.explosions = Collections.synchronizedList(new ArrayList<Explosion>());
     }
     

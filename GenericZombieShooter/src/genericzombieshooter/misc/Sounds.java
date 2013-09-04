@@ -31,6 +31,7 @@ import javax.sound.sampled.UnsupportedAudioFileException;
  * @author Darin Beaudreau
  */
 public enum Sounds {
+    POPGUN("shoot2.wav", false),
     RTPS("shoot1.wav", false),
     BOOMSTICK("shotgun1.wav", false),
     FLAMETHROWER("flamethrower.wav", true),
