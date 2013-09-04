@@ -59,6 +59,8 @@ Changes:
     to the Upchuck, Gasbag, and Big Mama type zombies.
   - Changed score value to cash value and changed zombie cash values to reflect this change.
   - Added text to show current wave number while a wave is in progress.
+  - Added Popgun (Handgun) and added "automatic" parameter to Weapon class so non-automatic weapons will not
+    continuously fire while the mouse button is held down.
 
 Known Issues:
 
