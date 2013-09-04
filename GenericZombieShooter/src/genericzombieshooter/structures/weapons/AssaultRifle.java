@@ -44,7 +44,8 @@ public class AssaultRifle extends Weapon {
     private static final int PARTICLE_LIFE = 2000;
     
     public AssaultRifle() {
-        super("RTPS", KeyEvent.VK_2, "/resources/images/GZS_RTPS.png", DEFAULT_AMMO, MAX_AMMO, AMMO_PER_USE, 10);
+        super("RTPS", KeyEvent.VK_2, "/resources/images/GZS_RTPS.png", 
+              DEFAULT_AMMO, MAX_AMMO, AMMO_PER_USE, 10, true);
     }
     
     @Override

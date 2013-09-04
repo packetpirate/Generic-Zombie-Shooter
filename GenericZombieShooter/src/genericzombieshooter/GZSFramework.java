@@ -167,7 +167,14 @@ public class GZSFramework {
                     if(Globals.started) {
                         if (m.getButton() == MouseEvent.BUTTON1) {
                             Globals.buttons[0] = false;
-                            if(player.getCurrentWeapon() == 3) Sounds.FLAMETHROWER.reset();
+                            if(player.getCurrentWeapon() == 4) Sounds.FLAMETHROWER.reset();
+                            
+                            // Reset non-automatic weapons.
+                            Iterator<Weapon> it = player.getAllWeapons().iterator();
+                            while(it.hasNext()) {
+                                Weapon w = it.next();
+                                if(!w.isAutomatic() && w.hasFired()) w.resetFire();
+                            }
                         }
                         if (m.getButton() == MouseEvent.BUTTON3) Globals.buttons[1] = false;
                     }

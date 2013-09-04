@@ -74,7 +74,6 @@ public enum Sounds {
         Runnable soundPlay = new Runnable() {
             @Override
             public void run() {
-                //if(clip.isRunning()) clip.stop();
                 if(!looped) reset();
                 clip.loop((looped)?Clip.LOOP_CONTINUOUSLY:0);
                 

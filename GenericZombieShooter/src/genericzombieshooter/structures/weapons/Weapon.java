@@ -20,7 +20,6 @@ import genericzombieshooter.GZSFramework;
 import genericzombieshooter.actors.Zombie;
 import genericzombieshooter.structures.Particle;
 import java.awt.Graphics2D;
-import java.awt.event.KeyEvent;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
@@ -46,12 +45,18 @@ public class Weapon {
     public int getMaxAmmo() { return this.maxAmmo; }
     private int ammoPerUse;
     
+    private boolean automatic; // Indicates if the weapon can be fired continuously.
+    public boolean isAutomatic() { return this.automatic; }
+    protected boolean fired; // Used with automatic to determine if the weapon needs to be fired again.
+    public boolean hasFired() { return this.fired; }
+    public void resetFire() { this.fired = false; }
     private int cooldown;
     private int coolPeriod;
     public void resetCooldown() { this.cooldown = this.coolPeriod; }
     public void cool() { if(this.cooldown > 0) this.cooldown--; }
     
-    public boolean canFire() { return (this.ammoLeft >= this.ammoPerUse) && (this.cooldown == 0); }
+    public boolean canFire() { return (this.ammoLeft >= this.ammoPerUse) && (this.cooldown == 0) &&
+                                      (this.automatic || (!this.automatic && !this.fired)); }
     public boolean ammoFull() { return this.ammoLeft == this.maxAmmo; }
     public void addAmmo(int amount) { 
         if((this.ammoLeft + amount) > this.maxAmmo) this.ammoLeft = this.maxAmmo;
@@ -71,15 +76,7 @@ public class Weapon {
     protected List<Particle> particles;
     public List<Particle> getParticles() { return this.particles; }
     
-    public Weapon(String name) {
-        this(name, KeyEvent.VK_1);
-    }
-    
-    public Weapon(String name, int key) {
-        this(name, key, "", 0, 100, 1, 0);
-    }
-    
-    public Weapon(String name, int key, String filename, int ammoLeft, int maxAmmo, int ammoPerUse, int cooldown) {
+    public Weapon(String name, int key, String filename, int ammoLeft, int maxAmmo, int ammoPerUse, int cooldown, boolean automatic) {
         this.name = name;
         this.key = key;
         
@@ -89,6 +86,8 @@ public class Weapon {
         this.maxAmmo = maxAmmo;
         this.ammoPerUse = ammoPerUse;
         
+        this.automatic = automatic;
+        this.fired = false;
         this.cooldown = cooldown;
         this.coolPeriod = cooldown;
         

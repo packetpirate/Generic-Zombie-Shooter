@@ -50,7 +50,8 @@ public class Grenade extends Weapon {
     public List<Explosion> getExplosions() { return this.explosions; }
     
     public Grenade() {
-        super("Nade", KeyEvent.VK_5, "/resources/images/GZS_Grenade.png", DEFAULT_AMMO, MAX_AMMO, AMMO_PER_USE, 100);
+        super("Hand Egg", KeyEvent.VK_5, "/resources/images/GZS_Grenade.png", 
+              DEFAULT_AMMO, MAX_AMMO, AMMO_PER_USE, 100, false);
         this.explosions = Collections.synchronizedList(new ArrayList<Explosion>());
     }
     
@@ -146,6 +147,7 @@ public class Grenade extends Weapon {
                 this.particles.add(p);
                 this.consumeAmmo();
                 this.resetCooldown();
+                this.fired = true;
                 Sounds.THROW.play();
             }
         }

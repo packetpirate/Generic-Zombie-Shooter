@@ -45,7 +45,7 @@ public class Handgun extends Weapon{
     
     public Handgun() {
         super("Popgun", KeyEvent.VK_1, "/resources/images/GZS_Popgun.png", 
-              Handgun.DEFAULT_AMMO, Handgun.MAX_AMMO, Handgun.AMMO_PER_USE, 5);
+              Handgun.DEFAULT_AMMO, Handgun.MAX_AMMO, Handgun.AMMO_PER_USE, 10, false);
     }
     
     @Override
@@ -101,6 +101,7 @@ public class Handgun extends Weapon{
             // Use up ammo.
             this.consumeAmmo();
             this.resetCooldown();
+            this.fired = true;
             Sounds.POPGUN.play();
         }
     }
