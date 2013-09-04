@@ -71,8 +71,16 @@ public class ItemFactory {
         }
         if(currentTime >= this.nextAmmo) {
             // Drop Ammo Crate
-            Item i = createItem(1, player);
-            this.itemsDropped.add(i);
+            boolean nonFullWeaponDetected = false;
+            Iterator<Weapon> it = player.getAllWeapons().iterator();
+            while(it.hasNext()) {
+                Weapon w = it.next();
+                if(!w.ammoFull()) nonFullWeaponDetected = true;
+            }
+            if(nonFullWeaponDetected) {
+                Item i = createItem(1, player);
+                this.itemsDropped.add(i);
+            }
             this.nextAmmo = currentTime + Ammo.SPAWN_TIME;
         }
         
@@ -108,25 +116,16 @@ public class ItemFactory {
             return i;
         } else if(type == 1) {
             // Return an Ammo Crate
-            boolean nonFullWeaponDetected = false;
-            Iterator<Weapon> it = player.getAllWeapons().iterator();
-            while(it.hasNext()) {
-                Weapon weapon = it.next();
-                if(!weapon.ammoFull()) nonFullWeaponDetected = true;
+            int numOfWeapons = player.getAllWeapons().size();
+            int w = Globals.r.nextInt(numOfWeapons) + 1;
+            if(player.getWeapon(w).ammoFull()) return createItem(1, player);
+            else {
+                int ammo = player.getWeapon(w).getAmmoPackAmount();
+                double x = Globals.r.nextInt((Globals.W_WIDTH - 20) - 20 + 1) + 20;
+                double y = Globals.r.nextInt((int)((Globals.W_HEIGHT - (WeaponsLoadout.BAR_HEIGHT + 10)) - 20 + 1)) + 20;
+                Item i = new Ammo(w, ammo, new Point2D.Double(x, y));
+                return i;
             }
-            if(nonFullWeaponDetected) {
-                int numOfWeapons = player.getAllWeapons().size();
-                int w = Globals.r.nextInt(numOfWeapons) + 1;
-                if(player.getWeapon(w).ammoFull()) return createItem(1, player);
-                else {
-                    int ammo = player.getWeapon(w).getAmmoPackAmount();
-                    double x = Globals.r.nextInt((Globals.W_WIDTH - 20) - 20 + 1) + 20;
-                    double y = Globals.r.nextInt((int)((Globals.W_HEIGHT - (WeaponsLoadout.BAR_HEIGHT + 10)) - 20 + 1)) + 20;
-                    Item i = new Ammo(w, ammo, new Point2D.Double(x, y));
-                    return i;
-                }
-            }
-        }
-        return null;
+        } else return null; // If a null item is ever returned, you done did somethin' bad.
     }
 }
