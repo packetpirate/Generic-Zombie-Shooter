@@ -21,13 +21,16 @@ import genericzombieshooter.actors.Zombie;
 import genericzombieshooter.misc.Globals;
 import genericzombieshooter.misc.Images;
 import genericzombieshooter.structures.weapons.Weapon;
+import java.awt.AlphaComposite;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.RadialGradientPaint;
 import java.awt.geom.AffineTransform;
+import java.awt.geom.Point2D;
 import java.awt.image.BufferedImage;
 import java.util.Iterator;
 import javax.swing.JPanel;
@@ -93,6 +96,17 @@ public class GZSCanvas extends JPanel {
             } // End drawing zombies.
 
             g2d.setTransform(saved); // Restore original transform state.
+            
+            { // Draw circle of light around player.
+                float radius = 200.0f;
+                float [] dist = {0.0f, 1.0f};
+                Color [] colors = {new Color(0.0f, 0.0f, 0.0f, 0.0f), Color.BLACK};
+                RadialGradientPaint p = new RadialGradientPaint(new Point2D.Double(player.getCenterX(), player.getCenterY()), 
+                                                                radius, dist, colors);
+                g2d.setPaint(p);
+                g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.95f));
+                g2d.fillRect(0, 0, Globals.W_WIDTH, Globals.W_HEIGHT);
+            } // End drawing circle of light.
 
             { // Draw GUI elements.
                 { // Begin drawing the health bar.
