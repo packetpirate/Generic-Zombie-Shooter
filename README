@@ -14,11 +14,13 @@ The game is not complete, so there is limited functionality. Here are the contro
   WASD keys - Movement
   Mouse - Aim
   Left Click/Hold - Fire equipped weapon.
-  1 - Select Rooty Tooty Point & Shooty (Assault Rifle)
-  2 - Select Boomstick (Shotgun)
-  3 - Select the Flammenwerfer (Flamethrower)
-  4 - Select Hand Eggs (Grenades)
-  5 - Select Flip-Flops (Landmines)
+  1 - Select Popgun (Handgun)
+  2 - Select Rooty Tooty Point & Shooty (Assault Rifle)
+  3 - Select Boomstick (Shotgun)
+  4 - Select the Flammenwerfer (Flamethrower)
+  5 - Select Hand Eggs (Grenades)
+  6 - Select Flip-Flops (Landmines)
+  7 - Select Shiny Sticks (Flares)
   Mouse Scroll Wheel - Quick Select Weapon (Up = Left, Down = Right)
   P - Pause Game
   
@@ -63,6 +65,9 @@ Changes:
     continuously fire while the mouse button is held down.
   - Added player death screen showing final zombie kill count, the ending wave, how many medkits the player used,
     and how many ammo crates the player collected.
+  - Added LightSource class for creating and drawing light sources.
+  - Added Flares, which when dropped, light up a small area of the screen so you can see enemies coming. They
+    burn out after 30 seconds.
 
 Known Issues:
 
