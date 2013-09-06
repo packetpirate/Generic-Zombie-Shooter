@@ -37,6 +37,8 @@ public class Animation {
     protected long nextFrameTime; // Time when to show the next frame.
     protected long delay; // How long to wait before starting and displaying animation.
     protected long timeCreated; // The time in milliseconds that the animation was created.
+    protected long life;
+    protected long expirationTime; // The time in milliseconds when the animation will expire.
     
     protected int currentFrame; // Current frame in the animation.
     
@@ -61,6 +63,10 @@ public class Animation {
      * @param loop Determines if the animation will loop.
      */
     public Animation(BufferedImage img, int frameWidth, int frameHeight, int frameCount, int x, int y, long frameTime, long delay, boolean loop) {
+        this(img, frameWidth, frameHeight, frameCount, x, y, frameTime, delay, -1, loop);
+    }
+    
+    public Animation(BufferedImage img, int frameWidth, int frameHeight, int frameCount, int x, int y, long frameTime, long delay, long life, boolean loop) {
         this.img = img;
         this.frameWidth = frameWidth;
         this.frameHeight = frameHeight;
@@ -69,22 +75,24 @@ public class Animation {
         this.x = x;
         this.y = y;
         
-        startX = 0;
-        endX = frameWidth;
+        this.startX = 0;
+        this.endX = frameWidth;
         
         this.frameTime = frameTime;
         this.delay = delay;
         
-        startingFrameTime = System.currentTimeMillis() + delay;
-        nextFrameTime = startingFrameTime + this.frameTime;
+        this.startingFrameTime = System.currentTimeMillis() + delay;
+        this.nextFrameTime = this.startingFrameTime + this.frameTime;
         
-        currentFrame = 0;
+        this.currentFrame = 0;
         
         this.loop = loop;
         
-        timeCreated = System.currentTimeMillis();
+        this.timeCreated = System.currentTimeMillis();
+        this.life = life;
+        this.expirationTime = System.currentTimeMillis() + life;
         
-        active = true;
+        this.active = true;
     }
     
     /* Changes the location of the animation.
@@ -97,7 +105,7 @@ public class Animation {
     }
     
     public boolean isActive() {
-        return this.active;
+        return this.active && ((this.life >= 0) && (System.currentTimeMillis() <= this.expirationTime));
     }
     
     /* Checks to see if it's time for the next frame in the animation.

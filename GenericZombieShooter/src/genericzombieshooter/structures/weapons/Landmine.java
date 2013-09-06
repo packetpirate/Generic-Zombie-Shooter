@@ -46,7 +46,6 @@ public class Landmine extends Weapon {
     
     // Member variables.
     private List<Explosion> explosions;
-    public List<Explosion> getExplosions() { return this.explosions; }
     
     public Landmine() {
         super("Flip-Flop", KeyEvent.VK_6, "/resources/images/GZS_Landmine.png",

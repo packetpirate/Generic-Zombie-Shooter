@@ -18,6 +18,7 @@ package genericzombieshooter.misc;
 
 import genericzombieshooter.structures.weapons.AssaultRifle;
 import genericzombieshooter.structures.weapons.Flamethrower;
+import genericzombieshooter.structures.weapons.Flare;
 import genericzombieshooter.structures.weapons.Grenade;
 import genericzombieshooter.structures.weapons.Handgun;
 import genericzombieshooter.structures.weapons.Landmine;
@@ -74,4 +75,5 @@ public class Globals {
     public static Flamethrower FLAMETHROWER = new Flamethrower();
     public static Grenade GRENADE = new Grenade();
     public static Landmine LANDMINE = new Landmine();
+    public static Flare FLARE = new Flare();
 }

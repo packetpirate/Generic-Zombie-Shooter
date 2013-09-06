@@ -20,6 +20,7 @@ import genericzombieshooter.actors.Player;
 import genericzombieshooter.actors.Zombie;
 import genericzombieshooter.misc.Globals;
 import genericzombieshooter.misc.Images;
+import genericzombieshooter.structures.LightSource;
 import genericzombieshooter.structures.weapons.Weapon;
 import java.awt.AlphaComposite;
 import java.awt.Color;
@@ -28,12 +29,11 @@ import java.awt.Font;
 import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.RadialGradientPaint;
 import java.awt.geom.AffineTransform;
-import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import java.util.Iterator;
+import java.util.List;
 import javax.swing.JPanel;
 
 /**
@@ -100,17 +100,31 @@ public class GZSCanvas extends JPanel {
                 g2d.setTransform(saved); // Restore original transform state.
 
                 { // Draw circle of light around player.
-                    float radius = 200.0f;
-                    float [] dist = {0.0f, 0.6f, 0.8f, 1.0f};
-                    Color [] colors = {new Color(0.0f, 0.0f, 0.0f, 0.0f),
-                                       new Color(0.0f, 0.0f, 0.0f, 0.75f),
-                                       new Color(0.0f, 0.0f, 0.0f, 0.9f), 
-                                       Color.BLACK};
-                    RadialGradientPaint p = new RadialGradientPaint(new Point2D.Double(player.getCenterX(), player.getCenterY()), 
-                                                                    radius, dist, colors);
-                    g2d.setPaint(p);
-                    g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.95f));
-                    g2d.fillRect(0, 0, Globals.W_WIDTH, Globals.W_HEIGHT);
+                    BufferedImage shadowBuffer = new BufferedImage(Globals.W_WIDTH, Globals.W_HEIGHT, BufferedImage.TYPE_INT_ARGB);
+                    Graphics2D sg = (Graphics2D)shadowBuffer.getGraphics();
+                    
+                    sg.setComposite(AlphaComposite.Src);
+                    sg.setColor(new Color(0.0f, 0.0f, 0.0f, 0.95f));
+                    sg.fillRect(0, 0, Globals.W_WIDTH, Globals.W_HEIGHT);
+                    sg.setComposite(AlphaComposite.DstIn);
+                    
+                    player.getLightSource().draw(sg);
+                    
+                    // Draw the light sources from flares.
+                    List<LightSource> lights = player.getWeapon(7).getLights();
+                    synchronized(lights) {
+                        if(!lights.isEmpty()) {
+                            Iterator<LightSource> it = lights.iterator();
+                            while(it.hasNext()) {
+                                LightSource ls = it.next();
+                                if(ls.isAlive()) ls.draw(sg);
+                            }
+                        }
+                    }
+                    
+                    g2d.drawImage(shadowBuffer, 0, 0, null);
+                    
+                    sg.dispose();
                 } // End drawing circle of light.
 
                 { // Draw GUI elements.

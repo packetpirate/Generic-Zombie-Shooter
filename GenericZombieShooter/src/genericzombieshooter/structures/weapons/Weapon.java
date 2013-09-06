@@ -18,6 +18,7 @@ package genericzombieshooter.structures.weapons;
 
 import genericzombieshooter.GZSFramework;
 import genericzombieshooter.actors.Zombie;
+import genericzombieshooter.structures.LightSource;
 import genericzombieshooter.structures.Particle;
 import java.awt.Graphics2D;
 import java.awt.geom.Point2D;
@@ -69,12 +70,11 @@ public class Weapon {
     public void resetAmmo() {
         this.particles = Collections.synchronizedList(new ArrayList<Particle>());
     }
-    public void reload() {
-        // Needs moar code...
-    }
     
     protected List<Particle> particles;
     public List<Particle> getParticles() { return this.particles; }
+    
+    public List<LightSource> getLights() { return null; }
     
     public Weapon(String name, int key, String filename, int ammoLeft, int maxAmmo, int ammoPerUse, int cooldown, boolean automatic) {
         this.name = name;

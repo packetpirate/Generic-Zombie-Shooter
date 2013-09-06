@@ -19,11 +19,13 @@ package genericzombieshooter.actors;
 import genericzombieshooter.misc.Globals;
 import genericzombieshooter.misc.Images;
 import genericzombieshooter.misc.Sounds;
+import genericzombieshooter.structures.LightSource;
 import genericzombieshooter.structures.weapons.Weapon;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Ellipse2D;
+import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
@@ -42,6 +44,7 @@ public class Player extends Rectangle2D.Double {
     // Member variables.
     private AffineTransform af;
     private BufferedImage img;
+    private LightSource light;
     private int health;
     private int cash;
     private int lives;
@@ -60,6 +63,18 @@ public class Player extends Rectangle2D.Double {
         super(x_, y_, w_, h_);
         this.af = new AffineTransform();
         this.img = Images.PLAYER;
+        
+        {
+            int xLoc = (int)this.getCenterX();
+            int yLoc = (int)this.getCenterY();
+            float intensity = 200.0f;
+            float [] distance = {0.0f, 0.6f, 0.8f, 1.0f};
+            Color [] colors = {new Color(0.0f, 0.0f, 0.0f, 0.0f),
+                                       new Color(0.0f, 0.0f, 0.0f, 0.75f),
+                                       new Color(0.0f, 0.0f, 0.0f, 0.9f),
+                                       Color.BLACK};
+            this.light = new LightSource(new Point2D.Double(xLoc, yLoc), 0, intensity, distance, colors);
+        }
 
         this.health = Player.MAX_HEALTH;
         this.cash = 0;
@@ -80,11 +95,13 @@ public class Player extends Rectangle2D.Double {
         this.weapons.add(Globals.FLAMETHROWER); // Weapon 4
         this.weapons.add(Globals.GRENADE); // Weapon 5
         this.weapons.add(Globals.LANDMINE); // Weapon 6
+        this.weapons.add(Globals.FLARE); // Weapon 7
     }
 
     // Getter/Setter methods.
     public AffineTransform getTransform() { return this.af; }
     public BufferedImage getImage() { return this.img; }
+    public LightSource getLightSource() { return this.light; }
 
     public int getHealth() { return this.health; }
     public int getCash() { return this.cash; }
@@ -120,6 +137,7 @@ public class Player extends Rectangle2D.Double {
         this.currentWeapon = 1;
         this.x = (Globals.W_WIDTH / 2) - (this.width / 2);
         this.y = (Globals.W_HEIGHT / 2) - (this.height / 2);
+        this.light.move(new Point2D.Double((int)this.getCenterX(), (int)this.getCenterY()));
     }
     public void resetStatistics() {
         this.killCount = 0;
@@ -168,6 +186,7 @@ public class Player extends Rectangle2D.Double {
         else if(direction == 1) x -= Player.MOVE_SPEED;
         else if(direction == 2) y += Player.MOVE_SPEED;
         else if(direction == 3) x += Player.MOVE_SPEED;
+        this.light.move(new Point2D.Double((int)this.getCenterX(), (int)this.getCenterY()));
     }
     
     private boolean poisoned;

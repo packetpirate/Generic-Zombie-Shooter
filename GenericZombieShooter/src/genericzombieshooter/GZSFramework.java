@@ -144,6 +144,10 @@ public class GZSFramework {
                             player.setWeapon(6);
                             loadout.setCurrentWeapon(6);
                         }
+                        if (key == Globals.FLARE.getKey()) {
+                            player.setWeapon(7);
+                            loadout.setCurrentWeapon(7);
+                        }
                     }
                 }
             });
