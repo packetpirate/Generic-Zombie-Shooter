@@ -61,6 +61,8 @@ Changes:
   - Added text to show current wave number while a wave is in progress.
   - Added Popgun (Handgun) and added "automatic" parameter to Weapon class so non-automatic weapons will not
     continuously fire while the mouse button is held down.
+  - Added player death screen showing final zombie kill count, the ending wave, how many medkits the player used,
+    and how many ammo crates the player collected.
 
 Known Issues:
 
@@ -80,7 +82,6 @@ TODO:
   - Add powerups (speed, firing rate, unlimited ammo?, extra life, etc)
   - Add "boss" waves every 20 waves or so where the entire wave is just one big boss monster with a special power.
   - Add background music or ambient sounds so the game isn't as quiet. Maybe add zombie noises.
-  - Add end screen showing final zombie kill count after player dies.
   - Add EXP and level up system to enhance certain attributes.
   - Add alt-fire for certain weapons.
   - Add effects to ammo for tertiary effects.
