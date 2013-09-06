@@ -31,7 +31,7 @@ import java.util.Random;
  */
 public class Globals {
     // Final
-    public static final String VERSION = "0.8.5";
+    public static final String VERSION = "0.8.6";
     public static final int W_WIDTH = 800; // The width of the game window.
     public static final int W_HEIGHT = 640; // The height of the game window.
     public static final long SLEEP_TIME = 20; // The sleep time of the animation thread.
