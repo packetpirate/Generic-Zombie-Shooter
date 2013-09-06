@@ -114,7 +114,7 @@ public class Handgun extends Weapon{
         while(it.hasNext()) {
             Particle p = it.next();
             // If the particle is still alive and has collided with the target.
-            if(p.isAlive() && rect.contains(p.getPos())) {
+            if(p.isAlive() && p.checkCollision(rect)) {
                 // Add the damage of the particle and remove it from the list.
                 damage += Handgun.DAMAGE_PER_PARTICLE;
                 it.remove();

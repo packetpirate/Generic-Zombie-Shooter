@@ -164,6 +164,7 @@ public class ZombieWave {
                             if(z.isDead()) {
                                 // Give the player some cash.
                                 player.addCash(z.getCashValue());
+                                player.addKill();
                             }
                         }
                     }

@@ -26,12 +26,15 @@ import java.awt.image.BufferedImage;
  * @author Darin Beaudreau
  */
 public abstract class Item extends Point2D.Double {
+    private int id;
+    public int getId() { return this.id; }
     private String name;
     public String getName() { return this.name; }
     protected BufferedImage icon;
     public BufferedImage getIcon() { return this.icon; }
     
-    public Item(String name, BufferedImage icon) {
+    public Item(int id, String name, BufferedImage icon) {
+        this.id = id;
         this.name = name;
         this.icon = icon;
     }

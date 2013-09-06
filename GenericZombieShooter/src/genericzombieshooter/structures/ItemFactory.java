@@ -92,6 +92,8 @@ public class ItemFactory {
                 Item i = it.next();
                 if(player.contains(i)) {
                     i.applyEffect(player);
+                    if(i.getId() == HealthPack.ID) player.medkitsUsed++;
+                    else if(i.getId() == Ammo.ID) player.ammoCratesUsed++;
                     this.itemsWithdrawn.add(i);
                 }
             }

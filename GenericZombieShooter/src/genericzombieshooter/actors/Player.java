@@ -49,6 +49,12 @@ public class Player extends Rectangle2D.Double {
     private long invincibleStartTime;
     private int currentWeapon;
     private List<Weapon> weapons;
+    
+    // Statistic Variables
+    private long deathTime;
+    public int killCount;
+    public int medkitsUsed;
+    public int ammoCratesUsed;
 
     public Player(double x_, double y_, double w_, double h_) {
         super(x_, y_, w_, h_);
@@ -61,6 +67,11 @@ public class Player extends Rectangle2D.Double {
         this.invincible = false;
         this.invincibleStartTime = System.currentTimeMillis();
         this.currentWeapon = 1;
+        
+        this.deathTime = System.currentTimeMillis();
+        this.killCount = 0;
+        this.medkitsUsed = 0;
+        this.ammoCratesUsed = 0;
         
         this.weapons = new ArrayList<Weapon>();
         this.weapons.add(Globals.HANDGUN); // Weapon 1
@@ -78,6 +89,7 @@ public class Player extends Rectangle2D.Double {
     public int getHealth() { return this.health; }
     public int getCash() { return this.cash; }
     public void addCash(int amount) { this.cash += amount; }
+    public void addKill() { this.killCount++; }
     public void takeDamage(int damage_) { this.health -= damage_; }
     public void addHealth(int amount) { 
         if((this.health + amount) > Player.MAX_HEALTH) this.health = Player.MAX_HEALTH;
@@ -86,6 +98,7 @@ public class Player extends Rectangle2D.Double {
     public boolean isAlive() { return this.health > 0; }
     public boolean isInvincible() { return this.invincible; }
     public long getInvincibilityStartTime() { return this.invincibleStartTime; }
+    public long getDeathTime() { return this.deathTime; }
     public void removeInvincibility() { this.invincible = false; }
     public int getLives() { return this.lives; }
     public void die() { 
@@ -97,6 +110,7 @@ public class Player extends Rectangle2D.Double {
         if(this.lives == 0) {
             this.cash = 0;
             this.lives = 3;
+            this.deathTime = System.currentTimeMillis();
         }
         else {
             this.invincible = true;
@@ -106,6 +120,11 @@ public class Player extends Rectangle2D.Double {
         this.currentWeapon = 1;
         this.x = (Globals.W_WIDTH / 2) - (this.width / 2);
         this.y = (Globals.W_HEIGHT / 2) - (this.height / 2);
+    }
+    public void resetStatistics() {
+        this.killCount = 0;
+        this.medkitsUsed = 0;
+        this.ammoCratesUsed = 0;
     }
     
     public Weapon getWeapon() { return this.weapons.get(this.currentWeapon - 1); }

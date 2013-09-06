@@ -68,6 +68,7 @@ public class GZSFramework {
         Globals.started = false;
         Globals.paused = false;
         Globals.crashed = false;
+        Globals.deathScreen = false;
         Globals.waveInProgress = false;
         Globals.nextWave = System.currentTimeMillis() + 3000;
 
@@ -150,8 +151,14 @@ public class GZSFramework {
             canvas.addMouseListener(new MouseAdapter() {
                 @Override
                 public void mouseClicked(MouseEvent m) {
-                    if((m.getButton() == MouseEvent.BUTTON1) && (!Globals.started)) {
-                        Globals.started = true;
+                    if((m.getButton() == MouseEvent.BUTTON1)) {
+                        if(!Globals.started) Globals.started = true;
+                        if(Globals.started && Globals.deathScreen) {
+                            Globals.started = false;
+                            Globals.deathScreen = false;
+                            currentWave = 1;
+                            player.resetStatistics();
+                        }
                     }
                 }
                 @Override
@@ -231,7 +238,7 @@ public class GZSFramework {
      * Updates the game objects in the animation loop.
      **/
     public void update() {
-        if(Globals.started && !Globals.paused && !Globals.crashed) {
+        if(Globals.started && !Globals.paused && !Globals.crashed && !Globals.deathScreen) {
             try {
                 // Calculate the player's angle based on the mouse position.
                 double cX = player.getCenterX();
@@ -252,18 +259,18 @@ public class GZSFramework {
                     double theta = Math.atan2((target.x - pos.x), (target.y - pos.y));
                     player.getWeapon().fire(theta, pos);
                 }
-                
+
                 if(!Globals.waveInProgress) {
                     // If the player is in between waves, check if the countdown has reached zero.
                     if(System.currentTimeMillis() >= Globals.nextWave) createWave();
                 }
-                
+
                 // Update all zombies in the current wave.
                 if(Globals.waveInProgress) this.wave.update(player);
 
                 // Check player for damage.
                 if(Globals.waveInProgress) this.wave.checkPlayerDamage(player);
-                
+
                 { // If the player's invincibility timer has run out, remove it.
                     if(player.isInvincible()) {
                         long startTime = player.getInvincibilityStartTime();
@@ -279,10 +286,9 @@ public class GZSFramework {
                 if(!player.isAlive()) {
                     player.die();
                     if(player.getLives() == 0) {
-                        // Reset the game.
-                        Globals.started = false;
+                        // Show death screen and reset player.
+                        Globals.deathScreen = true;
                         player.reset();
-                        currentWave = 1;
                         wave = new ZombieWave(currentWave);
                         for(boolean k : Globals.keys) k = false;
                         for(boolean b : Globals.buttons) b = false;
@@ -302,7 +308,7 @@ public class GZSFramework {
                         w.updateWeapon(this.wave.getZombies());
                     }
                 } // End weapon updates.
-                
+
                 // Check for end of wave.
                 if(Globals.waveInProgress && this.wave.waveFinished()) {
                     Globals.waveInProgress = false;

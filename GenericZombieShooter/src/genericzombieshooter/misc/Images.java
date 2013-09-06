@@ -26,6 +26,7 @@ import java.awt.image.BufferedImage;
 public class Images {
     public static final BufferedImage START_SCREEN = GZSFramework.loadImage("/resources/images/GZS_Splash.png");
     public static final BufferedImage BACKGROUND = GZSFramework.loadImage("/resources/images/GZS_Background_3.png");
+    public static final BufferedImage DEATH_SCREEN = GZSFramework.loadImage("/resources/images/GZS_DeathScreen.png");
     public static final BufferedImage PLAYER = GZSFramework.loadImage("/resources/images/GZS_Player.png");
     public static final BufferedImage CROSSHAIR = GZSFramework.loadImage("/resources/images/GZS_Crosshair.png");
     public static final BufferedImage ZOMBIE_REGULAR = GZSFramework.loadImage("/resources/images/GZS_Zombie_2.png");
