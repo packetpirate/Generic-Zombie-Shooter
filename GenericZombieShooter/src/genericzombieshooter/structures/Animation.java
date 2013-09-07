@@ -105,7 +105,7 @@ public class Animation {
     }
     
     public boolean isActive() {
-        return this.active && ((this.life >= 0) && (System.currentTimeMillis() <= this.expirationTime));
+        return this.active && ((this.life < 0) || ((this.life >= 0) && (System.currentTimeMillis() <= this.expirationTime)));
     }
     
     /* Checks to see if it's time for the next frame in the animation.
