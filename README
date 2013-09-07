@@ -71,7 +71,10 @@ Changes:
     burn out after 30 seconds.
   - Added Laser Wire. When two terminals are dropped, they create a laser between them that damages zombies that
     cross it. There is a small delay between each damage period to prevent insta-gibbing everything that touches it.
-    The terminals by themselves will last 2 minutes. Once both are deployed, the laser will last for 30 seconds.
+    The terminals by themselves will last 2 minutes. Once both are deployed, the laser will last for 30 seconds. The
+    terminals can be placed a max distance of 300px apart. A pink circle will appear to show you the area the second
+    terminal can be placed in. If placed outside this pink circle, the two terminals will disappear and the player's
+    laser wire ammo will be refunded.
 
 Known Issues:
 
@@ -94,6 +97,7 @@ TODO:
   - Add EXP and level up system to enhance certain attributes.
   - Add alt-fire for certain weapons.
   - Add effects to ammo for tertiary effects.
+  - Add message system to display various information.
 
 Planned Future Changes (Most likely post-1.0):
   - Add a lighting system so that you can only see directly in front of you, like a flashlight.
