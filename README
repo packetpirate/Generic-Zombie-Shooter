@@ -21,6 +21,7 @@ The game is not complete, so there is limited functionality. Here are the contro
   5 - Select Hand Eggs (Grenades)
   6 - Select Flip-Flops (Landmines)
   7 - Select Shiny Sticks (Flares)
+  8 - Select Laser Wire (needs better name)
   Mouse Scroll Wheel - Quick Select Weapon (Up = Left, Down = Right)
   P - Pause Game
   
@@ -68,6 +69,9 @@ Changes:
   - Added LightSource class for creating and drawing light sources.
   - Added Flares, which when dropped, light up a small area of the screen so you can see enemies coming. They
     burn out after 30 seconds.
+  - Added Laser Wire. When two terminals are dropped, they create a laser between them that damages zombies that
+    cross it. There is a small delay between each damage period to prevent insta-gibbing everything that touches it.
+    The terminals by themselves will last 2 minutes. Once both are deployed, the laser will last for 30 seconds.
 
 Known Issues:
 
