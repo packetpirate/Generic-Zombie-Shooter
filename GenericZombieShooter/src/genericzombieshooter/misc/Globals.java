@@ -22,6 +22,7 @@ import genericzombieshooter.structures.weapons.Flare;
 import genericzombieshooter.structures.weapons.Grenade;
 import genericzombieshooter.structures.weapons.Handgun;
 import genericzombieshooter.structures.weapons.Landmine;
+import genericzombieshooter.structures.weapons.LaserWire;
 import genericzombieshooter.structures.weapons.Shotgun;
 import java.awt.Point;
 import java.util.Random;
@@ -76,4 +77,5 @@ public class Globals {
     public static Grenade GRENADE = new Grenade();
     public static Landmine LANDMINE = new Landmine();
     public static Flare FLARE = new Flare();
+    public static LaserWire LASERWIRE = new LaserWire();
 }

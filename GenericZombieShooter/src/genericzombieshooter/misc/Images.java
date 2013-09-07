@@ -44,6 +44,7 @@ public class Images {
     public static final BufferedImage GRENADE_PARTICLE = GZSFramework.loadImage("/resources/images/GZS_GrenadeParticle.png");
     public static final BufferedImage LANDMINE_PARTICLE = GZSFramework.loadImage("/resources/images/GZS_LandmineParticle.png");
     public static final BufferedImage FLARE_PARTICLE = GZSFramework.loadImage("/resources/images/GZS_FlareParticle.png");
+    public static final BufferedImage LASER_TERMINAL = GZSFramework.loadImage("/resources/images/GZS_LaserTerminal.png");
     public static final BufferedImage EXPLOSION_SHEET = GZSFramework.loadImage("/resources/images/GZS_Explosion.png");
     public static final BufferedImage POISON_GAS_SHEET = GZSFramework.loadImage("/resources/images/GZS_PoisonExplosion.png");
     public static final BufferedImage BLOOD_SHEET = GZSFramework.loadImage("/resources/images/GZS_BloodExplosion.png");

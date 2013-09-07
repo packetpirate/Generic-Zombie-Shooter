@@ -34,6 +34,7 @@ public class Particle {
     protected double speed;
     protected int life;
     public boolean isAlive() { return this.life > 0; }
+    public void setLife(int newLife) { this.life = newLife; }
     protected Point2D.Double pos;
     public Point2D.Double getPos() { return this.pos; }
     protected Dimension size;

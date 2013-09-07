@@ -148,6 +148,10 @@ public class GZSFramework {
                             player.setWeapon(7);
                             loadout.setCurrentWeapon(7);
                         }
+                        if (key == Globals.LASERWIRE.getKey()) {
+                            player.setWeapon(8);
+                            loadout.setCurrentWeapon(8);
+                        }
                     }
                 }
             });

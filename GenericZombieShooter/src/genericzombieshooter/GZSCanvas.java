@@ -23,6 +23,7 @@ import genericzombieshooter.misc.Images;
 import genericzombieshooter.structures.LightSource;
 import genericzombieshooter.structures.weapons.Weapon;
 import java.awt.AlphaComposite;
+import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -128,6 +129,7 @@ public class GZSCanvas extends JPanel {
                 } // End drawing circle of light.
 
                 { // Draw GUI elements.
+                    g2d.setStroke(new BasicStroke(1));
                     { // Begin drawing the health bar.
                         // Draw the gray box under the HUD.
                         g2d.setColor(Color.LIGHT_GRAY);
