@@ -33,6 +33,7 @@ public class LaserWire extends Weapon {
     private static final long LASER_COOLDOWN = 500;
     private static final int PARTICLE_LIFE = 2 * 60 * 1000;
     private static final int LASER_LIFE = 30 * 1000;
+    private static final int MAX_LASER_DIST = 300;
     
     // Member Variables
     private List<Line2D.Double> lasers;
@@ -86,11 +87,20 @@ public class LaserWire extends Weapon {
                 if((this.particles.size() == 2) && this.lasers.isEmpty()) {
                     Point2D.Double p1 = this.particles.get(0).getPos();
                     Point2D.Double p2 = this.particles.get(1).getPos();
-                    this.lasers.add(new Line2D.Double(p1, p2));
-                    int newLife = LaserWire.LASER_LIFE / (int)Globals.SLEEP_TIME;
-                    this.particles.get(0).setLife(newLife);
-                    this.particles.get(1).setLife(newLife);
-                    this.lastDamageDone = System.currentTimeMillis();
+                    /* If the distance between the two terminals is too far,
+                       refund the player's ammo and delete the two terminals placed. */
+                    double xD = p1.x - p2.x;
+                    double yD = p1.y - p2.y;
+                    if((Math.sqrt((xD * xD) + (yD * yD))) >= LaserWire.MAX_LASER_DIST) {
+                        this.particles.clear();
+                        this.ammoLeft = LaserWire.DEFAULT_AMMO;
+                    } else {
+                        this.lasers.add(new Line2D.Double(p1, p2));
+                        int newLife = LaserWire.LASER_LIFE / (int)Globals.SLEEP_TIME;
+                        this.particles.get(0).setLife(newLife);
+                        this.particles.get(1).setLife(newLife);
+                        this.lastDamageDone = System.currentTimeMillis();
+                    }
                 }
             }
         } // End particle updates.
@@ -107,6 +117,13 @@ public class LaserWire extends Weapon {
                         Particle p = it.next();
                         if(p.isAlive()) p.draw(g2d);
                     }
+                }
+                if(this.particles.size() == 1) {
+                    Point2D.Double pos = this.particles.get(0).getPos();
+                    g2d.setColor(new Color(191, 74, 99));
+                    g2d.setStroke(new BasicStroke(2));
+                    g2d.drawOval((int)(pos.x - LaserWire.MAX_LASER_DIST), (int)(pos.y - LaserWire.MAX_LASER_DIST), 
+                                 (LaserWire.MAX_LASER_DIST * 2), (LaserWire.MAX_LASER_DIST * 2));
                 }
             }
         } // End drawing particles.
