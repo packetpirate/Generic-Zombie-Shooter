@@ -49,7 +49,7 @@ public class Landmine extends Weapon {
     
     public Landmine() {
         super("Flip-Flop", KeyEvent.VK_6, "/resources/images/GZS_Landmine.png",
-              DEFAULT_AMMO, MAX_AMMO, AMMO_PER_USE, 50, false);
+              Landmine.DEFAULT_AMMO, Landmine.MAX_AMMO, Landmine.AMMO_PER_USE, 50, false);
         this.explosions = Collections.synchronizedList(new ArrayList<Explosion>());
     }
     
@@ -60,7 +60,7 @@ public class Landmine extends Weapon {
     public void resetAmmo() {
         super.resetAmmo();
         this.explosions = Collections.synchronizedList(new ArrayList<Explosion>());
-        this.ammoLeft = DEFAULT_AMMO;
+        this.ammoLeft = Landmine.DEFAULT_AMMO;
     }
     
     @Override

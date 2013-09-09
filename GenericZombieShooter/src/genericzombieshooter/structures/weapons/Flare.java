@@ -46,7 +46,7 @@ public class Flare extends Weapon {
     
     public Flare() {
         super("Shiny Stick", KeyEvent.VK_7, "/resources/images/GZS_Flare.png",
-              DEFAULT_AMMO, MAX_AMMO, AMMO_PER_USE, 100, false);
+              Flare.DEFAULT_AMMO, Flare.MAX_AMMO, Flare.AMMO_PER_USE, 100, false);
         this.flares = Collections.synchronizedList(new ArrayList<Animation>());
         this.lights = Collections.synchronizedList(new ArrayList<LightSource>());
     }

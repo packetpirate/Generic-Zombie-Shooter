@@ -45,7 +45,8 @@ public class AssaultRifle extends Weapon {
     
     public AssaultRifle() {
         super("RTPS", KeyEvent.VK_2, "/resources/images/GZS_RTPS.png", 
-              DEFAULT_AMMO, MAX_AMMO, AMMO_PER_USE, 10, true);
+              AssaultRifle.DEFAULT_AMMO, AssaultRifle.MAX_AMMO, AssaultRifle.AMMO_PER_USE, 
+              10, true);
     }
     
     @Override
@@ -56,7 +57,7 @@ public class AssaultRifle extends Weapon {
     @Override
     public void resetAmmo() {
         super.resetAmmo();
-        this.ammoLeft = DEFAULT_AMMO;
+        this.ammoLeft = AssaultRifle.DEFAULT_AMMO;
     }
     
     @Override
@@ -77,7 +78,7 @@ public class AssaultRifle extends Weapon {
     @Override
     public void drawAmmo(Graphics2D g2d) {
         // Draw all particles whose life has not yet expired.
-        if(this.particles.size() > 0) {
+        if(!this.particles.isEmpty()) {
             g2d.setColor(Color.ORANGE);
             Iterator<Particle> it = this.particles.iterator();
             while(it.hasNext()) {
@@ -115,7 +116,7 @@ public class AssaultRifle extends Weapon {
             // If the particle is still alive and has collided with the target.
             if(p.isAlive() && p.checkCollision(rect)) {
                 // Add the damage of the particle and remove it from the list.
-                damage += DAMAGE_PER_PARTICLE;
+                damage += AssaultRifle.DAMAGE_PER_PARTICLE;
                 it.remove();
             }
         }

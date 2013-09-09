@@ -34,6 +34,7 @@ public class TurretWeapon extends Weapon {
     private static final int DEFAULT_AMMO = 1;
     private static final int MAX_AMMO = 1;
     private static final int AMMO_PER_USE = 1;
+    private static final long TURRET_LIFE = 60 * 1000;
     
     // Member Variables
     private List<Turret> turrets;

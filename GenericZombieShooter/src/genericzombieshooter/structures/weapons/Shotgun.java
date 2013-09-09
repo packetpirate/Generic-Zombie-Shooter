@@ -45,7 +45,7 @@ public class Shotgun extends Weapon {
     
     public Shotgun() {
         super("Boomstick", KeyEvent.VK_3, "/resources/images/GZS_Boomstick.png", 
-              DEFAULT_AMMO, MAX_AMMO, AMMO_PER_USE, 40, false);
+              Shotgun.DEFAULT_AMMO, Shotgun.MAX_AMMO, Shotgun.AMMO_PER_USE, 40, false);
     }
     
     @Override
@@ -56,7 +56,7 @@ public class Shotgun extends Weapon {
     @Override
     public void resetAmmo() {
         super.resetAmmo();
-        this.ammoLeft = DEFAULT_AMMO;
+        this.ammoLeft = Shotgun.DEFAULT_AMMO;
     }
     
     @Override
@@ -123,7 +123,7 @@ public class Shotgun extends Weapon {
                 // If the particle is still alive and has collided with the target.
                 if(p.isAlive() && p.checkCollision(rect)) {
                     // Add the damage of the particle and remove it from the list.
-                    damage += DAMAGE_PER_PARTICLE;
+                    damage += Shotgun.DAMAGE_PER_PARTICLE;
                     it.remove();
                 }
             }

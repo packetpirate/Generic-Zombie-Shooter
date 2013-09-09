@@ -47,7 +47,7 @@ public class Flamethrower extends Weapon {
     
     public Flamethrower() {
         super("The Flammenwerfer", KeyEvent.VK_4, "/resources/images/GZS_Flamethrower.png", 
-              DEFAULT_AMMO, MAX_AMMO, AMMO_PER_USE, 0, true);
+              Flamethrower.DEFAULT_AMMO, Flamethrower.MAX_AMMO, Flamethrower.AMMO_PER_USE, 0, true);
     }
     
     @Override
@@ -58,7 +58,7 @@ public class Flamethrower extends Weapon {
     @Override
     public void resetAmmo() {
         super.resetAmmo();
-        this.ammoLeft = DEFAULT_AMMO;
+        this.ammoLeft = Flamethrower.DEFAULT_AMMO;
     }
     
     @Override
@@ -126,7 +126,7 @@ public class Flamethrower extends Weapon {
                 // If the particle is still alive and has collided with the target.
                 if(p.isAlive() && p.checkCollision(rect)) {
                     // Add the damage of the particle and remove it from the list.
-                    damage += DAMAGE_PER_PARTICLE;
+                    damage += Flamethrower.DAMAGE_PER_PARTICLE;
                     it.remove();
                 }
             }

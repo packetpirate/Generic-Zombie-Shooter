@@ -51,13 +51,13 @@ public class Grenade extends Weapon {
     
     public Grenade() {
         super("Hand Egg", KeyEvent.VK_5, "/resources/images/GZS_Grenade.png", 
-              DEFAULT_AMMO, MAX_AMMO, AMMO_PER_USE, 100, false);
+              Grenade.DEFAULT_AMMO, Grenade.MAX_AMMO, Grenade.AMMO_PER_USE, 100, false);
         this.explosions = Collections.synchronizedList(new ArrayList<Explosion>());
     }
     
     @Override
     public int getAmmoPackAmount() {
-        return DEFAULT_AMMO;
+        return Grenade.DEFAULT_AMMO;
     }
     
     
@@ -65,7 +65,7 @@ public class Grenade extends Weapon {
     public void resetAmmo() {
         super.resetAmmo();
         this.explosions = Collections.synchronizedList(new ArrayList<Explosion>());
-        this.ammoLeft = DEFAULT_AMMO;
+        this.ammoLeft = Grenade.DEFAULT_AMMO;
     }
     
     @Override
@@ -152,7 +152,8 @@ public class Grenade extends Weapon {
     }
     
     public Particle createGrenadeParticle(double theta, Point2D.Double pos) {
-        Particle p = new Particle(theta, PARTICLE_SPREAD, 5.0, (Grenade.THROWING_DISTANCE / (int)Globals.SLEEP_TIME),
+        Particle p = new Particle(theta, Grenade.PARTICLE_SPREAD, 5.0, 
+                                 (Grenade.THROWING_DISTANCE / (int)Globals.SLEEP_TIME),
                                   pos, new Dimension(16, 16), Images.GRENADE_PARTICLE) {
             @Override
             public void draw(Graphics2D g2d) {
