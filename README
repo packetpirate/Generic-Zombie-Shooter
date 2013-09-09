@@ -1,6 +1,6 @@
 -----------------------
 Author: Darin Beaudreau
-Version: 0.8.8
+Version: 0.8.9
 -----------------------
 
 Description:
@@ -22,6 +22,7 @@ The game is not complete, so there is limited functionality. Here are the contro
   6 - Select Flip-Flops (Landmines)
   7 - Select Shiny Sticks (Flares)
   8 - Select Laser Wire (needs better name)
+  9 - Select Turrets (needs better name)
   Mouse Scroll Wheel - Quick Select Weapon (Up = Left, Down = Right)
   P - Pause Game
   
@@ -75,6 +76,9 @@ Changes:
     terminals can be placed a max distance of 300px apart. A pink circle will appear to show you the area the second
     terminal can be placed in. If placed outside this pink circle, the two terminals will disappear and the player's
     laser wire ammo will be refunded.
+  - Added automated Turrets. These nifty little machines will continously fire at oncoming zombies within a certain
+    range, giving you some help against the attacking hordes. They last for 60 seconds and you can only have one at
+    a time. I may change in the future so they can take damage and die early.
 
 Known Issues:
 
