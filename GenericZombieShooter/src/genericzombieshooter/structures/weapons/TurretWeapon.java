@@ -58,7 +58,12 @@ public class TurretWeapon extends Weapon {
     }
     
     @Override
-    public boolean canFire() { return super.canFire() && this.turrets.isEmpty(); }
+    public boolean canFire() {
+        boolean superBool = super.canFire();
+        boolean turretsEmpty = this.turrets.isEmpty();
+        //System.out.println("SuperBool: " + superBool + ", TurretsEmpty: " + turretsEmpty);
+        return superBool && turretsEmpty; 
+    }
     
     @Override
     public void updateWeapon(List<Zombie> zombies) {
@@ -68,6 +73,10 @@ public class TurretWeapon extends Weapon {
                 while(it.hasNext()) {
                     Turret t = it.next();
                     if(t.isAlive()) t.update(zombies);
+                    else {
+                        it.remove();
+                        continue;
+                    }
                 }
             }
         }

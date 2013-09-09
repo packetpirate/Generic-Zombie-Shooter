@@ -57,8 +57,11 @@ public class Weapon {
     public void cool() { if(this.cooldown > 0) this.cooldown--; }
     
     public boolean canFire() {
-        return (this.ammoLeft >= this.ammoPerUse) && (this.cooldown == 0) && 
-               (this.automatic || (!this.automatic && !this.fired)); 
+        boolean a = this.ammoLeft >= this.ammoPerUse;
+        boolean b = this.cooldown == 0;
+        boolean c = this.automatic || (!this.automatic && !this.fired);
+        //System.out.println("Enough Ammo? " + a + ", Cooled? " + b + ", Automatic or Manual and Cool? " + c);
+        return (a) && (b) && (c); 
     }
     public boolean ammoFull() { return this.ammoLeft == this.maxAmmo; }
     public void addAmmo(int amount) { 

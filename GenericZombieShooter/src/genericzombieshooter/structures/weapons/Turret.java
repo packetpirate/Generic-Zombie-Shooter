@@ -97,27 +97,16 @@ public class Turret extends Point2D.Double {
                 }
             } // End particle updates.
             { // Update zombie target.
-                // Should optimize this...
                 if(!targets.isEmpty()) {
+                    double xD = 1000;
+                    double yD = 1000;
+                    double dist = Math.sqrt((xD * xD) + (yD * yD));
                     if(this.target != null) {
-                        double xD = this.target.x - this.x;
-                        double yD = this.target.y - this.y;
-                        double dist = Math.sqrt((xD * xD) + (yD * yD));
-                        Iterator<Zombie> it = targets.iterator();
-                        while(it.hasNext()) {
-                            Zombie z = it.next();
-                            double xD2 = z.x - this.x;
-                            double yD2 = z.y - this.y;
-                            double dist2 = Math.sqrt((xD2 * xD2) + (yD2 * yD2));
-                            if((!z.isDead() && (dist2 < dist)) && (dist2 <= Turret.ATTACK_RADIUS)) {
-                                // Switch targets.
-                                this.target = z;
-                            }
-                        }
-                    } else {
-                        double xD = 1000;
-                        double yD = 1000;
-                        double dist = Math.sqrt((xD * xD) + (yD * yD));
+                        xD = this.target.x - this.x;
+                        yD = this.target.y - this.y;
+                        dist = Math.sqrt((xD * xD) + (yD * yD));
+                    }
+                    synchronized(targets) {
                         Iterator<Zombie> it = targets.iterator();
                         while(it.hasNext()) {
                             Zombie z = it.next();
