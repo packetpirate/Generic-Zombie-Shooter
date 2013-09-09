@@ -152,6 +152,10 @@ public class GZSFramework {
                             player.setWeapon(8);
                             loadout.setCurrentWeapon(8);
                         }
+                        if (key == Globals.TURRETWEAPON.getKey()) {
+                            player.setWeapon(9);
+                            loadout.setCurrentWeapon(9);
+                        }
                     }
                 }
             });

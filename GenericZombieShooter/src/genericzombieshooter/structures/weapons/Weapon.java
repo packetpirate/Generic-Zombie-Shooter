@@ -56,8 +56,10 @@ public class Weapon {
     public void resetCooldown() { this.cooldown = this.coolPeriod; }
     public void cool() { if(this.cooldown > 0) this.cooldown--; }
     
-    public boolean canFire() { return (this.ammoLeft >= this.ammoPerUse) && (this.cooldown == 0) &&
-                                      (this.automatic || (!this.automatic && !this.fired)); }
+    public boolean canFire() {
+        return (this.ammoLeft >= this.ammoPerUse) && (this.cooldown == 0) && 
+               (this.automatic || (!this.automatic && !this.fired)); 
+    }
     public boolean ammoFull() { return this.ammoLeft == this.maxAmmo; }
     public void addAmmo(int amount) { 
         if((this.ammoLeft + amount) > this.maxAmmo) this.ammoLeft = this.maxAmmo;

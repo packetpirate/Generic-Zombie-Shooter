@@ -17,12 +17,14 @@
 package genericzombieshooter.structures.weapons;
 
 import genericzombieshooter.actors.Zombie;
+import genericzombieshooter.misc.Sounds;
 import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -56,29 +58,55 @@ public class TurretWeapon extends Weapon {
     }
     
     @Override
-    public boolean canFire() {
-        return super.canFire() && this.turrets.isEmpty();
-    }
+    public boolean canFire() { return super.canFire() && this.turrets.isEmpty(); }
     
     @Override
     public void updateWeapon(List<Zombie> zombies) {
-        
+        synchronized(this.turrets) {
+            if(!this.turrets.isEmpty()) {
+                Iterator<Turret> it = this.turrets.iterator();
+                while(it.hasNext()) {
+                    Turret t = it.next();
+                    if(t.isAlive()) t.update(zombies);
+                }
+            }
+        }
+        this.cool();
     }
     
     @Override
     public void drawAmmo(Graphics2D g2d) {
-        
+        synchronized(this.turrets) {
+            if(!this.turrets.isEmpty()) {
+                Iterator<Turret> it = this.turrets.iterator();
+                while(it.hasNext()) {
+                    Turret t = it.next();
+                    if(t.isAlive()) t.draw(g2d);
+                }
+            }
+        }
     }
     
     @Override
     public void fire(double theta, Point2D.Double pos) {
-        
+        if(this.canFire()) {
+            this.turrets.add(new Turret(pos, TurretWeapon.TURRET_LIFE));
+            this.consumeAmmo();
+            this.resetCooldown();
+            Sounds.LANDMINE_ARMED.play();
+        }
     }
     
     @Override
     public int checkForDamage(Rectangle2D.Double rect) {
         int damage = 0;
-        
+        synchronized(this.turrets) {
+            Iterator<Turret> it = this.turrets.iterator();
+            while(it.hasNext()) {
+                Turret t = it.next();
+                if(t.isAlive()) damage += t.checkForDamage(rect);
+            }
+        }
         return damage;
     }
 }

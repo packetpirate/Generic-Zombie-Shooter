@@ -30,6 +30,7 @@ import java.awt.Font;
 import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Stroke;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
@@ -77,12 +78,14 @@ public class GZSCanvas extends JPanel {
                 framework.getItemFactory().draw(g2d);
 
                 { // Begin drawing player and ammo.
+                    Stroke oldStroke = g2d.getStroke();
                     Iterator<Weapon> it = player.getAllWeapons().iterator();
                     while(it.hasNext()) {
                         Weapon w = it.next();
                         w.drawAmmo((Graphics2D)g2d);
                     }
                     player.draw(g2d);
+                    g2d.setStroke(oldStroke);
                 } // End drawing player and ammo.
 
                 g2d.setTransform(saved);

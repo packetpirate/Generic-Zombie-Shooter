@@ -24,6 +24,7 @@ import genericzombieshooter.structures.weapons.Handgun;
 import genericzombieshooter.structures.weapons.Landmine;
 import genericzombieshooter.structures.weapons.LaserWire;
 import genericzombieshooter.structures.weapons.Shotgun;
+import genericzombieshooter.structures.weapons.TurretWeapon;
 import java.awt.Point;
 import java.util.Random;
 
@@ -33,7 +34,7 @@ import java.util.Random;
  */
 public class Globals {
     // Final
-    public static final String VERSION = "0.8.8";
+    public static final String VERSION = "0.8.9";
     public static final int W_WIDTH = 800; // The width of the game window.
     public static final int W_HEIGHT = 640; // The height of the game window.
     public static final long SLEEP_TIME = 20; // The sleep time of the animation thread.
@@ -78,4 +79,5 @@ public class Globals {
     public static Landmine LANDMINE = new Landmine();
     public static Flare FLARE = new Flare();
     public static LaserWire LASERWIRE = new LaserWire();
+    public static TurretWeapon TURRETWEAPON = new TurretWeapon();
 }

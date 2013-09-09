@@ -22,6 +22,7 @@ import genericzombieshooter.misc.Globals;
 import genericzombieshooter.misc.Images;
 import genericzombieshooter.misc.Sounds;
 import genericzombieshooter.structures.Particle;
+import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics2D;
@@ -44,7 +45,8 @@ public class Turret extends Point2D.Double {
     private static final int DAMAGE = 100;
     private static final double PARTICLE_SPREAD = 5.0;
     private static final long PARTICLE_LIFE = 2000;
-    private static final long FIRING_RATE = 150;
+    private static final long FIRING_RATE = 400;
+    private static final int ATTACK_RADIUS = 300;
     
     // Member Variables
     private BufferedImage turretMount;
@@ -79,28 +81,68 @@ public class Turret extends Point2D.Double {
     
     public void update(List<Zombie> targets) {
         if(this.isAlive()) {
-            { // Update zombie target.
-                double xD = this.target.x - this.x;
-                double yD = this.target.y - this.y;
-                double dist = Math.sqrt((xD * xD) + (yD * yD));
-                Iterator<Zombie> it = targets.iterator();
-                while(it.hasNext()) {
-                    Zombie z = it.next();
-                    double xD2 = z.x - this.x;
-                    double yD2 = z.y - this.y;
-                    double dist2 = Math.sqrt((xD2 * xD2) + (yD2 * yD2));
-                    if(!z.isDead() && (dist2 < dist)) {
-                        // Switch targets.
-                        this.target = z;
+            { // Update particles.
+                synchronized(this.particles) {
+                    if(!this.particles.isEmpty()) {
+                        Iterator<Particle> it = this.particles.iterator();
+                        while(it.hasNext()) {
+                            Particle p = it.next();
+                            p.update();
+                            if(!p.isAlive() || p.outOfBounds()) {
+                                it.remove();
+                                continue;
+                            }
+                        }
                     }
                 }
-
-                // Update theta for new target.
-                this.theta = Math.atan2((this.y - this.target.y), (this.x - this.target.x));
+            } // End particle updates.
+            { // Update zombie target.
+                // Should optimize this...
+                if(!targets.isEmpty()) {
+                    if(this.target != null) {
+                        double xD = this.target.x - this.x;
+                        double yD = this.target.y - this.y;
+                        double dist = Math.sqrt((xD * xD) + (yD * yD));
+                        Iterator<Zombie> it = targets.iterator();
+                        while(it.hasNext()) {
+                            Zombie z = it.next();
+                            double xD2 = z.x - this.x;
+                            double yD2 = z.y - this.y;
+                            double dist2 = Math.sqrt((xD2 * xD2) + (yD2 * yD2));
+                            if((!z.isDead() && (dist2 < dist)) && (dist2 <= Turret.ATTACK_RADIUS)) {
+                                // Switch targets.
+                                this.target = z;
+                            }
+                        }
+                    } else {
+                        double xD = 1000;
+                        double yD = 1000;
+                        double dist = Math.sqrt((xD * xD) + (yD * yD));
+                        Iterator<Zombie> it = targets.iterator();
+                        while(it.hasNext()) {
+                            Zombie z = it.next();
+                            double xD2 = z.x - this.x;
+                            double yD2 = z.y - this.y;
+                            double dist2 = Math.sqrt((xD2 * xD2) + (yD2 * yD2));
+                            if((!z.isDead() && (dist2 < dist)) && (dist2 <= Turret.ATTACK_RADIUS)) {
+                                // Switch targets.
+                                this.target = z;
+                            }
+                        }
+                    }
+                    
+                    if(this.target != null) {
+                        // Update theta for new target.
+                        this.theta = Math.atan2((this.y - this.target.y), (this.x - this.target.x)) - (Math.PI / 2);
+                    }
+                }
             } // End updating target.
 
+            // If the current target is dead, set the target to null.
+            if((this.target != null) && (this.target.isDead())) this.target = null;
+            
             // Fire a bullet at the nearest zombie.
-            this.fire();
+            if(this.target != null) this.fire();
         }
     }
     
@@ -143,12 +185,20 @@ public class Turret extends Point2D.Double {
             }
             g2d.setTransform(saved);
         } // End drawing turret head.
+        { // Draw turret's ring of influence.
+            int xPos = (int)(this.x - Turret.ATTACK_RADIUS);
+            int yPos = (int)(this.y - Turret.ATTACK_RADIUS);
+            g2d.setColor(Color.RED);
+            g2d.setStroke(new BasicStroke(2));
+            g2d.drawOval(xPos, yPos, (Turret.ATTACK_RADIUS * 2), (Turret.ATTACK_RADIUS * 2));
+        } // End drawing ring of influence.
     }
     
     public void fire() {
         if(this.canFire()) {
             Point2D.Double firingPos = new Point2D.Double(this.x, (this.y - 25));
-            Particle p = new Particle(this.theta, Turret.PARTICLE_SPREAD, 10.0,
+            AffineTransform.getRotateInstance(this.theta, this.x, this.y).transform(firingPos, firingPos);
+            Particle p = new Particle((-this.theta + Math.PI), Turret.PARTICLE_SPREAD, 10.0,
                                       (int)(Turret.PARTICLE_LIFE / Globals.SLEEP_TIME), firingPos,
                                       new Dimension(4, 10), Images.RTPS_BULLET);
             this.particles.add(p);
