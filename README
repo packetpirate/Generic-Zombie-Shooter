@@ -105,6 +105,7 @@ TODO:
   - Add alt-fire for certain weapons.
   - Add effects to ammo for tertiary effects.
   - Add message system to display various information.
+  - Add transparent overlay for weapons loadout weapons to show remaining cooldown on that weapon.
 
 Planned Future Changes (Most likely post-1.0):
   - Add a lighting system so that you can only see directly in front of you, like a flashlight.
