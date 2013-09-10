@@ -16,6 +16,7 @@
  **/
 package genericzombieshooter.structures.weapons;
 
+import genericzombieshooter.actors.Player;
 import genericzombieshooter.actors.Zombie;
 import genericzombieshooter.misc.Globals;
 import genericzombieshooter.misc.Images;
@@ -129,7 +130,7 @@ public class Landmine extends Weapon {
     }
     
     @Override
-    public void fire(double theta, Point2D.Double pos) {
+    public void fire(double theta, Point2D.Double pos, Player player) {
         synchronized(this.particles) {
             if(this.canFire()) {
                 Particle p = createLandmineParticle(theta, pos);

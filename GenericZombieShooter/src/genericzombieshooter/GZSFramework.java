@@ -156,6 +156,10 @@ public class GZSFramework {
                             player.setWeapon(9);
                             loadout.setCurrentWeapon(9);
                         }
+                        if (key == Globals.TELEPORTER.getKey()) {
+                            player.setWeapon(10);
+                            loadout.setCurrentWeapon(10);
+                        }    
                     }
                 }
             });
@@ -269,7 +273,7 @@ public class GZSFramework {
                     Point2D.Double pos = new Point2D.Double((player.x + 28), (player.y - 8));
                     AffineTransform.getRotateInstance(pAngle, player.getCenterX(), player.getCenterY()).transform(pos, pos);
                     double theta = Math.atan2((target.x - pos.x), (target.y - pos.y));
-                    player.getWeapon().fire(theta, pos);
+                    player.getWeapon().fire(theta, pos, player);
                 }
 
                 if(!Globals.waveInProgress) {

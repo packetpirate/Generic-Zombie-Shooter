@@ -16,6 +16,7 @@
  **/
 package genericzombieshooter.structures.weapons;
 
+import genericzombieshooter.actors.Player;
 import genericzombieshooter.actors.Zombie;
 import genericzombieshooter.misc.Images;
 import genericzombieshooter.structures.Animation;
@@ -112,7 +113,7 @@ public class Flare extends Weapon {
     }
     
     @Override
-    public void fire(double theta, Point2D.Double pos) {
+    public void fire(double theta, Point2D.Double pos, Player player) {
         if(this.canFire()) {
             synchronized(this.flares) {
                 Animation a = new Animation(Images.FLARE_PARTICLE, 32, 32, 3, (int)pos.x, (int)pos.y, 

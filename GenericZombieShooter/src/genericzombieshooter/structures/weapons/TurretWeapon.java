@@ -16,6 +16,7 @@
  **/
 package genericzombieshooter.structures.weapons;
 
+import genericzombieshooter.actors.Player;
 import genericzombieshooter.actors.Zombie;
 import genericzombieshooter.misc.Sounds;
 import java.awt.Graphics2D;
@@ -97,7 +98,7 @@ public class TurretWeapon extends Weapon {
     }
     
     @Override
-    public void fire(double theta, Point2D.Double pos) {
+    public void fire(double theta, Point2D.Double pos, Player player) {
         if(this.canFire()) {
             this.turrets.add(new Turret(pos, TurretWeapon.TURRET_LIFE));
             this.consumeAmmo();

@@ -17,6 +17,7 @@
 package genericzombieshooter.structures.weapons;
 
 import genericzombieshooter.GZSFramework;
+import genericzombieshooter.actors.Player;
 import genericzombieshooter.actors.Zombie;
 import genericzombieshooter.structures.LightSource;
 import genericzombieshooter.structures.Particle;
@@ -107,7 +108,7 @@ public class Weapon {
         // To be overridden.
     }
     
-    public void fire(double theta, Point2D.Double pos) {
+    public void fire(double theta, Point2D.Double pos, Player player) {
         // To be overridden.
     }
     

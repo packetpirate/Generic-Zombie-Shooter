@@ -16,6 +16,7 @@
  **/
 package genericzombieshooter.structures.weapons;
 
+import genericzombieshooter.actors.Player;
 import genericzombieshooter.actors.Zombie;
 import genericzombieshooter.misc.Globals;
 import genericzombieshooter.misc.Sounds;
@@ -92,7 +93,7 @@ public class Shotgun extends Weapon {
     }
     
     @Override
-    public void fire(double theta, Point2D.Double pos) {
+    public void fire(double theta, Point2D.Double pos, Player player) {
         synchronized(this.particles) {
             // If there is enough ammo left...
             if(this.canFire()) {

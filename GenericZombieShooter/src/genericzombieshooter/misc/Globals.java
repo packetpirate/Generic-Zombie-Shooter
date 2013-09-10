@@ -24,6 +24,7 @@ import genericzombieshooter.structures.weapons.Handgun;
 import genericzombieshooter.structures.weapons.Landmine;
 import genericzombieshooter.structures.weapons.LaserWire;
 import genericzombieshooter.structures.weapons.Shotgun;
+import genericzombieshooter.structures.weapons.Teleporter;
 import genericzombieshooter.structures.weapons.TurretWeapon;
 import java.awt.Point;
 import java.util.Random;
@@ -80,4 +81,5 @@ public class Globals {
     public static Flare FLARE = new Flare();
     public static LaserWire LASERWIRE = new LaserWire();
     public static TurretWeapon TURRETWEAPON = new TurretWeapon();
+    public static Teleporter TELEPORTER = new Teleporter();
 }
