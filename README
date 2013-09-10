@@ -23,6 +23,7 @@ The game is not complete, so there is limited functionality. Here are the contro
   7 - Select Shiny Sticks (Flares)
   8 - Select Laser Wire (needs better name)
   9 - Select Turrets (needs better name)
+  0 - Select Big Red Button (Teleporter)
   Mouse Scroll Wheel - Quick Select Weapon (Up = Left, Down = Right)
   P - Pause Game
   
@@ -79,6 +80,9 @@ Changes:
   - Added automated Turrets. These nifty little machines will continously fire at oncoming zombies within a certain
     range, giving you some help against the attacking hordes. They last for 60 seconds and you can only have one at
     a time. I may change in the future so they can take damage and die early.
+  - Added Big Red Button, which when used, teleports the player to a random location on the screen. It has a cooldown
+    of 60 seconds. I may change it in the future to simply recharge after a while, rather than requiring ammo to
+    refill, and may decide to have it teleport to the player's mouse location, rather than teleporting randomly.
 
 Known Issues:
 
@@ -92,7 +96,6 @@ Known Issues:
 
 TODO:
 
-  - Add more weapons.
   - Change gameplay so you do not start with all weapons automatically. Add store system so you can
     buy the weapons with your cash.
   - Add powerups (speed, firing rate, unlimited ammo?, extra life, etc)
