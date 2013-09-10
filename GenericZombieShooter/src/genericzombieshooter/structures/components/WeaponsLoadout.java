@@ -18,12 +18,14 @@ package genericzombieshooter.structures.components;
 
 import genericzombieshooter.actors.Player;
 import genericzombieshooter.misc.Globals;
+import genericzombieshooter.structures.weapons.Weapon;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Stroke;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
+import java.util.HashMap;
 
 /**
  * Used to draw the weapons loadout GUI component to the screen.
@@ -35,11 +37,14 @@ public class WeaponsLoadout {
     
     private Player player;
     private int currentWeapon;
-    public void setCurrentWeapon(int w) { this.currentWeapon = w; }
+    private String currentWeaponName;
+    //public void setCurrentWeapon(int w) { this.currentWeapon = w; }
+    public void setCurrentWeapon(String name) { this.currentWeaponName = name; }
     
     public WeaponsLoadout(Player p) {
         this.player = p;
         this.currentWeapon = 1;
+        this.currentWeaponName = p.getWeapon().getName();
     }
     
     public void draw(Graphics2D g2d) {
@@ -54,6 +59,11 @@ public class WeaponsLoadout {
             g2d.draw(rect);
         } // Stop drawing the bar under the weapon slots.
         { // Draw the filler color for the weapon slots.
+            String [] weaponNames = {Globals.HANDGUN.getName(), Globals.ASSAULT_RIFLE.getName(),
+                                                 Globals.SHOTGUN.getName(), Globals.FLAMETHROWER.getName(),
+                                                 Globals.GRENADE.getName(), Globals.LANDMINE.getName(),
+                                                 Globals.FLARE.getName(), Globals.LASERWIRE.getName(),
+                                                 Globals.TURRETWEAPON.getName(), Globals.TELEPORTER.getName()};
             for(int s = 0; s < 10; s++) {
                 int slot = s * 48;
                 int spacing = (s + 1) * 4;
@@ -66,14 +76,32 @@ public class WeaponsLoadout {
                 g2d.fill(rect);
                 g2d.setColor(Color.BLACK);
                 g2d.draw(rect);
-                if((s + 1) <= player.getAllWeapons().size()) { // Draw the weapon's icon.
+                /*if((s + 1) <= player.getAllWeapons().size()) { // Draw the weapon's icon.
                     BufferedImage image = player.getWeapon(s + 1).getImage();
                     double imageX = (x + 24) - (image.getWidth() / 2);
                     double imageY = (y + 24) - (image.getHeight() / 2);
                     g2d.drawImage(image, (int)imageX, (int)imageY, null);
-                } // End drawing of the weapon icon.
+                } // End drawing of the weapon icon.*/
+                { // Draw Weapon Icon
+                    BufferedImage image = null;
+                    HashMap<String, Weapon> weaponsMap = player.getWeaponsMap();
+                    
+                    int w = s + 1;
+                    if(w == 1 && weaponsMap.containsKey(Globals.HANDGUN.getName())) image = weaponsMap.get(Globals.HANDGUN.getName()).getImage();
+                    else if(w == 2 && weaponsMap.containsKey(Globals.ASSAULT_RIFLE.getName())) image = weaponsMap.get(Globals.ASSAULT_RIFLE.getName()).getImage();
+                    else if(w == 3 && weaponsMap.containsKey(Globals.SHOTGUN.getName())) image = weaponsMap.get(Globals.SHOTGUN.getName()).getImage();
+                    else if(w == 4 && weaponsMap.containsKey(Globals.FLAMETHROWER.getName())) image = weaponsMap.get(Globals.FLAMETHROWER.getName()).getImage();
+                    else if(w == 5 && weaponsMap.containsKey(Globals.GRENADE.getName())) image = weaponsMap.get(Globals.GRENADE.getName()).getImage();
+                    else if(w == 6 && weaponsMap.containsKey(Globals.LANDMINE.getName())) image = weaponsMap.get(Globals.LANDMINE.getName()).getImage();
+                    else if(w == 7 && weaponsMap.containsKey(Globals.FLARE.getName())) image = weaponsMap.get(Globals.FLARE.getName()).getImage();
+                    else if(w == 8 && weaponsMap.containsKey(Globals.LASERWIRE.getName())) image = weaponsMap.get(Globals.LASERWIRE.getName()).getImage();
+                    else if(w == 9 && weaponsMap.containsKey(Globals.TURRETWEAPON.getName())) image = weaponsMap.get(Globals.TURRETWEAPON.getName()).getImage();
+                    else if(w == 10 && weaponsMap.containsKey(Globals.TELEPORTER.getName())) image = weaponsMap.get(Globals.TELEPORTER.getName()).getImage();
+                    
+                    g2d.drawImage(image, (int)x, (int)y, null);
+                } // End drawing weapon icon.
                 // If the current iteration is the slot of the currently equipped weapon...
-                if((s + 1) == this.currentWeapon) {
+                if(this.currentWeaponName.equals(weaponNames[s])) {
                     x += 3;
                     y += 3;
                     size = 42;

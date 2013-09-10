@@ -29,10 +29,10 @@ import java.awt.geom.Point2D;
 public class Ammo extends Item {
     public static final int ID = 2;
     public static final long SPAWN_TIME = 15 * 1000;
-    private int weapon;
+    private String weapon;
     private int ammoCount;
     
-    public Ammo(int weapon, int ammoCount, Point2D.Double p) {
+    public Ammo(String weapon, int ammoCount, Point2D.Double p) {
         super(Ammo.ID, "Ammo Pack", Images.AMMO_PACK);
         this.weapon = weapon;
         this.ammoCount = ammoCount;

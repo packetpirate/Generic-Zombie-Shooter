@@ -28,8 +28,7 @@ import java.awt.geom.Ellipse2D;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
 
 /**
  * Represents the player character.
@@ -50,8 +49,10 @@ public class Player extends Rectangle2D.Double {
     private int lives;
     private boolean invincible;
     private long invincibleStartTime;
-    private int currentWeapon;
-    private List<Weapon> weapons;
+    //private int currentWeapon;
+    private String currentWeaponName;
+    //private List<Weapon> weapons;
+    private HashMap<String, Weapon> weaponsMap;
     
     // Statistic Variables
     private long deathTime;
@@ -81,14 +82,14 @@ public class Player extends Rectangle2D.Double {
         this.lives = 3;
         this.invincible = false;
         this.invincibleStartTime = System.currentTimeMillis();
-        this.currentWeapon = 1;
+        //this.currentWeapon = 1;
         
         this.deathTime = System.currentTimeMillis();
         this.killCount = 0;
         this.medkitsUsed = 0;
         this.ammoCratesUsed = 0;
         
-        this.weapons = new ArrayList<Weapon>();
+        /*this.weapons = new ArrayList<Weapon>();
         this.weapons.add(Globals.HANDGUN); // Weapon 1
         this.weapons.add(Globals.ASSAULT_RIFLE); // Weapon 2
         this.weapons.add(Globals.SHOTGUN); // Weapon 3
@@ -98,7 +99,10 @@ public class Player extends Rectangle2D.Double {
         this.weapons.add(Globals.FLARE); // Weapon 7
         this.weapons.add(Globals.LASERWIRE); // Weapon 8
         this.weapons.add(Globals.TURRETWEAPON); // Weapon 9
-        this.weapons.add(Globals.TELEPORTER); // Weapon 10
+        this.weapons.add(Globals.TELEPORTER); // Weapon 10*/
+        this.weaponsMap = new HashMap<String, Weapon>();
+        this.addWeapon(Globals.HANDGUN);
+        this.currentWeaponName = Globals.HANDGUN.getName();
     }
 
     // Getter/Setter methods.
@@ -131,13 +135,16 @@ public class Player extends Rectangle2D.Double {
             this.cash = 0;
             this.lives = 3;
             this.deathTime = System.currentTimeMillis();
+            this.weaponsMap = new HashMap<String, Weapon>();
+            this.weaponsMap.put(Globals.HANDGUN.getName(), Globals.HANDGUN);
         }
         else {
             this.invincible = true;
             this.invincibleStartTime = System.currentTimeMillis();
         }
         if(this.isPoisoned()) this.removePoison();
-        this.currentWeapon = 1;
+        //this.currentWeapon = 1;
+        this.currentWeaponName = Globals.HANDGUN.getName();
         this.x = (Globals.W_WIDTH / 2) - (this.width / 2);
         this.y = (Globals.W_HEIGHT / 2) - (this.height / 2);
         this.light.move(new Point2D.Double((int)this.getCenterX(), (int)this.getCenterY()));
@@ -148,13 +155,31 @@ public class Player extends Rectangle2D.Double {
         this.ammoCratesUsed = 0;
     }
     
-    public Weapon getWeapon() { return this.weapons.get(this.currentWeapon - 1); }
-    public Weapon getWeapon(int w) { return this.weapons.get(w - 1); }
-    public int getCurrentWeapon() { return this.currentWeapon; }
-    public List<Weapon> getAllWeapons() { return this.weapons; }
-    public void setWeapon(int w) { 
+    public boolean hasWeapon(String name) { return this.weaponsMap.containsKey(name); }
+    public Weapon getWeapon() { 
+        //return this.weapons.get(this.currentWeapon - 1);
+        return this.weaponsMap.get(this.currentWeaponName);
+    }
+    //public Weapon getWeapon(int w) { return this.weapons.get(w - 1); }
+    public Weapon getWeapon(String name) { return this.weaponsMap.get(name); }
+    //public int getCurrentWeapon() { return this.currentWeapon; }
+    public String getCurrentWeaponName() { return this.currentWeaponName; }
+    //public List<Weapon> getAllWeapons() { return this.weapons; }
+    public HashMap<String, Weapon> getWeaponsMap() { return this.weaponsMap; }
+    /*public void setWeapon(int w) { 
         this.currentWeapon = w;
         Sounds.FLAMETHROWER.reset();
+    }*/
+    public void setWeapon(String name) {
+        if(this.weaponsMap.containsKey(name)) {
+            this.currentWeaponName = name;
+            Sounds.FLAMETHROWER.reset();
+        } else {
+            System.out.println("ERROR: Weapon \"" + name + "\" not found.");
+        }
+    }
+    public void addWeapon(Weapon w) {
+        this.weaponsMap.put(w.getName(), w);
     }
     
     public void draw(Graphics2D g2d) {

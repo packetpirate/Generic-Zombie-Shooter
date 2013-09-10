@@ -21,6 +21,7 @@ import genericzombieshooter.actors.Zombie;
 import genericzombieshooter.misc.Globals;
 import genericzombieshooter.misc.Images;
 import genericzombieshooter.structures.LightSource;
+import genericzombieshooter.structures.components.StoreWindow;
 import genericzombieshooter.structures.weapons.Weapon;
 import java.awt.AlphaComposite;
 import java.awt.BasicStroke;
@@ -46,10 +47,12 @@ import javax.swing.JPanel;
 public class GZSCanvas extends JPanel {
     // Member variables.
     private GZSFramework framework;
+    private StoreWindow store;
     private BufferedImage background;
 
     public GZSCanvas(GZSFramework framework) {
         this.framework = framework;
+        this.store = new StoreWindow();
         this.background = Images.BACKGROUND;
 
         setBackground(Color.WHITE);
@@ -72,114 +75,123 @@ public class GZSCanvas extends JPanel {
         if(Globals.started) {
             Player player = framework.getPlayer();
             if(!Globals.deathScreen) {
-                g2d.drawImage(background, 0, 0, null);
+                if(!Globals.storeOpen) {
+                    g2d.drawImage(background, 0, 0, null);
 
-                // Draw Items
-                framework.getItemFactory().draw(g2d);
+                    // Draw Items
+                    framework.getItemFactory().draw(g2d);
 
-                { // Begin drawing player and ammo.
-                    Stroke oldStroke = g2d.getStroke();
-                    Iterator<Weapon> it = player.getAllWeapons().iterator();
-                    while(it.hasNext()) {
-                        Weapon w = it.next();
-                        w.drawAmmo((Graphics2D)g2d);
-                    }
-                    player.draw(g2d);
-                    g2d.setStroke(oldStroke);
-                } // End drawing player and ammo.
-
-                g2d.setTransform(saved);
-
-                { // Begin drawing zombies.
-                    synchronized(framework.getWave().getZombies()) {
-                        Iterator<Zombie> it = framework.getWave().getZombies().iterator();
+                    { // Begin drawing player and ammo.
+                        Stroke oldStroke = g2d.getStroke();
+                        //Iterator<Weapon> it = player.getAllWeapons().iterator();
+                        Iterator<Weapon> it = player.getWeaponsMap().values().iterator();
                         while(it.hasNext()) {
-                            Zombie z = it.next();
-                            z.draw(g2d);
-                            g2d.setTransform(saved);
+                            Weapon w = it.next();
+                            w.drawAmmo((Graphics2D)g2d);
                         }
-                    }
-                } // End drawing zombies.
+                        player.draw(g2d);
+                        g2d.setStroke(oldStroke);
+                    } // End drawing player and ammo.
 
-                g2d.setTransform(saved); // Restore original transform state.
+                    g2d.setTransform(saved);
 
-                { // Draw circle of light around player.
-                    BufferedImage shadowBuffer = new BufferedImage(Globals.W_WIDTH, Globals.W_HEIGHT, BufferedImage.TYPE_INT_ARGB);
-                    Graphics2D sg = (Graphics2D)shadowBuffer.getGraphics();
-                    
-                    sg.setComposite(AlphaComposite.Src);
-                    sg.setColor(new Color(0.0f, 0.0f, 0.0f, 0.95f));
-                    sg.fillRect(0, 0, Globals.W_WIDTH, Globals.W_HEIGHT);
-                    sg.setComposite(AlphaComposite.DstIn);
-                    
-                    player.getLightSource().draw(sg);
-                    
-                    // Draw the light sources from flares.
-                    List<LightSource> lights = player.getWeapon(7).getLights();
-                    synchronized(lights) {
-                        if(!lights.isEmpty()) {
-                            Iterator<LightSource> it = lights.iterator();
+                    { // Begin drawing zombies.
+                        synchronized(framework.getWave().getZombies()) {
+                            Iterator<Zombie> it = framework.getWave().getZombies().iterator();
                             while(it.hasNext()) {
-                                LightSource ls = it.next();
-                                if(ls.isAlive()) ls.draw(sg);
+                                Zombie z = it.next();
+                                z.draw(g2d);
+                                g2d.setTransform(saved);
                             }
                         }
-                    }
-                    
-                    g2d.drawImage(shadowBuffer, 0, 0, null);
-                    
-                    sg.dispose();
-                } // End drawing circle of light.
+                    } // End drawing zombies.
 
-                { // Draw GUI elements.
-                    g2d.setStroke(new BasicStroke(1));
-                    { // Begin drawing the health bar.
-                        // Draw the gray box under the HUD.
-                        g2d.setColor(Color.LIGHT_GRAY);
-                        g2d.fillRect(2, 2, (Player.MAX_HEALTH + 20), 84);
-                        g2d.setColor(Color.BLACK);
-                        g2d.drawRect(2, 2, (Player.MAX_HEALTH + 20), 84);
-                        // Draw the black bar behind the red health bar to act as a border.
-                        g2d.setColor(Color.BLACK);
-                        g2d.fillRect(10, 10, (Player.MAX_HEALTH + 4), 20);
+                    g2d.setTransform(saved); // Restore original transform state.
 
-                        // Only draw the red bar indicating health if player is still alive.
-                        if (player.getHealth() > 0) {
-                            g2d.setColor(((player.isPoisoned())?new Color(39, 161, 18):new Color(209, 21, 33)));
-                            g2d.fillRect(12, 12, player.getHealth(), 16);
-                            g2d.setColor(Color.WHITE);
-                            g2d.drawString(("HP: " + player.getHealth() + "/" + Player.MAX_HEALTH), 15, 25);
+                    { // Draw circle of light around player.
+                        BufferedImage shadowBuffer = new BufferedImage(Globals.W_WIDTH, Globals.W_HEIGHT, BufferedImage.TYPE_INT_ARGB);
+                        Graphics2D sg = (Graphics2D)shadowBuffer.getGraphics();
+
+                        sg.setComposite(AlphaComposite.Src);
+                        sg.setColor(new Color(0.0f, 0.0f, 0.0f, 0.95f));
+                        sg.fillRect(0, 0, Globals.W_WIDTH, Globals.W_HEIGHT);
+                        sg.setComposite(AlphaComposite.DstIn);
+
+                        player.getLightSource().draw(sg);
+
+                        // Draw the light sources from flares.
+                        if(player.hasWeapon(Globals.FLARE.getName())) {
+                            //List<LightSource> lights = player.getWeapon(7).getLights();
+                            List<LightSource> lights = player.getWeapon(Globals.FLARE.getName()).getLights();
+                            synchronized(lights) {
+                                if(!lights.isEmpty()) {
+                                    Iterator<LightSource> it = lights.iterator();
+                                    while(it.hasNext()) {
+                                        LightSource ls = it.next();
+                                        if(ls.isAlive()) ls.draw(sg);
+                                    }
+                                }
+                            }
                         }
-                    } // End drawing the health bar.
-                    // Draw status messages.
-                    g2d.setColor(Color.BLACK);
-                    g2d.drawString(("Cash: $" + player.getCash()), 10, 42);
-                    g2d.drawString(("Lives: " + player.getLives()), 10, 55);
-                    g2d.drawString(("Ammo: " + player.getWeapon().getAmmoLeft() + "/" + player.getWeapon().getMaxAmmo()),
-                                    10, 68);
-                    if(player.isPoisoned()) {
-                        long timeLeft = player.getPoisonEndTime() - System.currentTimeMillis();
-                        g2d.setColor(new Color(39, 161, 18));
-                        g2d.drawString(("Poisoned for " + (timeLeft / 1000) + "s!"), 10, 81);
-                    }
-                    framework.getLoadout().draw((Graphics2D)g2d);
 
-                    g2d.setColor(Color.WHITE);
-                    Font font = new Font("Impact", Font.PLAIN, 20);
-                    FontMetrics metrics = g2d.getFontMetrics(font);
-                    g2d.setFont(font);
-                    if(!Globals.waveInProgress) {
-                        long timeLeft = Globals.nextWave - System.currentTimeMillis();
-                        String s = "Next wave in " + ((timeLeft / 1000) + 1) + "...";
-                        int w = metrics.stringWidth(s);
-                        g2d.drawString(s, (Globals.W_WIDTH - (w + 20)), 24);
-                    } else {
-                        String s = "Current Wave: " + framework.getWave().getWaveNumber();
-                        int w = metrics.stringWidth(s);
-                        g2d.drawString(s, (Globals.W_WIDTH - (w + 20)), 24);
-                    }
-                    g2d.setFont(null);
-                } // End drawing GUI elements.
+                        g2d.drawImage(shadowBuffer, 0, 0, null);
+
+                        sg.dispose();
+                    } // End drawing circle of light.
+
+                    { // Draw GUI elements.
+                        g2d.setStroke(new BasicStroke(1));
+                        { // Begin drawing the health bar.
+                            // Draw the gray box under the HUD.
+                            g2d.setColor(Color.LIGHT_GRAY);
+                            g2d.fillRect(2, 2, (Player.MAX_HEALTH + 20), 84);
+                            g2d.setColor(Color.BLACK);
+                            g2d.drawRect(2, 2, (Player.MAX_HEALTH + 20), 84);
+                            // Draw the black bar behind the red health bar to act as a border.
+                            g2d.setColor(Color.BLACK);
+                            g2d.fillRect(10, 10, (Player.MAX_HEALTH + 4), 20);
+
+                            // Only draw the red bar indicating health if player is still alive.
+                            if (player.getHealth() > 0) {
+                                g2d.setColor(((player.isPoisoned())?new Color(39, 161, 18):new Color(209, 21, 33)));
+                                g2d.fillRect(12, 12, player.getHealth(), 16);
+                                g2d.setColor(Color.WHITE);
+                                g2d.drawString(("HP: " + player.getHealth() + "/" + Player.MAX_HEALTH), 15, 25);
+                            }
+                        } // End drawing the health bar.
+                        // Draw status messages.
+                        g2d.setColor(Color.BLACK);
+                        g2d.drawString(("Cash: $" + player.getCash()), 10, 42);
+                        g2d.drawString(("Lives: " + player.getLives()), 10, 55);
+                        g2d.drawString(("Ammo: " + player.getWeapon().getAmmoLeft() + "/" + player.getWeapon().getMaxAmmo()),
+                                        10, 68);
+                        if(player.isPoisoned()) {
+                            long timeLeft = player.getPoisonEndTime() - System.currentTimeMillis();
+                            g2d.setColor(new Color(39, 161, 18));
+                            g2d.drawString(("Poisoned for " + (timeLeft / 1000) + "s!"), 10, 81);
+                        }
+                        framework.getLoadout().draw((Graphics2D)g2d);
+
+                        g2d.setColor(Color.WHITE);
+                        Font font = new Font("Impact", Font.PLAIN, 20);
+                        FontMetrics metrics = g2d.getFontMetrics(font);
+                        g2d.setFont(font);
+                        if(!Globals.waveInProgress) {
+                            long timeLeft = Globals.nextWave - System.currentTimeMillis();
+                            String s = "Next wave in " + ((timeLeft / 1000) + 1) + "...";
+                            int w = metrics.stringWidth(s);
+                            g2d.drawString(s, (Globals.W_WIDTH - (w + 20)), 24);
+                        } else {
+                            String s = "Current Wave: " + framework.getWave().getWaveNumber();
+                            int w = metrics.stringWidth(s);
+                            g2d.drawString(s, (Globals.W_WIDTH - (w + 20)), 24);
+                        }
+                        g2d.setFont(null);
+                    } // End drawing GUI elements.
+                } else {
+                    // Draw the store window.
+                    this.store.draw(g2d);
+                }
             } else {
                 // Draw the death screen.
                 g2d.drawImage(Images.DEATH_SCREEN, 0, 0, null);
@@ -255,5 +267,6 @@ public class GZSCanvas extends JPanel {
         } else {
             g2d.drawImage(Images.START_SCREEN, 0, 0, null);
         }
+        g2d.dispose();
     }
 }
