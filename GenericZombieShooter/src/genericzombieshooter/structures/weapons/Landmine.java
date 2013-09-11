@@ -39,6 +39,8 @@ import java.util.List;
  */
 public class Landmine extends Weapon {
     // Final Variables
+    private static final int WEAPON_PRICE = 0;
+    private static final int AMMO_PRICE = 0;
     private static final int DEFAULT_AMMO = 1;
     private static final int MAX_AMMO = 3;
     private static final int AMMO_PER_USE = 1;
@@ -53,6 +55,12 @@ public class Landmine extends Weapon {
               Landmine.DEFAULT_AMMO, Landmine.MAX_AMMO, Landmine.AMMO_PER_USE, 50, false);
         this.explosions = Collections.synchronizedList(new ArrayList<Explosion>());
     }
+    
+    @Override
+    public int getWeaponPrice() { return Landmine.WEAPON_PRICE; }
+    
+    @Override
+    public int getAmmoPrice() { return Landmine.AMMO_PRICE; }
     
     @Override
     public int getAmmoPackAmount() { return Landmine.DEFAULT_AMMO; }

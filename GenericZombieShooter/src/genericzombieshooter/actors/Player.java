@@ -113,6 +113,7 @@ public class Player extends Rectangle2D.Double {
     public int getHealth() { return this.health; }
     public int getCash() { return this.cash; }
     public void addCash(int amount) { this.cash += amount; }
+    public void removeCash(int amount) { this.cash -= amount; }
     public void addKill() { this.killCount++; }
     public void takeDamage(int damage_) { this.health -= damage_; }
     public void addHealth(int amount) { 
@@ -170,13 +171,12 @@ public class Player extends Rectangle2D.Double {
         this.currentWeapon = w;
         Sounds.FLAMETHROWER.reset();
     }*/
-    public void setWeapon(String name) {
+    public int setWeapon(String name) {
         if(this.weaponsMap.containsKey(name)) {
             this.currentWeaponName = name;
             Sounds.FLAMETHROWER.reset();
-        } else {
-            System.out.println("ERROR: Weapon \"" + name + "\" not found.");
-        }
+            return 1;
+        } else return 0;
     }
     public void addWeapon(Weapon w) {
         this.weaponsMap.put(w.getName(), w);

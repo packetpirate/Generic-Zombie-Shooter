@@ -36,6 +36,8 @@ import java.util.List;
  */
 public class Shotgun extends Weapon {
     // Final Variables
+    private static final int WEAPON_PRICE = 0;
+    private static final int AMMO_PRICE = 0;
     private static final int DEFAULT_AMMO = 24;
     private static final int MAX_AMMO = 64;
     private static final int AMMO_PER_USE = 1;
@@ -48,6 +50,12 @@ public class Shotgun extends Weapon {
         super("Boomstick", KeyEvent.VK_3, "/resources/images/GZS_Boomstick.png", 
               Shotgun.DEFAULT_AMMO, Shotgun.MAX_AMMO, Shotgun.AMMO_PER_USE, 40, false);
     }
+    
+    @Override
+    public int getWeaponPrice() { return Shotgun.WEAPON_PRICE; }
+    
+    @Override
+    public int getAmmoPrice() { return Shotgun.AMMO_PRICE; }
     
     @Override
     public int getAmmoPackAmount() {
@@ -63,25 +71,27 @@ public class Shotgun extends Weapon {
     @Override
     public void updateWeapon(List<Zombie> zombies) {
         synchronized(this.particles) {
-            // Update all particles and remove them if their life has expired or they are out of bounds.
-            Iterator<Particle> it = this.particles.iterator();
-            while(it.hasNext()) {
-                Particle p = it.next();
-                p.update();
-                if(!p.isAlive() || p.outOfBounds()) {
-                    it.remove();
-                    continue;
+            if(!this.particles.isEmpty()) {
+                // Update all particles and remove them if their life has expired or they are out of bounds.
+                Iterator<Particle> it = this.particles.iterator();
+                while(it.hasNext()) {
+                    Particle p = it.next();
+                    p.update();
+                    if(!p.isAlive() || p.outOfBounds()) {
+                        it.remove();
+                        continue;
+                    }
                 }
             }
-            this.cool();
         }
+        this.cool();
     }
     
     @Override
     public void drawAmmo(Graphics2D g2d) {
         synchronized(this.particles) {
-            // Draw all particles whose life has not yet expired.
             if(!this.particles.isEmpty()) {
+                // Draw all particles whose life has not yet expired.
                 g2d.setColor(Color.YELLOW);
                 Iterator<Particle> it = this.particles.iterator();
                 while(it.hasNext()) {
@@ -117,15 +127,17 @@ public class Shotgun extends Weapon {
     public int checkForDamage(Rectangle2D.Double rect) {
         synchronized(this.particles) {
             int damage = 0;
-            // Check all particles for collisions with the target rectangle.
-            Iterator<Particle> it = this.particles.iterator();
-            while(it.hasNext()) {
-                Particle p = it.next();
-                // If the particle is still alive and has collided with the target.
-                if(p.isAlive() && p.checkCollision(rect)) {
-                    // Add the damage of the particle and remove it from the list.
-                    damage += Shotgun.DAMAGE_PER_PARTICLE;
-                    it.remove();
+            if(!this.particles.isEmpty()) {
+                // Check all particles for collisions with the target rectangle.
+                Iterator<Particle> it = this.particles.iterator();
+                while(it.hasNext()) {
+                    Particle p = it.next();
+                    // If the particle is still alive and has collided with the target.
+                    if(p.isAlive() && p.checkCollision(rect)) {
+                        // Add the damage of the particle and remove it from the list.
+                        damage += Shotgun.DAMAGE_PER_PARTICLE;
+                        it.remove();
+                    }
                 }
             }
             return damage;

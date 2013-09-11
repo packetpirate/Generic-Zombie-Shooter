@@ -39,6 +39,8 @@ import java.util.List;
  */
 public class Grenade extends Weapon {
     // Final Variables
+    private static final int WEAPON_PRICE = 0;
+    private static final int AMMO_PRICE = 0;
     private static final int DEFAULT_AMMO = 1;
     private static final int MAX_AMMO = 3;
     private static final int AMMO_PER_USE = 1;
@@ -55,6 +57,12 @@ public class Grenade extends Weapon {
               Grenade.DEFAULT_AMMO, Grenade.MAX_AMMO, Grenade.AMMO_PER_USE, 100, false);
         this.explosions = Collections.synchronizedList(new ArrayList<Explosion>());
     }
+    
+    @Override
+    public int getWeaponPrice() { return Grenade.WEAPON_PRICE; }
+    
+    @Override
+    public int getAmmoPrice() { return Grenade.AMMO_PRICE; }
     
     @Override
     public int getAmmoPackAmount() {

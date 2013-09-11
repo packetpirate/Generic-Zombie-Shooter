@@ -34,6 +34,8 @@ import java.util.List;
  */
 public class TurretWeapon extends Weapon {
     // Final Variables
+    private static final int WEAPON_PRICE = 0;
+    private static final int AMMO_PRICE = 0;
     private static final int DEFAULT_AMMO = 1;
     private static final int MAX_AMMO = 1;
     private static final int AMMO_PER_USE = 1;
@@ -48,6 +50,12 @@ public class TurretWeapon extends Weapon {
               50, false);
         this.turrets = Collections.synchronizedList(new ArrayList<Turret>());
     }
+    
+    @Override
+    public int getWeaponPrice() { return TurretWeapon.WEAPON_PRICE; }
+    
+    @Override
+    public int getAmmoPrice() { return TurretWeapon.AMMO_PRICE; }
     
     @Override
     public int getAmmoPackAmount() { return TurretWeapon.DEFAULT_AMMO; }
@@ -111,10 +119,12 @@ public class TurretWeapon extends Weapon {
     public int checkForDamage(Rectangle2D.Double rect) {
         int damage = 0;
         synchronized(this.turrets) {
-            Iterator<Turret> it = this.turrets.iterator();
-            while(it.hasNext()) {
-                Turret t = it.next();
-                if(t.isAlive()) damage += t.checkForDamage(rect);
+            if(!this.turrets.isEmpty()) {
+                Iterator<Turret> it = this.turrets.iterator();
+                while(it.hasNext()) {
+                    Turret t = it.next();
+                    if(t.isAlive()) damage += t.checkForDamage(rect);
+                }
             }
         }
         return damage;

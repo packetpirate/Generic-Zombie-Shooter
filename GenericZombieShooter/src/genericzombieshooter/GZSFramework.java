@@ -22,6 +22,7 @@ import genericzombieshooter.misc.Sounds;
 import genericzombieshooter.structures.ItemFactory;
 import genericzombieshooter.structures.ZombieWave;
 import genericzombieshooter.structures.components.ErrorWindow;
+import genericzombieshooter.structures.components.StoreWindow;
 import genericzombieshooter.structures.components.WeaponsLoadout;
 import genericzombieshooter.structures.weapons.Weapon;
 import java.awt.Point;
@@ -48,6 +49,7 @@ public class GZSFramework {
     // Member variables.
     public JFrame frame;
     public GZSCanvas canvas;
+    private StoreWindow store;
     
     // Game objects.
     private Player player; // The player character.
@@ -64,7 +66,9 @@ public class GZSFramework {
 
     public GZSFramework(JFrame frame_) {
         frame = frame_;
-        canvas = new GZSCanvas(this);
+        store = new StoreWindow();
+        canvas = new GZSCanvas(this, store);
+        
         Globals.started = false;
         Globals.paused = false;
         Globals.storeOpen = false;
@@ -130,44 +134,44 @@ public class GZSFramework {
                             }
                         }
                         if (key == Globals.HANDGUN.getKey()) {
-                            player.setWeapon(Globals.HANDGUN.getName());
-                            loadout.setCurrentWeapon(Globals.HANDGUN.getName());
+                            int r = player.setWeapon(Globals.HANDGUN.getName());
+                            if(r == 1) loadout.setCurrentWeapon(Globals.HANDGUN.getName());
                         }
                         if (key == Globals.ASSAULT_RIFLE.getKey()) {
-                            player.setWeapon(Globals.ASSAULT_RIFLE.getName());
-                            loadout.setCurrentWeapon(Globals.ASSAULT_RIFLE.getName());
+                            int r = player.setWeapon(Globals.ASSAULT_RIFLE.getName());
+                            if(r == 1) loadout.setCurrentWeapon(Globals.ASSAULT_RIFLE.getName());
                         }
                         if (key == Globals.SHOTGUN.getKey()) {
-                            player.setWeapon(Globals.SHOTGUN.getName());
-                            loadout.setCurrentWeapon(Globals.SHOTGUN.getName());
+                            int r = player.setWeapon(Globals.SHOTGUN.getName());
+                            if(r == 1) loadout.setCurrentWeapon(Globals.SHOTGUN.getName());
                         }
                         if (key == Globals.FLAMETHROWER.getKey()) {
-                            player.setWeapon(Globals.FLAMETHROWER.getName());
-                            loadout.setCurrentWeapon(Globals.FLAMETHROWER.getName());
+                            int r = player.setWeapon(Globals.FLAMETHROWER.getName());
+                            if(r == 1) loadout.setCurrentWeapon(Globals.FLAMETHROWER.getName());
                         }
                         if (key == Globals.GRENADE.getKey()) {
-                            player.setWeapon(Globals.GRENADE.getName());
-                            loadout.setCurrentWeapon(Globals.GRENADE.getName());
+                            int r = player.setWeapon(Globals.GRENADE.getName());
+                            if(r == 1) loadout.setCurrentWeapon(Globals.GRENADE.getName());
                         }
                         if (key == Globals.LANDMINE.getKey()) {
-                            player.setWeapon(Globals.LANDMINE.getName());
-                            loadout.setCurrentWeapon(Globals.LANDMINE.getName());
+                            int r = player.setWeapon(Globals.LANDMINE.getName());
+                            if(r == 1) loadout.setCurrentWeapon(Globals.LANDMINE.getName());
                         }
                         if (key == Globals.FLARE.getKey()) {
-                            player.setWeapon(Globals.FLARE.getName());
-                            loadout.setCurrentWeapon(Globals.FLARE.getName());
+                            int r = player.setWeapon(Globals.FLARE.getName());
+                            if(r == 1) loadout.setCurrentWeapon(Globals.FLARE.getName());
                         }
                         if (key == Globals.LASERWIRE.getKey()) {
-                            player.setWeapon(Globals.LASERWIRE.getName());
-                            loadout.setCurrentWeapon(Globals.LASERWIRE.getName());
+                            int r = player.setWeapon(Globals.LASERWIRE.getName());
+                            if(r == 1) loadout.setCurrentWeapon(Globals.LASERWIRE.getName());
                         }
                         if (key == Globals.TURRETWEAPON.getKey()) {
-                            player.setWeapon(Globals.TURRETWEAPON.getName());
-                            loadout.setCurrentWeapon(Globals.TURRETWEAPON.getName());
+                            int r = player.setWeapon(Globals.TURRETWEAPON.getName());
+                            if(r == 1) loadout.setCurrentWeapon(Globals.TURRETWEAPON.getName());
                         }
                         if (key == Globals.TELEPORTER.getKey()) {
-                            player.setWeapon(Globals.TELEPORTER.getName());
-                            loadout.setCurrentWeapon(Globals.TELEPORTER.getName());
+                            int r = player.setWeapon(Globals.TELEPORTER.getName());
+                            if(r == 1) loadout.setCurrentWeapon(Globals.TELEPORTER.getName());
                         }    
                     }
                 }
@@ -184,6 +188,7 @@ public class GZSFramework {
                             currentWave = 1;
                             player.resetStatistics();
                         }
+                        if(Globals.started && Globals.storeOpen) store.click(m, player);
                     }
                 }
                 @Override

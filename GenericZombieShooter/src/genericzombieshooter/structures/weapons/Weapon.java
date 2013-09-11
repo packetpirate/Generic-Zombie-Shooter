@@ -47,6 +47,9 @@ public class Weapon {
     public int getMaxAmmo() { return this.maxAmmo; }
     private int ammoPerUse;
     
+    public int getWeaponPrice() { return 0; }
+    public int getAmmoPrice() { return 0; }
+    
     private boolean automatic; // Indicates if the weapon can be fired continuously.
     public boolean isAutomatic() { return this.automatic; }
     protected boolean fired; // Used with automatic to determine if the weapon needs to be fired again.

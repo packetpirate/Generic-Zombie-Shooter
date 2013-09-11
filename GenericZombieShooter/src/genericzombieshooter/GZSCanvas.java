@@ -50,9 +50,9 @@ public class GZSCanvas extends JPanel {
     private StoreWindow store;
     private BufferedImage background;
 
-    public GZSCanvas(GZSFramework framework) {
+    public GZSCanvas(GZSFramework framework, StoreWindow store) {
         this.framework = framework;
-        this.store = new StoreWindow();
+        this.store = store;
         this.background = Images.BACKGROUND;
 
         setBackground(Color.WHITE);

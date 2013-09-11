@@ -30,6 +30,8 @@ import java.util.List;
  */
 public class Teleporter extends Weapon {
     // Final Variables
+    private static final int WEAPON_PRICE = 0;
+    private static final int AMMO_PRICE = 0;
     private static final int DEFAULT_AMMO = 1;
     private static final int MAX_AMMO = 1;
     private static final int AMMO_PER_USE = 1;
@@ -41,6 +43,12 @@ public class Teleporter extends Weapon {
               Teleporter.DEFAULT_AMMO, Teleporter.MAX_AMMO, Teleporter.AMMO_PER_USE,
               (int)Teleporter.COOLDOWN, false);
     }
+    
+    @Override
+    public int getWeaponPrice() { return Teleporter.WEAPON_PRICE; }
+    
+    @Override
+    public int getAmmoPrice() { return Teleporter.AMMO_PRICE; }
     
     @Override
     public int getAmmoPackAmount() { return Teleporter.DEFAULT_AMMO; }

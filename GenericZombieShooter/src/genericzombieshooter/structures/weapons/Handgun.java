@@ -37,6 +37,8 @@ import java.util.List;
  */
 public class Handgun extends Weapon{
     // Final Variables
+    private static final int WEAPON_PRICE = 0;
+    private static final int AMMO_PRICE = 0;
     private static final int DEFAULT_AMMO = 0;
     private static final int MAX_AMMO = 0;
     private static final int AMMO_PER_USE = 0;
@@ -48,6 +50,12 @@ public class Handgun extends Weapon{
         super("Popgun", KeyEvent.VK_1, "/resources/images/GZS_Popgun.png", 
               Handgun.DEFAULT_AMMO, Handgun.MAX_AMMO, Handgun.AMMO_PER_USE, 10, false);
     }
+    
+    @Override
+    public int getWeaponPrice() { return Handgun.WEAPON_PRICE; }
+    
+    @Override
+    public int getAmmoPrice() { return Handgun.AMMO_PRICE; }
     
     @Override
     public int getAmmoPackAmount() {
@@ -63,13 +71,17 @@ public class Handgun extends Weapon{
     @Override
     public void updateWeapon(List<Zombie> zombies) {
         // Update all particles and remove them if their life has expired or they are out of bounds.
-        Iterator<Particle> it = this.particles.iterator();
-        while(it.hasNext()) {
-            Particle p = it.next();
-            p.update();
-            if(!p.isAlive() || p.outOfBounds()) {
-                it.remove();
-                continue;
+        synchronized(this.particles) {
+            if(!this.particles.isEmpty()) {
+                Iterator<Particle> it = this.particles.iterator();
+                while(it.hasNext()) {
+                    Particle p = it.next();
+                    p.update();
+                    if(!p.isAlive() || p.outOfBounds()) {
+                        it.remove();
+                        continue;
+                    }
+                }
             }
         }
         this.cool();
@@ -78,12 +90,14 @@ public class Handgun extends Weapon{
     @Override
     public void drawAmmo(Graphics2D g2d) {
         // Draw all particles whose life has not yet expired.
-        if(this.particles.size() > 0) {
-            g2d.setColor(Color.ORANGE);
-            Iterator<Particle> it = this.particles.iterator();
-            while(it.hasNext()) {
-                Particle p = it.next();
-                if(p.isAlive()) p.draw(g2d);
+        synchronized(this.particles) {
+            if(!this.particles.isEmpty()) {
+                g2d.setColor(Color.ORANGE);
+                Iterator<Particle> it = this.particles.iterator();
+                while(it.hasNext()) {
+                    Particle p = it.next();
+                    if(p.isAlive()) p.draw(g2d);
+                }
             }
         }
     }
@@ -109,18 +123,22 @@ public class Handgun extends Weapon{
     
     @Override
     public int checkForDamage(Rectangle2D.Double rect) {
-        int damage = 0;
-        // Check all particles for collisions with the target rectangle.
-        Iterator<Particle> it = this.particles.iterator();
-        while(it.hasNext()) {
-            Particle p = it.next();
-            // If the particle is still alive and has collided with the target.
-            if(p.isAlive() && p.checkCollision(rect)) {
-                // Add the damage of the particle and remove it from the list.
-                damage += Handgun.DAMAGE_PER_PARTICLE;
-                it.remove();
+        synchronized(this.particles) {
+            int damage = 0;
+            if(!this.particles.isEmpty()) {
+                // Check all particles for collisions with the target rectangle.
+                Iterator<Particle> it = this.particles.iterator();
+                while(it.hasNext()) {
+                    Particle p = it.next();
+                    // If the particle is still alive and has collided with the target.
+                    if(p.isAlive() && p.checkCollision(rect)) {
+                        // Add the damage of the particle and remove it from the list.
+                        damage += Handgun.DAMAGE_PER_PARTICLE;
+                        it.remove();
+                    }
+                }
             }
+            return damage;
         }
-        return damage;
     }
 }

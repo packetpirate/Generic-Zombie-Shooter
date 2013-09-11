@@ -37,6 +37,8 @@ import java.util.List;
  */
 public class Flamethrower extends Weapon {
     // Final Variables
+    private static final int WEAPON_PRICE = 0;
+    private static final int AMMO_PRICE = 0;
     private static final int DEFAULT_AMMO = 100;
     private static final int MAX_AMMO = 300;
     private static final int AMMO_PER_USE = 1;
@@ -50,6 +52,12 @@ public class Flamethrower extends Weapon {
         super("The Flammenwerfer", KeyEvent.VK_4, "/resources/images/GZS_Flamethrower.png", 
               Flamethrower.DEFAULT_AMMO, Flamethrower.MAX_AMMO, Flamethrower.AMMO_PER_USE, 0, true);
     }
+    
+    @Override
+    public int getWeaponPrice() { return Flamethrower.WEAPON_PRICE; }
+    
+    @Override
+    public int getAmmoPrice() { return Flamethrower.AMMO_PRICE; }
     
     @Override
     public int getAmmoPackAmount() {
@@ -66,17 +74,19 @@ public class Flamethrower extends Weapon {
     public void updateWeapon(List<Zombie> zombies) {
         // Update all particles and remove them if their life has expired or they are out of bounds.
         synchronized(this.particles) {
-            Iterator<Particle> it = this.particles.iterator();
-            while(it.hasNext()) {
-                Particle p = it.next();
-                p.update();
-                if(!p.isAlive() || p.outOfBounds()) {
-                    it.remove();
-                    continue;
+            if(!this.particles.isEmpty()) {
+                Iterator<Particle> it = this.particles.iterator();
+                while(it.hasNext()) {
+                    Particle p = it.next();
+                    p.update();
+                    if(!p.isAlive() || p.outOfBounds()) {
+                        it.remove();
+                        continue;
+                    }
                 }
             }
-            this.cool();
         }
+        this.cool();
     }
     
     @Override
@@ -120,15 +130,17 @@ public class Flamethrower extends Weapon {
     public int checkForDamage(Rectangle2D.Double rect) {
         synchronized(this.particles) {
             int damage = 0;
-            // Check all particles for collisions with the target rectangle.
-            Iterator<Particle> it = this.particles.iterator();
-            while(it.hasNext()) {
-                Particle p = it.next();
-                // If the particle is still alive and has collided with the target.
-                if(p.isAlive() && p.checkCollision(rect)) {
-                    // Add the damage of the particle and remove it from the list.
-                    damage += Flamethrower.DAMAGE_PER_PARTICLE;
-                    it.remove();
+            if(!this.particles.isEmpty()) {
+                // Check all particles for collisions with the target rectangle.
+                Iterator<Particle> it = this.particles.iterator();
+                while(it.hasNext()) {
+                    Particle p = it.next();
+                    // If the particle is still alive and has collided with the target.
+                    if(p.isAlive() && p.checkCollision(rect)) {
+                        // Add the damage of the particle and remove it from the list.
+                        damage += Flamethrower.DAMAGE_PER_PARTICLE;
+                        it.remove();
+                    }
                 }
             }
             return damage;

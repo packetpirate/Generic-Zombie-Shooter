@@ -42,6 +42,8 @@ import java.util.List;
  */
 public class LaserWire extends Weapon {
     // Final Variables
+    private static final int WEAPON_PRICE = 0;
+    private static final int AMMO_PRICE = 0;
     private static final int DEFAULT_AMMO = 1;
     private static final int MAX_AMMO = 1;
     private static final int AMMO_PER_USE = 1;
@@ -61,6 +63,12 @@ public class LaserWire extends Weapon {
         this.lasers = Collections.synchronizedList(new ArrayList<Line2D.Double>());
         this.lastDamageDone = System.currentTimeMillis();
     }
+    
+    @Override
+    public int getWeaponPrice() { return LaserWire.WEAPON_PRICE; }
+    
+    @Override
+    public int getAmmoPrice() { return LaserWire.AMMO_PRICE; }
     
     @Override
     public int getAmmoPackAmount() { return LaserWire.DEFAULT_AMMO; }

@@ -26,6 +26,7 @@ import genericzombieshooter.structures.weapons.LaserWire;
 import genericzombieshooter.structures.weapons.Shotgun;
 import genericzombieshooter.structures.weapons.Teleporter;
 import genericzombieshooter.structures.weapons.TurretWeapon;
+import genericzombieshooter.structures.weapons.Weapon;
 import java.awt.Point;
 import java.util.Random;
 
@@ -83,4 +84,18 @@ public class Globals {
     public static LaserWire LASERWIRE = new LaserWire();
     public static TurretWeapon TURRETWEAPON = new TurretWeapon();
     public static Teleporter TELEPORTER = new Teleporter();
+    
+    public static Weapon getWeaponByName(String name) {
+        if(name.equals(Globals.HANDGUN.getName())) return Globals.HANDGUN;
+        else if(name.equals(Globals.ASSAULT_RIFLE.getName())) return Globals.ASSAULT_RIFLE;
+        else if(name.equals(Globals.SHOTGUN.getName())) return Globals.SHOTGUN;
+        else if(name.equals(Globals.FLAMETHROWER.getName())) return Globals.FLAMETHROWER;
+        else if(name.equals(Globals.GRENADE.getName())) return Globals.GRENADE;
+        else if(name.equals(Globals.LANDMINE.getName())) return Globals.LANDMINE;
+        else if(name.equals(Globals.FLARE.getName())) return Globals.FLARE;
+        else if(name.equals(Globals.LASERWIRE.getName())) return Globals.LASERWIRE;
+        else if(name.equals(Globals.TURRETWEAPON.getName())) return Globals.TURRETWEAPON;
+        else if(name.equals(Globals.TELEPORTER.getName())) return Globals.TELEPORTER;
+        else return null;
+    }
 }
