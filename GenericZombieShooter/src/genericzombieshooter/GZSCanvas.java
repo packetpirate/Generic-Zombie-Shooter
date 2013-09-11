@@ -83,7 +83,6 @@ public class GZSCanvas extends JPanel {
 
                     { // Begin drawing player and ammo.
                         Stroke oldStroke = g2d.getStroke();
-                        //Iterator<Weapon> it = player.getAllWeapons().iterator();
                         Iterator<Weapon> it = player.getWeaponsMap().values().iterator();
                         while(it.hasNext()) {
                             Weapon w = it.next();
@@ -121,7 +120,6 @@ public class GZSCanvas extends JPanel {
 
                         // Draw the light sources from flares.
                         if(player.hasWeapon(Globals.FLARE.getName())) {
-                            //List<LightSource> lights = player.getWeapon(7).getLights();
                             List<LightSource> lights = player.getWeapon(Globals.FLARE.getName()).getLights();
                             synchronized(lights) {
                                 if(!lights.isEmpty()) {

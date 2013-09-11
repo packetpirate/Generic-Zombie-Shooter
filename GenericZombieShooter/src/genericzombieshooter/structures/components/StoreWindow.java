@@ -19,6 +19,7 @@ package genericzombieshooter.structures.components;
 import genericzombieshooter.GZSFramework;
 import genericzombieshooter.actors.Player;
 import genericzombieshooter.misc.Globals;
+import genericzombieshooter.misc.Images;
 import genericzombieshooter.misc.Sounds;
 import genericzombieshooter.structures.weapons.Weapon;
 import java.awt.Color;
@@ -468,6 +469,9 @@ public class StoreWindow {
     public void click(MouseEvent m, Player player) {
         // Assume click is left mouse since it is checked before it is passed.
         Point2D.Double mousePos = new Point2D.Double(m.getX(), m.getY());
+        // Offset the mouse position by half the width and height of the mouse cursor image.
+        mousePos.x += Images.CROSSHAIR.getWidth() / 2;
+        mousePos.y += Images.CROSSHAIR.getHeight() / 2;
         
         // Check all weapon frames and check the purchase and buy ammo buttons.
         Iterator it = this.weaponFrames.entrySet().iterator();

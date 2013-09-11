@@ -18,6 +18,7 @@ package genericzombieshooter;
 
 import genericzombieshooter.actors.Player;
 import genericzombieshooter.misc.Globals;
+import genericzombieshooter.misc.Images;
 import genericzombieshooter.misc.Sounds;
 import genericzombieshooter.structures.ItemFactory;
 import genericzombieshooter.structures.ZombieWave;
@@ -209,11 +210,6 @@ public class GZSFramework {
                             }
                             
                             // Reset non-automatic weapons.
-                            /*Iterator<Weapon> it = player.getAllWeapons().iterator();
-                            while(it.hasNext()) {
-                                Weapon w = it.next();
-                                if(!w.isAutomatic() && w.hasFired()) w.resetFire();
-                            }*/
                             Iterator<Weapon> it = player.getWeaponsMap().values().iterator();
                             while(it.hasNext()) {
                                 Weapon w = it.next();
@@ -229,16 +225,16 @@ public class GZSFramework {
                 @Override
                 public void mouseMoved(MouseEvent m) {
                     if(Globals.started) {
-                        Globals.mousePos.x = m.getX();
-                        Globals.mousePos.y = m.getY();
+                        Globals.mousePos.x = m.getX() + (Images.CROSSHAIR.getWidth() / 2);
+                        Globals.mousePos.y = m.getY() + (Images.CROSSHAIR.getHeight() / 2);
                     }
                 }
 
                 @Override
                 public void mouseDragged(MouseEvent m) {
                     if(Globals.started) {
-                        Globals.mousePos.x = m.getX();
-                        Globals.mousePos.y = m.getY();
+                        Globals.mousePos.x = m.getX() + (Images.CROSSHAIR.getWidth() / 2);
+                        Globals.mousePos.y = m.getY() + (Images.CROSSHAIR.getHeight() / 2);
                     }
                 }
             });
@@ -255,9 +251,6 @@ public class GZSFramework {
                                                  Globals.TURRETWEAPON.getName(), Globals.TELEPORTER.getName()};
                         if(notches < 0) { // Wheel scrolled up.
                             // Move weapon selection to the right.
-                            /*int w = player.getCurrentWeapon();
-                            if(w == 1) w = player.getAllWeapons().size();
-                            else w--;*/
                             String name = Globals.HANDGUN.getName();
                             for(int i = 0; i < weaponNames.length; i++) {
                                 if(weaponNames[i].equals(player.getWeapon().getName())) {
@@ -278,11 +271,6 @@ public class GZSFramework {
                             loadout.setCurrentWeapon(name);
                         } else { // Wheel scrolled down.
                             // Move weapon selection to the left.
-                            /*int w = player.getCurrentWeapon();
-                            if(w == player.getAllWeapons().size()) w = 1;
-                            else w++;
-                            player.setWeapon(w);
-                            loadout.setCurrentWeapon(w);*/
                             String name = Globals.HANDGUN.getName();
                             for(int i = 0; i < weaponNames.length; i++) {
                                 if(weaponNames[i].equals(player.getWeapon().getName())) {
@@ -376,11 +364,6 @@ public class GZSFramework {
                         wave = new ZombieWave(currentWave);
                         for(boolean k : Globals.keys) k = false;
                         for(boolean b : Globals.buttons) b = false;
-                        /*Iterator<Weapon> it = player.getAllWeapons().iterator();
-                        while(it.hasNext()) {
-                            Weapon w = it.next();
-                            w.resetAmmo();
-                        }*/
                         Iterator<Weapon> it = player.getWeaponsMap().values().iterator();
                         while(it.hasNext()) {
                             Weapon w = it.next();
@@ -391,7 +374,6 @@ public class GZSFramework {
                 }
 
                 { // Begin weapon updates.
-                    //Iterator<Weapon> it = this.player.getAllWeapons().iterator();
                     Iterator<Weapon> it = this.player.getWeaponsMap().values().iterator();
                     while(it.hasNext()) {
                         Weapon w = it.next();

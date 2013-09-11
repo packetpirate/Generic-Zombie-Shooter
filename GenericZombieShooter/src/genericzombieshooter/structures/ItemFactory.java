@@ -72,7 +72,6 @@ public class ItemFactory {
         if(currentTime >= this.nextAmmo) {
             // Drop Ammo Crate
             boolean nonFullWeaponDetected = false;
-            //Iterator<Weapon> it = player.getAllWeapons().iterator();
             Iterator<Weapon> it = player.getWeaponsMap().values().iterator();
             while(it.hasNext()) {
                 Weapon w = it.next();
@@ -119,16 +118,6 @@ public class ItemFactory {
             return i;
         } else if(type == 1) {
             // Return an Ammo Crate
-            /*int numOfWeapons = player.getAllWeapons().size();
-            int w = Globals.r.nextInt(numOfWeapons) + 1;
-            if(player.getWeapon(w).ammoFull()) return createItem(1, player);
-            else {
-                int ammo = player.getWeapon(w).getAmmoPackAmount();
-                double x = Globals.r.nextInt((Globals.W_WIDTH - 20) - 20 + 1) + 20;
-                double y = Globals.r.nextInt((int)((Globals.W_HEIGHT - (WeaponsLoadout.BAR_HEIGHT + 10)) - 20 + 1)) + 20;
-                Item i = new Ammo(w, ammo, new Point2D.Double(x, y));
-                return i;
-            }*/
             List<String> weaponNames = new ArrayList<String>();
             for(String name : player.getWeaponsMap().keySet()) weaponNames.add(name);
             int w = Globals.r.nextInt(weaponNames.size());

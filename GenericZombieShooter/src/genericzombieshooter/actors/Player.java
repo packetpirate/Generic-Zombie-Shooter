@@ -49,9 +49,7 @@ public class Player extends Rectangle2D.Double {
     private int lives;
     private boolean invincible;
     private long invincibleStartTime;
-    //private int currentWeapon;
     private String currentWeaponName;
-    //private List<Weapon> weapons;
     private HashMap<String, Weapon> weaponsMap;
     
     // Statistic Variables
@@ -82,24 +80,12 @@ public class Player extends Rectangle2D.Double {
         this.lives = 3;
         this.invincible = false;
         this.invincibleStartTime = System.currentTimeMillis();
-        //this.currentWeapon = 1;
         
         this.deathTime = System.currentTimeMillis();
         this.killCount = 0;
         this.medkitsUsed = 0;
         this.ammoCratesUsed = 0;
         
-        /*this.weapons = new ArrayList<Weapon>();
-        this.weapons.add(Globals.HANDGUN); // Weapon 1
-        this.weapons.add(Globals.ASSAULT_RIFLE); // Weapon 2
-        this.weapons.add(Globals.SHOTGUN); // Weapon 3
-        this.weapons.add(Globals.FLAMETHROWER); // Weapon 4
-        this.weapons.add(Globals.GRENADE); // Weapon 5
-        this.weapons.add(Globals.LANDMINE); // Weapon 6
-        this.weapons.add(Globals.FLARE); // Weapon 7
-        this.weapons.add(Globals.LASERWIRE); // Weapon 8
-        this.weapons.add(Globals.TURRETWEAPON); // Weapon 9
-        this.weapons.add(Globals.TELEPORTER); // Weapon 10*/
         this.weaponsMap = new HashMap<String, Weapon>();
         this.addWeapon(Globals.HANDGUN);
         this.currentWeaponName = Globals.HANDGUN.getName();
@@ -157,20 +143,10 @@ public class Player extends Rectangle2D.Double {
     }
     
     public boolean hasWeapon(String name) { return this.weaponsMap.containsKey(name); }
-    public Weapon getWeapon() { 
-        //return this.weapons.get(this.currentWeapon - 1);
-        return this.weaponsMap.get(this.currentWeaponName);
-    }
-    //public Weapon getWeapon(int w) { return this.weapons.get(w - 1); }
+    public Weapon getWeapon() { return this.weaponsMap.get(this.currentWeaponName); }
     public Weapon getWeapon(String name) { return this.weaponsMap.get(name); }
-    //public int getCurrentWeapon() { return this.currentWeapon; }
     public String getCurrentWeaponName() { return this.currentWeaponName; }
-    //public List<Weapon> getAllWeapons() { return this.weapons; }
     public HashMap<String, Weapon> getWeaponsMap() { return this.weaponsMap; }
-    /*public void setWeapon(int w) { 
-        this.currentWeapon = w;
-        Sounds.FLAMETHROWER.reset();
-    }*/
     public int setWeapon(String name) {
         if(this.weaponsMap.containsKey(name)) {
             this.currentWeaponName = name;
@@ -205,10 +181,6 @@ public class Player extends Rectangle2D.Double {
     public void rotate(double theta_) { this.af.setToRotation(theta_, getCenterX(), getCenterY()); }
 
     // Player manipulation.
-    /**
-     * Moves the player object on the screen.
-     * @param direction The direction to move in.
-     **/
     public void move(int direction) {
         if(direction == 0) y -= Player.MOVE_SPEED;
         else if(direction == 1) x -= Player.MOVE_SPEED;

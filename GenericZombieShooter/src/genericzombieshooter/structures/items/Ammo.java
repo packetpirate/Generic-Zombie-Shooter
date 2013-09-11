@@ -42,7 +42,7 @@ public class Ammo extends Item {
     
     @Override
     public void applyEffect(Player player) {
-        player.getWeapon(this.weapon).addAmmo(this.ammoCount);
+        if(player.hasWeapon(this.weapon)) player.getWeapon(this.weapon).addAmmo(this.ammoCount);
         Sounds.POWERUP.play();
     }
 }
