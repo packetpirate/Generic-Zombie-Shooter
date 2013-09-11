@@ -41,6 +41,8 @@ public enum Sounds {
     EXPLOSION("explosion.wav", false),
     POISONCLOUD("poison_cloud.wav", false),
     POWERUP("powerup.wav", false),
+    PURCHASEWEAPON("purchase_weapon.wav", false),
+    BUYAMMO("buy_ammo.wav", false),
     PAUSE("pause.wav", false),
     UNPAUSE("unpause.wav", false);
     

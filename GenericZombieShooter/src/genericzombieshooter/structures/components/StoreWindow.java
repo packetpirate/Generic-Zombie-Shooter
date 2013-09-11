@@ -19,6 +19,7 @@ package genericzombieshooter.structures.components;
 import genericzombieshooter.GZSFramework;
 import genericzombieshooter.actors.Player;
 import genericzombieshooter.misc.Globals;
+import genericzombieshooter.misc.Sounds;
 import genericzombieshooter.structures.weapons.Weapon;
 import java.awt.Color;
 import java.awt.FontMetrics;
@@ -483,6 +484,7 @@ public class StoreWindow {
                                and add the weapon to the player's inventory. */
                             player.removeCash(w.getWeaponPrice());
                             player.addWeapon(w);
+                            Sounds.PURCHASEWEAPON.play();
                         }
                     }
                 }
@@ -500,6 +502,7 @@ public class StoreWindow {
                                    and add the ammo amount to the player's stock. */
                                 player.removeCash(w.getAmmoPrice());
                                 w.addAmmo(w.getAmmoPackAmount());
+                                Sounds.BUYAMMO.play();
                             }
                         }
                     }
