@@ -187,6 +187,7 @@ public class GZSFramework {
                             Globals.started = false;
                             Globals.deathScreen = false;
                             currentWave = 1;
+                            wave = new ZombieWave(currentWave);
                             player.resetStatistics();
                         }
                         if(Globals.started && Globals.storeOpen) store.click(m, player);
@@ -361,8 +362,6 @@ public class GZSFramework {
                         // Show death screen and reset player.
                         Globals.deathScreen = true;
                         player.reset();
-                        currentWave = 1;
-                        wave = new ZombieWave(currentWave);
                         itemFactory.reset();
                         for(boolean k : Globals.keys) k = false;
                         for(boolean b : Globals.buttons) b = false;
