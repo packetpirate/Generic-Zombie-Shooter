@@ -49,6 +49,7 @@ Changes:
 
   - Added weapons store and changed player to only start with the Handgun. The store allows the player to purchase
     weapons and ammo. Ammo crates still spawn as per usual. All weapon and ammo prices set to 0 for testing purposes.
+  - Added translucent overlay to weapon icons to show remaining cooldown on that weapon. Shrinks from right to left.
 
 Known Issues:
 
@@ -72,7 +73,6 @@ TODO:
   - Add alt-fire for certain weapons.
   - Add effects to ammo for tertiary effects.
   - Add message system to display various information.
-  - Add transparent overlay for weapons loadout weapons to show remaining cooldown on that weapon.
 
 Planned Future Changes (Most likely post-1.0):
   - Add a lighting system so that you can only see directly in front of you, like a flashlight.
