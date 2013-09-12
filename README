@@ -60,9 +60,6 @@ Known Issues:
   - If called from outside the framework class, the exception window seems to disappear immediately after being
     created and is replaced by a small blank window. I am thinking of making the framework variable global to solve this
     and some other issues.
-  - If the user clicks fast enough past the death and title screens to a new game, all the items dropped in the previous
-    game will still be on the field, and all ammo values will be retained from the previous game, even if you haven't
-    purchased the weapon yet.
 
 TODO:
 
