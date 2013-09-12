@@ -43,7 +43,7 @@ public class StoreWindow {
     // Final Variables
     private static final double ITEM_PANE_WIDTH = 256;
     private static final double ITEM_PANE_HEIGHT = 102.4;
-    private static final double ITEM_BUTTON_WIDTH = 75;
+    private static final double ITEM_BUTTON_WIDTH = 115;
     private static final double ITEM_BUTTON_HEIGHT = 20;
     
     // Member Variables
@@ -54,416 +54,93 @@ public class StoreWindow {
         this.background = GZSFramework.loadImage("/resources/images/GZS_StoreBackground.png");
         this.weaponFrames = new HashMap<String, List<Rectangle2D.Double>>();
         { // Add weapons to icons map.
-            {
-                Rectangle2D.Double arRect = new Rectangle2D.Double(72, 12.8, 
-                        StoreWindow.ITEM_PANE_WIDTH, StoreWindow.ITEM_PANE_HEIGHT);
-                Rectangle2D.Double buyAmmo = new Rectangle2D.Double(((arRect.x + arRect.width) - (StoreWindow.ITEM_BUTTON_WIDTH + 10)), 
-                                                                      ((arRect.y + arRect.height) - (StoreWindow.ITEM_BUTTON_HEIGHT + 10)), 
-                        StoreWindow.ITEM_BUTTON_WIDTH, StoreWindow.ITEM_BUTTON_HEIGHT);
-                Rectangle2D.Double purchase = new Rectangle2D.Double((buyAmmo.x - (StoreWindow.ITEM_BUTTON_WIDTH + 10)), buyAmmo.y, 
-                        StoreWindow.ITEM_BUTTON_WIDTH, StoreWindow.ITEM_BUTTON_HEIGHT);
-                List<Rectangle2D.Double> rects = new ArrayList<Rectangle2D.Double>();
-                rects.add(arRect);
-                rects.add(purchase);
-                rects.add(buyAmmo);
-                this.weaponFrames.put(Globals.ASSAULT_RIFLE.getName(), rects);
-            }
-            
-            {
-                Rectangle2D.Double stRect = new Rectangle2D.Double(72, 140.8, 
-                        StoreWindow.ITEM_PANE_WIDTH, StoreWindow.ITEM_PANE_HEIGHT);
-                Rectangle2D.Double buyAmmo = new Rectangle2D.Double(((stRect.x + stRect.width) - (StoreWindow.ITEM_BUTTON_WIDTH + 10)), 
-                                                                      ((stRect.y + stRect.height) - (StoreWindow.ITEM_BUTTON_HEIGHT + 10)), 
-                        StoreWindow.ITEM_BUTTON_WIDTH, StoreWindow.ITEM_BUTTON_HEIGHT);
-                Rectangle2D.Double purchase = new Rectangle2D.Double((buyAmmo.x - (StoreWindow.ITEM_BUTTON_WIDTH + 10)), buyAmmo.y, 
-                        StoreWindow.ITEM_BUTTON_WIDTH, StoreWindow.ITEM_BUTTON_HEIGHT);
-                List<Rectangle2D.Double> rects = new ArrayList<Rectangle2D.Double>();
-                rects.add(stRect);
-                rects.add(purchase);
-                rects.add(buyAmmo);
-                this.weaponFrames.put(Globals.SHOTGUN.getName(), rects);
-            }
-            
-            {
-                Rectangle2D.Double ftRect = new Rectangle2D.Double(72, 268.8, 
-                        StoreWindow.ITEM_PANE_WIDTH, StoreWindow.ITEM_PANE_HEIGHT);
-                Rectangle2D.Double buyAmmo = new Rectangle2D.Double(((ftRect.x + ftRect.width) - (StoreWindow.ITEM_BUTTON_WIDTH + 10)), 
-                                                                      ((ftRect.y + ftRect.height) - (StoreWindow.ITEM_BUTTON_HEIGHT + 10)), 
-                        StoreWindow.ITEM_BUTTON_WIDTH, StoreWindow.ITEM_BUTTON_HEIGHT);
-                Rectangle2D.Double purchase = new Rectangle2D.Double((buyAmmo.x - (StoreWindow.ITEM_BUTTON_WIDTH + 10)), buyAmmo.y, 
-                        StoreWindow.ITEM_BUTTON_WIDTH, StoreWindow.ITEM_BUTTON_HEIGHT);
-                List<Rectangle2D.Double> rects = new ArrayList<Rectangle2D.Double>();
-                rects.add(ftRect);
-                rects.add(purchase);
-                rects.add(buyAmmo);
-                this.weaponFrames.put(Globals.FLAMETHROWER.getName(), rects);
-            }
-            
-            {
-                Rectangle2D.Double gnRect = new Rectangle2D.Double(72, 396.8, 
-                        StoreWindow.ITEM_PANE_WIDTH, StoreWindow.ITEM_PANE_HEIGHT);
-                Rectangle2D.Double buyAmmo = new Rectangle2D.Double(((gnRect.x + gnRect.width) - (StoreWindow.ITEM_BUTTON_WIDTH + 10)), 
-                                                                      ((gnRect.y + gnRect.height) - (StoreWindow.ITEM_BUTTON_HEIGHT + 10)), 
-                        StoreWindow.ITEM_BUTTON_WIDTH, StoreWindow.ITEM_BUTTON_HEIGHT);
-                Rectangle2D.Double purchase = new Rectangle2D.Double((buyAmmo.x - (StoreWindow.ITEM_BUTTON_WIDTH + 10)), buyAmmo.y, 
-                        StoreWindow.ITEM_BUTTON_WIDTH, StoreWindow.ITEM_BUTTON_HEIGHT);
-                List<Rectangle2D.Double> rects = new ArrayList<Rectangle2D.Double>();
-                rects.add(gnRect);
-                rects.add(purchase);
-                rects.add(buyAmmo);
-                this.weaponFrames.put(Globals.GRENADE.getName(), rects);
-            }
-            
-            {
-                Rectangle2D.Double lmRect = new Rectangle2D.Double(72, 524.8, 
-                        StoreWindow.ITEM_PANE_WIDTH, StoreWindow.ITEM_PANE_HEIGHT);
-                Rectangle2D.Double buyAmmo = new Rectangle2D.Double(((lmRect.x + lmRect.width) - (StoreWindow.ITEM_BUTTON_WIDTH + 10)), 
-                                                                      ((lmRect.y + lmRect.height) - (StoreWindow.ITEM_BUTTON_HEIGHT + 10)), 
-                        StoreWindow.ITEM_BUTTON_WIDTH, StoreWindow.ITEM_BUTTON_HEIGHT);
-                Rectangle2D.Double purchase = new Rectangle2D.Double((buyAmmo.x - (StoreWindow.ITEM_BUTTON_WIDTH + 10)), buyAmmo.y, 
-                        StoreWindow.ITEM_BUTTON_WIDTH, StoreWindow.ITEM_BUTTON_HEIGHT);
-                List<Rectangle2D.Double> rects = new ArrayList<Rectangle2D.Double>();
-                rects.add(lmRect);
-                rects.add(purchase);
-                rects.add(buyAmmo);
-                this.weaponFrames.put(Globals.LANDMINE.getName(), rects);
-            }
-            
-            {
-                Rectangle2D.Double flRect = new Rectangle2D.Double(472, 12.8, 
-                        StoreWindow.ITEM_PANE_WIDTH, StoreWindow.ITEM_PANE_HEIGHT);
-                Rectangle2D.Double buyAmmo = new Rectangle2D.Double(((flRect.x + flRect.width) - (StoreWindow.ITEM_BUTTON_WIDTH + 10)), 
-                                                                      ((flRect.y + flRect.height) - (StoreWindow.ITEM_BUTTON_HEIGHT + 10)), 
-                        StoreWindow.ITEM_BUTTON_WIDTH, StoreWindow.ITEM_BUTTON_HEIGHT);
-                Rectangle2D.Double purchase = new Rectangle2D.Double((buyAmmo.x - (StoreWindow.ITEM_BUTTON_WIDTH + 10)), buyAmmo.y, 
-                        StoreWindow.ITEM_BUTTON_WIDTH, StoreWindow.ITEM_BUTTON_HEIGHT);
-                List<Rectangle2D.Double> rects = new ArrayList<Rectangle2D.Double>();
-                rects.add(flRect);
-                rects.add(purchase);
-                rects.add(buyAmmo);
-                this.weaponFrames.put(Globals.FLARE.getName(), rects);
-            }
-            
-            {
-                Rectangle2D.Double lwRect = new Rectangle2D.Double(472, 140.8, 
-                        StoreWindow.ITEM_PANE_WIDTH, StoreWindow.ITEM_PANE_HEIGHT);
-                Rectangle2D.Double buyAmmo = new Rectangle2D.Double(((lwRect.x + lwRect.width) - (StoreWindow.ITEM_BUTTON_WIDTH + 10)), 
-                                                                      ((lwRect.y + lwRect.height) - (StoreWindow.ITEM_BUTTON_HEIGHT + 10)), 
-                        StoreWindow.ITEM_BUTTON_WIDTH, StoreWindow.ITEM_BUTTON_HEIGHT);
-                Rectangle2D.Double purchase = new Rectangle2D.Double((buyAmmo.x - (StoreWindow.ITEM_BUTTON_WIDTH + 10)), buyAmmo.y, 
-                        StoreWindow.ITEM_BUTTON_WIDTH, StoreWindow.ITEM_BUTTON_HEIGHT);
-                List<Rectangle2D.Double> rects = new ArrayList<Rectangle2D.Double>();
-                rects.add(lwRect);
-                rects.add(purchase);
-                rects.add(buyAmmo);
-                this.weaponFrames.put(Globals.LASERWIRE.getName(), rects);
-            }
-            
-            {
-                Rectangle2D.Double twRect = new Rectangle2D.Double(472, 268.8, 
-                        StoreWindow.ITEM_PANE_WIDTH, StoreWindow.ITEM_PANE_HEIGHT);
-                Rectangle2D.Double buyAmmo = new Rectangle2D.Double(((twRect.x + twRect.width) - (StoreWindow.ITEM_BUTTON_WIDTH + 10)), 
-                                                                      ((twRect.y + twRect.height) - (StoreWindow.ITEM_BUTTON_HEIGHT + 10)), 
-                        StoreWindow.ITEM_BUTTON_WIDTH, StoreWindow.ITEM_BUTTON_HEIGHT);
-                Rectangle2D.Double purchase = new Rectangle2D.Double((buyAmmo.x - (StoreWindow.ITEM_BUTTON_WIDTH + 10)), buyAmmo.y, 
-                        StoreWindow.ITEM_BUTTON_WIDTH, StoreWindow.ITEM_BUTTON_HEIGHT);
-                List<Rectangle2D.Double> rects = new ArrayList<Rectangle2D.Double>();
-                rects.add(twRect);
-                rects.add(purchase);
-                rects.add(buyAmmo);
-                this.weaponFrames.put(Globals.TURRETWEAPON.getName(), rects);
-            }
-            
-            {
-                Rectangle2D.Double tpRect = new Rectangle2D.Double(472, 396.8, 
-                        StoreWindow.ITEM_PANE_WIDTH, StoreWindow.ITEM_PANE_HEIGHT);
-                Rectangle2D.Double buyAmmo = new Rectangle2D.Double(((tpRect.x + tpRect.width) - (StoreWindow.ITEM_BUTTON_WIDTH + 10)), 
-                                                                      ((tpRect.y + tpRect.height) - (StoreWindow.ITEM_BUTTON_HEIGHT + 10)), 
-                        StoreWindow.ITEM_BUTTON_WIDTH, StoreWindow.ITEM_BUTTON_HEIGHT);
-                Rectangle2D.Double purchase = new Rectangle2D.Double((buyAmmo.x - (StoreWindow.ITEM_BUTTON_WIDTH + 10)), buyAmmo.y, 
-                        StoreWindow.ITEM_BUTTON_WIDTH, StoreWindow.ITEM_BUTTON_HEIGHT);
-                List<Rectangle2D.Double> rects = new ArrayList<Rectangle2D.Double>();
-                rects.add(tpRect);
-                rects.add(purchase);
-                rects.add(buyAmmo);
-                this.weaponFrames.put(Globals.TELEPORTER.getName(), rects);
-            }
+            this.createWeaponFrame(Globals.ASSAULT_RIFLE, 
+                                   new Rectangle2D.Double(72, 12.8, 
+                    StoreWindow.ITEM_PANE_WIDTH, StoreWindow.ITEM_PANE_HEIGHT));
+            this.createWeaponFrame(Globals.SHOTGUN, 
+                                   new Rectangle2D.Double(72, 140.8, 
+                    StoreWindow.ITEM_PANE_WIDTH, StoreWindow.ITEM_PANE_HEIGHT));
+            this.createWeaponFrame(Globals.FLAMETHROWER, 
+                                   new Rectangle2D.Double(72, 268.8, 
+                    StoreWindow.ITEM_PANE_WIDTH, StoreWindow.ITEM_PANE_HEIGHT));
+            this.createWeaponFrame(Globals.GRENADE, 
+                                   new Rectangle2D.Double(72, 396.8, 
+                    StoreWindow.ITEM_PANE_WIDTH, StoreWindow.ITEM_PANE_HEIGHT));
+            this.createWeaponFrame(Globals.LANDMINE, 
+                                   new Rectangle2D.Double(72, 524.8, 
+                    StoreWindow.ITEM_PANE_WIDTH, StoreWindow.ITEM_PANE_HEIGHT));
+            this.createWeaponFrame(Globals.FLARE, 
+                                   new Rectangle2D.Double(472, 12.8, 
+                    StoreWindow.ITEM_PANE_WIDTH, StoreWindow.ITEM_PANE_HEIGHT));
+            this.createWeaponFrame(Globals.LASERWIRE, 
+                                   new Rectangle2D.Double(472, 140.8, 
+                    StoreWindow.ITEM_PANE_WIDTH, StoreWindow.ITEM_PANE_HEIGHT));
+            this.createWeaponFrame(Globals.TURRETWEAPON, 
+                                   new Rectangle2D.Double(472, 268.8, 
+                    StoreWindow.ITEM_PANE_WIDTH, StoreWindow.ITEM_PANE_HEIGHT));
+            this.createWeaponFrame(Globals.TELEPORTER, 
+                                   new Rectangle2D.Double(472, 396.8, 
+                    StoreWindow.ITEM_PANE_WIDTH, StoreWindow.ITEM_PANE_HEIGHT));
         } // End adding weapons to icons map.
+    }
+    
+    private void createWeaponFrame(Weapon w, Rectangle2D.Double rect) {
+        Rectangle2D.Double purchase = new Rectangle2D.Double((rect.x + 10), 
+                        ((rect.y + rect.height) - (StoreWindow.ITEM_BUTTON_HEIGHT + 10)), 
+                        StoreWindow.ITEM_BUTTON_WIDTH, StoreWindow.ITEM_BUTTON_HEIGHT);
+        Rectangle2D.Double buyAmmo = new Rectangle2D.Double(((purchase.x + purchase.width) + 6), purchase.y, 
+                        StoreWindow.ITEM_BUTTON_WIDTH, StoreWindow.ITEM_BUTTON_HEIGHT);
+        List<Rectangle2D.Double> rects = new ArrayList<Rectangle2D.Double>();
+        rects.add(rect);
+        rects.add(purchase);
+        rects.add(buyAmmo);
+        this.weaponFrames.put(w.getName(), rects);
     }
     
     public void draw(Graphics2D g2d) {
         if(this.background != null) g2d.drawImage(this.background, 0, 0, null);
+        this.drawWeaponFrame(g2d, Globals.ASSAULT_RIFLE, "/resources/images/GZS_RTPS.png");
+        this.drawWeaponFrame(g2d, Globals.SHOTGUN, "/resources/images/GZS_Boomstick.png");
+        this.drawWeaponFrame(g2d, Globals.FLAMETHROWER, "/resources/images/GZS_Flamethrower.png");
+        this.drawWeaponFrame(g2d, Globals.GRENADE, "/resources/images/GZS_Grenade.png");
+        this.drawWeaponFrame(g2d, Globals.LANDMINE, "/resources/images/GZS_Landmine.png");
+        this.drawWeaponFrame(g2d, Globals.FLARE, "/resources/images/GZS_Flare.png");
+        this.drawWeaponFrame(g2d, Globals.LASERWIRE, "/resources/images/GZS_LaserWire.png");
+        this.drawWeaponFrame(g2d, Globals.TURRETWEAPON, "/resources/images/GZS_Turret.png");
+        this.drawWeaponFrame(g2d, Globals.TELEPORTER, "/resources/images/GZS_BigRedButton.png");
+    }
+    
+    private void drawWeaponFrame(Graphics2D g2d, Weapon w, String file) {
         FontMetrics metrics = g2d.getFontMetrics();
-        { // Draw Assault Rifle Box
-            int x = (int)(this.weaponFrames.get(Globals.ASSAULT_RIFLE.getName()).get(0).x + 18);
-            int y = (int)(this.weaponFrames.get(Globals.ASSAULT_RIFLE.getName()).get(0).y + 17.2);
-            BufferedImage rtps = GZSFramework.loadImage("/resources/images/GZS_RTPS.png");
-            g2d.drawImage(rtps, x, y, null);
-            g2d.setColor(Color.WHITE);
-            g2d.drawString(Globals.ASSAULT_RIFLE.getName(), (x + 58), (y + 12));
-            g2d.drawString(("Automatic? " + ((Globals.ASSAULT_RIFLE.isAutomatic())?"Yes":"No")), (x + 58), (y + 26));
-            g2d.drawString(("Capacity: " + Globals.ASSAULT_RIFLE.getMaxAmmo()), (x + 58), (y + 40));
-            
-            String pS = "Purchase";
-            Rectangle2D.Double purchase = this.weaponFrames.get(Globals.ASSAULT_RIFLE.getName()).get(1);
-            g2d.setColor(new Color(8, 84, 22));
-            g2d.fill(purchase);
-            g2d.setColor(Color.BLACK);
-            g2d.draw(purchase);
-            g2d.setColor(Color.WHITE);
-            g2d.drawString(pS, (int)((purchase.x + (purchase.width / 2)) - (metrics.stringWidth(pS) / 2)), 
-                                (int)((purchase.y + (purchase.height / 2)) + ((metrics.getHeight() / 2) - 3)));
-            
-            String bS = "Buy Ammo";
-            Rectangle2D.Double buyAmmo = this.weaponFrames.get(Globals.ASSAULT_RIFLE.getName()).get(2);
-            g2d.setColor(new Color(8, 84, 22));
-            g2d.fill(buyAmmo);
-            g2d.setColor(Color.BLACK);
-            g2d.draw(buyAmmo);
-            g2d.setColor(Color.WHITE);
-            g2d.drawString(bS, (int)((buyAmmo.x + (buyAmmo.width / 2)) - (metrics.stringWidth(bS) / 2)), 
-                               (int)((buyAmmo.y + (buyAmmo.height / 2)) + ((metrics.getHeight() / 2) - 3)));
-        } // End Drawing Assault Rifle Box
-        { // Draw Shotgun Box
-            int x = (int)(this.weaponFrames.get(Globals.SHOTGUN.getName()).get(0).x + 18);
-            int y = (int)(this.weaponFrames.get(Globals.SHOTGUN.getName()).get(0).y + 17.2);
-            BufferedImage bmst = GZSFramework.loadImage("/resources/images/GZS_Boomstick.png");
-            g2d.drawImage(bmst, x, y, null);
-            g2d.setColor(Color.WHITE);
-            g2d.drawString(Globals.SHOTGUN.getName(), (x + 58), (y + 12));
-            g2d.drawString(("Automatic? " + ((Globals.SHOTGUN.isAutomatic())?"Yes":"No")), (x + 58), (y + 26));
-            g2d.drawString(("Capacity: " + Globals.SHOTGUN.getMaxAmmo()), (x + 58), (y + 40));
-            
-            String pS = "Purchase";
-            Rectangle2D.Double purchase = this.weaponFrames.get(Globals.SHOTGUN.getName()).get(1);
-            g2d.setColor(new Color(8, 84, 22));
-            g2d.fill(purchase);
-            g2d.setColor(Color.BLACK);
-            g2d.draw(purchase);
-            g2d.setColor(Color.WHITE);
-            g2d.drawString(pS, (int)((purchase.x + (purchase.width / 2)) - (metrics.stringWidth(pS) / 2)), 
-                                (int)((purchase.y + (purchase.height / 2)) + ((metrics.getHeight() / 2) - 3)));
-            
-            String bS = "Buy Ammo";
-            Rectangle2D.Double buyAmmo = this.weaponFrames.get(Globals.SHOTGUN.getName()).get(2);
-            g2d.setColor(new Color(8, 84, 22));
-            g2d.fill(buyAmmo);
-            g2d.setColor(Color.BLACK);
-            g2d.draw(buyAmmo);
-            g2d.setColor(Color.WHITE);
-            g2d.drawString(bS, (int)((buyAmmo.x + (buyAmmo.width / 2)) - (metrics.stringWidth(bS) / 2)), 
-                               (int)((buyAmmo.y + (buyAmmo.height / 2)) + ((metrics.getHeight() / 2) - 3)));
-        } // End Drawing Shotgun Box
-        { // Draw Flamethrower Box
-            int x = (int)(this.weaponFrames.get(Globals.FLAMETHROWER.getName()).get(0).x + 18);
-            int y = (int)(this.weaponFrames.get(Globals.FLAMETHROWER.getName()).get(0).y + 17.2);
-            BufferedImage fmth = GZSFramework.loadImage("/resources/images/GZS_Flamethrower.png");
-            g2d.drawImage(fmth, x, y, null);
-            g2d.setColor(Color.WHITE);
-            g2d.drawString(Globals.FLAMETHROWER.getName(), (x + 58), (y + 12));
-            g2d.drawString(("Automatic? " + ((Globals.FLAMETHROWER.isAutomatic())?"Yes":"No")), (x + 58), (y + 26));
-            g2d.drawString(("Capacity: " + Globals.FLAMETHROWER.getMaxAmmo()), (x + 58), (y + 40));
-            
-            String pS = "Purchase";
-            Rectangle2D.Double purchase = this.weaponFrames.get(Globals.FLAMETHROWER.getName()).get(1);
-            g2d.setColor(new Color(8, 84, 22));
-            g2d.fill(purchase);
-            g2d.setColor(Color.BLACK);
-            g2d.draw(purchase);
-            g2d.setColor(Color.WHITE);
-            g2d.drawString(pS, (int)((purchase.x + (purchase.width / 2)) - (metrics.stringWidth(pS) / 2)), 
-                                (int)((purchase.y + (purchase.height / 2)) + ((metrics.getHeight() / 2) - 3)));
-            
-            String bS = "Buy Ammo";
-            Rectangle2D.Double buyAmmo = this.weaponFrames.get(Globals.FLAMETHROWER.getName()).get(2);
-            g2d.setColor(new Color(8, 84, 22));
-            g2d.fill(buyAmmo);
-            g2d.setColor(Color.BLACK);
-            g2d.draw(buyAmmo);
-            g2d.setColor(Color.WHITE);
-            g2d.drawString(bS, (int)((buyAmmo.x + (buyAmmo.width / 2)) - (metrics.stringWidth(bS) / 2)), 
-                               (int)((buyAmmo.y + (buyAmmo.height / 2)) + ((metrics.getHeight() / 2) - 3)));
-        } // End Drawing Flamethrower Box
-        { // Draw Grenade Box
-            int x = (int)(this.weaponFrames.get(Globals.GRENADE.getName()).get(0).x + 18);
-            int y = (int)(this.weaponFrames.get(Globals.GRENADE.getName()).get(0).y + 17.2);
-            BufferedImage gren = GZSFramework.loadImage("/resources/images/GZS_Grenade.png");
-            g2d.drawImage(gren, x, y, null);
-            g2d.setColor(Color.WHITE);
-            g2d.drawString(Globals.GRENADE.getName(), (x + 58), (y + 12));
-            g2d.drawString(("Automatic? " + ((Globals.GRENADE.isAutomatic())?"Yes":"No")), (x + 58), (y + 26));
-            g2d.drawString(("Capacity: " + Globals.GRENADE.getMaxAmmo()), (x + 58), (y + 40));
-            
-            String pS = "Purchase";
-            Rectangle2D.Double purchase = this.weaponFrames.get(Globals.GRENADE.getName()).get(1);
-            g2d.setColor(new Color(8, 84, 22));
-            g2d.fill(purchase);
-            g2d.setColor(Color.BLACK);
-            g2d.draw(purchase);
-            g2d.setColor(Color.WHITE);
-            g2d.drawString(pS, (int)((purchase.x + (purchase.width / 2)) - (metrics.stringWidth(pS) / 2)), 
-                                (int)((purchase.y + (purchase.height / 2)) + ((metrics.getHeight() / 2) - 3)));
-            
-            String bS = "Buy Ammo";
-            Rectangle2D.Double buyAmmo = this.weaponFrames.get(Globals.GRENADE.getName()).get(2);
-            g2d.setColor(new Color(8, 84, 22));
-            g2d.fill(buyAmmo);
-            g2d.setColor(Color.BLACK);
-            g2d.draw(buyAmmo);
-            g2d.setColor(Color.WHITE);
-            g2d.drawString(bS, (int)((buyAmmo.x + (buyAmmo.width / 2)) - (metrics.stringWidth(bS) / 2)), 
-                               (int)((buyAmmo.y + (buyAmmo.height / 2)) + ((metrics.getHeight() / 2) - 3)));
-        } // End Drawing Grenade Box
-        { // Draw Landmine Box
-            int x = (int)(this.weaponFrames.get(Globals.LANDMINE.getName()).get(0).x + 18);
-            int y = (int)(this.weaponFrames.get(Globals.LANDMINE.getName()).get(0).y + 17.2);
-            BufferedImage lndm = GZSFramework.loadImage("/resources/images/GZS_Landmine.png");
-            g2d.drawImage(lndm, x, y, null);
-            g2d.setColor(Color.WHITE);
-            g2d.drawString(Globals.LANDMINE.getName(), (x + 58), (y + 12));
-            g2d.drawString(("Automatic? " + ((Globals.LANDMINE.isAutomatic())?"Yes":"No")), (x + 58), (y + 26));
-            g2d.drawString(("Capacity: " + Globals.LANDMINE.getMaxAmmo()), (x + 58), (y + 40));
-            
-            String pS = "Purchase";
-            Rectangle2D.Double purchase = this.weaponFrames.get(Globals.LANDMINE.getName()).get(1);
-            g2d.setColor(new Color(8, 84, 22));
-            g2d.fill(purchase);
-            g2d.setColor(Color.BLACK);
-            g2d.draw(purchase);
-            g2d.setColor(Color.WHITE);
-            g2d.drawString(pS, (int)((purchase.x + (purchase.width / 2)) - (metrics.stringWidth(pS) / 2)), 
-                                (int)((purchase.y + (purchase.height / 2)) + ((metrics.getHeight() / 2) - 3)));
-            
-            String bS = "Buy Ammo";
-            Rectangle2D.Double buyAmmo = this.weaponFrames.get(Globals.LANDMINE.getName()).get(2);
-            g2d.setColor(new Color(8, 84, 22));
-            g2d.fill(buyAmmo);
-            g2d.setColor(Color.BLACK);
-            g2d.draw(buyAmmo);
-            g2d.setColor(Color.WHITE);
-            g2d.drawString(bS, (int)((buyAmmo.x + (buyAmmo.width / 2)) - (metrics.stringWidth(bS) / 2)), 
-                               (int)((buyAmmo.y + (buyAmmo.height / 2)) + ((metrics.getHeight() / 2) - 3)));
-        } // End Drawing Landmine Box
-        { // Draw Flare Box
-            int x = (int)(this.weaponFrames.get(Globals.FLARE.getName()).get(0).x + 18);
-            int y = (int)(this.weaponFrames.get(Globals.FLARE.getName()).get(0).y + 17.2);
-            BufferedImage flre = GZSFramework.loadImage("/resources/images/GZS_Flare.png");
-            g2d.drawImage(flre, x, y, null);
-            g2d.setColor(Color.WHITE);
-            g2d.drawString(Globals.FLARE.getName(), (x + 58), (y + 12));
-            g2d.drawString(("Automatic? " + ((Globals.FLARE.isAutomatic())?"Yes":"No")), (x + 58), (y + 26));
-            g2d.drawString(("Capacity: " + Globals.FLARE.getMaxAmmo()), (x + 58), (y + 40));
-            
-            String pS = "Purchase";
-            Rectangle2D.Double purchase = this.weaponFrames.get(Globals.FLARE.getName()).get(1);
-            g2d.setColor(new Color(8, 84, 22));
-            g2d.fill(purchase);
-            g2d.setColor(Color.BLACK);
-            g2d.draw(purchase);
-            g2d.setColor(Color.WHITE);
-            g2d.drawString(pS, (int)((purchase.x + (purchase.width / 2)) - (metrics.stringWidth(pS) / 2)), 
-                                (int)((purchase.y + (purchase.height / 2)) + ((metrics.getHeight() / 2) - 3)));
-            
-            String bS = "Buy Ammo";
-            Rectangle2D.Double buyAmmo = this.weaponFrames.get(Globals.FLARE.getName()).get(2);
-            g2d.setColor(new Color(8, 84, 22));
-            g2d.fill(buyAmmo);
-            g2d.setColor(Color.BLACK);
-            g2d.draw(buyAmmo);
-            g2d.setColor(Color.WHITE);
-            g2d.drawString(bS, (int)((buyAmmo.x + (buyAmmo.width / 2)) - (metrics.stringWidth(bS) / 2)), 
-                               (int)((buyAmmo.y + (buyAmmo.height / 2)) + ((metrics.getHeight() / 2) - 3)));
-        } // End Drawing Flare Box
-        { // Draw Laser Wire Box
-            int x = (int)(this.weaponFrames.get(Globals.LASERWIRE.getName()).get(0).x + 18);
-            int y = (int)(this.weaponFrames.get(Globals.LASERWIRE.getName()).get(0).y + 17.2);
-            BufferedImage lsrw = GZSFramework.loadImage("/resources/images/GZS_LaserWire.png");
-            g2d.drawImage(lsrw, x, y, null);
-            g2d.setColor(Color.WHITE);
-            g2d.drawString(Globals.LASERWIRE.getName(), (x + 58), (y + 12));
-            g2d.drawString(("Automatic? " + ((Globals.LASERWIRE.isAutomatic())?"Yes":"No")), (x + 58), (y + 26));
-            g2d.drawString(("Capacity: " + Globals.LASERWIRE.getMaxAmmo()), (x + 58), (y + 40));
-            
-            String pS = "Purchase";
-            Rectangle2D.Double purchase = this.weaponFrames.get(Globals.LASERWIRE.getName()).get(1);
-            g2d.setColor(new Color(8, 84, 22));
-            g2d.fill(purchase);
-            g2d.setColor(Color.BLACK);
-            g2d.draw(purchase);
-            g2d.setColor(Color.WHITE);
-            g2d.drawString(pS, (int)((purchase.x + (purchase.width / 2)) - (metrics.stringWidth(pS) / 2)), 
-                                (int)((purchase.y + (purchase.height / 2)) + ((metrics.getHeight() / 2) - 3)));
-            
-            String bS = "Buy Ammo";
-            Rectangle2D.Double buyAmmo = this.weaponFrames.get(Globals.LASERWIRE.getName()).get(2);
-            g2d.setColor(new Color(8, 84, 22));
-            g2d.fill(buyAmmo);
-            g2d.setColor(Color.BLACK);
-            g2d.draw(buyAmmo);
-            g2d.setColor(Color.WHITE);
-            g2d.drawString(bS, (int)((buyAmmo.x + (buyAmmo.width / 2)) - (metrics.stringWidth(bS) / 2)), 
-                               (int)((buyAmmo.y + (buyAmmo.height / 2)) + ((metrics.getHeight() / 2) - 3)));
-        } // End Drawing Laser Wire Box
-        { // Draw Turret Box
-            int x = (int)(this.weaponFrames.get(Globals.TURRETWEAPON.getName()).get(0).x + 18);
-            int y = (int)(this.weaponFrames.get(Globals.TURRETWEAPON.getName()).get(0).y + 17.2);
-            BufferedImage turr = GZSFramework.loadImage("/resources/images/GZS_Turret.png");
-            g2d.drawImage(turr, x, y, null);
-            g2d.setColor(Color.WHITE);
-            g2d.drawString(Globals.TURRETWEAPON.getName(), (x + 58), (y + 12));
-            g2d.drawString(("Automatic? " + ((Globals.TURRETWEAPON.isAutomatic())?"Yes":"No")), (x + 58), (y + 26));
-            g2d.drawString(("Capacity: " + Globals.TURRETWEAPON.getMaxAmmo()), (x + 58), (y + 40));
-            
-            String pS = "Purchase";
-            Rectangle2D.Double purchase = this.weaponFrames.get(Globals.TURRETWEAPON.getName()).get(1);
-            g2d.setColor(new Color(8, 84, 22));
-            g2d.fill(purchase);
-            g2d.setColor(Color.BLACK);
-            g2d.draw(purchase);
-            g2d.setColor(Color.WHITE);
-            g2d.drawString(pS, (int)((purchase.x + (purchase.width / 2)) - (metrics.stringWidth(pS) / 2)), 
-                                (int)((purchase.y + (purchase.height / 2)) + ((metrics.getHeight() / 2) - 3)));
-            
-            String bS = "Buy Ammo";
-            Rectangle2D.Double buyAmmo = this.weaponFrames.get(Globals.TURRETWEAPON.getName()).get(2);
-            g2d.setColor(new Color(8, 84, 22));
-            g2d.fill(buyAmmo);
-            g2d.setColor(Color.BLACK);
-            g2d.draw(buyAmmo);
-            g2d.setColor(Color.WHITE);
-            g2d.drawString(bS, (int)((buyAmmo.x + (buyAmmo.width / 2)) - (metrics.stringWidth(bS) / 2)), 
-                               (int)((buyAmmo.y + (buyAmmo.height / 2)) + ((metrics.getHeight() / 2) - 3)));
-        } // End Drawing Turret Box
-        { // Draw Teleporter Box
-            int x = (int)(this.weaponFrames.get(Globals.TELEPORTER.getName()).get(0).x + 18);
-            int y = (int)(this.weaponFrames.get(Globals.TELEPORTER.getName()).get(0).y + 17.2);
-            BufferedImage brbt = GZSFramework.loadImage("/resources/images/GZS_BigRedButton.png");
-            g2d.drawImage(brbt, x, y, null);
-            g2d.setColor(Color.WHITE);
-            g2d.drawString(Globals.TELEPORTER.getName(), (x + 58), (y + 12));
-            g2d.drawString(("Automatic? " + ((Globals.TELEPORTER.isAutomatic())?"Yes":"No")), (x + 58), (y + 26));
-            g2d.drawString(("Capacity: " + Globals.TELEPORTER.getMaxAmmo()), (x + 58), (y + 40));
-            
-            String pS = "Purchase";
-            Rectangle2D.Double purchase = this.weaponFrames.get(Globals.TELEPORTER.getName()).get(1);
-            g2d.setColor(new Color(8, 84, 22));
-            g2d.fill(purchase);
-            g2d.setColor(Color.BLACK);
-            g2d.draw(purchase);
-            g2d.setColor(Color.WHITE);
-            g2d.drawString(pS, (int)((purchase.x + (purchase.width / 2)) - (metrics.stringWidth(pS) / 2)), 
-                                (int)((purchase.y + (purchase.height / 2)) + ((metrics.getHeight() / 2) - 3)));
-            
-            String bS = "Buy Ammo";
-            Rectangle2D.Double buyAmmo = this.weaponFrames.get(Globals.TELEPORTER.getName()).get(2);
-            g2d.setColor(new Color(8, 84, 22));
-            g2d.fill(buyAmmo);
-            g2d.setColor(Color.BLACK);
-            g2d.draw(buyAmmo);
-            g2d.setColor(Color.WHITE);
-            g2d.drawString(bS, (int)((buyAmmo.x + (buyAmmo.width / 2)) - (metrics.stringWidth(bS) / 2)), 
-                               (int)((buyAmmo.y + (buyAmmo.height / 2)) + ((metrics.getHeight() / 2) - 3)));
-        } // End Drawing Teleporter Box
+        
+        int x = (int)(this.weaponFrames.get(w.getName()).get(0).x + 18);
+        int y = (int)(this.weaponFrames.get(w.getName()).get(0).y + 17.2);
+        BufferedImage brbt = GZSFramework.loadImage(file);
+        g2d.drawImage(brbt, x, y, null);
+        g2d.setColor(Color.WHITE);
+        g2d.drawString(w.getName(), (x + 58), (y + 12));
+        g2d.drawString(("Automatic? " + ((w.isAutomatic())?"Yes":"No")), (x + 58), (y + 26));
+        g2d.drawString(("Capacity: " + w.getMaxAmmo()), (x + 58), (y + 40));
+        
+        String pS = "Purchase : $" + w.getWeaponPrice();
+        Rectangle2D.Double purchase = this.weaponFrames.get(w.getName()).get(1);
+        g2d.setColor(new Color(8, 84, 22));
+        g2d.fill(purchase);
+        g2d.setColor(Color.BLACK);
+        g2d.draw(purchase);
+        g2d.setColor(Color.WHITE);
+        g2d.drawString(pS, (int)((purchase.x + (purchase.width / 2)) - (metrics.stringWidth(pS) / 2)), 
+                            (int)((purchase.y + (purchase.height / 2)) + ((metrics.getHeight() / 2) - 3)));
+        
+        String bS = "Buy Ammo: $" + w.getAmmoPrice();
+        Rectangle2D.Double buyAmmo = this.weaponFrames.get(w.getName()).get(2);
+        g2d.setColor(new Color(8, 84, 22));
+        g2d.fill(buyAmmo);
+        g2d.setColor(Color.BLACK);
+        g2d.draw(buyAmmo);
+        g2d.setColor(Color.WHITE);
+        g2d.drawString(bS, (int)((buyAmmo.x + (buyAmmo.width / 2)) - (metrics.stringWidth(bS) / 2)), 
+                           (int)((buyAmmo.y + (buyAmmo.height / 2)) + ((metrics.getHeight() / 2) - 3)));
     }
     
     public void click(MouseEvent m, Player player) {
