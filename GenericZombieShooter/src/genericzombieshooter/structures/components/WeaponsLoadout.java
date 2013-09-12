@@ -91,8 +91,8 @@ public class WeaponsLoadout {
                     { // Draw Translucent Box To Show Cooldown
                         if((weapon != null) && player.hasWeapon(weapon.getName())) {
                             g2d.setColor(new Color(0, 0, 0, 200));
-                            double height = weapon.getCooldownPercentage() * 48;
-                            Rectangle2D.Double coolBox = new Rectangle2D.Double(x, y, 48, height);
+                            double width = weapon.getCooldownPercentage() * 48;
+                            Rectangle2D.Double coolBox = new Rectangle2D.Double(x, y, width, 48);
                             g2d.fill(coolBox);
                         }
                     } // End drawing translucent cooldown box.
