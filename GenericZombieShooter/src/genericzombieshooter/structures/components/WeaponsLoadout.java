@@ -36,14 +36,11 @@ public class WeaponsLoadout {
     public static final double BAR_HEIGHT = 56;
     
     private Player player;
-    private int currentWeapon;
     private String currentWeaponName;
-    //public void setCurrentWeapon(int w) { this.currentWeapon = w; }
     public void setCurrentWeapon(String name) { this.currentWeaponName = name; }
     
     public WeaponsLoadout(Player p) {
         this.player = p;
-        this.currentWeapon = 1;
         this.currentWeaponName = p.getWeapon().getName();
     }
     
@@ -76,29 +73,29 @@ public class WeaponsLoadout {
                 g2d.fill(rect);
                 g2d.setColor(Color.BLACK);
                 g2d.draw(rect);
-                /*if((s + 1) <= player.getAllWeapons().size()) { // Draw the weapon's icon.
-                    BufferedImage image = player.getWeapon(s + 1).getImage();
-                    double imageX = (x + 24) - (image.getWidth() / 2);
-                    double imageY = (y + 24) - (image.getHeight() / 2);
-                    g2d.drawImage(image, (int)imageX, (int)imageY, null);
-                } // End drawing of the weapon icon.*/
                 { // Draw Weapon Icon
                     BufferedImage image = null;
                     HashMap<String, Weapon> weaponsMap = player.getWeaponsMap();
                     
                     int w = s + 1;
-                    if(w == 1 && weaponsMap.containsKey(Globals.HANDGUN.getName())) image = weaponsMap.get(Globals.HANDGUN.getName()).getImage();
-                    else if(w == 2 && weaponsMap.containsKey(Globals.ASSAULT_RIFLE.getName())) image = weaponsMap.get(Globals.ASSAULT_RIFLE.getName()).getImage();
-                    else if(w == 3 && weaponsMap.containsKey(Globals.SHOTGUN.getName())) image = weaponsMap.get(Globals.SHOTGUN.getName()).getImage();
-                    else if(w == 4 && weaponsMap.containsKey(Globals.FLAMETHROWER.getName())) image = weaponsMap.get(Globals.FLAMETHROWER.getName()).getImage();
-                    else if(w == 5 && weaponsMap.containsKey(Globals.GRENADE.getName())) image = weaponsMap.get(Globals.GRENADE.getName()).getImage();
-                    else if(w == 6 && weaponsMap.containsKey(Globals.LANDMINE.getName())) image = weaponsMap.get(Globals.LANDMINE.getName()).getImage();
-                    else if(w == 7 && weaponsMap.containsKey(Globals.FLARE.getName())) image = weaponsMap.get(Globals.FLARE.getName()).getImage();
-                    else if(w == 8 && weaponsMap.containsKey(Globals.LASERWIRE.getName())) image = weaponsMap.get(Globals.LASERWIRE.getName()).getImage();
-                    else if(w == 9 && weaponsMap.containsKey(Globals.TURRETWEAPON.getName())) image = weaponsMap.get(Globals.TURRETWEAPON.getName()).getImage();
-                    else if(w == 10 && weaponsMap.containsKey(Globals.TELEPORTER.getName())) image = weaponsMap.get(Globals.TELEPORTER.getName()).getImage();
-                    
-                    g2d.drawImage(image, (int)x, (int)y, null);
+                    Weapon weapon = null;
+                    for(int i = 1; i <= 10; i++) {
+                        if((w == i) && weaponsMap.containsKey(weaponNames[i - 1])) {
+                            weapon = weaponsMap.get(weaponNames[i - 1]);
+                            image = weapon.getImage();
+                            break;
+                        }
+                    }
+                    if(image != null) g2d.drawImage(image, (int)x, (int)y, null);
+                
+                    { // Draw Translucent Box To Show Cooldown
+                        if((weapon != null) && player.hasWeapon(weapon.getName())) {
+                            g2d.setColor(new Color(0, 0, 0, 200));
+                            double height = weapon.getCooldownPercentage() * 48;
+                            Rectangle2D.Double coolBox = new Rectangle2D.Double(x, y, 48, height);
+                            g2d.fill(coolBox);
+                        }
+                    } // End drawing translucent cooldown box.
                 } // End drawing weapon icon.
                 // If the current iteration is the slot of the currently equipped weapon...
                 if(this.currentWeaponName.equals(weaponNames[s])) {

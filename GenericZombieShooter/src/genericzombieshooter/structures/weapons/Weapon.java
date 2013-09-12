@@ -57,6 +57,7 @@ public class Weapon {
     public void resetFire() { this.fired = false; }
     private int cooldown;
     private int coolPeriod;
+    public double getCooldownPercentage() { return ((double)cooldown / (double)coolPeriod); }
     public void resetCooldown() { this.cooldown = this.coolPeriod; }
     public void cool() { if(this.cooldown > 0) this.cooldown--; }
     
