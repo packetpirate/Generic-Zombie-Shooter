@@ -77,7 +77,7 @@ public class Weapon {
         return 0;
     }
     public void resetAmmo() {
-        this.particles = Collections.synchronizedList(new ArrayList<Particle>());
+        synchronized(this.particles) { this.particles.clear(); }
     }
     
     protected List<Particle> particles;

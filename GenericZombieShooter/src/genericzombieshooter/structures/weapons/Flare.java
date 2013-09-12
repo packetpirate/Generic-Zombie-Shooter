@@ -65,8 +65,8 @@ public class Flare extends Weapon {
     
     @Override
     public void resetAmmo() {
-        this.flares = Collections.synchronizedList(new ArrayList<Animation>());
-        this.lights = Collections.synchronizedList(new ArrayList<LightSource>());
+        synchronized(this.flares) { this.flares.clear(); }
+        synchronized(this.lights) { this.lights.clear(); }
         this.ammoLeft = Flare.DEFAULT_AMMO;
     }
     

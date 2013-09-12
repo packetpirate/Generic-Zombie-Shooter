@@ -73,7 +73,7 @@ public class Grenade extends Weapon {
     @Override
     public void resetAmmo() {
         super.resetAmmo();
-        this.explosions = Collections.synchronizedList(new ArrayList<Explosion>());
+        synchronized(this.explosions) { this.explosions.clear(); }
         this.ammoLeft = Grenade.DEFAULT_AMMO;
     }
     

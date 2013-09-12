@@ -361,7 +361,9 @@ public class GZSFramework {
                         // Show death screen and reset player.
                         Globals.deathScreen = true;
                         player.reset();
+                        currentWave = 1;
                         wave = new ZombieWave(currentWave);
+                        itemFactory.reset();
                         for(boolean k : Globals.keys) k = false;
                         for(boolean b : Globals.buttons) b = false;
                         Iterator<Weapon> it = player.getWeaponsMap().values().iterator();
@@ -427,14 +429,15 @@ public class GZSFramework {
             public void run() {
                 Globals.running = true;
                 while (Globals.running) {
-                    update();
-                    canvas.repaint();
-
                     try {
+                        update();
+                        canvas.repaint();
                         Thread.sleep(Globals.SLEEP_TIME);
                     } catch (InterruptedException ie) {
                         System.out.println("Error occurred in main thread...");
                         createErrorWindow(ie);
+                    } catch(Exception e) {
+                        createErrorWindow(e);
                     }
                 }
                 System.exit(0);

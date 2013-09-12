@@ -79,6 +79,10 @@ public class Turret extends Point2D.Double {
     public boolean isAlive() { return (System.currentTimeMillis() < this.deathTime); }
     private boolean canFire() { return (System.currentTimeMillis() >= (this.lastFired + Turret.FIRING_RATE)); }
     
+    public void reset() {
+        synchronized(this.particles) { this.particles.clear(); }
+    }
+    
     public void update(List<Zombie> targets) {
         if(this.isAlive()) {
             { // Update particles.

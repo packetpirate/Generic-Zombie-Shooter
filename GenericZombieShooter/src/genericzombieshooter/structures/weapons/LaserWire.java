@@ -76,7 +76,7 @@ public class LaserWire extends Weapon {
     @Override
     public void resetAmmo() {
         super.resetAmmo();
-        this.lasers = Collections.synchronizedList(new ArrayList<Line2D.Double>());
+        synchronized(this.lasers) { this.lasers.clear(); }
         this.ammoLeft = LaserWire.DEFAULT_AMMO;
     }
     

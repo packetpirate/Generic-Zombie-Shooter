@@ -62,7 +62,14 @@ public class TurretWeapon extends Weapon {
     
     @Override
     public void resetAmmo() {
-        this.turrets = Collections.synchronizedList(new ArrayList<Turret>());
+        synchronized(this.turrets) {
+            Iterator<Turret> it = this.turrets.iterator();
+            while(it.hasNext()) {
+                Turret t = it.next();
+                t.reset();
+            }
+            this.turrets.clear(); 
+        }
         this.ammoLeft = TurretWeapon.DEFAULT_AMMO;
     }
     

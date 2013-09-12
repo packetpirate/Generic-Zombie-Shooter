@@ -51,6 +51,15 @@ public class ItemFactory {
         this.nextAmmo = currentTime + Ammo.SPAWN_TIME;
     }
     
+    public void reset() {
+        synchronized(this.itemsDropped) { this.itemsDropped.clear(); }
+        synchronized(this.itemsActive) { this.itemsActive.clear(); }
+        synchronized(this.itemsWithdrawn) { this.itemsWithdrawn.clear(); }
+        long currentTime = System.currentTimeMillis();
+        this.nextHealth = currentTime + HealthPack.SPAWN_TIME;
+        this.nextAmmo = currentTime + Ammo.SPAWN_TIME;
+    }
+    
     public void update(Player player) {
         // If there are withdrawn items, remove them from the active list.
         if(!this.itemsWithdrawn.isEmpty()) this.itemsActive.removeAll(this.itemsWithdrawn);
