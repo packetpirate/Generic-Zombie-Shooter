@@ -22,6 +22,7 @@ import genericzombieshooter.misc.Globals;
 import genericzombieshooter.misc.Images;
 import genericzombieshooter.misc.Sounds;
 import genericzombieshooter.structures.Particle;
+import genericzombieshooter.structures.items.UnlimitedAmmo;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics2D;
@@ -115,7 +116,7 @@ public class AssaultRifle extends Weapon {
                            new Dimension(width, height), Images.RTPS_BULLET);
             this.particles.add(p);
             // Use up ammo.
-            this.consumeAmmo();
+            if(!player.hasEffect(UnlimitedAmmo.EFFECT_NAME)) this.consumeAmmo();
             this.resetCooldown();
             Sounds.RTPS.play();
         }

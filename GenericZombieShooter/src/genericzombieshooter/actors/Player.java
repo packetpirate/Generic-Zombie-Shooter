@@ -20,9 +20,13 @@ import genericzombieshooter.misc.Globals;
 import genericzombieshooter.misc.Images;
 import genericzombieshooter.misc.Sounds;
 import genericzombieshooter.structures.LightSource;
+import genericzombieshooter.structures.StatusEffect;
+import genericzombieshooter.structures.items.SpeedUp;
+import genericzombieshooter.structures.items.UnlimitedAmmo;
 import genericzombieshooter.structures.weapons.Weapon;
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.awt.Point;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.Point2D;
@@ -45,8 +49,10 @@ public class Player extends Rectangle2D.Double {
     private BufferedImage img;
     private LightSource light;
     private int health;
+    private double speed;
     private int cash;
     private int lives;
+    private HashMap<String, StatusEffect> statusEffects;
     private boolean invincible;
     private long invincibleStartTime;
     private String currentWeaponName;
@@ -76,8 +82,12 @@ public class Player extends Rectangle2D.Double {
         }
 
         this.health = Player.MAX_HEALTH;
+        this.speed = Player.MOVE_SPEED;
         this.cash = 0;
         this.lives = 3;
+        
+        this.statusEffects = new HashMap<String, StatusEffect>();
+        
         this.invincible = false;
         this.invincibleStartTime = System.currentTimeMillis();
         
@@ -112,6 +122,7 @@ public class Player extends Rectangle2D.Double {
     public long getDeathTime() { return this.deathTime; }
     public void removeInvincibility() { this.invincible = false; }
     public int getLives() { return this.lives; }
+    public void addLife() { this.lives++; }
     public void die() { 
         this.lives--;
         if(this.lives > 0) reset();
@@ -158,6 +169,47 @@ public class Player extends Rectangle2D.Double {
         this.weaponsMap.put(w.getName(), w);
     }
     
+    public void update() {
+        // Calculate the player's angle based on the mouse position.
+        double cX = this.getCenterX();
+        double cY = this.getCenterY();
+        double pAngle = Math.atan2((cY - Globals.mousePos.y), (cX - Globals.mousePos.x)) - Math.PI / 2;
+        this.rotate(pAngle);
+        
+        // Move the player according to which keys are being held down.
+        for(int i = 0; i < Globals.keys.length; i++)  {
+            if(Globals.keys[i]) this.move(i);
+        }
+        
+        // If the left mouse button is held down, create a new projectile.
+        if(Globals.buttons[0]) {
+            Point target = new Point(Globals.mousePos);
+            Point2D.Double pos = new Point2D.Double((this.x + 28), (this.y - 8));
+            AffineTransform.getRotateInstance(pAngle, this.getCenterX(), this.getCenterY()).transform(pos, pos);
+            double theta = Math.atan2((target.x - pos.x), (target.y - pos.y));
+            this.getWeapon().fire(theta, pos, this);
+        }
+        
+        { // Resolve status effects.
+            if(this.statusEffects.containsKey(SpeedUp.EFFECT_NAME)) {
+                StatusEffect status = this.statusEffects.get(SpeedUp.EFFECT_NAME);
+                if(status.isActive()) {
+                    // Change the player's move speed.
+                    this.speed = Player.MOVE_SPEED * status.getValue();
+                } else {
+                    // Reset the player's movement speed and remove the status.
+                    this.speed = Player.MOVE_SPEED;
+                    this.statusEffects.remove(SpeedUp.EFFECT_NAME);
+                }
+            }
+            if(this.statusEffects.containsKey(UnlimitedAmmo.EFFECT_NAME)) {
+                // If the player has the unlimited ammo effect, but it is no longer active, remove it.
+                StatusEffect status = this.statusEffects.get(UnlimitedAmmo.EFFECT_NAME);
+                if(!status.isActive()) this.statusEffects.remove(UnlimitedAmmo.EFFECT_NAME);
+            }
+        } // End resolving status effects.
+    }
+    
     public void draw(Graphics2D g2d) {
         g2d.setTransform(this.af);
         { // Draw player shadow.
@@ -182,10 +234,10 @@ public class Player extends Rectangle2D.Double {
 
     // Player manipulation.
     public void move(int direction) {
-        if(direction == 0) y -= Player.MOVE_SPEED;
-        else if(direction == 1) x -= Player.MOVE_SPEED;
-        else if(direction == 2) y += Player.MOVE_SPEED;
-        else if(direction == 3) x += Player.MOVE_SPEED;
+        if(direction == 0) y -= this.speed;
+        else if(direction == 1) x -= this.speed;
+        else if(direction == 2) y += this.speed;
+        else if(direction == 3) x += this.speed;
         this.light.move(new Point2D.Double((int)this.getCenterX(), (int)this.getCenterY()));
     }
     
@@ -226,4 +278,13 @@ public class Player extends Rectangle2D.Double {
         if(currentTime >= this.endTime) this.poisoned = false;
     }
     public void removePoison() { this.poisoned = false; }
+    
+    public void addStatusEffect(int id, String name, long duration, int value) {
+        if(!this.statusEffects.containsKey(name)) this.statusEffects.put(name, new StatusEffect(duration, value));
+        else this.statusEffects.get(name).refresh(duration);
+    }
+    
+    public boolean hasEffect(String name) {
+        return this.statusEffects.containsKey(name);
+    }
 }

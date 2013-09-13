@@ -21,10 +21,12 @@ import genericzombieshooter.misc.Globals;
 import genericzombieshooter.misc.Images;
 import genericzombieshooter.misc.Sounds;
 import genericzombieshooter.structures.ItemFactory;
+import genericzombieshooter.structures.StatusEffect;
 import genericzombieshooter.structures.ZombieWave;
 import genericzombieshooter.structures.components.ErrorWindow;
 import genericzombieshooter.structures.components.StoreWindow;
 import genericzombieshooter.structures.components.WeaponsLoadout;
+import genericzombieshooter.structures.items.SpeedUp;
 import genericzombieshooter.structures.weapons.Weapon;
 import java.awt.Point;
 import java.awt.event.KeyAdapter;
@@ -32,8 +34,6 @@ import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseWheelEvent;
-import java.awt.geom.AffineTransform;
-import java.awt.geom.Point2D;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.Iterator;
@@ -313,25 +313,8 @@ public class GZSFramework {
     public void update() {
         if(Globals.started && !Globals.paused && !Globals.crashed && !Globals.deathScreen) {
             try {
-                // Calculate the player's angle based on the mouse position.
-                double cX = player.getCenterX();
-                double cY = player.getCenterY();
-                double pAngle = Math.atan2((cY - Globals.mousePos.y), (cX - Globals.mousePos.x)) - Math.PI / 2;
-                player.rotate(pAngle);
-
-                // Move the player according to which keys are being held down.
-                for(int i = 0; i < Globals.keys.length; i++)  {
-                    if(Globals.keys[i]) player.move(i);
-                }
-
-                // If the left mouse button is held down, create a new projectile.
-                if(Globals.buttons[0]) {
-                    Point target = new Point(Globals.mousePos);
-                    Point2D.Double pos = new Point2D.Double((player.x + 28), (player.y - 8));
-                    AffineTransform.getRotateInstance(pAngle, player.getCenterX(), player.getCenterY()).transform(pos, pos);
-                    double theta = Math.atan2((target.x - pos.x), (target.y - pos.y));
-                    player.getWeapon().fire(theta, pos, player);
-                }
+                // Update the player.
+                player.update();
 
                 if(!Globals.waveInProgress) {
                     // If the player is in between waves, check if the countdown has reached zero.
@@ -339,7 +322,7 @@ public class GZSFramework {
                 }
 
                 // Update all zombies in the current wave.
-                if(Globals.waveInProgress) this.wave.update(player);
+                if(Globals.waveInProgress) this.wave.update(player, itemFactory);
 
                 // Check player for damage.
                 if(Globals.waveInProgress) this.wave.checkPlayerDamage(player);

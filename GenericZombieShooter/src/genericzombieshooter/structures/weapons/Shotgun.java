@@ -21,6 +21,7 @@ import genericzombieshooter.actors.Zombie;
 import genericzombieshooter.misc.Globals;
 import genericzombieshooter.misc.Sounds;
 import genericzombieshooter.structures.Particle;
+import genericzombieshooter.structures.items.UnlimitedAmmo;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics2D;
@@ -115,7 +116,7 @@ public class Shotgun extends Weapon {
                     this.particles.add(p);
                 }
                 // Use up ammo.
-                this.consumeAmmo();
+                if(!player.hasEffect(UnlimitedAmmo.EFFECT_NAME)) this.consumeAmmo();
                 this.resetCooldown();
                 this.fired = true;
                 Sounds.BOOMSTICK.play();

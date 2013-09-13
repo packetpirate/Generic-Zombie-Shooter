@@ -99,7 +99,7 @@ public class GZSCanvas extends JPanel {
                             Iterator<Zombie> it = framework.getWave().getZombies().iterator();
                             while(it.hasNext()) {
                                 Zombie z = it.next();
-                                z.draw(g2d);
+                                if(!z.isDead()) z.draw(g2d);
                                 g2d.setTransform(saved);
                             }
                         }

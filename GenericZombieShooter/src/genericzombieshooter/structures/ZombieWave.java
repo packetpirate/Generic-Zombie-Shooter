@@ -7,6 +7,9 @@ import genericzombieshooter.actors.Zombie;
 import genericzombieshooter.actors.ZombieMatron;
 import genericzombieshooter.misc.Globals;
 import genericzombieshooter.misc.Images;
+import genericzombieshooter.structures.items.ExtraLife;
+import genericzombieshooter.structures.items.SpeedUp;
+import genericzombieshooter.structures.items.UnlimitedAmmo;
 import genericzombieshooter.structures.weapons.Weapon;
 import java.awt.Graphics2D;
 import java.awt.geom.Point2D;
@@ -114,7 +117,7 @@ public class ZombieWave {
         }
     }
     
-    public void update(Player player) {
+    public void update(Player player, ItemFactory itemFactory) {
         // Remove dead zombies from the live list.
         if(!this.zombiesToDie.isEmpty()) this.zombiesAlive.removeAll(this.zombiesToDie);
         // If the spawn timer is up, spawn a new zombie.
@@ -166,6 +169,20 @@ public class ZombieWave {
                                 // Give the player some cash.
                                 player.addCash(z.getCashValue());
                                 player.addKill();
+                                if(z.getType() >= 3) {
+                                    // Base chance of 10% (19-20) to drop a powerup. 
+                                    // 10% extra for each tier of zombie.
+                                    int dropRoll = Globals.r.nextInt(20) + 1;
+                                    if((z.getType() >= Globals.ZOMBIE_ACID_TYPE) && (z.getType() < Globals.ZOMBIE_TINY_TYPE)) 
+                                        dropRoll += (z.getType() % Globals.ZOMBIE_ACID_TYPE) * 2;
+                                    if(dropRoll >= 19) {
+                                        Item [] statusItems = {new SpeedUp(z), new UnlimitedAmmo(z),
+                                                               new ExtraLife(z), new SpeedUp(z),
+                                                               new ExtraLife(z)};
+                                        int i = Globals.r.nextInt(statusItems.length);
+                                        itemFactory.dropItem(statusItems[i]);
+                                    }
+                                }
                             }
                         }
                     }

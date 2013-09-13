@@ -117,6 +117,10 @@ public class ItemFactory {
         }
     }
     
+    public void dropItem(Item i) {
+        if(i != null) this.itemsDropped.add(i);
+    }
+    
     private Item createItem(int type, Player player) {
         if(type == 0) {
             // Return a Health Pack
