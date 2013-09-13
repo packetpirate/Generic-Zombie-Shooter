@@ -64,6 +64,7 @@ Changes:
   - Changed invulnerability effect for when player dies to a "blink" effect, rather than the white circle used previously.
   - Added expiration times for items so health packs, ammo, power-ups, etc will disappear from the screen after
     a set duration.
+  - Added status effect icon display under upper HUD to show status effects currently affecting the player.
 
 Known Issues:
 
@@ -81,8 +82,7 @@ TODO:
   - Add alt-fire for certain weapons.
   - Add effects to ammo for tertiary effects.
   - Add message system to display various information.
-  - Add icon display to show the user their current status effects. These effects will "fade out" by having their
-    opacity set to a value of (currentTime / expirationTime).
+  - Changed status effect icon display so icons "fade out".
   - Enhance visuals of weapons store.
 
 Planned Future Changes (Most likely post-1.0):
