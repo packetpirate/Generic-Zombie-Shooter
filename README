@@ -39,6 +39,14 @@ Zombie Types:
   - Big Mama, an ugly pale creature resembling a Wight that, if not killed fast enough, will burst into a
     swarm of tiny zombies. The burst of blood also does damage, so watch out for these!
   - Tiny Zumby, a much smaller and faster version of the Zumby, but weaker.
+  
+Items:
+
+  - Health Pack, heals the player and removes the poison effect.
+  - Ammo Crate, gives the player some ammo for a random weapon. These may be removed/changed soon.
+  - SpeedUp, doubles the player's movement speed for 10 seconds.
+  - Unlimited Ammo, stops ammo consumption for the Assault Rifle, Shotgun, and Flamethrower for 10 seconds.
+  - Extra Life, gives the player 1 extra life.
 
 Copyright Information:
 
@@ -50,6 +58,9 @@ Changes:
   - Added weapons store and changed player to only start with the Handgun. The store allows the player to purchase
     weapons and ammo. Ammo crates still spawn as per usual. All weapon and ammo prices set to 0 for testing purposes.
   - Added translucent overlay to weapon icons to show remaining cooldown on that weapon. Shrinks from right to left.
+  - Added three power-up items; the SpeedUp, which doubles the player's movement speed for 10 seconds, the Unlimited
+    Ammo power-up, which stops ammo consumption for the Assault Rifle, Shotgun, and Flamethrower for 10 seconds,
+    and the Extra Life power-up, which.... gives the player an extra life!
 
 Known Issues:
 
@@ -60,13 +71,21 @@ Known Issues:
 
 TODO:
 
-  - Add powerups (speed, firing rate, unlimited ammo?, extra life, etc)
+  - Add more power-ups?
   - Add "boss" waves every 20 waves or so where the entire wave is just one big boss monster with a special power.
   - Add background music or ambient sounds so the game isn't as quiet. Maybe add zombie noises.
   - Add EXP and level up system to enhance certain attributes.
   - Add alt-fire for certain weapons.
   - Add effects to ammo for tertiary effects.
   - Add message system to display various information.
+  - Change poison and invulnerability effects for player so they come from the statusEffects map, rather than
+    having their own method set.
+  - Add "blink" effect to replace the white circle around the player when he is invulnerable.
+  - Add expiration time to items so they disappear after a while (as they are now, they clog up the field fast,
+    which might forseeably cause some slow-down issues).
+  - Remove "Poisoned for X seconds!" message on upper HUD and instead have icons display above weapons loadout
+    to indicate current power-ups and icons under the upper HUD to indicate detrimental effects.
+  - Enhance visuals of weapons store.
 
 Planned Future Changes (Most likely post-1.0):
   - Add a lighting system so that you can only see directly in front of you, like a flashlight.
