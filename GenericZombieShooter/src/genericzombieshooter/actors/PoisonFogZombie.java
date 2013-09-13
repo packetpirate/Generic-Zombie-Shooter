@@ -79,7 +79,8 @@ public class PoisonFogZombie extends Zombie {
             // Update the explosion animation and damage the player if he is touching it.
             if(collidesWithExplosion(player) && !this.damageDone) { 
                 //player.poison((20 * 1000), PoisonFogZombie.POISON_DAMAGE);
-                player.addStatusEffect(6, "Poison", (15 * 1000), PoisonFogZombie.POISON_DAMAGE);
+                player.addStatusEffect(6, "Poison", Images.POISON_STATUS_ICON, 
+                        (15 * 1000), PoisonFogZombie.POISON_DAMAGE);
                 this.damageDone = true;
             }
             if(this.explosion.getImage().isActive()) this.explosion.getImage().update();

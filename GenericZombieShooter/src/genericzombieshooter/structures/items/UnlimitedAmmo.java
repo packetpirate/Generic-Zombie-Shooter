@@ -41,7 +41,7 @@ public class UnlimitedAmmo extends Item {
     
     @Override
     public void applyEffect(Player p) {
-        p.addStatusEffect(UnlimitedAmmo.ID, this.getName(), UnlimitedAmmo.DURATION, 0);
+        p.addStatusEffect(UnlimitedAmmo.ID, this.getName(), Images.UNLIMITED_AMMO, UnlimitedAmmo.DURATION, 0);
         Sounds.POWERUP.play();
     }
 }

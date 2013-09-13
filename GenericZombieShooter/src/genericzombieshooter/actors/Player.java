@@ -28,7 +28,6 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.geom.AffineTransform;
-import java.awt.geom.Ellipse2D;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
@@ -141,7 +140,7 @@ public class Player extends Rectangle2D.Double {
             this.weaponsMap.put(Globals.HANDGUN.getName(), Globals.HANDGUN);
         }
         else {
-            this.addStatusEffect(7, "Invincibility", 3000, 0);
+            this.addStatusEffect(7, "Invincibility", null, 3000, 0);
             this.blink = true;
             this.nextBlinkChange = System.currentTimeMillis() + 300;
         }
@@ -273,8 +272,10 @@ public class Player extends Rectangle2D.Double {
         this.light.move(p);
     }
     
-    public void addStatusEffect(int id, String name, long duration, int value) {
-        if(!this.statusEffects.containsKey(name)) this.statusEffects.put(name, new StatusEffect(duration, value));
+    public HashMap<String, StatusEffect> getStatusEffects() { return this.statusEffects; }
+    
+    public void addStatusEffect(int id, String name, BufferedImage img, long duration, int value) {
+        if(!this.statusEffects.containsKey(name)) this.statusEffects.put(name, new StatusEffect(img, duration, value));
         else this.statusEffects.get(name).refresh(duration);
     }
     

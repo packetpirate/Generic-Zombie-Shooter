@@ -42,7 +42,7 @@ public class SpeedUp extends Item {
     
     @Override
     public void applyEffect(Player p) {
-        p.addStatusEffect(SpeedUp.ID, this.getName(), SpeedUp.DURATION, SpeedUp.SPEED_MULTIPLIER);
+        p.addStatusEffect(SpeedUp.ID, this.getName(), Images.SPEED_UP, SpeedUp.DURATION, SpeedUp.SPEED_MULTIPLIER);
         Sounds.POWERUP.play();
     }
 }

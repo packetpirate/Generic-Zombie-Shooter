@@ -16,12 +16,16 @@
  **/
 package genericzombieshooter.structures;
 
+import java.awt.image.BufferedImage;
+
 /**
  * Used to manage status effects on the player.
  * @author Darin Beaudreau
  */
 public class StatusEffect {
     // Member Variables
+    private BufferedImage img;
+    public BufferedImage getImage() { return this.img; }
     private long endTime;
     public long getEndTime() { return this.endTime; }
     public void refresh(long duration) { this.endTime = System.currentTimeMillis() + duration; }
@@ -29,7 +33,8 @@ public class StatusEffect {
     private int value;
     public long getValue() { return this.value; }
     
-    public StatusEffect(long duration, int value) {
+    public StatusEffect(BufferedImage img, long duration, int value) {
+        this.img = img;
         this.endTime = System.currentTimeMillis() + duration;
         this.value = value;
     }

@@ -21,6 +21,7 @@ import genericzombieshooter.actors.Zombie;
 import genericzombieshooter.misc.Globals;
 import genericzombieshooter.misc.Images;
 import genericzombieshooter.structures.LightSource;
+import genericzombieshooter.structures.StatusEffect;
 import genericzombieshooter.structures.components.StoreWindow;
 import genericzombieshooter.structures.weapons.Weapon;
 import java.awt.AlphaComposite;
@@ -164,6 +165,18 @@ public class GZSCanvas extends JPanel {
                         g2d.drawString(("Cash: $" + player.getCash()), 10, 58);
                         g2d.drawString(("Ammo: " + player.getWeapon().getAmmoLeft() + "/" + player.getWeapon().getMaxAmmo()),
                                         10, 71);
+                        { // Draw Status Icons
+                            int x = 5;
+                            int y = 81;
+                            Iterator<StatusEffect> it = player.getStatusEffects().values().iterator();
+                            while(it.hasNext()) {
+                                StatusEffect status = it.next();
+                                if(status.isActive() && (status.getImage() != null)) {
+                                    g2d.drawImage(status.getImage(), x, y, null);
+                                    x += 37;
+                                }
+                            }
+                        } // End Drawing Status Icons
                         framework.getLoadout().draw((Graphics2D)g2d);
 
                         g2d.setColor(Color.WHITE);

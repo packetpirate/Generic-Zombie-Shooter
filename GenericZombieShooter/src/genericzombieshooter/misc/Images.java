@@ -42,6 +42,7 @@ public class Images {
     public static final BufferedImage ZOMBIE_TINY = GZSFramework.loadImage("/resources/images/GZS_ZombieTiny.png");
     public static final BufferedImage ACID_PARTICLE = GZSFramework.loadImage("/resources/images/GZS_AcidParticle.png");
     public static final BufferedImage POISON_GAS_SHEET = GZSFramework.loadImage("/resources/images/GZS_PoisonExplosion.png");
+    public static final BufferedImage POISON_STATUS_ICON = GZSFramework.loadImage("/resources/images/GZS_PoisonIcon.png");
     public static final BufferedImage BLOOD_SHEET = GZSFramework.loadImage("/resources/images/GZS_BloodExplosion.png");
     
     // Power-Up Related
