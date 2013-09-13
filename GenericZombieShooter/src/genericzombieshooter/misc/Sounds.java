@@ -31,15 +31,20 @@ import javax.sound.sampled.UnsupportedAudioFileException;
  * @author Darin Beaudreau
  */
 public enum Sounds {
+    // Weapon-Related
     POPGUN("shoot2.wav", false),
     RTPS("shoot1.wav", false),
     BOOMSTICK("shotgun1.wav", false),
     FLAMETHROWER("flamethrower.wav", true),
-    LANDMINE_ARMED("landmine_armed.wav", false),
-    TELEPORT("teleport.wav", false),
     THROW("throw.wav", false),
     EXPLOSION("explosion.wav", false),
+    LANDMINE_ARMED("landmine_armed.wav", false),
+    TELEPORT("teleport.wav", false),
+    
+    // Zombie-Related
     POISONCLOUD("poison_cloud.wav", false),
+    
+    // Game Sounds
     POWERUP("powerup.wav", false),
     PURCHASEWEAPON("purchase_weapon.wav", false),
     BUYAMMO("buy_ammo.wav", false),

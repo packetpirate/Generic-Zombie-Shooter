@@ -30,10 +30,11 @@ public class UnlimitedAmmo extends Item {
     // Final Variables
     public static final int ID = 4;
     public static final String EFFECT_NAME = "Unlimited Ammo";
+    public static final long ITEM_DURATION = 15 * 1000;
     public static final long DURATION = 10 * 1000;
     
     public UnlimitedAmmo(Point2D.Double p) {
-        super(UnlimitedAmmo.ID, UnlimitedAmmo.EFFECT_NAME, Images.UNLIMITED_AMMO);
+        super(UnlimitedAmmo.ID, UnlimitedAmmo.EFFECT_NAME, Images.UNLIMITED_AMMO, UnlimitedAmmo.DURATION);
         this.x = p.x;
         this.y = p.y;
     }

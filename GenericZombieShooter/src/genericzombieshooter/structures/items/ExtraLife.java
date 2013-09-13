@@ -30,9 +30,10 @@ public class ExtraLife extends Item {
     // Final Variables
     public static final int ID = 5;
     public static final String EFFECT_NAME = "Extra Life";
+    public static final long DURATION = 15 * 1000;
     
     public ExtraLife(Point2D.Double p) {
-        super(ExtraLife.ID, ExtraLife.EFFECT_NAME, Images.EXTRA_LIFE);
+        super(ExtraLife.ID, ExtraLife.EFFECT_NAME, Images.EXTRA_LIFE, ExtraLife.DURATION);
         this.x = p.x;
         this.y = p.y;
     }

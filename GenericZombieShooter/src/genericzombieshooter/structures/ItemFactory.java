@@ -93,16 +93,21 @@ public class ItemFactory {
             this.nextAmmo = currentTime + Ammo.SPAWN_TIME;
         }
         
-        /* If the player has picked up an item in the active list,
-           remove it and add it to the withdrawn list. */
+        /* If the player has picked up an item or the item has
+           disappeared in the active list, remove it and add it 
+           to the withdrawn list. */
         {
             Iterator<Item> it = this.itemsActive.iterator();
             while(it.hasNext()) {
                 Item i = it.next();
-                if(player.contains(i)) {
-                    i.applyEffect(player);
-                    if(i.getId() == HealthPack.ID) player.medkitsUsed++;
-                    else if(i.getId() == Ammo.ID) player.ammoCratesUsed++;
+                if(i.isActive()) {
+                    if(player.contains(i)) {
+                        i.applyEffect(player);
+                        if(i.getId() == HealthPack.ID) player.medkitsUsed++;
+                        else if(i.getId() == Ammo.ID) player.ammoCratesUsed++;
+                        this.itemsWithdrawn.add(i);
+                    }
+                } else {
                     this.itemsWithdrawn.add(i);
                 }
             }

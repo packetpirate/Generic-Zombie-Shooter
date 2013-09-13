@@ -29,10 +29,11 @@ import java.awt.geom.Point2D;
 public class HealthPack extends Item {
     public static final int ID = 1;
     public static final long SPAWN_TIME = 20 * 1000;
+    public static final long DURATION = 15 * 1000;
     private int healAmount;
     
     public HealthPack(int healAmount, Point2D.Double p) {
-        super(HealthPack.ID, "Health Pack", Images.HEALTH_PACK);
+        super(HealthPack.ID, "Health Pack", Images.HEALTH_PACK, HealthPack.DURATION);
         this.healAmount = healAmount;
         this.x = p.x;
         this.y = p.y;

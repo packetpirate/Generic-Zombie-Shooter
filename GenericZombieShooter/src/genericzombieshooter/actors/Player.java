@@ -54,6 +54,9 @@ public class Player extends Rectangle2D.Double {
     private int cash;
     private int lives;
     
+    private boolean blink;
+    private long nextBlinkChange;
+    
     private HashMap<String, StatusEffect> statusEffects;
     private long lastPoisoned;
     
@@ -87,6 +90,9 @@ public class Player extends Rectangle2D.Double {
         this.speed = Player.MOVE_SPEED;
         this.cash = 0;
         this.lives = 3;
+        
+        this.blink = false;
+        this.nextBlinkChange = System.currentTimeMillis();
         
         this.statusEffects = new HashMap<String, StatusEffect>();
         
@@ -136,6 +142,8 @@ public class Player extends Rectangle2D.Double {
         }
         else {
             this.addStatusEffect(7, "Invincibility", 3000, 0);
+            this.blink = true;
+            this.nextBlinkChange = System.currentTimeMillis() + 300;
         }
         if(this.hasEffect("Poison")) this.removeEffect("Poison");
         this.lastPoisoned = System.currentTimeMillis();
@@ -216,39 +224,34 @@ public class Player extends Rectangle2D.Double {
                         this.lastPoisoned = System.currentTimeMillis();
                         this.takeDamage((int)status.getValue());
                     }
-                } else {
-                    // Otherwise, remove the effect.
-                    this.removeEffect("Poison");
-                }
+                } else this.removeEffect("Poison");
             }
             
             // Other Effects
             if(this.hasEffect("Invincibility")) {
                 StatusEffect status = this.statusEffects.get("Invincibility");
-                if(!status.isActive()) {
-                    // Remove the effect.
-                    this.removeEffect("Invincibility");
-                }
+                if(status.isActive()) {
+                    if(System.currentTimeMillis() >= this.nextBlinkChange) {
+                        this.blink = ((this.blink)?false:true);
+                        this.nextBlinkChange = System.currentTimeMillis() + 300;
+                    }
+                } else this.removeEffect("Invincibility");
             }
         } // End resolving status effects.
     }
     
     public void draw(Graphics2D g2d) {
-        g2d.setTransform(this.af);
-        { // Draw player shadow.
-            int w = this.img.getWidth();
-            int h = this.img.getHeight();
-            int xPos = (int)(this.getCenterX() - (w / 2));
-            int yPos = (int)(this.getCenterY() - (h / 2) + 5);
-            g2d.setColor(new Color(0, 0, 0, 100));
-            g2d.fillOval(xPos, yPos, w, h);
-        } // End drawing player shadow.
-        g2d.drawImage(this.img, (int) this.x, (int) this.y, null);
-        if(this.hasEffect("Invincibility")) {
-            g2d.setColor(Color.WHITE);
-            Ellipse2D.Double halo = new Ellipse2D.Double((this.x - 10), (this.y - 10), 
-                                                         (this.width + 20), (this.height + 20));
-            g2d.draw(halo);
+        if(!this.blink) {
+            g2d.setTransform(this.af);
+            { // Draw player shadow.
+                int w = this.img.getWidth();
+                int h = this.img.getHeight();
+                int xPos = (int)(this.getCenterX() - (w / 2));
+                int yPos = (int)(this.getCenterY() - (h / 2) + 5);
+                g2d.setColor(new Color(0, 0, 0, 100));
+                g2d.fillOval(xPos, yPos, w, h);
+            } // End drawing player shadow.
+            g2d.drawImage(this.img, (int) this.x, (int) this.y, null);
         }
     }
 

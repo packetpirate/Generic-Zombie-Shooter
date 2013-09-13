@@ -35,7 +35,7 @@ import java.util.Random;
  * @author Darin Beaudreau
  */
 public class Globals {
-    // Final
+    // Game Information
     public static final String VERSION = "0.9.3";
     public static final int W_WIDTH = 800; // The width of the game window.
     public static final int W_HEIGHT = 640; // The height of the game window.
@@ -43,6 +43,7 @@ public class Globals {
     public static final long WAVE_BREAK_TIME = 30 * 1000;
     public static final Random r = new Random();
     
+    // Zombie Information
     public static final int ZOMBIE_REGULAR_TYPE = 1;
     public static final long ZOMBIE_REGULAR_SPAWN = 1000;
     public static final int ZOMBIE_DOG_TYPE = 2;
@@ -55,11 +56,8 @@ public class Globals {
     public static final long ZOMBIE_MATRON_SPAWN = 50000;
     public static final int ZOMBIE_TINY_TYPE = 6;
     
-    // Non-Final
+    // Game-State Related
     public static Runnable animation; // The primary animation thread.
-    //public static List<Runnable> zombieSpawns; // A list containing the threads that spawn zombies.
-    //public static Runnable health; // The thread for spawning health packs.
-    //public static Runnable ammo; // The thread for spawning ammo packs.
     public static boolean running; // Whether or not the game is currently running.
     public static boolean started;
     public static boolean crashed; // Tells the game whether or not there was a crash.
@@ -69,11 +67,12 @@ public class Globals {
     public static boolean waveInProgress; // Whether the player is fighting or waiting for another wave.
     public static long nextWave;
     
+    // Input Related
     public static boolean [] keys; // The state of the game key controls.
     public static boolean [] buttons; // The state of the game mouse button controls.
-    
     public static Point mousePos; // The current position of the mouse on the screen.
     
+    // Static Weapons
     public static Handgun HANDGUN = new Handgun();
     public static AssaultRifle ASSAULT_RIFLE = new AssaultRifle();
     public static Shotgun SHOTGUN = new Shotgun();

@@ -32,11 +32,14 @@ public abstract class Item extends Point2D.Double {
     public String getName() { return this.name; }
     protected BufferedImage icon;
     public BufferedImage getIcon() { return this.icon; }
+    private long expirationTime;
+    public boolean isActive() { return (System.currentTimeMillis() < this.expirationTime); }
     
-    public Item(int id, String name, BufferedImage icon) {
+    public Item(int id, String name, BufferedImage icon, long duration) {
         this.id = id;
         this.name = name;
         this.icon = icon;
+        this.expirationTime = System.currentTimeMillis() + duration;
     }
     
     public void applyEffect(Player player) {

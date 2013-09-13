@@ -30,11 +30,12 @@ public class SpeedUp extends Item {
     // Final Variables
     public static final int ID = 3;
     public static final String EFFECT_NAME = "SpeedUp";
+    public static final long ITEM_DURATION = 15 * 1000;
     public static final long DURATION = 10 * 1000;
     public static final int SPEED_MULTIPLIER = 2;
     
     public SpeedUp(Point2D.Double p) {
-        super(SpeedUp.ID, SpeedUp.EFFECT_NAME, Images.SPEED_UP);
+        super(SpeedUp.ID, SpeedUp.EFFECT_NAME, Images.SPEED_UP, SpeedUp.DURATION);
         this.x = p.x;
         this.y = p.y;
     }
