@@ -21,12 +21,10 @@ import genericzombieshooter.misc.Globals;
 import genericzombieshooter.misc.Images;
 import genericzombieshooter.misc.Sounds;
 import genericzombieshooter.structures.ItemFactory;
-import genericzombieshooter.structures.StatusEffect;
 import genericzombieshooter.structures.ZombieWave;
 import genericzombieshooter.structures.components.ErrorWindow;
 import genericzombieshooter.structures.components.StoreWindow;
 import genericzombieshooter.structures.components.WeaponsLoadout;
-import genericzombieshooter.structures.items.SpeedUp;
 import genericzombieshooter.structures.weapons.Weapon;
 import java.awt.Point;
 import java.awt.event.KeyAdapter;
@@ -326,14 +324,6 @@ public class GZSFramework {
 
                 // Check player for damage.
                 if(Globals.waveInProgress) this.wave.checkPlayerDamage(player);
-
-                { // If the player's invincibility timer has run out, remove it.
-                    if(player.isInvincible()) {
-                        long startTime = player.getInvincibilityStartTime();
-                        long currentTime = System.currentTimeMillis();
-                        if(currentTime >= (startTime + Player.INVINCIBILITY_LENGTH)) player.removeInvincibility(); 
-                    }
-                } // End removing player invincibility.
 
                 // Update Items
                 itemFactory.update(player);

@@ -48,13 +48,15 @@ public class Player extends Rectangle2D.Double {
     private AffineTransform af;
     private BufferedImage img;
     private LightSource light;
+    
     private int health;
     private double speed;
     private int cash;
     private int lives;
+    
     private HashMap<String, StatusEffect> statusEffects;
-    private boolean invincible;
-    private long invincibleStartTime;
+    private long lastPoisoned;
+    
     private String currentWeaponName;
     private HashMap<String, Weapon> weaponsMap;
     
@@ -88,8 +90,7 @@ public class Player extends Rectangle2D.Double {
         
         this.statusEffects = new HashMap<String, StatusEffect>();
         
-        this.invincible = false;
-        this.invincibleStartTime = System.currentTimeMillis();
+        this.lastPoisoned = System.currentTimeMillis();
         
         this.deathTime = System.currentTimeMillis();
         this.killCount = 0;
@@ -117,10 +118,7 @@ public class Player extends Rectangle2D.Double {
         else this.health += amount;
     }
     public boolean isAlive() { return this.health > 0; }
-    public boolean isInvincible() { return this.invincible; }
-    public long getInvincibilityStartTime() { return this.invincibleStartTime; }
     public long getDeathTime() { return this.deathTime; }
-    public void removeInvincibility() { this.invincible = false; }
     public int getLives() { return this.lives; }
     public void addLife() { this.lives++; }
     public void die() { 
@@ -137,11 +135,11 @@ public class Player extends Rectangle2D.Double {
             this.weaponsMap.put(Globals.HANDGUN.getName(), Globals.HANDGUN);
         }
         else {
-            this.invincible = true;
-            this.invincibleStartTime = System.currentTimeMillis();
+            this.addStatusEffect(7, "Invincibility", 3000, 0);
         }
-        if(this.isPoisoned()) this.removePoison();
-        //this.currentWeapon = 1;
+        if(this.hasEffect("Poison")) this.removeEffect("Poison");
+        this.lastPoisoned = System.currentTimeMillis();
+        
         this.currentWeaponName = Globals.HANDGUN.getName();
         this.x = (Globals.W_WIDTH / 2) - (this.width / 2);
         this.y = (Globals.W_HEIGHT / 2) - (this.height / 2);
@@ -191,7 +189,8 @@ public class Player extends Rectangle2D.Double {
         }
         
         { // Resolve status effects.
-            if(this.statusEffects.containsKey(SpeedUp.EFFECT_NAME)) {
+            // Power-Up Effects
+            if(this.hasEffect(SpeedUp.EFFECT_NAME)) {
                 StatusEffect status = this.statusEffects.get(SpeedUp.EFFECT_NAME);
                 if(status.isActive()) {
                     // Change the player's move speed.
@@ -199,13 +198,37 @@ public class Player extends Rectangle2D.Double {
                 } else {
                     // Reset the player's movement speed and remove the status.
                     this.speed = Player.MOVE_SPEED;
-                    this.statusEffects.remove(SpeedUp.EFFECT_NAME);
+                    this.removeEffect(SpeedUp.EFFECT_NAME);
                 }
             }
-            if(this.statusEffects.containsKey(UnlimitedAmmo.EFFECT_NAME)) {
+            if(this.hasEffect(UnlimitedAmmo.EFFECT_NAME)) {
                 // If the player has the unlimited ammo effect, but it is no longer active, remove it.
                 StatusEffect status = this.statusEffects.get(UnlimitedAmmo.EFFECT_NAME);
-                if(!status.isActive()) this.statusEffects.remove(UnlimitedAmmo.EFFECT_NAME);
+                if(!status.isActive()) this.removeEffect(UnlimitedAmmo.EFFECT_NAME);
+            }
+            
+            // Negative Effects
+            if(this.hasEffect("Poison")) {
+                StatusEffect status = this.statusEffects.get("Poison");
+                if(status.isActive()) {
+                    // If the player is poisoned, take damage.
+                    if(System.currentTimeMillis() >= (this.lastPoisoned + 1000)) {
+                        this.lastPoisoned = System.currentTimeMillis();
+                        this.takeDamage((int)status.getValue());
+                    }
+                } else {
+                    // Otherwise, remove the effect.
+                    this.removeEffect("Poison");
+                }
+            }
+            
+            // Other Effects
+            if(this.hasEffect("Invincibility")) {
+                StatusEffect status = this.statusEffects.get("Invincibility");
+                if(!status.isActive()) {
+                    // Remove the effect.
+                    this.removeEffect("Invincibility");
+                }
             }
         } // End resolving status effects.
     }
@@ -221,7 +244,7 @@ public class Player extends Rectangle2D.Double {
             g2d.fillOval(xPos, yPos, w, h);
         } // End drawing player shadow.
         g2d.drawImage(this.img, (int) this.x, (int) this.y, null);
-        if(this.isInvincible()) {
+        if(this.hasEffect("Invincibility")) {
             g2d.setColor(Color.WHITE);
             Ellipse2D.Double halo = new Ellipse2D.Double((this.x - 10), (this.y - 10), 
                                                          (this.width + 20), (this.height + 20));
@@ -241,47 +264,19 @@ public class Player extends Rectangle2D.Double {
         this.light.move(new Point2D.Double((int)this.getCenterX(), (int)this.getCenterY()));
     }
     
-    private boolean poisoned;
-    public boolean isPoisoned() { return this.poisoned; }
-    private long lastPoisoned;
-    private long endTime;
-    public long getPoisonEndTime() { return this.endTime; }
-    private int poisonDamage;
-    public void poison(long length, int dps) {
-        /* If the player is not already poisoned, set the current time as
-           the last time the player was poisoned, set the boolean poisoned
-           flag to true, and set the end time of the poison effect to the
-           current time plus the length specified. Also, set the poison damage. */
-        long startTime = System.currentTimeMillis();
-        if(!this.poisoned) {
-            this.poisoned = true;
-            this.endTime = startTime + length;
-            this.poisonDamage = dps;
-        } else {
-            /* If the player is already poisoned, simply refresh the duration to
-               the current time plus the length and set the damage in case
-               it has changed. */
-            this.endTime = startTime + length;
-            this.poisonDamage = dps;
-        }
-        this.lastPoisoned = startTime;
+    public void move(Point2D.Double p) {
+        this.x = p.x;
+        this.y = p.y;
+        this.light.move(p);
     }
-    public void takePoisonDamage() {
-        /* If it has been at least one second since the last time the player
-           took poison damage, deal poison damage again. If the duration has
-           run its course, set the poisoned boolean flag to false. */
-        long currentTime = System.currentTimeMillis();
-        if(currentTime >= (this.lastPoisoned + 1000)) {
-            this.takeDamage(this.poisonDamage);
-            this.lastPoisoned = currentTime;
-        }
-        if(currentTime >= this.endTime) this.poisoned = false;
-    }
-    public void removePoison() { this.poisoned = false; }
     
     public void addStatusEffect(int id, String name, long duration, int value) {
         if(!this.statusEffects.containsKey(name)) this.statusEffects.put(name, new StatusEffect(duration, value));
         else this.statusEffects.get(name).refresh(duration);
+    }
+    
+    public void removeEffect(String name) {
+        if(this.hasEffect(name)) this.statusEffects.remove(name);
     }
     
     public boolean hasEffect(String name) {

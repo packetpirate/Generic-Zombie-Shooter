@@ -198,7 +198,7 @@ public class ZombieWave {
         Iterator<Zombie> it = this.zombiesAlive.iterator();
         while(it.hasNext()) {
             Zombie z = it.next();
-            if(!player.isInvincible()) {
+            if(!player.hasEffect("Invincibility")) {
                 if(player.intersects(z.getRect())) player.takeDamage(z.getDamage());
                 if(z.getParticles() != null) {
                     Iterator<Particle> pit = z.getParticles().iterator();
@@ -209,6 +209,5 @@ public class ZombieWave {
                 }
             }
         }
-        if(player.isPoisoned()) player.takePoisonDamage();
     }
 }

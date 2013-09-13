@@ -41,7 +41,7 @@ public class HealthPack extends Item {
     @Override
     public void applyEffect(Player player) {
         player.addHealth(this.healAmount);
-        player.removePoison();
+        player.removeEffect("Poison");
         Sounds.POWERUP.play();
     }
 }

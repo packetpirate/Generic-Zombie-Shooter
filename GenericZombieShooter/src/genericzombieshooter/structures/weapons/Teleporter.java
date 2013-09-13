@@ -65,8 +65,7 @@ public class Teleporter extends Weapon {
     public void fire(double theta, Point2D.Double pos, Player player) {
         if(this.canFire()) {
             Point2D.Double newPos = this.getTeleportLocation(player);
-            player.x = newPos.x;
-            player.y = newPos.y;
+            player.move(newPos);
             this.consumeAmmo();
             this.resetCooldown();
             Sounds.TELEPORT.play();
