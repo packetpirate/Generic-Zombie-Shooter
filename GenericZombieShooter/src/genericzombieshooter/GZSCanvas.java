@@ -27,6 +27,7 @@ import genericzombieshooter.structures.weapons.Weapon;
 import java.awt.AlphaComposite;
 import java.awt.BasicStroke;
 import java.awt.Color;
+import java.awt.Composite;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.FontMetrics;
@@ -172,7 +173,17 @@ public class GZSCanvas extends JPanel {
                             while(it.hasNext()) {
                                 StatusEffect status = it.next();
                                 if(status.isActive() && (status.getImage() != null)) {
-                                    g2d.drawImage(status.getImage(), x, y, null);
+                                    Composite savedComp = g2d.getComposite();
+                                    BufferedImage image = status.getImage();
+                                    
+                                    double opacity = 1.0f;
+                                    if(System.currentTimeMillis() >= (status.getEndTime() - 3000))
+                                        opacity = ((double)status.getEndTime() - (double)System.currentTimeMillis()) / 3000;
+                                    g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, (float)opacity));
+                                    
+                                    g2d.drawImage(image, x, y, null);
+                                    g2d.setComposite(savedComp);
+                                    
                                     x += 37;
                                 }
                             }

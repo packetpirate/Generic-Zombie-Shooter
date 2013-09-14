@@ -25,7 +25,9 @@ import genericzombieshooter.structures.ZombieWave;
 import genericzombieshooter.structures.components.ErrorWindow;
 import genericzombieshooter.structures.components.StoreWindow;
 import genericzombieshooter.structures.components.WeaponsLoadout;
+import genericzombieshooter.structures.items.UnlimitedAmmo;
 import genericzombieshooter.structures.weapons.Weapon;
+import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
@@ -132,6 +134,12 @@ public class GZSFramework {
                                 Globals.paused = true;
                             }
                         }
+                        // For testing purposes. Gives unlimited ammo for 5 seconds.
+                        /*if (key == KeyEvent.VK_G) {
+                            if(Globals.started && !Globals.storeOpen && !Globals.paused) {
+                                player.addStatusEffect(UnlimitedAmmo.ID, UnlimitedAmmo.EFFECT_NAME, Images.UNLIMITED_AMMO, 5000, 0);
+                            }
+                        }*/
                         if (key == Globals.HANDGUN.getKey()) {
                             int r = player.setWeapon(Globals.HANDGUN.getName());
                             if(r == 1) loadout.setCurrentWeapon(Globals.HANDGUN.getName());
@@ -378,7 +386,13 @@ public class GZSFramework {
     
     public static BufferedImage loadImage(String filename) {
         try {
-            return ImageIO.read(GZSFramework.class.getResource(filename));
+            // Create a new BufferedImage from the file that supports transparency.
+            BufferedImage bi = ImageIO.read(GZSFramework.class.getResource(filename));
+            BufferedImage buffer = new BufferedImage(bi.getWidth(), bi.getHeight(), BufferedImage.TYPE_INT_ARGB);
+            Graphics2D g2d = (Graphics2D)buffer.createGraphics();
+            g2d.drawImage(bi, 0, 0, null);
+            g2d.dispose();
+            return buffer;
         } catch(IOException io) {
             System.out.println(io.getMessage());
             System.out.println("Error reading file: " + filename);
