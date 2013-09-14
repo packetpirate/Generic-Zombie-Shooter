@@ -65,6 +65,7 @@ Changes:
   - Added expiration times for items so health packs, ammo, power-ups, etc will disappear from the screen after
     a set duration.
   - Added status effect icon display under upper HUD to show status effects currently affecting the player.
+  - Status effect icons now "fade out" when within 3 seconds of their expiration time.
 
 Known Issues:
 
@@ -82,7 +83,7 @@ TODO:
   - Add alt-fire for certain weapons.
   - Add effects to ammo for tertiary effects.
   - Add message system to display various information.
-  - Changed status effect icon display so icons "fade out".
+  - Change Item class so items "blink" when close to disappearing.
   - Enhance visuals of weapons store.
 
 Planned Future Changes (Most likely post-1.0):
