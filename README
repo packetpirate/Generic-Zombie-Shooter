@@ -1,6 +1,6 @@
 -----------------------
 Author: Darin Beaudreau
-Version: 0.9.3
+Version: 0.9.4
 -----------------------
 
 Description:
@@ -66,6 +66,8 @@ Changes:
     a set duration.
   - Added status effect icon display under upper HUD to show status effects currently affecting the player.
   - Status effect icons now "fade out" when within 3 seconds of their expiration time.
+  - Added message system to show helpful information about power-ups you collect above the weapons loadout.
+  - Modified items to now blink when they are close to the time they are set to expire.
 
 Known Issues:
 
@@ -82,8 +84,6 @@ TODO:
   - Add EXP and level up system to enhance certain attributes.
   - Add alt-fire for certain weapons.
   - Add effects to ammo for tertiary effects.
-  - Add message system to display various information.
-  - Change Item class so items "blink" when close to disappearing.
   - Enhance visuals of weapons store.
 
 Planned Future Changes (Most likely post-1.0):
