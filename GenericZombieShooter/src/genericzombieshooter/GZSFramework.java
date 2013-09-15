@@ -21,11 +21,11 @@ import genericzombieshooter.misc.Globals;
 import genericzombieshooter.misc.Images;
 import genericzombieshooter.misc.Sounds;
 import genericzombieshooter.structures.ItemFactory;
+import genericzombieshooter.structures.Message;
 import genericzombieshooter.structures.ZombieWave;
 import genericzombieshooter.structures.components.ErrorWindow;
 import genericzombieshooter.structures.components.StoreWindow;
 import genericzombieshooter.structures.components.WeaponsLoadout;
-import genericzombieshooter.structures.items.UnlimitedAmmo;
 import genericzombieshooter.structures.weapons.Weapon;
 import java.awt.Graphics2D;
 import java.awt.Point;
@@ -368,6 +368,19 @@ public class GZSFramework {
                     Globals.waveInProgress = false;
                     Globals.nextWave = System.currentTimeMillis() + (10 * 1000);
                 }
+                
+                { // Delete expired messages.
+                    synchronized(Globals.GAME_MESSAGES) {
+                        Iterator<Message> it = Globals.GAME_MESSAGES.iterator();
+                        while(it.hasNext()) {
+                            Message m = it.next();
+                            if(!m.isAlive()) {
+                                it.remove();
+                                continue;
+                            }
+                        }
+                    }
+                } // End deleting expired messages.
             } catch(Exception e) {
                 createErrorWindow(e);
             }

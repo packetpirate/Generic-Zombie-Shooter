@@ -17,9 +17,11 @@
 package genericzombieshooter.structures.items;
 
 import genericzombieshooter.actors.Player;
+import genericzombieshooter.misc.Globals;
 import genericzombieshooter.misc.Images;
 import genericzombieshooter.misc.Sounds;
 import genericzombieshooter.structures.Item;
+import genericzombieshooter.structures.Message;
 import java.awt.geom.Point2D;
 
 /**
@@ -42,6 +44,9 @@ public class UnlimitedAmmo extends Item {
     @Override
     public void applyEffect(Player p) {
         p.addStatusEffect(UnlimitedAmmo.ID, this.getName(), Images.UNLIMITED_AMMO, UnlimitedAmmo.DURATION, 0);
+        synchronized(Globals.GAME_MESSAGES) {
+            Globals.GAME_MESSAGES.add(new Message(("Player has unlimited ammo for " + UnlimitedAmmo.DURATION + " seconds!"), 5000));
+        }
         Sounds.POWERUP.play();
     }
 }

@@ -21,8 +21,10 @@ import genericzombieshooter.actors.Zombie;
 import genericzombieshooter.misc.Globals;
 import genericzombieshooter.misc.Images;
 import genericzombieshooter.structures.LightSource;
+import genericzombieshooter.structures.Message;
 import genericzombieshooter.structures.StatusEffect;
 import genericzombieshooter.structures.components.StoreWindow;
+import genericzombieshooter.structures.components.WeaponsLoadout;
 import genericzombieshooter.structures.weapons.Weapon;
 import java.awt.AlphaComposite;
 import java.awt.BasicStroke;
@@ -35,6 +37,7 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Stroke;
 import java.awt.geom.AffineTransform;
+import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import java.util.Iterator;
@@ -114,6 +117,7 @@ public class GZSCanvas extends JPanel {
                         BufferedImage shadowBuffer = new BufferedImage(Globals.W_WIDTH, Globals.W_HEIGHT, BufferedImage.TYPE_INT_ARGB);
                         Graphics2D sg = (Graphics2D)shadowBuffer.getGraphics();
 
+                        // For each light source, draw a translucent radial gradient painted rectangle over the "shadow" layer.
                         sg.setComposite(AlphaComposite.Src);
                         sg.setColor(new Color(0.0f, 0.0f, 0.0f, 0.95f));
                         sg.fillRect(0, 0, Globals.W_WIDTH, Globals.W_HEIGHT);
@@ -176,19 +180,42 @@ public class GZSCanvas extends JPanel {
                                     Composite savedComp = g2d.getComposite();
                                     BufferedImage image = status.getImage();
                                     
+                                    // Based on the time until the status effect's expiration, calculate the icon's opacity.
                                     double opacity = 1.0f;
                                     if(System.currentTimeMillis() >= (status.getEndTime() - 3000))
                                         opacity = ((double)status.getEndTime() - (double)System.currentTimeMillis()) / 3000;
+                                    // Set the composite to use the calculated opacity value.
                                     g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, (float)opacity));
                                     
+                                    // Draw the image using the composite and then restore the composite to its previous state.
                                     g2d.drawImage(image, x, y, null);
                                     g2d.setComposite(savedComp);
                                     
-                                    x += 37;
+                                    // Increase the X value by the icon width + 5.
+                                    x += image.getWidth() + 5;
                                 }
                             }
                         } // End Drawing Status Icons
                         framework.getLoadout().draw((Graphics2D)g2d);
+                        
+                        { // Draw game messages.
+                            synchronized(Globals.GAME_MESSAGES) {
+                                int i = 0;
+                                int x = (int)((Globals.W_WIDTH / 2) - (WeaponsLoadout.BAR_WIDTH / 2));
+                                int y = (int)((Globals.W_HEIGHT - (WeaponsLoadout.BAR_HEIGHT + 15)) - 10);
+                                g2d.setColor(Color.WHITE);
+                                Iterator<Message> it = Globals.GAME_MESSAGES.iterator();
+                                while(it.hasNext()) {
+                                    if(i < 3) {
+                                        Message m = it.next();
+                                        if(m.isAlive()) {
+                                            m.draw(g2d, new Point2D.Double(x, y));
+                                            y -= 12;
+                                        }
+                                    } else break;
+                                }
+                            }
+                        } // End drawing game messages.
 
                         g2d.setColor(Color.WHITE);
                         Font font = new Font("Impact", Font.PLAIN, 20);

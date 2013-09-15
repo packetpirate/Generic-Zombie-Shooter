@@ -16,6 +16,7 @@
  **/
 package genericzombieshooter.misc;
 
+import genericzombieshooter.structures.Message;
 import genericzombieshooter.structures.weapons.AssaultRifle;
 import genericzombieshooter.structures.weapons.Flamethrower;
 import genericzombieshooter.structures.weapons.Flare;
@@ -28,6 +29,8 @@ import genericzombieshooter.structures.weapons.Teleporter;
 import genericzombieshooter.structures.weapons.TurretWeapon;
 import genericzombieshooter.structures.weapons.Weapon;
 import java.awt.Point;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 /**
@@ -36,12 +39,13 @@ import java.util.Random;
  */
 public class Globals {
     // Game Information
-    public static final String VERSION = "0.9.3";
+    public static final String VERSION = "0.9.4";
     public static final int W_WIDTH = 800; // The width of the game window.
     public static final int W_HEIGHT = 640; // The height of the game window.
     public static final long SLEEP_TIME = 20; // The sleep time of the animation thread.
     public static final long WAVE_BREAK_TIME = 30 * 1000;
     public static final Random r = new Random();
+    public static List<Message> GAME_MESSAGES = new ArrayList<Message>();
     
     // Zombie Information
     public static final int ZOMBIE_REGULAR_TYPE = 1;

@@ -35,11 +35,17 @@ public abstract class Item extends Point2D.Double {
     private long expirationTime;
     public boolean isActive() { return (System.currentTimeMillis() < this.expirationTime); }
     
+    private boolean blink;
+    private long nextBlinkChange;
+    
     public Item(int id, String name, BufferedImage icon, long duration) {
         this.id = id;
         this.name = name;
         this.icon = icon;
         this.expirationTime = System.currentTimeMillis() + duration;
+        
+        this.blink = false;
+        this.nextBlinkChange = System.currentTimeMillis();
     }
     
     public void applyEffect(Player player) {
@@ -47,8 +53,17 @@ public abstract class Item extends Point2D.Double {
     }
     
     public void draw(Graphics2D g2d) {
-        int width = this.icon.getWidth();
-        int height = this.icon.getHeight();
-        g2d.drawImage(this.icon, (int)(this.x - (width / 2)), (int)(this.y - (height / 2)), null);
+        // Check if item should start blinking.
+        if(System.currentTimeMillis() >= (this.expirationTime - 3000)) {
+            if(System.currentTimeMillis() >= this.nextBlinkChange) {
+                this.blink = ((this.blink)?false:true);
+                this.nextBlinkChange = System.currentTimeMillis() + 200;
+            }
+        }
+        if(!this.blink) {
+            int width = this.icon.getWidth();
+            int height = this.icon.getHeight();
+            g2d.drawImage(this.icon, (int)(this.x - (width / 2)), (int)(this.y - (height / 2)), null);
+        }
     }
 }

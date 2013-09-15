@@ -17,9 +17,11 @@
 package genericzombieshooter.structures.items;
 
 import genericzombieshooter.actors.Player;
+import genericzombieshooter.misc.Globals;
 import genericzombieshooter.misc.Images;
 import genericzombieshooter.misc.Sounds;
 import genericzombieshooter.structures.Item;
+import genericzombieshooter.structures.Message;
 import java.awt.geom.Point2D;
 
 /**
@@ -43,6 +45,9 @@ public class SpeedUp extends Item {
     @Override
     public void applyEffect(Player p) {
         p.addStatusEffect(SpeedUp.ID, this.getName(), Images.SPEED_UP, SpeedUp.DURATION, SpeedUp.SPEED_MULTIPLIER);
+        synchronized(Globals.GAME_MESSAGES) {
+            Globals.GAME_MESSAGES.add(new Message("Player speed doubled for " + SpeedUp.DURATION + " seconds!", 5000));
+        }
         Sounds.POWERUP.play();
     }
 }
