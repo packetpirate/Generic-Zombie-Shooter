@@ -235,7 +235,7 @@ public class GZSCanvas extends JPanel {
                     } // End drawing GUI elements.
                 } else {
                     // Draw the store window.
-                    this.store.draw(g2d);
+                    this.store.draw(g2d, player);
                 }
             } else {
                 // Draw the death screen.

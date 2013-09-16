@@ -342,15 +342,12 @@ public class GZSFramework {
                     if(player.getLives() == 0) {
                         // Show death screen and reset player.
                         Globals.deathScreen = true;
+                        synchronized(Globals.GAME_MESSAGES) { Globals.GAME_MESSAGES.clear(); }
                         player.reset();
                         itemFactory.reset();
                         for(boolean k : Globals.keys) k = false;
                         for(boolean b : Globals.buttons) b = false;
-                        Iterator<Weapon> it = player.getWeaponsMap().values().iterator();
-                        while(it.hasNext()) {
-                            Weapon w = it.next();
-                            w.resetAmmo();
-                        }
+                        Globals.resetWeapons();
                     }
                     loadout.setCurrentWeapon(Globals.HANDGUN.getName());
                 }

@@ -97,20 +97,20 @@ public class StoreWindow {
         this.weaponFrames.put(w.getName(), rects);
     }
     
-    public void draw(Graphics2D g2d) {
+    public void draw(Graphics2D g2d, Player player) {
         if(this.background != null) g2d.drawImage(this.background, 0, 0, null);
-        this.drawWeaponFrame(g2d, Globals.ASSAULT_RIFLE, "/resources/images/GZS_RTPS.png");
-        this.drawWeaponFrame(g2d, Globals.SHOTGUN, "/resources/images/GZS_Boomstick.png");
-        this.drawWeaponFrame(g2d, Globals.FLAMETHROWER, "/resources/images/GZS_Flamethrower.png");
-        this.drawWeaponFrame(g2d, Globals.GRENADE, "/resources/images/GZS_Grenade.png");
-        this.drawWeaponFrame(g2d, Globals.LANDMINE, "/resources/images/GZS_Landmine.png");
-        this.drawWeaponFrame(g2d, Globals.FLARE, "/resources/images/GZS_Flare.png");
-        this.drawWeaponFrame(g2d, Globals.LASERWIRE, "/resources/images/GZS_LaserWire.png");
-        this.drawWeaponFrame(g2d, Globals.TURRETWEAPON, "/resources/images/GZS_Turret.png");
-        this.drawWeaponFrame(g2d, Globals.TELEPORTER, "/resources/images/GZS_BigRedButton.png");
+        this.drawWeaponFrame(g2d, player, Globals.ASSAULT_RIFLE, "/resources/images/GZS_RTPS.png");
+        this.drawWeaponFrame(g2d, player, Globals.SHOTGUN, "/resources/images/GZS_Boomstick.png");
+        this.drawWeaponFrame(g2d, player, Globals.FLAMETHROWER, "/resources/images/GZS_Flamethrower.png");
+        this.drawWeaponFrame(g2d, player, Globals.GRENADE, "/resources/images/GZS_Grenade.png");
+        this.drawWeaponFrame(g2d, player, Globals.LANDMINE, "/resources/images/GZS_Landmine.png");
+        this.drawWeaponFrame(g2d, player, Globals.FLARE, "/resources/images/GZS_Flare.png");
+        this.drawWeaponFrame(g2d, player, Globals.LASERWIRE, "/resources/images/GZS_LaserWire.png");
+        this.drawWeaponFrame(g2d, player, Globals.TURRETWEAPON, "/resources/images/GZS_Turret.png");
+        this.drawWeaponFrame(g2d, player, Globals.TELEPORTER, "/resources/images/GZS_BigRedButton.png");
     }
     
-    private void drawWeaponFrame(Graphics2D g2d, Weapon w, String file) {
+    private void drawWeaponFrame(Graphics2D g2d, Player player, Weapon w, String file) {
         FontMetrics metrics = g2d.getFontMetrics();
         
         int x = (int)(this.weaponFrames.get(w.getName()).get(0).x + 18);
@@ -124,7 +124,8 @@ public class StoreWindow {
         
         String pS = "Purchase : $" + w.getWeaponPrice();
         Rectangle2D.Double purchase = this.weaponFrames.get(w.getName()).get(1);
-        g2d.setColor(new Color(8, 84, 22));
+        if(!player.hasWeapon(w.getName())) g2d.setColor(new Color(8, 84, 22));
+        else g2d.setColor(Color.DARK_GRAY);
         g2d.fill(purchase);
         g2d.setColor(Color.BLACK);
         g2d.draw(purchase);
@@ -134,7 +135,8 @@ public class StoreWindow {
         
         String bS = "Buy Ammo: $" + w.getAmmoPrice();
         Rectangle2D.Double buyAmmo = this.weaponFrames.get(w.getName()).get(2);
-        g2d.setColor(new Color(8, 84, 22));
+        if(player.hasWeapon(w.getName()) && !w.ammoFull()) g2d.setColor(new Color(8, 84, 22));
+        else g2d.setColor(Color.DARK_GRAY);
         g2d.fill(buyAmmo);
         g2d.setColor(Color.BLACK);
         g2d.draw(buyAmmo);
@@ -177,7 +179,7 @@ public class StoreWindow {
                     Weapon w = Globals.getWeaponByName(pair.getKey());
                     if(w != null) {
                         // If the selected weapon's ammo stock is not already full...
-                        if(w.getAmmoLeft() < w.getMaxAmmo()) {
+                        if(!w.ammoFull()) {
                             if(player.getCash() >= w.getAmmoPrice()) {
                                 /* Deduct the cash amount from the player's total
                                    and add the ammo amount to the player's stock. */

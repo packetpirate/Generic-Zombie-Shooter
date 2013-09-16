@@ -101,4 +101,17 @@ public class Globals {
         else if(name.equals(Globals.TELEPORTER.getName())) return Globals.TELEPORTER;
         else return null;
     }
+    
+    public static void resetWeapons() {
+        Globals.HANDGUN.resetAmmo();
+        Globals.ASSAULT_RIFLE.resetAmmo();
+        Globals.SHOTGUN.resetAmmo();
+        Globals.FLAMETHROWER.resetAmmo();
+        Globals.GRENADE.resetAmmo();
+        Globals.LANDMINE.resetAmmo();
+        Globals.FLARE.resetAmmo();
+        Globals.LASERWIRE.resetAmmo();
+        Globals.TURRETWEAPON.resetAmmo();
+        Globals.TELEPORTER.resetAmmo();
+    }
 }
