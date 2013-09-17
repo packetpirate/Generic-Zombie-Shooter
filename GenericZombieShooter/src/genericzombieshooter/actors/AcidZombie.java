@@ -33,6 +33,7 @@ import java.util.List;
  */
 public class AcidZombie extends Zombie {
     // Final Variables
+    private static final int EXP_VALUE = 50;
     private static final int COOL_TIME = 3000 / (int)Globals.SLEEP_TIME;
     private static final double ATTACK_DISTANCE = 300.0;
     private static final int PARTICLE_LIFE = 2000;
@@ -47,7 +48,7 @@ public class AcidZombie extends Zombie {
     public boolean canFire() { return this.cooldown == 0; }
     
     public AcidZombie(Point2D.Double p_, int health_, int damage_, double speed_, int score_, Animation animation_) {
-        super(p_, Globals.ZOMBIE_ACID_TYPE, health_, damage_, speed_, score_, animation_);
+        super(p_, Globals.ZOMBIE_ACID_TYPE, health_, damage_, speed_, score_, AcidZombie.EXP_VALUE, animation_);
         this.particles = new ArrayList<Particle>();
         this.cooldown = AcidZombie.COOL_TIME;
     }

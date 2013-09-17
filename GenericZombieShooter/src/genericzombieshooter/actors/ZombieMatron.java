@@ -34,6 +34,7 @@ import java.util.List;
  */
 public class ZombieMatron extends Zombie {
     // Final Variables
+    public static final int EXP_VALUE = 200;
     public static final long TIME_TO_BURST = 8000;
     private static final int MIN_ZOMBIES = 5;
     private static final int MAX_ZOMBIES = 10;
@@ -48,7 +49,7 @@ public class ZombieMatron extends Zombie {
     private long burstTime;
     
     public ZombieMatron(Point2D.Double p_, int health_, int damage_, double speed_, int score_, Animation animation_) {
-        super(p_, Globals.ZOMBIE_MATRON_TYPE, health_, damage_, speed_, score_, animation_);
+        super(p_, Globals.ZOMBIE_MATRON_TYPE, health_, damage_, speed_, score_, ZombieMatron.EXP_VALUE, animation_);
         this.burst = false;
         this.damageDone = false;
         this.explosion = new Explosion(Images.BLOOD_SHEET, new Point2D.Double(this.x, this.y));
@@ -90,7 +91,7 @@ public class ZombieMatron extends Zombie {
                 p_.x += radius_ * Math.cos(theta_);
                 p_.y += radius_ * Math.sin(theta_);
                 Animation a_ = new Animation(Images.ZOMBIE_TINY, 20, 20, 2, (int)p_.x, (int)p_.y, 100, 0, true);
-                Zombie z_ = new Zombie(p_, Globals.ZOMBIE_TINY_TYPE, 100, 1, 2, 50, a_);
+                Zombie z_ = new Zombie(p_, Globals.ZOMBIE_TINY_TYPE, 100, 1, 2, 50, (ZombieMatron.EXP_VALUE / numOfZombies), a_);
                 toAdd.add(z_);
             }
         }

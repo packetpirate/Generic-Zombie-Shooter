@@ -19,12 +19,12 @@ package genericzombieshooter.structures.components;
 import genericzombieshooter.GZSFramework;
 import genericzombieshooter.actors.Player;
 import java.awt.Color;
+import java.awt.FontMetrics;
 import java.awt.Graphics2D;
 import java.awt.event.MouseEvent;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import java.util.HashMap;
-import java.util.Iterator;
 
 /**
  * Used to display the player's experience and current attributes, along with
@@ -55,12 +55,27 @@ public class LevelScreen {
         // Draw the background image.
         g2d.drawImage(this.background, 0, 0, null);
         { // Draw the rectangles in the map.
-            /*g2d.setColor(new Color(209, 21, 33));
-            Iterator<Rectangle2D.Double> it = this.rects.values().iterator();
-            while(it.hasNext()) {
-                Rectangle2D.Double rect = it.next();
-                g2d.fill(rect);
-            }*/
+            FontMetrics metrics = g2d.getFontMetrics();
+            { // Draw the experience bar.
+                g2d.setColor(new Color(67, 158, 22));
+                Rectangle2D.Double expBar = this.rects.get(LevelScreen.EXP_BAR_NAME);
+                double w = ((double)player.getExp() / (double)player.getNextLevelExp()) * expBar.width;
+                g2d.fillRect((int)expBar.x, (int)expBar.y, (int)w, (int)expBar.height);
+                g2d.setColor(Color.WHITE);
+                String s = player.getExp() + " / " + player.getNextLevelExp();
+                int h = metrics.getHeight();
+                g2d.drawString(s, (int)(expBar.x + 5), (int)((expBar.y + (expBar.height / 2)) + (h / 3)));
+            } // End drawing the experience bar.
+            { // Draw the health bar.
+                g2d.setColor(new Color(209, 21, 33));
+                Rectangle2D.Double healthBar = this.rects.get(LevelScreen.HEALTH_BAR_NAME);
+                double w = ((double)player.getHealth() / (double)player.getMaxHealth()) * healthBar.width;
+                g2d.fillRect((int)healthBar.x, (int)healthBar.y, (int)w, (int)healthBar.height);
+                g2d.setColor(Color.WHITE);
+                String s = player.getHealth() + " / " + player.getMaxHealth();
+                int h = metrics.getHeight();
+                g2d.drawString(s, (int)(healthBar.x + 5), (int)((healthBar.y + (healthBar.height / 2)) + (h / 3)));
+            } // End drawing the health bar.
         } // End drawing mapped rectangles.
     }
     

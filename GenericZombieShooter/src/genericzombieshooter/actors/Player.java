@@ -39,7 +39,7 @@ import java.util.HashMap;
  **/
 public class Player extends Rectangle2D.Double {
     // Final variables.
-    public static final int MAX_HEALTH = 150;
+    private static final int MAX_HEALTH = 150;
     public static final long INVINCIBILITY_LENGTH = 3000;
     private static final double MOVE_SPEED = 2; // How many pixels per tick the player moves.
     
@@ -49,8 +49,14 @@ public class Player extends Rectangle2D.Double {
     private LightSource light;
     
     private int health;
+    private int maxHealth;
     private double speed;
     private int cash;
+    
+    private int experience;
+    private int level;
+    private int skillPoints;
+    
     private int lives;
     
     private boolean blink;
@@ -86,8 +92,14 @@ public class Player extends Rectangle2D.Double {
         }
 
         this.health = Player.MAX_HEALTH;
+        this.maxHealth = Player.MAX_HEALTH;
         this.speed = Player.MOVE_SPEED;
         this.cash = 0;
+        
+        this.experience = 0;
+        this.level = 1;
+        this.skillPoints = 0;
+        
         this.lives = 3;
         
         this.blink = false;
@@ -113,15 +125,23 @@ public class Player extends Rectangle2D.Double {
     public LightSource getLightSource() { return this.light; }
 
     public int getHealth() { return this.health; }
+    public int getMaxHealth() { return this.maxHealth; }
     public int getCash() { return this.cash; }
     public void addCash(int amount) { this.cash += amount; }
     public void removeCash(int amount) { this.cash -= amount; }
+    public int getExp() { return this.experience; }
+    public void addExp(int amount) { this.experience += amount; }
+    public int getNextLevelExp() {
+        return ((this.level * 1000) + (((int)(this.level / 4)) * 2000));
+    }
+    public int getLevel() { return this.level; }
     public void addKill() { this.killCount++; }
     public void takeDamage(int damage_) { this.health -= damage_; }
     public void addHealth(int amount) { 
-        if((this.health + amount) > Player.MAX_HEALTH) this.health = Player.MAX_HEALTH;
+        if((this.health + amount) > this.maxHealth) this.health = this.maxHealth;
         else this.health += amount;
     }
+    public void addMaxHealth(int amount) { this.maxHealth += amount; }
     public boolean isAlive() { return this.health > 0; }
     public long getDeathTime() { return this.deathTime; }
     public int getLives() { return this.lives; }
@@ -133,8 +153,15 @@ public class Player extends Rectangle2D.Double {
     public void reset() {
         this.health = Player.MAX_HEALTH;
         if(this.lives == 0) {
+            this.maxHealth = Player.MAX_HEALTH;
             this.cash = 0;
+            
+            this.experience = 0;
+            this.level = 1;
+            this.skillPoints = 0;
+            
             this.lives = 3;
+            
             this.deathTime = System.currentTimeMillis();
             this.weaponsMap = new HashMap<String, Weapon>();
             this.weaponsMap.put(Globals.HANDGUN.getName(), Globals.HANDGUN);
@@ -235,6 +262,13 @@ public class Player extends Rectangle2D.Double {
                         this.nextBlinkChange = System.currentTimeMillis() + 300;
                     }
                 } else this.removeEffect("Invincibility");
+            }
+            
+            // Check player to see if he has leveled up.
+            if(this.experience >= this.getNextLevelExp()) {
+                this.experience = (this.experience % this.getNextLevelExp());
+                this.level++;
+                this.skillPoints++;
             }
         } // End resolving status effects.
     }

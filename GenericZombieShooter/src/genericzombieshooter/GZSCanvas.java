@@ -152,30 +152,31 @@ public class GZSCanvas extends JPanel {
                         { // Begin drawing the health bar.
                             // Draw the gray box under the HUD.
                             g2d.setColor(Color.LIGHT_GRAY);
-                            g2d.fillRect(2, 2, (Player.MAX_HEALTH + 20), 76);
+                            g2d.fillRect(2, 2, (player.getMaxHealth() + 20), 89);
                             g2d.setColor(Color.BLACK);
-                            g2d.drawRect(2, 2, (Player.MAX_HEALTH + 20), 76);
+                            g2d.drawRect(2, 2, (player.getMaxHealth() + 20), 89);
                             // Draw the black bar behind the red health bar to act as a border.
                             g2d.setColor(Color.BLACK);
-                            g2d.fillRect(10, 10, (Player.MAX_HEALTH + 4), 20);
+                            g2d.fillRect(10, 10, (player.getMaxHealth() + 4), 20);
 
                             // Only draw the red bar indicating health if player is still alive.
                             if (player.getHealth() > 0) {
                                 g2d.setColor(((player.hasEffect("Poison"))?new Color(39, 161, 18):new Color(209, 21, 33)));
                                 g2d.fillRect(12, 12, player.getHealth(), 16);
                                 g2d.setColor(Color.WHITE);
-                                g2d.drawString(("HP: " + player.getHealth() + "/" + Player.MAX_HEALTH), 15, 25);
+                                g2d.drawString(("HP: " + player.getHealth() + "/" + player.getMaxHealth()), 15, 25);
                             }
                         } // End drawing the health bar.
                         // Draw status messages.
                         g2d.setColor(Color.BLACK);
                         g2d.drawString(("Lives: " + player.getLives()), 10, 45);
-                        g2d.drawString(("Cash: $" + player.getCash()), 10, 58);
+                        g2d.drawString(("Level: " + player.getLevel()), 10, 58);
+                        g2d.drawString(("Cash: $" + player.getCash()), 10, 71);
                         g2d.drawString(("Ammo: " + player.getWeapon().getAmmoLeft() + "/" + player.getWeapon().getMaxAmmo()),
-                                        10, 71);
+                                        10, 84);
                         { // Draw Status Icons
                             int x = 5;
-                            int y = 81;
+                            int y = 94;
                             Iterator<StatusEffect> it = player.getStatusEffects().values().iterator();
                             while(it.hasNext()) {
                                 StatusEffect status = it.next();

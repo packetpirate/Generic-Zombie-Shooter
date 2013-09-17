@@ -33,6 +33,7 @@ import java.util.List;
  */
 public class PoisonFogZombie extends Zombie {
     // Final Variables
+    private static final int EXP_VALUE = 100;
     private static final int POISON_DAMAGE = 5;
     // Member Variables
     private Explosion explosion;
@@ -40,7 +41,7 @@ public class PoisonFogZombie extends Zombie {
     private boolean damageDone;
     
     public PoisonFogZombie(Point2D.Double p_, int health_, int damage_, double speed_, int score_, Animation animation_) {
-        super(p_, Globals.ZOMBIE_POISONFOG_TYPE, health_, damage_, speed_, score_, animation_);
+        super(p_, Globals.ZOMBIE_POISONFOG_TYPE, health_, damage_, speed_, score_, PoisonFogZombie.EXP_VALUE, animation_);
         this.explosion = new Explosion(Images.POISON_GAS_SHEET, new Point2D.Double(this.x, this.y));
         this.exploded = false;
         this.damageDone = false;

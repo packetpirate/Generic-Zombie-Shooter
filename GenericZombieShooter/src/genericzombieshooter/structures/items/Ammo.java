@@ -30,7 +30,7 @@ import java.awt.geom.Point2D;
  */
 public class Ammo extends Item {
     public static final int ID = 2;
-    public static final long SPAWN_TIME = 15 * 1000;
+    public static final long SPAWN_TIME = 40 * 1000;
     public static final long DURATION = 15 * 1000;
     private String weapon;
     private int ammoCount;

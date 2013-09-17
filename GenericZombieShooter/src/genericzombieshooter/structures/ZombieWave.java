@@ -77,12 +77,12 @@ public class ZombieWave {
             if(zombieType == Globals.ZOMBIE_REGULAR_TYPE) {
                 // Zumby
                 Animation a_ = new Animation(Images.ZOMBIE_REGULAR, 40, 40, 2, (int)p_.x, (int)p_.y, 200, 0, true);
-                Zombie z_ = new Zombie(p_, Globals.ZOMBIE_REGULAR_TYPE, 250, 1, 1, 10, a_);
+                Zombie z_ = new Zombie(p_, Globals.ZOMBIE_REGULAR_TYPE, 250, 1, 1, 10, 20, a_);
                 wave.add(z_);
             } else if(zombieType == Globals.ZOMBIE_DOG_TYPE) {
                 // Rotdog
                 Animation a_ = new Animation(Images.ZOMBIE_DOG, 50, 50, 4, (int)p_.x, (int)p_.y, 80, 0, true);
-                Zombie z_ = new Zombie(p_, Globals.ZOMBIE_DOG_TYPE, 100, 3, 2, 20, a_);
+                Zombie z_ = new Zombie(p_, Globals.ZOMBIE_DOG_TYPE, 100, 3, 2, 20, 30, a_);
                 wave.add(z_);
             } else if(zombieType == Globals.ZOMBIE_ACID_TYPE) {
                 // Up-Chuck
@@ -168,6 +168,7 @@ public class ZombieWave {
                             if(z.isDead()) {
                                 // Give the player some cash.
                                 player.addCash(z.getCashValue());
+                                player.addExp(z.getExpValue());
                                 player.addKill();
                                 if(z.getType() >= 3) {
                                     // Base chance of 10% (19-20) to drop a powerup. 
