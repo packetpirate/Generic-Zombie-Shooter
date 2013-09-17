@@ -23,6 +23,7 @@ import genericzombieshooter.misc.Images;
 import genericzombieshooter.structures.LightSource;
 import genericzombieshooter.structures.Message;
 import genericzombieshooter.structures.StatusEffect;
+import genericzombieshooter.structures.components.LevelScreen;
 import genericzombieshooter.structures.components.StoreWindow;
 import genericzombieshooter.structures.components.WeaponsLoadout;
 import genericzombieshooter.structures.weapons.Weapon;
@@ -53,11 +54,13 @@ public class GZSCanvas extends JPanel {
     // Member variables.
     private GZSFramework framework;
     private StoreWindow store;
+    private LevelScreen levelScreen;
     private BufferedImage background;
 
-    public GZSCanvas(GZSFramework framework, StoreWindow store) {
+    public GZSCanvas(GZSFramework framework, StoreWindow store, LevelScreen levelScreen) {
         this.framework = framework;
         this.store = store;
+        this.levelScreen = levelScreen;
         this.background = Images.BACKGROUND;
 
         setBackground(Color.WHITE);
@@ -80,7 +83,7 @@ public class GZSCanvas extends JPanel {
         if(Globals.started) {
             Player player = framework.getPlayer();
             if(!Globals.deathScreen) {
-                if(!Globals.storeOpen) {
+                if(!Globals.storeOpen && !Globals.levelScreenOpen) {
                     g2d.drawImage(background, 0, 0, null);
 
                     // Draw Items
@@ -233,9 +236,12 @@ public class GZSCanvas extends JPanel {
                         }
                         g2d.setFont(null);
                     } // End drawing GUI elements.
-                } else {
+                } else if(Globals.storeOpen) {
                     // Draw the store window.
                     this.store.draw(g2d, player);
+                } else if(Globals.levelScreenOpen) {
+                    // Draw the experience/leveling window.
+                    this.levelScreen.draw(g2d, player);
                 }
             } else {
                 // Draw the death screen.

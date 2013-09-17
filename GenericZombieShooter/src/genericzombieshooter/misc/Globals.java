@@ -67,6 +67,7 @@ public class Globals {
     public static boolean crashed; // Tells the game whether or not there was a crash.
     public static boolean paused;
     public static boolean storeOpen;
+    public static boolean levelScreenOpen;
     public static boolean deathScreen;
     public static boolean waveInProgress; // Whether the player is fighting or waiting for another wave.
     public static long nextWave;

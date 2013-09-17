@@ -24,6 +24,7 @@ import genericzombieshooter.structures.ItemFactory;
 import genericzombieshooter.structures.Message;
 import genericzombieshooter.structures.ZombieWave;
 import genericzombieshooter.structures.components.ErrorWindow;
+import genericzombieshooter.structures.components.LevelScreen;
 import genericzombieshooter.structures.components.StoreWindow;
 import genericzombieshooter.structures.components.WeaponsLoadout;
 import genericzombieshooter.structures.weapons.Weapon;
@@ -51,6 +52,7 @@ public class GZSFramework {
     public JFrame frame;
     public GZSCanvas canvas;
     private StoreWindow store;
+    private LevelScreen levelScreen;
     
     // Game objects.
     private Player player; // The player character.
@@ -68,11 +70,13 @@ public class GZSFramework {
     public GZSFramework(JFrame frame_) {
         frame = frame_;
         store = new StoreWindow();
-        canvas = new GZSCanvas(this, store);
+        levelScreen = new LevelScreen();
+        canvas = new GZSCanvas(this, store, levelScreen);
         
         Globals.started = false;
         Globals.paused = false;
         Globals.storeOpen = false;
+        Globals.levelScreenOpen = false;
         Globals.crashed = false;
         Globals.deathScreen = false;
         Globals.waveInProgress = false;
@@ -131,6 +135,15 @@ public class GZSFramework {
                                 Globals.paused = false;
                             } else {
                                 Globals.storeOpen = true;
+                                Globals.paused = true;
+                            }
+                        }
+                        if (key == KeyEvent.VK_T) {
+                            if(Globals.levelScreenOpen) {
+                                Globals.levelScreenOpen = false;
+                                Globals.paused = false;
+                            } else {
+                                Globals.levelScreenOpen = true;
                                 Globals.paused = true;
                             }
                         }
@@ -197,6 +210,7 @@ public class GZSFramework {
                             player.resetStatistics();
                         }
                         if(Globals.started && Globals.storeOpen) store.click(m, player);
+                        else if(Globals.started && Globals.levelScreenOpen) levelScreen.click(m, player);
                     }
                 }
                 @Override
