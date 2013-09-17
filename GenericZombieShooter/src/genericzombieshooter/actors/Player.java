@@ -39,9 +39,14 @@ import java.util.HashMap;
  **/
 public class Player extends Rectangle2D.Double {
     // Final variables.
-    private static final int MAX_HEALTH = 150;
+    public static final int DEFAULT_HEALTH = 150;
     public static final long INVINCIBILITY_LENGTH = 3000;
     private static final double MOVE_SPEED = 2; // How many pixels per tick the player moves.
+    
+    public static final int MAX_HEALTH_ID = 1;
+    private static final int MAX_HEALTH_INC = 50;
+    public static final int DAMAGE_ID = 2;
+    public static final int SPEED_ID = 3;
     
     // Member variables.
     private AffineTransform af;
@@ -91,8 +96,8 @@ public class Player extends Rectangle2D.Double {
             this.light = new LightSource(new Point2D.Double(xLoc, yLoc), 0, intensity, distance, colors);
         }
 
-        this.health = Player.MAX_HEALTH;
-        this.maxHealth = Player.MAX_HEALTH;
+        this.health = Player.DEFAULT_HEALTH;
+        this.maxHealth = Player.DEFAULT_HEALTH;
         this.speed = Player.MOVE_SPEED;
         this.cash = 0;
         
@@ -141,7 +146,6 @@ public class Player extends Rectangle2D.Double {
         if((this.health + amount) > this.maxHealth) this.health = this.maxHealth;
         else this.health += amount;
     }
-    public void addMaxHealth(int amount) { this.maxHealth += amount; }
     public boolean isAlive() { return this.health > 0; }
     public long getDeathTime() { return this.deathTime; }
     public int getLives() { return this.lives; }
@@ -150,10 +154,28 @@ public class Player extends Rectangle2D.Double {
         this.lives--;
         if(this.lives > 0) reset();
     }
+    public void spendPoint(int id) {
+        if(id == Player.MAX_HEALTH_ID) {
+            // Determine if player has enough points to buy the next upgrade.
+            int maxHealthLevel = (int)((this.maxHealth - Player.DEFAULT_HEALTH) / Player.MAX_HEALTH_INC);
+            if(this.skillPoints >= (maxHealthLevel + 1)) {
+                // Determine if the player has already maxed out this skill.
+                if(maxHealthLevel < 5) {
+                    // Deduct the appropriate number of skill points and raise the skill to the next level.
+                    this.skillPoints -= (maxHealthLevel + 1);
+                    this.maxHealth += Player.MAX_HEALTH_INC;
+                    this.addHealth(Player.MAX_HEALTH_INC);
+                }
+            }
+        } else if(id == Player.DAMAGE_ID) {
+            
+        } else if(id == Player.SPEED_ID) {
+            
+        }
+    }
     public void reset() {
-        this.health = Player.MAX_HEALTH;
         if(this.lives == 0) {
-            this.maxHealth = Player.MAX_HEALTH;
+            this.maxHealth = Player.DEFAULT_HEALTH;
             this.cash = 0;
             
             this.experience = 0;
@@ -174,6 +196,7 @@ public class Player extends Rectangle2D.Double {
         if(this.hasEffect("Poison")) this.removeEffect("Poison");
         this.lastPoisoned = System.currentTimeMillis();
         
+        this.health = this.maxHealth;
         this.currentWeaponName = Globals.HANDGUN.getName();
         this.x = (Globals.W_WIDTH / 2) - (this.width / 2);
         this.y = (Globals.W_HEIGHT / 2) - (this.height / 2);

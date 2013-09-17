@@ -18,10 +18,12 @@ package genericzombieshooter.structures.components;
 
 import genericzombieshooter.GZSFramework;
 import genericzombieshooter.actors.Player;
+import genericzombieshooter.misc.Images;
 import java.awt.Color;
 import java.awt.FontMetrics;
 import java.awt.Graphics2D;
 import java.awt.event.MouseEvent;
+import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import java.util.HashMap;
@@ -80,6 +82,17 @@ public class LevelScreen {
     }
     
     public void click(MouseEvent m, Player player) {
+        // Assume click is left mouse since it is checked before it is passed.
+        Point2D.Double mousePos = new Point2D.Double(m.getX(), m.getY());
+        // Offset the mouse position by half the width and height of the mouse cursor image.
+        mousePos.x += Images.CROSSHAIR.getWidth() / 2;
+        mousePos.y += Images.CROSSHAIR.getHeight() / 2;
         
+        { // Check Add Health Button
+            if(this.rects.get(LevelScreen.HEALTH_BUTTON_NAME).contains(mousePos)) {
+                // Attempt to raise the player's max health.
+                player.spendPoint(Player.MAX_HEALTH_ID);
+            }
+        } // End checking Add Health Button
     }
 }

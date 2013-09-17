@@ -152,17 +152,18 @@ public class GZSCanvas extends JPanel {
                         { // Begin drawing the health bar.
                             // Draw the gray box under the HUD.
                             g2d.setColor(Color.LIGHT_GRAY);
-                            g2d.fillRect(2, 2, (player.getMaxHealth() + 20), 89);
+                            g2d.fillRect(2, 2, (Player.DEFAULT_HEALTH + 20), 89);
                             g2d.setColor(Color.BLACK);
-                            g2d.drawRect(2, 2, (player.getMaxHealth() + 20), 89);
+                            g2d.drawRect(2, 2, (Player.DEFAULT_HEALTH + 20), 89);
                             // Draw the black bar behind the red health bar to act as a border.
                             g2d.setColor(Color.BLACK);
-                            g2d.fillRect(10, 10, (player.getMaxHealth() + 4), 20);
+                            g2d.fillRect(10, 10, (Player.DEFAULT_HEALTH + 4), 20);
 
                             // Only draw the red bar indicating health if player is still alive.
                             if (player.getHealth() > 0) {
+                                int healthBarWidth = (int)(((double)player.getHealth() / (double)player.getMaxHealth()) * Player.DEFAULT_HEALTH);
                                 g2d.setColor(((player.hasEffect("Poison"))?new Color(39, 161, 18):new Color(209, 21, 33)));
-                                g2d.fillRect(12, 12, player.getHealth(), 16);
+                                g2d.fillRect(12, 12, healthBarWidth, 16);
                                 g2d.setColor(Color.WHITE);
                                 g2d.drawString(("HP: " + player.getHealth() + "/" + player.getMaxHealth()), 15, 25);
                             }
