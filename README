@@ -61,7 +61,8 @@ Changes:
   - Added translucent overlay to weapon icons to show remaining cooldown on that weapon. Shrinks from right to left.
   - Added three power-up items; the SpeedUp, which doubles the player's movement speed for 10 seconds, the Unlimited
     Ammo power-up, which stops ammo consumption for the Assault Rifle, Shotgun, and Flamethrower for 10 seconds,
-    and the Extra Life power-up, which.... gives the player an extra life!
+    and the Extra Life power-up, which.... gives the player an extra life, and the Experience Multiplier power-up,
+    which doubles the player's experience for 20 seconds!
   - Changed invulnerability effect for when player dies to a "blink" effect, rather than the white circle used previously.
   - Added expiration times for items so health packs, ammo, power-ups, etc will disappear from the screen after
     a set duration.
