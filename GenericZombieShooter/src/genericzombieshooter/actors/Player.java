@@ -20,7 +20,9 @@ import genericzombieshooter.misc.Globals;
 import genericzombieshooter.misc.Images;
 import genericzombieshooter.misc.Sounds;
 import genericzombieshooter.structures.LightSource;
+import genericzombieshooter.structures.Message;
 import genericzombieshooter.structures.StatusEffect;
+import genericzombieshooter.structures.items.ExpMultiplier;
 import genericzombieshooter.structures.items.SpeedUp;
 import genericzombieshooter.structures.items.UnlimitedAmmo;
 import genericzombieshooter.structures.weapons.Weapon;
@@ -59,6 +61,7 @@ public class Player extends Rectangle2D.Double {
     private int cash;
     
     private int experience;
+    private int experienceMultiplier;
     private int level;
     private int skillPoints;
     
@@ -102,6 +105,7 @@ public class Player extends Rectangle2D.Double {
         this.cash = 0;
         
         this.experience = 0;
+        this.experienceMultiplier = 1;
         this.level = 1;
         this.skillPoints = 0;
         
@@ -135,7 +139,7 @@ public class Player extends Rectangle2D.Double {
     public void addCash(int amount) { this.cash += amount; }
     public void removeCash(int amount) { this.cash -= amount; }
     public int getExp() { return this.experience; }
-    public void addExp(int amount) { this.experience += amount; }
+    public void addExp(int amount) { this.experience += (amount * this.experienceMultiplier); }
     public int getNextLevelExp() {
         return ((this.level * 1000) + (((int)(this.level / 4)) * 2000));
     }
@@ -165,6 +169,7 @@ public class Player extends Rectangle2D.Double {
                     this.skillPoints -= (maxHealthLevel + 1);
                     this.maxHealth += Player.MAX_HEALTH_INC;
                     this.addHealth(Player.MAX_HEALTH_INC);
+                    synchronized(Globals.GAME_MESSAGES) { Globals.GAME_MESSAGES.add(new Message("Max Health increased!", 5000)); }
                 }
             }
         } else if(id == Player.DAMAGE_ID) {
@@ -197,9 +202,11 @@ public class Player extends Rectangle2D.Double {
         this.lastPoisoned = System.currentTimeMillis();
         
         this.health = this.maxHealth;
+        this.experienceMultiplier = 1;
         this.currentWeaponName = Globals.HANDGUN.getName();
         this.x = (Globals.W_WIDTH / 2) - (this.width / 2);
         this.y = (Globals.W_HEIGHT / 2) - (this.height / 2);
+        this.statusEffects.clear();
         this.light.move(new Point2D.Double((int)this.getCenterX(), (int)this.getCenterY()));
     }
     public void resetStatistics() {
@@ -263,6 +270,17 @@ public class Player extends Rectangle2D.Double {
                 StatusEffect status = this.statusEffects.get(UnlimitedAmmo.EFFECT_NAME);
                 if(!status.isActive()) this.removeEffect(UnlimitedAmmo.EFFECT_NAME);
             }
+            if(this.hasEffect(ExpMultiplier.EFFECT_NAME)) {
+                // If the player no longer has the experience multiplier effect, remove it and reset the multiplier.
+                StatusEffect status = this.statusEffects.get(ExpMultiplier.EFFECT_NAME);
+                if(status.isActive()) {
+                    // Change the player's experience multiplier.
+                    this.experienceMultiplier = 2;
+                } else {
+                    this.experienceMultiplier = 1;
+                    this.removeEffect(ExpMultiplier.EFFECT_NAME);
+                }
+            }
             
             // Negative Effects
             if(this.hasEffect("Poison")) {
@@ -292,6 +310,8 @@ public class Player extends Rectangle2D.Double {
                 this.experience = (this.experience % this.getNextLevelExp());
                 this.level++;
                 this.skillPoints++;
+                synchronized(Globals.GAME_MESSAGES) { 
+                    Globals.GAME_MESSAGES.add(new Message(("Player reached level " + this.level + "!"), 5000)); }
             }
         } // End resolving status effects.
     }

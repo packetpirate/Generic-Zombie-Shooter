@@ -51,6 +51,7 @@ public class Images {
     public static final BufferedImage SPEED_UP = GZSFramework.loadImage("/resources/images/GZS_SpeedUp.png");
     public static final BufferedImage UNLIMITED_AMMO = GZSFramework.loadImage("/resources/images/GZS_UnlimitedAmmo.png");
     public static final BufferedImage EXTRA_LIFE = GZSFramework.loadImage("/resources/images/GZS_ExtraLife.png");
+    public static final BufferedImage EXP_MULTIPLIER = GZSFramework.loadImage("/resources/images/GZS_ExpMultiplier.png");
     
     // Ammo-Related
     public static final BufferedImage POPGUN_BULLET = GZSFramework.loadImage("/resources/images/GZS_Bullet.png");

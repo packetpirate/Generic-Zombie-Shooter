@@ -7,6 +7,7 @@ import genericzombieshooter.actors.Zombie;
 import genericzombieshooter.actors.ZombieMatron;
 import genericzombieshooter.misc.Globals;
 import genericzombieshooter.misc.Images;
+import genericzombieshooter.structures.items.ExpMultiplier;
 import genericzombieshooter.structures.items.ExtraLife;
 import genericzombieshooter.structures.items.SpeedUp;
 import genericzombieshooter.structures.items.UnlimitedAmmo;
@@ -177,9 +178,12 @@ public class ZombieWave {
                                     if((z.getType() >= Globals.ZOMBIE_ACID_TYPE) && (z.getType() < Globals.ZOMBIE_TINY_TYPE)) 
                                         dropRoll += (z.getType() % Globals.ZOMBIE_ACID_TYPE) * 2;
                                     if(dropRoll >= 19) {
-                                        Item [] statusItems = {new SpeedUp(z), new UnlimitedAmmo(z),
-                                                               new ExtraLife(z), new SpeedUp(z),
-                                                               new ExtraLife(z)};
+                                        SpeedUp speed = new SpeedUp(z);
+                                        UnlimitedAmmo unlimited = new UnlimitedAmmo(z);
+                                        ExtraLife extra = new ExtraLife(z);
+                                        ExpMultiplier exp = new ExpMultiplier(z);
+                                        Item [] statusItems = {speed, unlimited, speed, speed,
+                                                               extra, speed, exp, speed, exp};
                                         int i = Globals.r.nextInt(statusItems.length);
                                         itemFactory.dropItem(statusItems[i]);
                                     }

@@ -27,6 +27,7 @@ import genericzombieshooter.structures.components.ErrorWindow;
 import genericzombieshooter.structures.components.LevelScreen;
 import genericzombieshooter.structures.components.StoreWindow;
 import genericzombieshooter.structures.components.WeaponsLoadout;
+import genericzombieshooter.structures.items.ExpMultiplier;
 import genericzombieshooter.structures.weapons.Weapon;
 import java.awt.Graphics2D;
 import java.awt.Point;
@@ -147,17 +148,6 @@ public class GZSFramework {
                                 Globals.paused = true;
                             }
                         }
-                        if (key == KeyEvent.VK_C) {
-                            if(Globals.started && !Globals.storeOpen && !Globals.levelScreenOpen && !Globals.paused) {
-                                player.addExp(1000);
-                            }
-                        }
-                        // For testing purposes. Gives unlimited ammo for 5 seconds.
-                        /*if (key == KeyEvent.VK_G) {
-                            if(Globals.started && !Globals.storeOpen && !Globals.paused) {
-                                player.addStatusEffect(UnlimitedAmmo.ID, UnlimitedAmmo.EFFECT_NAME, Images.UNLIMITED_AMMO, 5000, 0);
-                            }
-                        }*/
                         if (key == Globals.HANDGUN.getKey()) {
                             int r = player.setWeapon(Globals.HANDGUN.getName());
                             if(r == 1) loadout.setCurrentWeapon(Globals.HANDGUN.getName());
