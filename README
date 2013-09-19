@@ -1,6 +1,6 @@
 -----------------------
 Author: Darin Beaudreau
-Version: 0.9.4
+Version: 0.9.6
 -----------------------
 
 Description:
@@ -9,7 +9,9 @@ Generic Zombie Shooter is a simple overhead shooter game. Kill as many zombies a
 
 Instructions:
 
-The game is not complete, so there is limited functionality. Here are the controls.
+The game is almost complete, but there are a few features that aren't yet added. Enjoy!
+
+Controls:
 
   WASD keys - Movement
   Mouse - Aim
@@ -70,9 +72,9 @@ Changes:
   - Status effect icons now "fade out" when within 3 seconds of their expiration time.
   - Added message system to show helpful information about power-ups you collect above the weapons loadout.
   - Modified items to now blink when they are close to the time they are set to expire.
-  - Added basic experience / leveling system with skill points. At this time, the only attribute you can upgrade is
-    the player's max health. To begin with, you need 1 skill point (1 level) to increase a skill. Each successive
-    attribute increase requires an additional skill point (ie: 2 skill points for second increase, 3 for the third).
+  - Added basic experience / leveling system with skill points. All skills max out at 5. Each level in health
+    increments your maximum health by 50. Each level in damage increases your damage bonus by 20%, and each level
+    in speed increases your speed bonus by 20%. The experience / leveling screen shows your current level in each skill.
 
 Known Issues:
 
