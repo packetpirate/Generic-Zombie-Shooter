@@ -48,7 +48,9 @@ public class Player extends Rectangle2D.Double {
     public static final int MAX_HEALTH_ID = 1;
     private static final int MAX_HEALTH_INC = 50;
     public static final int DAMAGE_ID = 2;
+    private static final double DAMAGE_INC = 0.2;
     public static final int SPEED_ID = 3;
+    private static final double SPEED_INC = 0.2;
     
     // Member variables.
     private AffineTransform af;
@@ -57,7 +59,9 @@ public class Player extends Rectangle2D.Double {
     
     private int health;
     private int maxHealth;
+    private double damageBonus;
     private double speed;
+    private double speedBonus;
     private int cash;
     
     private int experience;
@@ -101,7 +105,9 @@ public class Player extends Rectangle2D.Double {
 
         this.health = Player.DEFAULT_HEALTH;
         this.maxHealth = Player.DEFAULT_HEALTH;
+        this.damageBonus = 0;
         this.speed = Player.MOVE_SPEED;
+        this.speedBonus = 0;
         this.cash = 0;
         
         this.experience = 0;
@@ -135,6 +141,7 @@ public class Player extends Rectangle2D.Double {
 
     public int getHealth() { return this.health; }
     public int getMaxHealth() { return this.maxHealth; }
+    public double getDamageBonus() { return this.damageBonus; }
     public int getCash() { return this.cash; }
     public void addCash(int amount) { this.cash += amount; }
     public void removeCash(int amount) { this.cash -= amount; }
@@ -144,6 +151,7 @@ public class Player extends Rectangle2D.Double {
         return ((this.level * 1000) + (((int)(this.level / 4)) * 2000));
     }
     public int getLevel() { return this.level; }
+    public int getSkillPoints() { return this.skillPoints; }
     public void addKill() { this.killCount++; }
     public void takeDamage(int damage_) { this.health -= damage_; }
     public void addHealth(int amount) { 
@@ -158,29 +166,52 @@ public class Player extends Rectangle2D.Double {
         this.lives--;
         if(this.lives > 0) reset();
     }
-    public void spendPoint(int id) {
+    public int spendPoint(int id, int currentLevel) {
         if(id == Player.MAX_HEALTH_ID) {
-            // Determine if player has enough points to buy the next upgrade.
-            int maxHealthLevel = (int)((this.maxHealth - Player.DEFAULT_HEALTH) / Player.MAX_HEALTH_INC);
-            if(this.skillPoints >= (maxHealthLevel + 1)) {
+            // Determine if player has enough points to buy the next upgrade.;
+            if(this.skillPoints >= (currentLevel + 1)) {
                 // Determine if the player has already maxed out this skill.
-                if(maxHealthLevel < 5) {
+                if(currentLevel < 5) {
                     // Deduct the appropriate number of skill points and raise the skill to the next level.
-                    this.skillPoints -= (maxHealthLevel + 1);
+                    this.skillPoints -= (currentLevel + 1);
                     this.maxHealth += Player.MAX_HEALTH_INC;
                     this.addHealth(Player.MAX_HEALTH_INC);
                     synchronized(Globals.GAME_MESSAGES) { Globals.GAME_MESSAGES.add(new Message("Max Health increased!", 5000)); }
+                    return 1;
                 }
             }
         } else if(id == Player.DAMAGE_ID) {
-            
+            // Determine if player has enough points to buy the next upgrade.
+            if(this.skillPoints >= (currentLevel + 1)) {
+                // Determine if the player has already maxed out this skill.
+                if(currentLevel < 5) {
+                    // Deduct the appropriate number of skill points and raise the skill to the next level.
+                    this.skillPoints -= (currentLevel + 1);
+                    this.damageBonus += Player.DAMAGE_INC;
+                    synchronized(Globals.GAME_MESSAGES) { Globals.GAME_MESSAGES.add(new Message("Damage increased!", 5000)); }
+                    return 1;
+                }
+            }
         } else if(id == Player.SPEED_ID) {
-            
+            // Determine if player has enough points to buy the next upgrade.
+            if(this.skillPoints >= (currentLevel + 1)) {
+                // Determine if the player has already maxed out this skill.
+                if(currentLevel < 5) {
+                    // Deduct the appropriate number of skill points and raise the skill to the next level.
+                    this.skillPoints -= (currentLevel + 1);
+                    this.speedBonus += Player.SPEED_INC;
+                    synchronized(Globals.GAME_MESSAGES) { Globals.GAME_MESSAGES.add(new Message("Speed increased!", 5000)); }
+                    return 1;
+                }
+            }
         }
+        return 0;
     }
     public void reset() {
         if(this.lives == 0) {
             this.maxHealth = Player.DEFAULT_HEALTH;
+            this.damageBonus = 0;
+            this.speedBonus = 0;
             this.cash = 0;
             
             this.experience = 0;
@@ -202,6 +233,7 @@ public class Player extends Rectangle2D.Double {
         this.lastPoisoned = System.currentTimeMillis();
         
         this.health = this.maxHealth;
+        this.speed = Player.MOVE_SPEED;
         this.experienceMultiplier = 1;
         this.currentWeaponName = Globals.HANDGUN.getName();
         this.x = (Globals.W_WIDTH / 2) - (this.width / 2);
@@ -336,10 +368,10 @@ public class Player extends Rectangle2D.Double {
 
     // Player manipulation.
     public void move(int direction) {
-        if(direction == 0) y -= this.speed;
-        else if(direction == 1) x -= this.speed;
-        else if(direction == 2) y += this.speed;
-        else if(direction == 3) x += this.speed;
+        if(direction == 0) y -= (this.speed + this.speedBonus);
+        else if(direction == 1) x -= (this.speed + this.speedBonus);
+        else if(direction == 2) y += (this.speed + this.speedBonus);
+        else if(direction == 3) x += (this.speed + this.speedBonus);
         this.light.move(new Point2D.Double((int)this.getCenterX(), (int)this.getCenterY()));
     }
     

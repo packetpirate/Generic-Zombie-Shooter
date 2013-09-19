@@ -164,6 +164,7 @@ public class ZombieWave {
                     while(wit.hasNext()) {
                         Weapon w = wit.next();
                         int damage = w.checkForDamage(z.getRect());
+                        if(player.getDamageBonus() > 0) damage += (damage * player.getDamageBonus());
                         if(damage > 0) {
                             z.takeDamage(damage);
                             if(z.isDead()) {

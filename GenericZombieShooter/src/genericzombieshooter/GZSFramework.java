@@ -148,6 +148,11 @@ public class GZSFramework {
                                 Globals.paused = true;
                             }
                         }
+                        if (key == KeyEvent.VK_C) {
+                            if(Globals.started && !Globals.paused && !Globals.storeOpen && !Globals.levelScreenOpen) {
+                                player.addExp(5000);
+                            }
+                        }
                         if (key == Globals.HANDGUN.getKey()) {
                             int r = player.setWeapon(Globals.HANDGUN.getName());
                             if(r == 1) loadout.setCurrentWeapon(Globals.HANDGUN.getName());
