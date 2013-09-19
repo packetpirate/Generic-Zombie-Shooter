@@ -208,6 +208,8 @@ public class Player extends Rectangle2D.Double {
         return 0;
     }
     public void reset() {
+        this.statusEffects.clear();
+        
         if(this.lives == 0) {
             this.maxHealth = Player.DEFAULT_HEALTH;
             this.damageBonus = 0;
@@ -238,7 +240,6 @@ public class Player extends Rectangle2D.Double {
         this.currentWeaponName = Globals.HANDGUN.getName();
         this.x = (Globals.W_WIDTH / 2) - (this.width / 2);
         this.y = (Globals.W_HEIGHT / 2) - (this.height / 2);
-        this.statusEffects.clear();
         this.light.move(new Point2D.Double((int)this.getCenterX(), (int)this.getCenterY()));
     }
     public void resetStatistics() {
