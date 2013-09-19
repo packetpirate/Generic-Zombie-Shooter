@@ -75,13 +75,11 @@ Changes:
   - Added basic experience / leveling system with skill points. All skills max out at 5. Each level in health
     increments your maximum health by 50. Each level in damage increases your damage bonus by 20%, and each level
     in speed increases your speed bonus by 20%. The experience / leveling screen shows your current level in each skill.
-  - Added GameTime class to replace current method of keeping track of elapsed time. Currently not in use. Will refactor
-    code later on.
+  - Added GameTime class to replace current method of keeping track of elapsed time. This fixed issues where the wave
+    countdown would continue while the game was paused, among other things.
 
 Known Issues:
 
-  - Pausing the game during a wave countdown does not stop the countdown, and it will continue to count while paused.
-    If resumed after it hits 0, it will immediately start a new wave.
   - There was one particular case of an IllegalStateException after killing a tiny zombie from a matron horde, but
     I have no been able to replicate it, and am not sure what the cause was.
 
@@ -93,8 +91,6 @@ TODO:
   - Add alt-fire for certain weapons.
   - Add effects to ammo for tertiary effects.
   - Enhance visuals of weapons store.
-  - Create a GameTime class to keep track of elapsed time while playing to avoid issues with timing caused by
-    using System.currentTimeMillis()
 
 Planned Future Changes (Most likely post-1.0):
   - Add a lighting system so that you can only see directly in front of you, like a flashlight.
