@@ -91,6 +91,8 @@ TODO:
   - Add alt-fire for certain weapons.
   - Add effects to ammo for tertiary effects.
   - Enhance visuals of weapons store.
+  - Create a GameTime class to keep track of elapsed time while playing to avoid issues with timing caused by
+    using System.currentTimeMillis()
 
 Planned Future Changes (Most likely post-1.0):
   - Add a lighting system so that you can only see directly in front of you, like a flashlight.
