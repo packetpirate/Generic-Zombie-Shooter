@@ -20,6 +20,7 @@ import genericzombieshooter.actors.Player;
 import genericzombieshooter.misc.Globals;
 import genericzombieshooter.misc.Images;
 import genericzombieshooter.misc.Sounds;
+import genericzombieshooter.structures.GameTime;
 import genericzombieshooter.structures.ItemFactory;
 import genericzombieshooter.structures.Message;
 import genericzombieshooter.structures.ZombieWave;
@@ -27,7 +28,6 @@ import genericzombieshooter.structures.components.ErrorWindow;
 import genericzombieshooter.structures.components.LevelScreen;
 import genericzombieshooter.structures.components.StoreWindow;
 import genericzombieshooter.structures.components.WeaponsLoadout;
-import genericzombieshooter.structures.items.ExpMultiplier;
 import genericzombieshooter.structures.weapons.Weapon;
 import java.awt.Graphics2D;
 import java.awt.Point;
@@ -74,6 +74,7 @@ public class GZSFramework {
         levelScreen = new LevelScreen();
         canvas = new GZSCanvas(this, store, levelScreen);
         
+        Globals.gameTime = new GameTime();
         Globals.started = false;
         Globals.paused = false;
         Globals.storeOpen = false;
@@ -331,6 +332,16 @@ public class GZSFramework {
      * Updates the game objects in the animation loop.
      **/
     public void update() {
+        // Update the game time.
+        if(Globals.started && !Globals.paused && 
+          !Globals.crashed && !Globals.deathScreen &&
+          !Globals.storeOpen && !Globals.levelScreenOpen) {
+            Globals.gameTime.update();
+        } else if(Globals.started && !Globals.deathScreen && !Globals.crashed) {
+            Globals.gameTime.increaseOffset();
+        }
+        
+        // Update the game itself.
         if(Globals.started && !Globals.paused && !Globals.crashed && !Globals.deathScreen) {
             try {
                 // Update the player.
@@ -356,6 +367,7 @@ public class GZSFramework {
                     if(player.getLives() == 0) {
                         // Show death screen and reset player.
                         Globals.deathScreen = true;
+                        Globals.gameTime.reset();
                         synchronized(Globals.GAME_MESSAGES) { Globals.GAME_MESSAGES.clear(); }
                         player.reset();
                         itemFactory.reset();

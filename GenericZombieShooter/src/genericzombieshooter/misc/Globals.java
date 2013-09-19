@@ -16,6 +16,7 @@
  **/
 package genericzombieshooter.misc;
 
+import genericzombieshooter.structures.GameTime;
 import genericzombieshooter.structures.Message;
 import genericzombieshooter.structures.weapons.AssaultRifle;
 import genericzombieshooter.structures.weapons.Flamethrower;
@@ -62,6 +63,8 @@ public class Globals {
     
     // Game-State Related
     public static Runnable animation; // The primary animation thread.
+    public static GameTime gameTime; // Used to keep track of the time.
+    
     public static boolean running; // Whether or not the game is currently running.
     public static boolean started;
     public static boolean crashed; // Tells the game whether or not there was a crash.
