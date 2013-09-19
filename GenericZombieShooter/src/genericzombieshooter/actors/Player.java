@@ -118,13 +118,13 @@ public class Player extends Rectangle2D.Double {
         this.lives = 3;
         
         this.blink = false;
-        this.nextBlinkChange = System.currentTimeMillis();
+        this.nextBlinkChange = Globals.gameTime.getElapsedMillis();
         
         this.statusEffects = new HashMap<String, StatusEffect>();
         
-        this.lastPoisoned = System.currentTimeMillis();
+        this.lastPoisoned = Globals.gameTime.getElapsedMillis();
         
-        this.deathTime = System.currentTimeMillis();
+        this.deathTime = Globals.gameTime.getElapsedMillis();
         this.killCount = 0;
         this.medkitsUsed = 0;
         this.ammoCratesUsed = 0;
@@ -222,17 +222,17 @@ public class Player extends Rectangle2D.Double {
             
             this.lives = 3;
             
-            this.deathTime = System.currentTimeMillis();
+            this.deathTime = Globals.gameTime.getElapsedMillis();
             this.weaponsMap = new HashMap<String, Weapon>();
             this.weaponsMap.put(Globals.HANDGUN.getName(), Globals.HANDGUN);
         }
         else {
             this.addStatusEffect(7, "Invincibility", null, 3000, 0);
             this.blink = true;
-            this.nextBlinkChange = System.currentTimeMillis() + 300;
+            this.nextBlinkChange = Globals.gameTime.getElapsedMillis() + 300;
         }
         if(this.hasEffect("Poison")) this.removeEffect("Poison");
-        this.lastPoisoned = System.currentTimeMillis();
+        this.lastPoisoned = Globals.gameTime.getElapsedMillis();
         
         this.health = this.maxHealth;
         this.speed = Player.MOVE_SPEED;
@@ -320,8 +320,8 @@ public class Player extends Rectangle2D.Double {
                 StatusEffect status = this.statusEffects.get("Poison");
                 if(status.isActive()) {
                     // If the player is poisoned, take damage.
-                    if(System.currentTimeMillis() >= (this.lastPoisoned + 1000)) {
-                        this.lastPoisoned = System.currentTimeMillis();
+                    if(Globals.gameTime.getElapsedMillis() >= (this.lastPoisoned + 1000)) {
+                        this.lastPoisoned = Globals.gameTime.getElapsedMillis();
                         this.takeDamage((int)status.getValue());
                     }
                 } else this.removeEffect("Poison");
@@ -331,9 +331,9 @@ public class Player extends Rectangle2D.Double {
             if(this.hasEffect("Invincibility")) {
                 StatusEffect status = this.statusEffects.get("Invincibility");
                 if(status.isActive()) {
-                    if(System.currentTimeMillis() >= this.nextBlinkChange) {
+                    if(Globals.gameTime.getElapsedMillis() >= this.nextBlinkChange) {
                         this.blink = ((this.blink)?false:true);
-                        this.nextBlinkChange = System.currentTimeMillis() + 300;
+                        this.nextBlinkChange = Globals.gameTime.getElapsedMillis() + 300;
                     }
                 } else this.removeEffect("Invincibility");
             }

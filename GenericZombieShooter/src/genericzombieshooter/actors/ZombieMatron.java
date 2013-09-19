@@ -53,7 +53,7 @@ public class ZombieMatron extends Zombie {
         this.burst = false;
         this.damageDone = false;
         this.explosion = new Explosion(Images.BLOOD_SHEET, new Point2D.Double(this.x, this.y));
-        this.spawnTime = System.currentTimeMillis();
+        this.spawnTime = Globals.gameTime.getElapsedMillis();
         this.burstTime = spawnTime + ZombieMatron.TIME_TO_BURST;
     }
     
@@ -78,7 +78,7 @@ public class ZombieMatron extends Zombie {
     @Override
     public void update(Player player, List<Zombie> toAdd) {
         // If the Zombie Matron's timer has run out, the Matron bursts...
-        if((System.currentTimeMillis() >= burstTime) && !this.burst) {
+        if((Globals.gameTime.getElapsedMillis() >= burstTime) && !this.burst) {
             this.burst = true;
             this.explosion = new Explosion(Images.BLOOD_SHEET, new Point2D.Double(this.x, this.y));
             Sounds.EXPLOSION.play();

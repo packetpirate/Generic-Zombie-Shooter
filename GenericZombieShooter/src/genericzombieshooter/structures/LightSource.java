@@ -16,6 +16,7 @@
  **/
 package genericzombieshooter.structures;
 
+import genericzombieshooter.misc.Globals;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.RadialGradientPaint;
@@ -55,7 +56,7 @@ public class LightSource extends Point2D.Double {
      **/
     public LightSource(Point2D.Double center, long life, float intensity, float [] distance, Color [] colors) {
         super(center.x, center.y);
-        this.timeExpiring = System.currentTimeMillis() + life;
+        this.timeExpiring = Globals.gameTime.getElapsedMillis() + life;
         this.life = life;
         this.radius = intensity;
         this.distance = distance;
@@ -63,7 +64,7 @@ public class LightSource extends Point2D.Double {
     }
     
     public boolean isAlive() {
-        return (this.life > 0) && (System.currentTimeMillis() <= this.timeExpiring);
+        return (this.life > 0) && (Globals.gameTime.getElapsedMillis() <= this.timeExpiring);
     }
     
     /**

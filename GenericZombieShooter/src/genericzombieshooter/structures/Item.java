@@ -17,6 +17,7 @@
 package genericzombieshooter.structures;
 
 import genericzombieshooter.actors.Player;
+import genericzombieshooter.misc.Globals;
 import java.awt.Graphics2D;
 import java.awt.geom.Point2D;
 import java.awt.image.BufferedImage;
@@ -33,7 +34,7 @@ public abstract class Item extends Point2D.Double {
     protected BufferedImage icon;
     public BufferedImage getIcon() { return this.icon; }
     private long expirationTime;
-    public boolean isActive() { return (System.currentTimeMillis() < this.expirationTime); }
+    public boolean isActive() { return (Globals.gameTime.getElapsedMillis() < this.expirationTime); }
     
     private boolean blink;
     private long nextBlinkChange;
@@ -42,10 +43,10 @@ public abstract class Item extends Point2D.Double {
         this.id = id;
         this.name = name;
         this.icon = icon;
-        this.expirationTime = System.currentTimeMillis() + duration;
+        this.expirationTime = Globals.gameTime.getElapsedMillis() + duration;
         
         this.blink = false;
-        this.nextBlinkChange = System.currentTimeMillis();
+        this.nextBlinkChange = Globals.gameTime.getElapsedMillis();
     }
     
     public void applyEffect(Player player) {
@@ -54,10 +55,10 @@ public abstract class Item extends Point2D.Double {
     
     public void draw(Graphics2D g2d) {
         // Check if item should start blinking.
-        if(System.currentTimeMillis() >= (this.expirationTime - 3000)) {
-            if(System.currentTimeMillis() >= this.nextBlinkChange) {
+        if(Globals.gameTime.getElapsedMillis() >= (this.expirationTime - 3000)) {
+            if(Globals.gameTime.getElapsedMillis() >= this.nextBlinkChange) {
                 this.blink = ((this.blink)?false:true);
-                this.nextBlinkChange = System.currentTimeMillis() + 200;
+                this.nextBlinkChange = Globals.gameTime.getElapsedMillis() + 200;
             }
         }
         if(!this.blink) {

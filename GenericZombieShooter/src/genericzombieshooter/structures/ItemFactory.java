@@ -46,7 +46,7 @@ public class ItemFactory {
         this.itemsActive = new ArrayList<Item>();
         this.itemsWithdrawn = new ArrayList<Item>();
         
-        long currentTime = System.currentTimeMillis();
+        long currentTime = Globals.gameTime.getElapsedMillis();
         this.nextHealth = currentTime + HealthPack.SPAWN_TIME;
         this.nextAmmo = currentTime + Ammo.SPAWN_TIME;
     }
@@ -55,7 +55,7 @@ public class ItemFactory {
         synchronized(this.itemsDropped) { this.itemsDropped.clear(); }
         synchronized(this.itemsActive) { this.itemsActive.clear(); }
         synchronized(this.itemsWithdrawn) { this.itemsWithdrawn.clear(); }
-        long currentTime = System.currentTimeMillis();
+        long currentTime = Globals.gameTime.getElapsedMillis();
         this.nextHealth = currentTime + HealthPack.SPAWN_TIME;
         this.nextAmmo = currentTime + Ammo.SPAWN_TIME;
     }
@@ -71,7 +71,7 @@ public class ItemFactory {
         }
         
         // Get the current time and determine if an item should drop.
-        long currentTime = System.currentTimeMillis();
+        long currentTime = Globals.gameTime.getElapsedMillis();
         if(currentTime >= this.nextHealth) {
             // Drop Health Pack
             Item i = createItem(0, player);

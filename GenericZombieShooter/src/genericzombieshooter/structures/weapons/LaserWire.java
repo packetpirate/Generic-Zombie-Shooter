@@ -61,7 +61,7 @@ public class LaserWire extends Weapon {
         super("Laser Wire", KeyEvent.VK_8, "/resources/images/GZS_LaserWire.png",
               LaserWire.DEFAULT_AMMO, LaserWire.MAX_AMMO, LaserWire.AMMO_PER_USE, 50, false);
         this.lasers = Collections.synchronizedList(new ArrayList<Line2D.Double>());
-        this.lastDamageDone = System.currentTimeMillis();
+        this.lastDamageDone = 0;
     }
     
     @Override
@@ -123,7 +123,7 @@ public class LaserWire extends Weapon {
                         int newLife = LaserWire.LASER_LIFE / (int)Globals.SLEEP_TIME;
                         this.particles.get(0).setLife(newLife);
                         this.particles.get(1).setLife(newLife);
-                        this.lastDamageDone = System.currentTimeMillis();
+                        this.lastDamageDone = Globals.gameTime.getElapsedMillis();
                     }
                 }
             }
@@ -201,14 +201,14 @@ public class LaserWire extends Weapon {
     public int checkForDamage(Rectangle2D.Double rect) {
         synchronized(this.lasers) {
             int damage = 0;
-            if(System.currentTimeMillis() >= (this.lastDamageDone + LaserWire.LASER_COOLDOWN)) {
+            if(Globals.gameTime.getElapsedMillis() >= (this.lastDamageDone + LaserWire.LASER_COOLDOWN)) {
                 if(!this.lasers.isEmpty()) {
                     Iterator<Line2D.Double> it = this.lasers.iterator();
                     while(it.hasNext()) {
                         Line2D.Double laser = it.next();
                         if(rect.intersectsLine(laser)) {
                             damage += LaserWire.DAMAGE_BY_LASER;
-                            this.lastDamageDone = System.currentTimeMillis();
+                            this.lastDamageDone = Globals.gameTime.getElapsedMillis();
                         }
                     }
                 }

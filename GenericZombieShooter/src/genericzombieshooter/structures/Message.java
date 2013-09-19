@@ -16,6 +16,7 @@
  **/
 package genericzombieshooter.structures;
 
+import genericzombieshooter.misc.Globals;
 import java.awt.AlphaComposite;
 import java.awt.Composite;
 import java.awt.Graphics2D;
@@ -33,17 +34,17 @@ public class Message {
     
     public Message(String text, long duration) {
         this.text = text;
-        this.expirationTime = System.currentTimeMillis() + duration;
+        this.expirationTime = Globals.gameTime.getElapsedMillis() + duration;
     }
     
-    public boolean isAlive() { return (System.currentTimeMillis() < this.expirationTime); }
+    public boolean isAlive() { return (Globals.gameTime.getElapsedMillis() < this.expirationTime); }
     
     public void draw(Graphics2D g2d, Point2D.Double pos) {
         Composite savedComp = g2d.getComposite();
         
         double opacity = 1.0f;
-        if(System.currentTimeMillis() >= (this.expirationTime - 3000)) {
-            opacity = ((double)this.expirationTime - (double)System.currentTimeMillis()) / 3000;
+        if(Globals.gameTime.getElapsedMillis() >= (this.expirationTime - 3000)) {
+            opacity = ((double)this.expirationTime - (double)Globals.gameTime.getElapsedMillis()) / 3000;
         }
         g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, (float)opacity));
         g2d.drawString(this.text, (int)pos.x, (int)pos.y);

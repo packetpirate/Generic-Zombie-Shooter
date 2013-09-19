@@ -42,7 +42,7 @@ public class ZombieWave {
         this.zombiesUnborn = constructWave(wave);
         this.zombiesAlive = new ArrayList<Zombie>();
         this.zombiesToDie = new ArrayList<Zombie>();
-        this.nextZombieSpawn = System.currentTimeMillis() + ZombieWave.ZOMBIE_SPAWN_TIME;
+        this.nextZombieSpawn = Globals.gameTime.getElapsedMillis() + ZombieWave.ZOMBIE_SPAWN_TIME;
     }
     
     private List<Zombie> constructWave(int currentWave) {
@@ -122,11 +122,11 @@ public class ZombieWave {
         // Remove dead zombies from the live list.
         if(!this.zombiesToDie.isEmpty()) this.zombiesAlive.removeAll(this.zombiesToDie);
         // If the spawn timer is up, spawn a new zombie.
-        if(!this.zombiesUnborn.isEmpty() && (System.currentTimeMillis() >= this.nextZombieSpawn)) {
+        if(!this.zombiesUnborn.isEmpty() && (Globals.gameTime.getElapsedMillis() >= this.nextZombieSpawn)) {
             Zombie z = this.zombiesUnborn.remove(0);
-            if(z.getType() == Globals.ZOMBIE_MATRON_TYPE) z.set(0, (System.currentTimeMillis() + ZombieMatron.TIME_TO_BURST));
+            if(z.getType() == Globals.ZOMBIE_MATRON_TYPE) z.set(0, (Globals.gameTime.getElapsedMillis() + ZombieMatron.TIME_TO_BURST));
             this.zombiesAlive.add(z);
-            this.nextZombieSpawn = System.currentTimeMillis() + ZombieWave.ZOMBIE_SPAWN_TIME;
+            this.nextZombieSpawn = Globals.gameTime.getElapsedMillis() + ZombieWave.ZOMBIE_SPAWN_TIME;
             
         }
         if(!this.zombiesUnborn.isEmpty()) {

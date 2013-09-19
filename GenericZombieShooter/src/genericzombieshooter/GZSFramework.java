@@ -349,7 +349,6 @@ public class GZSFramework {
 
                 if(!Globals.waveInProgress) {
                     // If the player is in between waves, check if the countdown has reached zero.
-                    //if(System.currentTimeMillis() >= Globals.nextWave) createWave();
                     if(Globals.gameTime.getElapsedMillis() >= Globals.nextWave) createWave();
                 }
 
@@ -390,7 +389,6 @@ public class GZSFramework {
                 // Check for end of wave.
                 if(Globals.waveInProgress && this.wave.waveFinished()) {
                     Globals.waveInProgress = false;
-                    //Globals.nextWave = System.currentTimeMillis() + (10 * 1000);
                     Globals.nextWave = Globals.gameTime.getElapsedMillis() + (10 * 1000);
                 }
                 

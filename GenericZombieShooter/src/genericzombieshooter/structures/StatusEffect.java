@@ -16,6 +16,7 @@
  **/
 package genericzombieshooter.structures;
 
+import genericzombieshooter.misc.Globals;
 import java.awt.image.BufferedImage;
 
 /**
@@ -28,14 +29,14 @@ public class StatusEffect {
     public BufferedImage getImage() { return this.img; }
     private long endTime;
     public long getEndTime() { return this.endTime; }
-    public void refresh(long duration) { this.endTime = System.currentTimeMillis() + duration; }
-    public boolean isActive() { return (System.currentTimeMillis() < this.endTime); }
+    public void refresh(long duration) { this.endTime = Globals.gameTime.getElapsedMillis() + duration; }
+    public boolean isActive() { return (Globals.gameTime.getElapsedMillis() < this.endTime); }
     private int value;
     public long getValue() { return this.value; }
     
     public StatusEffect(BufferedImage img, long duration, int value) {
         this.img = img;
-        this.endTime = System.currentTimeMillis() + duration;
+        this.endTime = Globals.gameTime.getElapsedMillis() + duration;
         this.value = value;
     }
 }

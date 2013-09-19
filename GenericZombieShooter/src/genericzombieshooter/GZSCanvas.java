@@ -187,8 +187,8 @@ public class GZSCanvas extends JPanel {
                                     
                                     // Based on the time until the status effect's expiration, calculate the icon's opacity.
                                     double opacity = 1.0f;
-                                    if(System.currentTimeMillis() >= (status.getEndTime() - 3000))
-                                        opacity = ((double)status.getEndTime() - (double)System.currentTimeMillis()) / 3000;
+                                    if(Globals.gameTime.getElapsedMillis() >= (status.getEndTime() - 3000))
+                                        opacity = ((double)status.getEndTime() - (double)Globals.gameTime.getElapsedMillis()) / 3000;
                                     // Set the composite to use the calculated opacity value.
                                     g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, (float)opacity));
                                     
@@ -227,7 +227,6 @@ public class GZSCanvas extends JPanel {
                         FontMetrics metrics = g2d.getFontMetrics(font);
                         g2d.setFont(font);
                         if(!Globals.waveInProgress) {
-                            //long timeLeft = Globals.nextWave - System.currentTimeMillis();
                             long timeLeft = Globals.nextWave - Globals.gameTime.getElapsedMillis();
                             String s = "Next wave in " + ((timeLeft / 1000) + 1) + "...";
                             int w = metrics.stringWidth(s);

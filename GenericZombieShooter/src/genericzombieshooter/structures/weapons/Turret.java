@@ -46,7 +46,7 @@ public class Turret extends Point2D.Double {
     private static final double PARTICLE_SPREAD = 5.0;
     private static final long PARTICLE_LIFE = 2000;
     private static final long FIRING_RATE = 400;
-    private static final int ATTACK_RADIUS = 300;
+    private static final int ATTACK_RADIUS = 250;
     
     // Member Variables
     private BufferedImage turretMount;
@@ -72,12 +72,12 @@ public class Turret extends Point2D.Double {
         this.particles = Collections.synchronizedList(new ArrayList<Particle>());
         this.target = null;
         this.theta = 0;
-        this.lastFired = System.currentTimeMillis();
-        this.deathTime = System.currentTimeMillis() + life;
+        this.lastFired = Globals.gameTime.getElapsedMillis();
+        this.deathTime = Globals.gameTime.getElapsedMillis() + life;
     }
     
-    public boolean isAlive() { return (System.currentTimeMillis() < this.deathTime); }
-    private boolean canFire() { return (System.currentTimeMillis() >= (this.lastFired + Turret.FIRING_RATE)); }
+    public boolean isAlive() { return (Globals.gameTime.getElapsedMillis() < this.deathTime); }
+    private boolean canFire() { return (Globals.gameTime.getElapsedMillis() >= (this.lastFired + Turret.FIRING_RATE)); }
     
     public void reset() {
         synchronized(this.particles) { this.particles.clear(); }
@@ -195,7 +195,7 @@ public class Turret extends Point2D.Double {
                                       (int)(Turret.PARTICLE_LIFE / Globals.SLEEP_TIME), firingPos,
                                       new Dimension(4, 10), Images.RTPS_BULLET);
             this.particles.add(p);
-            this.lastFired = System.currentTimeMillis();
+            this.lastFired = Globals.gameTime.getElapsedMillis();
             Sounds.RTPS.play();
         }
     }
