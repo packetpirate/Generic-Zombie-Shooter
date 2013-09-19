@@ -75,6 +75,8 @@ Changes:
   - Added basic experience / leveling system with skill points. All skills max out at 5. Each level in health
     increments your maximum health by 50. Each level in damage increases your damage bonus by 20%, and each level
     in speed increases your speed bonus by 20%. The experience / leveling screen shows your current level in each skill.
+  - Added GameTime class to replace current method of keeping track of elapsed time. Currently not in use. Will refactor
+    code later on.
 
 Known Issues:
 
