@@ -227,7 +227,8 @@ public class GZSCanvas extends JPanel {
                         FontMetrics metrics = g2d.getFontMetrics(font);
                         g2d.setFont(font);
                         if(!Globals.waveInProgress) {
-                            long timeLeft = Globals.nextWave - System.currentTimeMillis();
+                            //long timeLeft = Globals.nextWave - System.currentTimeMillis();
+                            long timeLeft = Globals.nextWave - Globals.gameTime.getElapsedMillis();
                             String s = "Next wave in " + ((timeLeft / 1000) + 1) + "...";
                             int w = metrics.stringWidth(s);
                             g2d.drawString(s, (Globals.W_WIDTH - (w + 20)), 24);

@@ -82,7 +82,7 @@ public class GZSFramework {
         Globals.crashed = false;
         Globals.deathScreen = false;
         Globals.waveInProgress = false;
-        Globals.nextWave = System.currentTimeMillis() + 3000;
+        Globals.nextWave = Globals.gameTime.getElapsedMillis() + 3000;
 
         { // Begin initializing member variables.
             Globals.keys = new boolean[4];
@@ -202,7 +202,11 @@ public class GZSFramework {
                 @Override
                 public void mouseClicked(MouseEvent m) {
                     if((m.getButton() == MouseEvent.BUTTON1)) {
-                        if(!Globals.started) Globals.started = true;
+                        if(!Globals.started) {
+                            Globals.started = true;
+                            Globals.gameTime.reset();
+                            Globals.nextWave = Globals.gameTime.getElapsedMillis() + 3000;
+                        }
                         if(Globals.started && Globals.deathScreen) {
                             Globals.started = false;
                             Globals.deathScreen = false;
@@ -333,23 +337,20 @@ public class GZSFramework {
      **/
     public void update() {
         // Update the game time.
-        if(Globals.started && !Globals.paused && 
-          !Globals.crashed && !Globals.deathScreen &&
-          !Globals.storeOpen && !Globals.levelScreenOpen) {
-            Globals.gameTime.update();
-        } else if(Globals.started && !Globals.deathScreen && !Globals.crashed) {
-            Globals.gameTime.increaseOffset();
+        if(Globals.started && !Globals.crashed && !Globals.deathScreen) {
+            if(Globals.paused || Globals.storeOpen || Globals.levelScreenOpen) Globals.gameTime.increaseOffset();
+            else Globals.gameTime.update();
         }
         
         // Update the game itself.
         if(Globals.started && !Globals.paused && !Globals.crashed && !Globals.deathScreen) {
             try {
-                // Update the player.
                 player.update();
 
                 if(!Globals.waveInProgress) {
                     // If the player is in between waves, check if the countdown has reached zero.
-                    if(System.currentTimeMillis() >= Globals.nextWave) createWave();
+                    //if(System.currentTimeMillis() >= Globals.nextWave) createWave();
+                    if(Globals.gameTime.getElapsedMillis() >= Globals.nextWave) createWave();
                 }
 
                 // Update all zombies in the current wave.
@@ -389,7 +390,8 @@ public class GZSFramework {
                 // Check for end of wave.
                 if(Globals.waveInProgress && this.wave.waveFinished()) {
                     Globals.waveInProgress = false;
-                    Globals.nextWave = System.currentTimeMillis() + (10 * 1000);
+                    //Globals.nextWave = System.currentTimeMillis() + (10 * 1000);
+                    Globals.nextWave = Globals.gameTime.getElapsedMillis() + (10 * 1000);
                 }
                 
                 { // Delete expired messages.

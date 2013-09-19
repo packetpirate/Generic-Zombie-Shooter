@@ -24,10 +24,10 @@ public class GameTime {
     private long elapsedMillis;
     public long getElapsedMillis() { return this.elapsedMillis; }
     public long getElapsedSecs() { return (this.elapsedMillis / 1000); }
-    public void reset() { this.elapsedMillis = 0; }
     private long lastUpdate;
     private long offset;
     public long getOffset() { return this.offset; }
+    public void increaseOffset() { this.offset = System.currentTimeMillis() - this.lastUpdate; }
     
     public GameTime() {
         this.elapsedMillis = 0;
@@ -35,15 +35,14 @@ public class GameTime {
     }
     
     public void update() {
-        long time = System.currentTimeMillis() - this.lastUpdate;
-        time -= this.offset;
-        this.elapsedMillis += time;
+        this.elapsedMillis += ((System.currentTimeMillis() - this.lastUpdate) - this.offset);
         this.lastUpdate = System.currentTimeMillis();
         this.offset = 0;
     }
     
-    public void increaseOffset() {
-        long time = System.currentTimeMillis() - this.lastUpdate;
-        this.offset = time;
+    public void reset() { 
+        this.elapsedMillis = 0;
+        this.lastUpdate = System.currentTimeMillis();
+        this.offset = 0;
     }
 }
