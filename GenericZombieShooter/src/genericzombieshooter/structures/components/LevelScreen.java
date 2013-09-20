@@ -66,6 +66,10 @@ public class LevelScreen {
             this.rects.put(LevelScreen.SPEED_BUTTON_NAME, new Rectangle2D.Double(697, 433, 30, 30));
             this.rects.put(LevelScreen.SKILL_POINTS_LABEL_NAME, new Rectangle2D.Double(478, 529, 153, 30));
         } // End adding rectangles to map.
+        resetLevels();
+    }
+    
+    public void resetLevels() {
         this.healthLevel = 0;
         this.damageLevel = 0;
         this.speedLevel = 0;

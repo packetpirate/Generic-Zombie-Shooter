@@ -370,6 +370,7 @@ public class GZSFramework {
                         Globals.gameTime.reset();
                         synchronized(Globals.GAME_MESSAGES) { Globals.GAME_MESSAGES.clear(); }
                         player.reset();
+                        levelScreen.resetLevels();
                         itemFactory.reset();
                         for(boolean k : Globals.keys) k = false;
                         for(boolean b : Globals.buttons) b = false;
