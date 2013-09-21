@@ -23,6 +23,7 @@ import genericzombieshooter.structures.LightSource;
 import genericzombieshooter.structures.Message;
 import genericzombieshooter.structures.StatusEffect;
 import genericzombieshooter.structures.items.ExpMultiplier;
+import genericzombieshooter.structures.items.Invulnerability;
 import genericzombieshooter.structures.items.SpeedUp;
 import genericzombieshooter.structures.items.UnlimitedAmmo;
 import genericzombieshooter.structures.weapons.Weapon;
@@ -227,7 +228,7 @@ public class Player extends Rectangle2D.Double {
             this.weaponsMap.put(Globals.HANDGUN.getName(), Globals.HANDGUN);
         }
         else {
-            this.addStatusEffect(7, "Invincibility", null, 3000, 0);
+            this.addStatusEffect(Invulnerability.ID, Invulnerability.EFFECT_NAME, Images.INVULNERABILITY, 3000, 0);
             this.blink = true;
             this.nextBlinkChange = Globals.gameTime.getElapsedMillis() + 300;
         }
@@ -328,14 +329,14 @@ public class Player extends Rectangle2D.Double {
             }
             
             // Other Effects
-            if(this.hasEffect("Invincibility")) {
-                StatusEffect status = this.statusEffects.get("Invincibility");
+            if(this.hasEffect(Invulnerability.EFFECT_NAME)) {
+                StatusEffect status = this.statusEffects.get(Invulnerability.EFFECT_NAME);
                 if(status.isActive()) {
                     if(Globals.gameTime.getElapsedMillis() >= this.nextBlinkChange) {
                         this.blink = ((this.blink)?false:true);
                         this.nextBlinkChange = Globals.gameTime.getElapsedMillis() + 300;
                     }
-                } else this.removeEffect("Invincibility");
+                } else this.removeEffect(Invulnerability.EFFECT_NAME);
             }
             
             // Check player to see if he has leveled up.

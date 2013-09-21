@@ -9,6 +9,7 @@ import genericzombieshooter.misc.Globals;
 import genericzombieshooter.misc.Images;
 import genericzombieshooter.structures.items.ExpMultiplier;
 import genericzombieshooter.structures.items.ExtraLife;
+import genericzombieshooter.structures.items.Invulnerability;
 import genericzombieshooter.structures.items.SpeedUp;
 import genericzombieshooter.structures.items.UnlimitedAmmo;
 import genericzombieshooter.structures.weapons.Weapon;
@@ -183,8 +184,9 @@ public class ZombieWave {
                                         UnlimitedAmmo unlimited = new UnlimitedAmmo(z);
                                         ExtraLife extra = new ExtraLife(z);
                                         ExpMultiplier exp = new ExpMultiplier(z);
-                                        Item [] statusItems = {speed, unlimited, speed, speed,
-                                                               extra, speed, exp, speed, exp};
+                                        Invulnerability invuln = new Invulnerability(z);
+                                        Item [] statusItems = {speed, unlimited, speed, invuln, 
+                                                               speed, extra, speed, exp, speed, exp};
                                         int i = Globals.r.nextInt(statusItems.length);
                                         itemFactory.dropItem(statusItems[i]);
                                     }
@@ -204,7 +206,7 @@ public class ZombieWave {
         Iterator<Zombie> it = this.zombiesAlive.iterator();
         while(it.hasNext()) {
             Zombie z = it.next();
-            if(!player.hasEffect("Invincibility")) {
+            if(!player.hasEffect(Invulnerability.EFFECT_NAME)) {
                 if(player.intersects(z.getRect())) player.takeDamage(z.getDamage());
                 if(z.getParticles() != null) {
                     Iterator<Particle> pit = z.getParticles().iterator();
