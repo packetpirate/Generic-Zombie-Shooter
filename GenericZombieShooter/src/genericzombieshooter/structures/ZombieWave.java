@@ -1,5 +1,6 @@
 package genericzombieshooter.structures;
 
+import genericzombieshooter.actors.AberrationBoss;
 import genericzombieshooter.actors.AcidZombie;
 import genericzombieshooter.actors.Player;
 import genericzombieshooter.actors.PoisonFogZombie;
@@ -27,8 +28,10 @@ public class ZombieWave {
     // Final Variables
     private static final long ZOMBIE_SPAWN_TIME = 1000;
     private static final int ZOMBIES_PER_WAVE = 3;
+    
     // Member Variables
     private int waveNumber;
+    private boolean bossWave;
     private List<Zombie> zombiesUnborn;
     private List<Zombie> zombiesAlive;
     private List<Zombie> zombiesToDie;
@@ -40,6 +43,7 @@ public class ZombieWave {
     
     public ZombieWave(int wave) {
         this.waveNumber = wave;
+        this.bossWave = ((wave % 25) == 0);
         this.zombiesUnborn = constructWave(wave);
         this.zombiesAlive = new ArrayList<Zombie>();
         this.zombiesToDie = new ArrayList<Zombie>();
@@ -49,16 +53,65 @@ public class ZombieWave {
     private List<Zombie> constructWave(int currentWave) {
         List<Zombie> wave = new ArrayList<Zombie>();
         
-        int difficulty = 2;
-        if(currentWave >= 5) difficulty++;
-        if(currentWave >= 10) difficulty++;
-        if(currentWave >= 20) difficulty++;
-        
-        int enemyCount = currentWave * ZombieWave.ZOMBIES_PER_WAVE;
-        int specialsThisWave = (int)(enemyCount / 4);
-        int specialsSpawned = 0;
-        for(int i = 0; i < enemyCount; i++) {
-            // Decide which side of the screen to spawn the zombie on.
+        if(!this.bossWave) {
+            int difficulty = 2;
+            if(currentWave >= 5) difficulty++;
+            if(currentWave >= 10) difficulty++;
+            if(currentWave >= 20) difficulty++;
+
+            int enemyCount = currentWave * ZombieWave.ZOMBIES_PER_WAVE;
+            int specialsThisWave = (int)(enemyCount / 4);
+            int specialsSpawned = 0;
+            for(int i = 0; i < enemyCount; i++) {
+                // Decide which side of the screen to spawn the zombie on.
+                double x = 0;
+                double y = 0;
+
+                int spawnSide = Globals.r.nextInt(4) + 1;
+                if(spawnSide == 1) x = Globals.r.nextInt((Globals.W_WIDTH - 40) + 1);
+                else if(spawnSide == 2) {
+                    x = Globals.W_WIDTH - 40;
+                    y = Globals.r.nextInt((Globals.W_HEIGHT - 40) + 1);
+                } else if(spawnSide == 3) {
+                    x = Globals.r.nextInt((Globals.W_WIDTH - 40) + 1);
+                    y = Globals.W_HEIGHT - 40;
+                } else if(spawnSide == 4) y = Globals.r.nextInt((Globals.W_HEIGHT - 40) + 1);
+
+                Point2D.Double p_ = new Point2D.Double(x, y);
+
+                if(specialsSpawned >= specialsThisWave) difficulty = 2;
+                int zombieType = Globals.r.nextInt(difficulty) + 1;
+                if(zombieType == Globals.ZOMBIE_REGULAR_TYPE) {
+                    // Zumby
+                    Animation a_ = new Animation(Images.ZOMBIE_REGULAR, 40, 40, 2, (int)p_.x, (int)p_.y, 200, 0, true);
+                    Zombie z_ = new Zombie(p_, Globals.ZOMBIE_REGULAR_TYPE, 250, 1, 1, 10, 20, a_);
+                    wave.add(z_);
+                } else if(zombieType == Globals.ZOMBIE_DOG_TYPE) {
+                    // Rotdog
+                    Animation a_ = new Animation(Images.ZOMBIE_DOG, 50, 50, 4, (int)p_.x, (int)p_.y, 80, 0, true);
+                    Zombie z_ = new Zombie(p_, Globals.ZOMBIE_DOG_TYPE, 100, 3, 2, 20, 30, a_);
+                    wave.add(z_);
+                } else if(zombieType == Globals.ZOMBIE_ACID_TYPE) {
+                    // Up-Chuck
+                    Animation a_ = new Animation(Images.ZOMBIE_ACID, 64, 64, 2, (int)p_.x, (int)p_.y, 200, 0, true);
+                    AcidZombie z_ = new AcidZombie(p_, 300, 1, 1, 50, a_);
+                    wave.add(z_);
+                    specialsSpawned++;
+                } else if(zombieType == Globals.ZOMBIE_POISONFOG_TYPE) {
+                    // Gasbag
+                    Animation a_ = new Animation(Images.ZOMBIE_POISONFOG, 40, 40, 2, (int)p_.x, (int)p_.y, 100, 0, true);
+                    PoisonFogZombie pfz_ = new PoisonFogZombie(p_, 250, 1, 2, 80, a_);
+                    wave.add(pfz_);
+                    specialsSpawned++;
+                } else if(zombieType == Globals.ZOMBIE_MATRON_TYPE) {
+                    // Big Mama
+                    Animation a_ = new Animation(Images.ZOMBIE_MATRON, 48, 48, 2, (int)p_.x, (int)p_.y, 200, 0, true);
+                    ZombieMatron zm_ = new ZombieMatron(p_, 500, 1, 1, 150, a_);
+                    wave.add(zm_);
+                    specialsSpawned++;
+                }
+            }
+        } else {
             double x = 0;
             double y = 0;
             
@@ -74,37 +127,12 @@ public class ZombieWave {
             
             Point2D.Double p_ = new Point2D.Double(x, y);
             
-            if(specialsSpawned >= specialsThisWave) difficulty = 2;
-            int zombieType = Globals.r.nextInt(difficulty) + 1;
-            if(zombieType == Globals.ZOMBIE_REGULAR_TYPE) {
-                // Zumby
-                Animation a_ = new Animation(Images.ZOMBIE_REGULAR, 40, 40, 2, (int)p_.x, (int)p_.y, 200, 0, true);
-                Zombie z_ = new Zombie(p_, Globals.ZOMBIE_REGULAR_TYPE, 250, 1, 1, 10, 20, a_);
-                wave.add(z_);
-            } else if(zombieType == Globals.ZOMBIE_DOG_TYPE) {
-                // Rotdog
-                Animation a_ = new Animation(Images.ZOMBIE_DOG, 50, 50, 4, (int)p_.x, (int)p_.y, 80, 0, true);
-                Zombie z_ = new Zombie(p_, Globals.ZOMBIE_DOG_TYPE, 100, 3, 2, 20, 30, a_);
-                wave.add(z_);
-            } else if(zombieType == Globals.ZOMBIE_ACID_TYPE) {
-                // Up-Chuck
-                Animation a_ = new Animation(Images.ZOMBIE_ACID, 64, 64, 2, (int)p_.x, (int)p_.y, 200, 0, true);
-                AcidZombie z_ = new AcidZombie(p_, 300, 1, 1, 50, a_);
-                wave.add(z_);
-                specialsSpawned++;
-            } else if(zombieType == Globals.ZOMBIE_POISONFOG_TYPE) {
-                // Gasbag
-                Animation a_ = new Animation(Images.ZOMBIE_POISONFOG, 40, 40, 2, (int)p_.x, (int)p_.y, 100, 0, true);
-                PoisonFogZombie pfz_ = new PoisonFogZombie(p_, 250, 1, 2, 80, a_);
-                wave.add(pfz_);
-                specialsSpawned++;
-            } else if(zombieType == Globals.ZOMBIE_MATRON_TYPE) {
-                // Big Mama
-                Animation a_ = new Animation(Images.ZOMBIE_MATRON, 48, 48, 2, (int)p_.x, (int)p_.y, 200, 0, true);
-                ZombieMatron zm_ = new ZombieMatron(p_, 500, 1, 1, 150, a_);
-                wave.add(zm_);
-                specialsSpawned++;
-            }
+            // Aberration
+            Animation a_ = new Animation(Images.BOSS_ABERRATION, 128, 128, 4, (int)p_.x, (int)p_.y, 150, 0, true);
+            AberrationBoss ab_ = new AberrationBoss(p_, 10000, 1, 1, 1000, a_);
+            wave.add(ab_);
+            
+            this.bossWave = false;
         }
         
         return wave;

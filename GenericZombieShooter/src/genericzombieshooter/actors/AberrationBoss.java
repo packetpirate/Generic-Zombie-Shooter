@@ -28,30 +28,32 @@ import java.util.Iterator;
 import java.util.List;
 
 /**
- * Extends the Zombie class. Used to represent the special acid zombie type.
+ * Used to represent the Aberration boss type zombie.
  * @author Darin Beaudreau
  */
-public class AcidZombie extends Zombie {
+public class AberrationBoss extends Zombie {
     // Final Variables
-    private static final int EXP_VALUE = 50;
+    private static final int EXP_VALUE = 5000;
     private static final int COOL_TIME = 3000 / (int)Globals.SLEEP_TIME;
     private static final double ATTACK_DISTANCE = 300.0;
     private static final int PARTICLE_LIFE = 2000;
-    private static final int ACID_DAMAGE = 40;
+    private static final double PARTICLE_SPREAD = 10.0;
+    private static final int PARTICLE_COUNT = 5;
+    private static final int PARTICLE_DAMAGE = 80;
     
     // Member Variables
     private List<Particle> particles;
     @Override
     public List<Particle> getParticles() { return this.particles; }
     @Override
-    public int getParticleDamage() { return AcidZombie.ACID_DAMAGE; }
+    public int getParticleDamage() { return AberrationBoss.PARTICLE_DAMAGE; }
     private int cooldown;
     public boolean canFire() { return this.cooldown == 0; }
     
-    public AcidZombie(Point2D.Double p_, int health_, int damage_, double speed_, int score_, Animation animation_) {
-        super(p_, Globals.ZOMBIE_ACID_TYPE, health_, damage_, speed_, score_, AcidZombie.EXP_VALUE, animation_);
+    public AberrationBoss(Point2D.Double p_, int health_, int damage_, double speed_, int score_, Animation animation_) {
+        super(p_, Globals.ZOMBIE_BOSS_ABERRATION_TYPE, health_, damage_, speed_, score_, AberrationBoss.EXP_VALUE, animation_);
         this.particles = new ArrayList<Particle>();
-        this.cooldown = AcidZombie.COOL_TIME;
+        this.cooldown = AberrationBoss.COOL_TIME;
     }
     
     @Override
@@ -88,7 +90,7 @@ public class AcidZombie extends Zombie {
             if(inRange(playerPos, myPos)) {
                 // Fire a new particle at the player.
                 this.fire(playerPos);
-                this.cooldown = AcidZombie.COOL_TIME;
+                this.cooldown = AberrationBoss.COOL_TIME;
             }
         } else this.cooldown--;
     }
@@ -100,26 +102,41 @@ public class AcidZombie extends Zombie {
     }
     
     private void fire(Point2D.Double playerPos) {
-        double theta = Math.atan2((playerPos.y - this.y), (playerPos.x - this.x)) - Math.PI;
-        Particle p = new Particle(theta, 0.0, 8.0, (AcidZombie.PARTICLE_LIFE / (int)Globals.SLEEP_TIME),
-            new Point2D.Double(this.x, this.y), new Dimension(20, 20), Images.ACID_PARTICLE) {
-              @Override
-              public void update() {
-                  if(this.isAlive()) {
-                      // Age the particle.
-                      this.life--;
-                      // Update the position.
-                      this.pos.x += -(this.speed * Math.cos(this.theta));
-                      this.pos.y += -(this.speed * Math.sin(this.theta));
+        // Create group of particles.
+        for(int i = 0; i < AberrationBoss.PARTICLE_COUNT; i++) {
+            double theta = Math.atan2((playerPos.y - this.y), (playerPos.x - this.x)) - Math.PI;
+            { // Deviate particle from intended target.
+                boolean deviate = Globals.r.nextBoolean();
+                if(deviate) {
+                    double spread = Math.toRadians(Globals.r.nextDouble() * AberrationBoss.PARTICLE_SPREAD);
+                    if(spread > 0) {
+                        boolean clockwise = Globals.r.nextBoolean();
+                        if(clockwise) theta += spread;
+                        else theta -= spread;
+                    }
+                }
+            } // End particle deviation.
+            
+            Particle p = new Particle(theta, 0.0, 8.0, (AberrationBoss.PARTICLE_LIFE / (int)Globals.SLEEP_TIME),
+                new Point2D.Double(this.x, this.y), new Dimension(20, 20), Images.ACID_PARTICLE) {
+                  @Override
+                  public void update() {
+                      if(this.isAlive()) {
+                          // Age the particle.
+                          this.life--;
+                          // Update the position.
+                          this.pos.x += -(this.speed * Math.cos(this.theta));
+                          this.pos.y += -(this.speed * Math.sin(this.theta));
+                      }
                   }
-              }
-            };
-        this.particles.add(p);
+                };
+            this.particles.add(p);
+        }
     }
     
     private boolean inRange(Point2D.Double playerPos, Point2D.Double myPos) {
         double xD = playerPos.x - myPos.x;
         double yD = playerPos.y - myPos.y;
-        return Math.sqrt((xD * xD) + (yD * yD)) <= AcidZombie.ATTACK_DISTANCE;
+        return Math.sqrt((xD * xD) + (yD * yD)) <= AberrationBoss.ATTACK_DISTANCE;
     }
 }

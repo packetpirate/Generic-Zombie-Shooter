@@ -340,13 +340,7 @@ public class Player extends Rectangle2D.Double {
             }
             
             // Check player to see if he has leveled up.
-            if(this.experience >= this.getNextLevelExp()) {
-                this.experience = (this.experience % this.getNextLevelExp());
-                this.level++;
-                this.skillPoints++;
-                synchronized(Globals.GAME_MESSAGES) { 
-                    Globals.GAME_MESSAGES.add(new Message(("Player reached level " + this.level + "!"), 5000)); }
-            }
+            this.checkLevel();
         } // End resolving status effects.
     }
     
@@ -369,6 +363,17 @@ public class Player extends Rectangle2D.Double {
     public void rotate(double theta_) { this.af.setToRotation(theta_, getCenterX(), getCenterY()); }
 
     // Player manipulation.
+    public void checkLevel() {
+        while(this.experience >= this.getNextLevelExp()) {
+            this.experience -= this.getNextLevelExp();
+            this.level++;
+            this.skillPoints++;
+            synchronized(Globals.GAME_MESSAGES) { 
+                Globals.GAME_MESSAGES.add(new Message(("Played reached level " + this.level + "!"), 5000)); 
+            }
+        }
+    }
+    
     public void move(int direction) {
         if(direction == 0) y -= (this.speed + this.speedBonus);
         else if(direction == 1) x -= (this.speed + this.speedBonus);

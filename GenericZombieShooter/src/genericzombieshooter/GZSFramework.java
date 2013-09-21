@@ -95,7 +95,7 @@ public class GZSFramework {
 
         { // Begin initializing game objects.
             player = new Player(((Globals.W_WIDTH / 2) - 20), ((Globals.W_HEIGHT / 2) - 20), 40, 40);
-            currentWave = 0;
+            currentWave = 1;
             wave = new ZombieWave(currentWave);
             loadout = new WeaponsLoadout(player);
             itemFactory = new ItemFactory();
@@ -150,8 +150,18 @@ public class GZSFramework {
                             }
                         }
                         if (key == KeyEvent.VK_C) {
-                            if(Globals.started && !Globals.paused && !Globals.storeOpen && !Globals.levelScreenOpen) {
+                            if(Globals.started && !Globals.paused && 
+                               !Globals.storeOpen && !Globals.levelScreenOpen && 
+                               !Globals.crashed && !Globals.deathScreen) {
                                 player.addExp(5000);
+                            }
+                        }
+                        if (key == KeyEvent.VK_J) {
+                            if(Globals.started && !Globals.paused && 
+                               !Globals.storeOpen && !Globals.levelScreenOpen && 
+                               !Globals.crashed && !Globals.deathScreen) {
+                                currentWave = 25;
+                                synchronized(Globals.GAME_MESSAGES) { Globals.GAME_MESSAGES.add(new Message("Wave number increased!", 5000)); }
                             }
                         }
                         if (key == Globals.HANDGUN.getKey()) {
@@ -413,8 +423,8 @@ public class GZSFramework {
     
     private void createWave() {
         try {
-            this.currentWave++;
             this.wave = new ZombieWave(this.currentWave);
+            this.currentWave++;
             Globals.waveInProgress = true;
         } catch(Exception e) {
             createErrorWindow(e);

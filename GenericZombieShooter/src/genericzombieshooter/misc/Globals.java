@@ -61,6 +61,9 @@ public class Globals {
     public static final long ZOMBIE_MATRON_SPAWN = 50000;
     public static final int ZOMBIE_TINY_TYPE = 6;
     
+    // Boss Information
+    public static final int ZOMBIE_BOSS_ABERRATION_TYPE = 7;
+    
     // Game-State Related
     public static Runnable animation; // The primary animation thread.
     public static GameTime gameTime; // Used to keep track of the time.
