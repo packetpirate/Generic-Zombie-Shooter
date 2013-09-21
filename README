@@ -43,6 +43,15 @@ Zombie Types:
     swarm of tiny zombies. The burst of blood also does damage, so watch out for these!
   - Tiny Zumby, a much smaller and faster version of the Zumby, but weaker.
   
+Boss Types:
+
+  - Aberration, the first of the zombie boss types. It is a disgusting, shapeless green horror characterized by
+    its many tentacles and the opening on top of it that is lined with razor sharp teeth all around. This opening
+    will shoot acid (subject to change) at the player if he is too close in buck shots, like the Boomstick. The
+    Aberration has an extremely large amount of health, and will take your strongest weapons to extinguish. The
+    Aberration will appear every 25 waves (wave 25, 50, 75, etc... for now). Such a beast is worth a large sum of
+    cash and a lot of experience. Are you up to the challenge?
+  
 Items:
 
   - Health Pack, heals the player and removes the poison effect.
@@ -78,16 +87,20 @@ Changes:
     in speed increases your speed bonus by 20%. The experience / leveling screen shows your current level in each skill.
   - Added GameTime class to replace current method of keeping track of elapsed time. This fixed issues where the wave
     countdown would continue while the game was paused, among other things.
+  - Added boss type, the Aberration. See the above description.
 
 Known Issues:
 
   - There was one particular case of an IllegalStateException after killing a tiny zombie from a matron horde, but
     I have no been able to replicate it, and am not sure what the cause was.
+  - Landmines and Grenades are capable of killing any enemy in one hit due to the fact that it is dealing damage
+    in every update that they are active. They need to modified so they can only damage each enemy once. This makes 
+    the fight with the Aberration a joke, as he dies instantly.
 
 TODO:
 
   - Add more power-ups?
-  - Add "boss" waves every 20 waves or so where the entire wave is just one big boss monster with a special power.
+  - Add more boss types.
   - Add background music or ambient sounds so the game isn't as quiet. Maybe add zombie noises.
   - Enhance visuals of weapons store?
 
