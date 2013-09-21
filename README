@@ -63,8 +63,9 @@ Changes:
   - Added translucent overlay to weapon icons to show remaining cooldown on that weapon. Shrinks from right to left.
   - Added three power-up items; the SpeedUp, which doubles the player's movement speed for 10 seconds, the Unlimited
     Ammo power-up, which stops ammo consumption for the Assault Rifle, Shotgun, and Flamethrower for 10 seconds,
-    and the Extra Life power-up, which.... gives the player an extra life, and the Experience Multiplier power-up,
-    which doubles the player's experience for 20 seconds!
+    the Extra Life power-up, which.... gives the player an extra life, the Experience Multiplier power-up,
+    which doubles the player's experience for 20 seconds, and the Invulnerability power-up, which makes the player
+    completely impervious to damage for 10 seconds!
   - Changed invulnerability effect for when player dies to a "blink" effect, rather than the white circle used previously.
   - Added expiration times for items so health packs, ammo, power-ups, etc will disappear from the screen after
     a set duration.
@@ -88,9 +89,7 @@ TODO:
   - Add more power-ups?
   - Add "boss" waves every 20 waves or so where the entire wave is just one big boss monster with a special power.
   - Add background music or ambient sounds so the game isn't as quiet. Maybe add zombie noises.
-  - Add alt-fire for certain weapons.
-  - Add effects to ammo for tertiary effects.
-  - Enhance visuals of weapons store.
+  - Enhance visuals of weapons store?
 
 Planned Future Changes (Most likely post-1.0):
   - Add a lighting system so that you can only see directly in front of you, like a flashlight.
