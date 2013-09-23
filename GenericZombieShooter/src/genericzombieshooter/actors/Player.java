@@ -320,10 +320,12 @@ public class Player extends Rectangle2D.Double {
             if(this.hasEffect("Poison")) {
                 StatusEffect status = this.statusEffects.get("Poison");
                 if(status.isActive()) {
-                    // If the player is poisoned, take damage.
-                    if(Globals.gameTime.getElapsedMillis() >= (this.lastPoisoned + 1000)) {
-                        this.lastPoisoned = Globals.gameTime.getElapsedMillis();
-                        this.takeDamage((int)status.getValue());
+                    if(!this.hasEffect(Invulnerability.EFFECT_NAME)) {
+                        // If the player is poisoned, take damage.
+                        if(Globals.gameTime.getElapsedMillis() >= (this.lastPoisoned + 1000)) {
+                            this.lastPoisoned = Globals.gameTime.getElapsedMillis();
+                            this.takeDamage((int)status.getValue());
+                        }
                     }
                 } else this.removeEffect("Poison");
             }
@@ -336,7 +338,10 @@ public class Player extends Rectangle2D.Double {
                         this.blink = ((this.blink)?false:true);
                         this.nextBlinkChange = Globals.gameTime.getElapsedMillis() + 300;
                     }
-                } else this.removeEffect(Invulnerability.EFFECT_NAME);
+                } else {
+                    this.removeEffect(Invulnerability.EFFECT_NAME);
+                    this.blink = false;
+                }
             }
             
             // Check player to see if he has leveled up.

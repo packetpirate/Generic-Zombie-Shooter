@@ -21,6 +21,7 @@ import genericzombieshooter.misc.Images;
 import genericzombieshooter.misc.Sounds;
 import genericzombieshooter.structures.Animation;
 import genericzombieshooter.structures.Explosion;
+import genericzombieshooter.structures.items.Invulnerability;
 import java.awt.Graphics2D;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
@@ -78,11 +79,12 @@ public class PoisonFogZombie extends Zombie {
         }
         if(this.exploded) { // Otherwise...
             // Update the explosion animation and damage the player if he is touching it.
-            if(collidesWithExplosion(player) && !this.damageDone) { 
-                //player.poison((20 * 1000), PoisonFogZombie.POISON_DAMAGE);
-                player.addStatusEffect(6, "Poison", Images.POISON_STATUS_ICON, 
-                        (15 * 1000), PoisonFogZombie.POISON_DAMAGE);
-                this.damageDone = true;
+            if(collidesWithExplosion(player) && !this.damageDone) {
+                if(!player.hasEffect(Invulnerability.EFFECT_NAME)) {
+                    player.addStatusEffect(6, "Poison", Images.POISON_STATUS_ICON, 
+                            (15 * 1000), PoisonFogZombie.POISON_DAMAGE);
+                    this.damageDone = true;
+                }
             }
             if(this.explosion.getImage().isActive()) this.explosion.getImage().update();
         }
