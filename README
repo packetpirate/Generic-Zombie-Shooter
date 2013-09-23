@@ -101,6 +101,9 @@ TODO:
 
   - Add more power-ups?
   - Add more boss types.
+    - Zombie "Bat", a "flying" zombie that appears in swarms of three on a boss wave and is just a zombie that
+      flaps its arms really fast to fly. When within range of the player, it drains the player's health to
+      heal itself. (Credit to MM4ge for the idea!)
   - Add background music or ambient sounds so the game isn't as quiet. Maybe add zombie noises.
   - Enhance visuals of weapons store?
 
