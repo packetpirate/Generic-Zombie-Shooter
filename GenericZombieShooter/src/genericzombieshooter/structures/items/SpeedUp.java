@@ -46,7 +46,7 @@ public class SpeedUp extends Item {
     public void applyEffect(Player p) {
         p.addStatusEffect(SpeedUp.ID, this.getName(), Images.SPEED_UP, SpeedUp.DURATION, SpeedUp.SPEED_MULTIPLIER);
         synchronized(Globals.GAME_MESSAGES) {
-            Globals.GAME_MESSAGES.add(new Message("Player speed doubled for " + SpeedUp.DURATION + " seconds!", 5000));
+            Globals.GAME_MESSAGES.add(new Message("Player speed doubled for " + (SpeedUp.DURATION / 1000) + " seconds!", 5000));
         }
         Sounds.POWERUP.play();
     }

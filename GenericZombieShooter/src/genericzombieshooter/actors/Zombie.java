@@ -36,7 +36,7 @@ public class Zombie extends Point2D.Double {
     private Animation img;
     
     private int type;
-    private double health; // How much health the zombie has.
+    protected double health; // How much health the zombie has.
     private int damage; // How much damage the zombie does per tick to the player.
     private double speed; // How fast the zombie moves.
     private int cashValue; // How many points the zombie is worth.

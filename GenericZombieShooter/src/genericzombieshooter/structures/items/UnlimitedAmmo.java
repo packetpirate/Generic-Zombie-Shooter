@@ -45,7 +45,7 @@ public class UnlimitedAmmo extends Item {
     public void applyEffect(Player p) {
         p.addStatusEffect(UnlimitedAmmo.ID, this.getName(), Images.UNLIMITED_AMMO, UnlimitedAmmo.DURATION, 0);
         synchronized(Globals.GAME_MESSAGES) {
-            Globals.GAME_MESSAGES.add(new Message(("Player has unlimited ammo for " + UnlimitedAmmo.DURATION + " seconds!"), 5000));
+            Globals.GAME_MESSAGES.add(new Message(("Player has unlimited ammo for " + (UnlimitedAmmo.DURATION / 1000) + " seconds!"), 5000));
         }
         Sounds.POWERUP.play();
     }

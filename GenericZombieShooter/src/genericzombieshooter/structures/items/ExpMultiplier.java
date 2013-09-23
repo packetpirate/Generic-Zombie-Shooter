@@ -44,7 +44,7 @@ public class ExpMultiplier extends Item {
     @Override
     public void applyEffect(Player p) {
         p.addStatusEffect(ExpMultiplier.ID, ExpMultiplier.EFFECT_NAME, Images.EXP_MULTIPLIER, ExpMultiplier.DURATION, 0);
-        synchronized(Globals.GAME_MESSAGES) { Globals.GAME_MESSAGES.add(new Message("Player experience doubled!", 5000)); }
+        synchronized(Globals.GAME_MESSAGES) { Globals.GAME_MESSAGES.add(new Message("Player experience doubled for " + (ExpMultiplier.DURATION / 1000) +" seconds!", 5000)); }
         Sounds.POWERUP.play();
     }
 }

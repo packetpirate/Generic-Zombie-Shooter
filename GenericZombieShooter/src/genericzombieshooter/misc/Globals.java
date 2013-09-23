@@ -40,7 +40,7 @@ import java.util.Random;
  */
 public class Globals {
     // Game Information
-    public static final String VERSION = "0.9.6";
+    public static final String VERSION = "0.9.8";
     public static final int W_WIDTH = 800; // The width of the game window.
     public static final int W_HEIGHT = 640; // The height of the game window.
     public static final long SLEEP_TIME = 20; // The sleep time of the animation thread.
@@ -63,6 +63,7 @@ public class Globals {
     
     // Boss Information
     public static final int ZOMBIE_BOSS_ABERRATION_TYPE = 7;
+    public static final int ZOMBIE_BOSS_ZOMBAT_TYPE = 8;
     
     // Game-State Related
     public static Runnable animation; // The primary animation thread.

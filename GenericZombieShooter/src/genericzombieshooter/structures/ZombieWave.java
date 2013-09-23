@@ -4,6 +4,7 @@ import genericzombieshooter.actors.AberrationBoss;
 import genericzombieshooter.actors.AcidZombie;
 import genericzombieshooter.actors.Player;
 import genericzombieshooter.actors.PoisonFogZombie;
+import genericzombieshooter.actors.ZombatBoss;
 import genericzombieshooter.actors.Zombie;
 import genericzombieshooter.actors.ZombieMatron;
 import genericzombieshooter.misc.Globals;
@@ -127,10 +128,21 @@ public class ZombieWave {
             
             Point2D.Double p_ = new Point2D.Double(x, y);
             
-            // Aberration
-            Animation a_ = new Animation(Images.BOSS_ABERRATION, 128, 128, 4, (int)p_.x, (int)p_.y, 150, 0, true);
-            AberrationBoss ab_ = new AberrationBoss(p_, 10000, 1, 1, 1000, a_);
-            wave.add(ab_);
+            int bossType = (Globals.r.nextInt(2) + 1);
+            
+            if(bossType == 1) {
+                // Aberration
+                Animation a_ = new Animation(Images.BOSS_ABERRATION, 128, 128, 4, (int)p_.x, (int)p_.y, 150, 0, true);
+                AberrationBoss ab_ = new AberrationBoss(p_, 10000, 1, 1, 1000, a_);
+                wave.add(ab_);
+            } else if(bossType == 2) {
+                // Zombat Wave
+                for(int i = 0; i < 5; i++) {
+                    Animation a_ = new Animation(Images.BOSS_ZOMBAT, 64, 64, 4, (int)p_.x, (int)p_.y, 50, 0, true);
+                    ZombatBoss zb_ = new ZombatBoss(p_, 2000, 1, 2, 500, a_);
+                    wave.add(zb_);
+                }
+            }
             
             this.bossWave = false;
         }
