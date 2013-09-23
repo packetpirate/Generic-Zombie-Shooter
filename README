@@ -1,6 +1,6 @@
 -----------------------
 Author: Darin Beaudreau
-Version: 0.9.6
+Version: 0.9.8
 -----------------------
 
 Description:
@@ -51,6 +51,11 @@ Boss Types:
     Aberration has an extremely large amount of health, and will take your strongest weapons to extinguish. The
     Aberration will appear every 25 waves (wave 25, 50, 75, etc... for now). Such a beast is worth a large sum of
     cash and a lot of experience. Are you up to the challenge?
+  - Zombat, the second of the zombie boss types. It has the strange idea that it can fly, and flaps its arms
+    rapidly to achieve lift... oddly enough, it works, and they will float fast across the screen toward the player.
+    However ridiculous they seem, they are very deadly. If they get close enough to the player, they can drain
+    his health to replenish their own. They have quite a substantial health supply and appear in groups of 5 during
+    boss waves, but are well worth the risk for the reward. (Credit to MM4ge for the idea!)
   
 Items:
 
@@ -88,6 +93,7 @@ Changes:
   - Added GameTime class to replace current method of keeping track of elapsed time. This fixed issues where the wave
     countdown would continue while the game was paused, among other things.
   - Added boss type, the Aberration. See the above description.
+  - Added boss type, the Zombat. See above description.
 
 Known Issues:
 
@@ -101,9 +107,6 @@ TODO:
 
   - Add more power-ups?
   - Add more boss types.
-    - Zombie "Bat", a "flying" zombie that appears in swarms of three on a boss wave and is just a zombie that
-      flaps its arms really fast to fly. When within range of the player, it drains the player's health to
-      heal itself. (Credit to MM4ge for the idea!)
   - Add background music or ambient sounds so the game isn't as quiet. Maybe add zombie noises.
   - Enhance visuals of weapons store?
 
