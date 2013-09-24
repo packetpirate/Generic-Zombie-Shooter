@@ -35,7 +35,7 @@ public class AcidZombie extends Zombie {
     // Final Variables
     private static final int EXP_VALUE = 50;
     private static final int COOL_TIME = 3000 / (int)Globals.SLEEP_TIME;
-    private static final double ATTACK_DISTANCE = 300.0;
+    private static final double ATTACK_DISTANCE = 316.0;
     private static final int PARTICLE_LIFE = 2000;
     private static final int ACID_DAMAGE = 40;
     

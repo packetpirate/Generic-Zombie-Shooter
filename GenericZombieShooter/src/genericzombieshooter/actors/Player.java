@@ -143,6 +143,7 @@ public class Player extends Rectangle2D.Double {
     public int getHealth() { return this.health; }
     public int getMaxHealth() { return this.maxHealth; }
     public double getDamageBonus() { return this.damageBonus; }
+    public double getSpeed() { return (this.speed + this.speedBonus); }
     public int getCash() { return this.cash; }
     public void addCash(int amount) { this.cash += amount; }
     public void removeCash(int amount) { this.cash -= amount; }

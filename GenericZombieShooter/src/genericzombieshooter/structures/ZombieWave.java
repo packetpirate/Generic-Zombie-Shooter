@@ -46,7 +46,7 @@ public class ZombieWave {
     
     public ZombieWave(int wave) {
         this.waveNumber = wave;
-        this.bossWave = ((wave % 25) == 0);
+        this.bossWave = ((wave % 15) == 0);
         this.zombiesUnborn = constructWave(wave);
         this.zombiesAlive = new ArrayList<Zombie>();
         this.zombiesToDie = new ArrayList<Zombie>();

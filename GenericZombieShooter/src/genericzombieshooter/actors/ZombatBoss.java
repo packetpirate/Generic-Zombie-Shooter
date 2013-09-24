@@ -29,7 +29,7 @@ import java.util.List;
 public class ZombatBoss extends Zombie {
     // Final Variables
     private static final int EXP_VALUE = 2500;
-    private static final double ATTACK_DISTANCE = 150.0;
+    private static final double ATTACK_DISTANCE = 166.0;
     private static final int DRAIN_COOLDOWN = 2000 / (int)Globals.SLEEP_TIME;
     private static final int DRAIN_AMOUNT = 5;
     

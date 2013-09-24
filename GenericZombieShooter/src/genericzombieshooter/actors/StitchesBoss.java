@@ -41,11 +41,10 @@ public class StitchesBoss extends Zombie {
     // Final Variables
     private static final int EXP_VALUE = 10000;
     private static final int COOL_TIME = 5000 / (int)Globals.SLEEP_TIME;
-    private static final double ATTACK_DISTANCE = 314.0;
+    private static final double ATTACK_DISTANCE = 364.0;
     private static final double POISON_RANGE = 114.0;
     private static final int POISON_DAMAGE = 10;
     private static final long HOOK_DURATION = 10000;
-    private static final double HOOK_REEL_SPEED = 1.2;
     
     // Member Variables
     private List<Particle> particles;
@@ -96,7 +95,7 @@ public class StitchesBoss extends Zombie {
                     if(!this.hooked) p.update();
                     else p.setPos(new Point2D.Double(player.getCenterX(), player.getCenterY())); // Otherwise, move it to the player...
                     
-                    { // Update the hook's theta.
+                    if(this.hooked) { // Update the hook's theta.
                         double theta = Math.atan2((player.y - p.getPos().y), (player.x - p.getPos().x)) - Math.PI;
                         p.setTheta(theta);
                     } // End hook's theta update.
@@ -129,8 +128,8 @@ public class StitchesBoss extends Zombie {
                                 // Reel in the player.
                                 double theta = Math.atan2((this.y - player.y), (this.x - player.x));
                                 Point2D.Double newPos = new Point2D.Double(player.x, player.y);
-                                newPos.x += StitchesBoss.HOOK_REEL_SPEED * Math.cos(theta);
-                                newPos.y += StitchesBoss.HOOK_REEL_SPEED * Math.sin(theta);
+                                newPos.x += (player.getSpeed() + 0.2) * Math.cos(theta);
+                                newPos.y += (player.getSpeed() + 0.2) * Math.sin(theta);
                                 player.move(newPos);
                             }
                         } else {
