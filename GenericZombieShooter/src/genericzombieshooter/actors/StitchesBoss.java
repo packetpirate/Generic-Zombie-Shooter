@@ -71,11 +71,11 @@ public class StitchesBoss extends Zombie {
                 Particle p = it.next();
                 if(p.isAlive() || this.hooked) {
                     Stroke s = g2d.getStroke();
-                    p.draw(g2d);
                     g2d.setColor(Color.BLACK);
                     g2d.setStroke(new BasicStroke(2.0f));
-                    g2d.drawLine((int)(this.x), (int)(this.y - 20), (int)p.getPos().x, (int)p.getPos().y);
+                    g2d.drawLine((int)(this.x), (int)(this.y), (int)p.getPos().x, (int)p.getPos().y);
                     g2d.setStroke(s);
+                    p.draw(g2d);
                 }
             }
         }
@@ -95,6 +95,11 @@ public class StitchesBoss extends Zombie {
                     // If the hook hasn't attached to something yet...
                     if(!this.hooked) p.update();
                     else p.setPos(new Point2D.Double(player.getCenterX(), player.getCenterY())); // Otherwise, move it to the player...
+                    
+                    { // Update the hook's theta.
+                        double theta = Math.atan2((player.y - p.getPos().y), (player.x - p.getPos().x)) - Math.PI;
+                        p.setTheta(theta);
+                    } // End hook's theta update.
                     
                     // If not hooked and the hook is not alive or is out of bounds... remove it.
                     if(!this.hooked && (!p.isAlive() || p.outOfBounds())) {
@@ -157,9 +162,9 @@ public class StitchesBoss extends Zombie {
     @Override
     public void draw(Graphics2D g2d) {
         AffineTransform saved = g2d.getTransform();
+        if(!this.particles.isEmpty()) drawParticles(g2d);
         super.draw(g2d);
         g2d.setTransform(saved);
-        if(!this.particles.isEmpty()) drawParticles(g2d);
     }
     
     private void throwHook(Point2D.Double playerPos) {

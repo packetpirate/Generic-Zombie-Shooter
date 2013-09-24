@@ -18,6 +18,7 @@ package genericzombieshooter.actors;
 
 import genericzombieshooter.misc.Globals;
 import genericzombieshooter.structures.Animation;
+import genericzombieshooter.structures.items.Invulnerability;
 import java.awt.geom.Point2D;
 import java.util.List;
 
@@ -58,9 +59,11 @@ public class ZombatBoss extends Zombie {
     }
     
     private void drain(Player player) {
-        player.takeDamage(ZombatBoss.DRAIN_AMOUNT);
-        this.health += ZombatBoss.DRAIN_AMOUNT;
-        if(this.health > this.maxHealth) this.health = this.maxHealth;
+        if(!player.hasEffect(Invulnerability.EFFECT_NAME)) {
+            player.takeDamage(ZombatBoss.DRAIN_AMOUNT);
+            this.health += ZombatBoss.DRAIN_AMOUNT;
+            if(this.health > this.maxHealth) this.health = this.maxHealth;
+        }
     }
     
     private boolean inRange(Point2D.Double playerPos, Point2D.Double myPos) {

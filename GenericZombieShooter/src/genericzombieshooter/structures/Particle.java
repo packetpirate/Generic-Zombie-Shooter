@@ -31,6 +31,7 @@ import java.awt.image.BufferedImage;
  */
 public class Particle {
     protected double theta;
+    public void setTheta(double theta) { this.theta = theta; }
     protected double speed;
     protected int life;
     public boolean isAlive() { return this.life > 0; }
