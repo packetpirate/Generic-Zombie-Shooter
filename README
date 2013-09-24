@@ -56,6 +56,11 @@ Boss Types:
     However ridiculous they seem, they are very deadly. If they get close enough to the player, they can drain
     his health to replenish their own. They have quite a substantial health supply and appear in groups of 5 during
     boss waves, but are well worth the risk for the reward. (Credit to MM4ge for the idea!)
+  - Stitches, the third and final boss type. Stitches is a hulking abomination that seems to be made up of parts of
+    other zombies. Stitches is incredibly durable, and does massive melee damage... but that's not what makes Stitches
+    so deadly. Stitches has the ability to shoot a hook from his stomach that he uses to reel the player in closer to
+    him. To make matters worse, when the player is close enough to Stitches, he will deal poison damage to the player
+    with his stinky aura. Stitches is a force to be reckoned with, and is well worth the reward.
   
 Items:
 
@@ -64,6 +69,8 @@ Items:
   - SpeedUp, doubles the player's movement speed for 10 seconds.
   - Unlimited Ammo, stops ammo consumption for the Assault Rifle, Shotgun, and Flamethrower for 10 seconds.
   - Extra Life, gives the player 1 extra life.
+  - Experience Multiplier, doubles the player's experience for 20 seconds.
+  - Invulnerability, makes the player invincible for a short time.
 
 Copyright Information:
 
@@ -75,7 +82,7 @@ Changes:
   - Added weapons store and changed player to only start with the Handgun. The store allows the player to purchase
     weapons and ammo. Ammo crates still spawn as per usual. All weapon and ammo prices set to 0 for testing purposes.
   - Added translucent overlay to weapon icons to show remaining cooldown on that weapon. Shrinks from right to left.
-  - Added three power-up items; the SpeedUp, which doubles the player's movement speed for 10 seconds, the Unlimited
+  - Added five power-up items; the SpeedUp, which doubles the player's movement speed for 10 seconds, the Unlimited
     Ammo power-up, which stops ammo consumption for the Assault Rifle, Shotgun, and Flamethrower for 10 seconds,
     the Extra Life power-up, which.... gives the player an extra life, the Experience Multiplier power-up,
     which doubles the player's experience for 20 seconds, and the Invulnerability power-up, which makes the player
@@ -94,6 +101,7 @@ Changes:
     countdown would continue while the game was paused, among other things.
   - Added boss type, the Aberration. See the above description.
   - Added boss type, the Zombat. See above description.
+  - Added boss type, Stitches. See above description.
 
 Known Issues:
 
@@ -106,9 +114,8 @@ Known Issues:
 TODO:
 
   - Add more power-ups?
-  - Add more boss types.
+  - Overhaul game graphics.
   - Add background music or ambient sounds so the game isn't as quiet. Maybe add zombie noises.
-  - Enhance visuals of weapons store?
 
 Planned Future Changes (Most likely post-1.0):
   - Add a lighting system so that you can only see directly in front of you, like a flashlight.
