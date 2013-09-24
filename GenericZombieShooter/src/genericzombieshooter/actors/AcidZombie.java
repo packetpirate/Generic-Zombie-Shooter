@@ -54,7 +54,6 @@ public class AcidZombie extends Zombie {
         this.cooldown = AcidZombie.COOL_TIME;
     }
     
-    @Override
     public void drawParticles(Graphics2D g2d) {
         synchronized(this.particles) {
             Iterator<Particle> it = this.particles.iterator();

@@ -42,8 +42,10 @@ public class Images {
     public static final BufferedImage ZOMBIE_TINY = GZSFramework.loadImage("/resources/images/GZS_ZombieTiny.png");
     public static final BufferedImage BOSS_ABERRATION = GZSFramework.loadImage("/resources/images/GZS_Aberration2.png");
     public static final BufferedImage BOSS_ZOMBAT = GZSFramework.loadImage("/resources/images/GZS_Zombat.png");
+    public static final BufferedImage BOSS_STITCHES = GZSFramework.loadImage("/resources/images/GZS_Stitches.png");
     
     public static final BufferedImage ACID_PARTICLE = GZSFramework.loadImage("/resources/images/GZS_AcidParticle.png");
+    public static final BufferedImage STITCHES_HOOK = GZSFramework.loadImage("/resources/images/GZS_Hook.png");
     public static final BufferedImage POISON_GAS_SHEET = GZSFramework.loadImage("/resources/images/GZS_PoisonExplosion.png");
     public static final BufferedImage POISON_STATUS_ICON = GZSFramework.loadImage("/resources/images/GZS_PoisonIcon.png");
     public static final BufferedImage BLOOD_SHEET = GZSFramework.loadImage("/resources/images/GZS_BloodExplosion.png");

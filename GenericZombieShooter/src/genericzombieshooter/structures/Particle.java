@@ -37,6 +37,7 @@ public class Particle {
     public void setLife(int newLife) { this.life = newLife; }
     protected Point2D.Double pos;
     public Point2D.Double getPos() { return this.pos; }
+    public void setPos(Point2D.Double p) { this.pos = p; }
     protected Dimension size;
     public Dimension getSize() { return this.size; }
     

@@ -113,10 +113,6 @@ public class Zombie extends Point2D.Double {
         return null;
     }
     
-    public void drawParticles(Graphics2D g2d) {
-        // To be overridden.
-    }
-    
     public int getParticleDamage() { 
         // To be overridden.
         return 0;

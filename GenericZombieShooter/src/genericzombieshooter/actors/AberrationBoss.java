@@ -56,7 +56,6 @@ public class AberrationBoss extends Zombie {
         this.cooldown = AberrationBoss.COOL_TIME;
     }
     
-    @Override
     public void drawParticles(Graphics2D g2d) {
         synchronized(this.particles) {
             Iterator<Particle> it = this.particles.iterator();

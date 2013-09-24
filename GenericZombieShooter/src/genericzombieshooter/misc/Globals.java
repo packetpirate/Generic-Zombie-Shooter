@@ -64,6 +64,7 @@ public class Globals {
     // Boss Information
     public static final int ZOMBIE_BOSS_ABERRATION_TYPE = 7;
     public static final int ZOMBIE_BOSS_ZOMBAT_TYPE = 8;
+    public static final int ZOMBIE_BOSS_STITCHES_TYPE = 9;
     
     // Game-State Related
     public static Runnable animation; // The primary animation thread.

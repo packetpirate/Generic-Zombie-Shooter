@@ -102,17 +102,8 @@ public class GZSCanvas extends JPanel {
 
                     g2d.setTransform(saved);
 
-                    { // Begin drawing zombies.
-                        List<Zombie> zombies = framework.getWave().getZombies();
-                        synchronized(zombies) {
-                            Iterator<Zombie> it = zombies.iterator();
-                            while(it.hasNext()) {
-                                Zombie z = it.next();
-                                if(!z.isDead()) z.draw(g2d);
-                                g2d.setTransform(saved);
-                            }
-                        }
-                    } // End drawing zombies.
+                    // Draw zombies and zombie particles.
+                    framework.getWave().draw(g2d);
 
                     g2d.setTransform(saved); // Restore original transform state.
 

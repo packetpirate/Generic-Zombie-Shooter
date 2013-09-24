@@ -4,6 +4,7 @@ import genericzombieshooter.actors.AberrationBoss;
 import genericzombieshooter.actors.AcidZombie;
 import genericzombieshooter.actors.Player;
 import genericzombieshooter.actors.PoisonFogZombie;
+import genericzombieshooter.actors.StitchesBoss;
 import genericzombieshooter.actors.ZombatBoss;
 import genericzombieshooter.actors.Zombie;
 import genericzombieshooter.actors.ZombieMatron;
@@ -16,6 +17,7 @@ import genericzombieshooter.structures.items.SpeedUp;
 import genericzombieshooter.structures.items.UnlimitedAmmo;
 import genericzombieshooter.structures.weapons.Weapon;
 import java.awt.Graphics2D;
+import java.awt.geom.AffineTransform;
 import java.awt.geom.Point2D;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -128,7 +130,7 @@ public class ZombieWave {
             
             Point2D.Double p_ = new Point2D.Double(x, y);
             
-            int bossType = (Globals.r.nextInt(2) + 1);
+            int bossType = (Globals.r.nextInt(3) + 1);
             
             if(bossType == 1) {
                 // Aberration
@@ -142,6 +144,11 @@ public class ZombieWave {
                     ZombatBoss zb_ = new ZombatBoss(p_, 2000, 1, 2, 500, a_);
                     wave.add(zb_);
                 }
+            } else if(bossType == 3) {
+                // Stitches
+                Animation a_ = new Animation(Images.BOSS_STITCHES, 128, 128, 4, (int)p_.x, (int)p_.y, 150, 0, true);
+                StitchesBoss sb_ = new StitchesBoss(p_, 15000, 4, 1, 3000, a_);
+                wave.add(sb_);
             }
             
             this.bossWave = false;
@@ -151,11 +158,12 @@ public class ZombieWave {
     }
     
     public void draw(Graphics2D g2d) {
+        AffineTransform saved = g2d.getTransform();
         Iterator<Zombie> it = this.zombiesAlive.iterator();
         while(it.hasNext()) {
             Zombie z = it.next();
             z.draw(g2d);
-            if(!z.getParticles().isEmpty()) z.drawParticles(g2d);
+            g2d.setTransform(saved);
         }
     }
     
