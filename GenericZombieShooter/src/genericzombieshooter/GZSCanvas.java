@@ -17,7 +17,6 @@
 package genericzombieshooter;
 
 import genericzombieshooter.actors.Player;
-import genericzombieshooter.actors.Zombie;
 import genericzombieshooter.misc.Globals;
 import genericzombieshooter.misc.Images;
 import genericzombieshooter.structures.LightSource;
@@ -143,12 +142,14 @@ public class GZSCanvas extends JPanel {
                         { // Begin drawing the health bar.
                             // Draw the gray box under the HUD.
                             g2d.setColor(Color.LIGHT_GRAY);
-                            g2d.fillRect(2, 2, (Player.DEFAULT_HEALTH + 20), 89);
+                            g2d.fillRect(2, 2, (Player.DEFAULT_HEALTH + 20), 94);
                             g2d.setColor(Color.BLACK);
-                            g2d.drawRect(2, 2, (Player.DEFAULT_HEALTH + 20), 89);
+                            g2d.drawRect(2, 2, (Player.DEFAULT_HEALTH + 20), 94);
                             // Draw the black bar behind the red health bar to act as a border.
                             g2d.setColor(Color.BLACK);
                             g2d.fillRect(10, 10, (Player.DEFAULT_HEALTH + 4), 20);
+                            // Draw the black bar behind the experience bar to act as a border.
+                            g2d.fillRect(10, 32, 154, 20);
 
                             // Only draw the red bar indicating health if player is still alive.
                             if (player.getHealth() > 0) {
@@ -159,13 +160,20 @@ public class GZSCanvas extends JPanel {
                                 g2d.drawString(("HP: " + player.getHealth() + "/" + player.getMaxHealth()), 15, 25);
                             }
                         } // End drawing the health bar.
+                        { // Draw the experience bar.
+                            int expBarWidth = (int)(((double)player.getExp() / (double)player.getNextLevelExp()) * 150);
+                            g2d.setColor(new Color(67, 158, 22));
+                            g2d.fillRect(12, 34, expBarWidth, 16);
+                            g2d.setColor(Color.WHITE);
+                            g2d.drawString(("LVL: " + player.getLevel()), 15, 47);
+                        } // End drawing the experience bar.
                         // Draw status messages.
                         g2d.setColor(Color.BLACK);
-                        g2d.drawString(("Lives: " + player.getLives()), 10, 45);
-                        g2d.drawString(("Level: " + player.getLevel()), 10, 58);
-                        g2d.drawString(("Cash: $" + player.getCash()), 10, 71);
+                        g2d.drawString(("Lives: " + player.getLives()), 10, 65);
+                        //g2d.drawString(("Level: " + player.getLevel()), 10, 58);
+                        g2d.drawString(("Cash: $" + player.getCash()), 10, 78);
                         g2d.drawString(("Ammo: " + player.getWeapon().getAmmoLeft() + "/" + player.getWeapon().getMaxAmmo()),
-                                        10, 84);
+                                        10, 91);
                         { // Draw Status Icons
                             int x = 5;
                             int y = 94;

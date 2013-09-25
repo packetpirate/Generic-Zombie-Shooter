@@ -94,7 +94,7 @@ public class GZSFramework {
         } // End member variable initialization.
 
         { // Begin initializing game objects.
-            player = new Player(((Globals.W_WIDTH / 2) - 20), ((Globals.W_HEIGHT / 2) - 20), 40, 40);
+            player = new Player(((Globals.W_WIDTH / 2) - 24), ((Globals.W_HEIGHT / 2) - 24), 48, 48);
             currentWave = 1;
             wave = new ZombieWave(currentWave);
             loadout = new WeaponsLoadout(player);

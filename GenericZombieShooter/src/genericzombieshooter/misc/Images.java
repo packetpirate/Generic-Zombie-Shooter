@@ -30,11 +30,11 @@ public class Images {
     public static final BufferedImage DEATH_SCREEN = GZSFramework.loadImage("/resources/images/GZS_DeathScreen.png");
     
     // Player-Related
-    public static final BufferedImage PLAYER = GZSFramework.loadImage("/resources/images/GZS_Player.png");
+    public static final BufferedImage PLAYER = GZSFramework.loadImage("/resources/images/GZS_Player2.png");
     public static final BufferedImage CROSSHAIR = GZSFramework.loadImage("/resources/images/GZS_Crosshair.png");
     
     // Zombie-Related
-    public static final BufferedImage ZOMBIE_REGULAR = GZSFramework.loadImage("/resources/images/GZS_Zombie_2.png");
+    public static final BufferedImage ZOMBIE_REGULAR = GZSFramework.loadImage("/resources/images/GZS_Zumby2.png");
     public static final BufferedImage ZOMBIE_DOG = GZSFramework.loadImage("/resources/images/GZS_ZombieDog2.png");
     public static final BufferedImage ZOMBIE_ACID = GZSFramework.loadImage("/resources/images/GZS_AcidZombie.png");
     public static final BufferedImage ZOMBIE_POISONFOG = GZSFramework.loadImage("/resources/images/GZS_ZombieExplosive.png");

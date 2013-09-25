@@ -86,7 +86,7 @@ public class ZombieWave {
                 int zombieType = Globals.r.nextInt(difficulty) + 1;
                 if(zombieType == Globals.ZOMBIE_REGULAR_TYPE) {
                     // Zumby
-                    Animation a_ = new Animation(Images.ZOMBIE_REGULAR, 40, 40, 2, (int)p_.x, (int)p_.y, 200, 0, true);
+                    Animation a_ = new Animation(Images.ZOMBIE_REGULAR, 48, 48, 4, (int)p_.x, (int)p_.y, 200, 0, true);
                     Zombie z_ = new Zombie(p_, Globals.ZOMBIE_REGULAR_TYPE, 250, 1, 1, 10, 20, a_);
                     wave.add(z_);
                 } else if(zombieType == Globals.ZOMBIE_DOG_TYPE) {

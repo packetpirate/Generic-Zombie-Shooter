@@ -281,7 +281,7 @@ public class Player extends Rectangle2D.Double {
         // If the left mouse button is held down, create a new projectile.
         if(Globals.buttons[0]) {
             Point target = new Point(Globals.mousePos);
-            Point2D.Double pos = new Point2D.Double((this.x + 28), (this.y - 8));
+            Point2D.Double pos = new Point2D.Double((this.x + 32), (this.y + 1));
             AffineTransform.getRotateInstance(pAngle, this.getCenterX(), this.getCenterY()).transform(pos, pos);
             double theta = Math.atan2((target.x - pos.x), (target.y - pos.y));
             this.getWeapon().fire(theta, pos, this);
