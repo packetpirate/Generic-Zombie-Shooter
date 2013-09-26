@@ -156,6 +156,12 @@ public class GZSFramework {
                                 }
                             }
                         }
+                        if (key == KeyEvent.VK_C) {
+                            if(Globals.started && !Globals.deathScreen && !Globals.crashed &&
+                               !Globals.levelScreenOpen && !Globals.storeOpen && !Globals.paused) {
+                                currentWave = 15;
+                            }
+                        }
                         if(!Globals.deathScreen && !Globals.crashed && !Globals.storeOpen && !Globals.levelScreenOpen) {
                             if (key == Globals.HANDGUN.getKey()) {
                                 int r = player.setWeapon(Globals.HANDGUN.getName());

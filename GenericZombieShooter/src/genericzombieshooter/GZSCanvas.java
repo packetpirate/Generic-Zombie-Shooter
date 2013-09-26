@@ -163,7 +163,7 @@ public class GZSCanvas extends JPanel {
                         { // Draw the experience bar.
                             int expBarWidth = (int)(((double)player.getExp() / (double)player.getNextLevelExp()) * 150);
                             g2d.setColor(new Color(67, 158, 22));
-                            g2d.fillRect(12, 34, expBarWidth, 16);
+                            g2d.fillRect(12, 34, ((expBarWidth > 150)?150:expBarWidth), 16);
                             g2d.setColor(Color.WHITE);
                             g2d.drawString(("LVL: " + player.getLevel()), 15, 47);
                         } // End drawing the experience bar.
@@ -176,7 +176,7 @@ public class GZSCanvas extends JPanel {
                                         10, 91);
                         { // Draw Status Icons
                             int x = 5;
-                            int y = 94;
+                            int y = 101;
                             Iterator<StatusEffect> it = player.getStatusEffects().values().iterator();
                             while(it.hasNext()) {
                                 StatusEffect status = it.next();

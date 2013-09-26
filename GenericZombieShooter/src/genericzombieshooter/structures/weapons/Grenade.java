@@ -44,7 +44,7 @@ public class Grenade extends Weapon {
     private static final int DEFAULT_AMMO = 1;
     private static final int MAX_AMMO = 3;
     private static final int AMMO_PER_USE = 1;
-    private static final int DAMAGE_PER_EXPLOSION = 500;
+    private static final int DAMAGE_PER_EXPLOSION = (500 / (int)Globals.SLEEP_TIME);
     private static final double PARTICLE_SPREAD = 5.0;
     private static final int THROWING_DISTANCE = 1000;
     
