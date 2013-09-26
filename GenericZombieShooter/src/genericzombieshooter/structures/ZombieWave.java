@@ -96,7 +96,7 @@ public class ZombieWave {
                     wave.add(z_);
                 } else if(zombieType == Globals.ZOMBIE_ACID_TYPE) {
                     // Up-Chuck
-                    Animation a_ = new Animation(Images.ZOMBIE_ACID, 64, 64, 2, (int)p_.x, (int)p_.y, 200, 0, true);
+                    Animation a_ = new Animation(Images.ZOMBIE_ACID, 64, 64, 4, (int)p_.x, (int)p_.y, 200, 0, true);
                     AcidZombie z_ = new AcidZombie(p_, 300, 1, 1, 50, a_);
                     wave.add(z_);
                     specialsSpawned++;
