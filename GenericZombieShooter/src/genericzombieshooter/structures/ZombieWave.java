@@ -91,7 +91,7 @@ public class ZombieWave {
                     wave.add(z_);
                 } else if(zombieType == Globals.ZOMBIE_DOG_TYPE) {
                     // Rotdog
-                    Animation a_ = new Animation(Images.ZOMBIE_DOG, 50, 50, 4, (int)p_.x, (int)p_.y, 80, 0, true);
+                    Animation a_ = new Animation(Images.ZOMBIE_DOG, 48, 48, 4, (int)p_.x, (int)p_.y, 80, 0, true);
                     Zombie z_ = new Zombie(p_, Globals.ZOMBIE_DOG_TYPE, 100, 3, 2, 20, 30, a_);
                     wave.add(z_);
                 } else if(zombieType == Globals.ZOMBIE_ACID_TYPE) {
