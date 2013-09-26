@@ -102,6 +102,8 @@ Changes:
   - Added boss type, the Aberration. See the above description.
   - Added boss type, the Zombat. See above description.
   - Added boss type, Stitches. See above description.
+  - Made changes to HUD.
+  - Revised sprites for the player, Zumby, and Rotdog.
 
 Known Issues:
 
@@ -115,6 +117,7 @@ TODO:
 
   - Overhaul game graphics.
   - Add background music or ambient sounds so the game isn't as quiet. Maybe add zombie noises.
+  - Create final splash screen to reflect new sprites.
 
 Planned Future Changes (Most likely post-1.0):
   - Add a lighting system so that you can only see directly in front of you, like a flashlight.
