@@ -103,7 +103,7 @@ Changes:
   - Added boss type, the Zombat. See above description.
   - Added boss type, Stitches. See above description.
   - Made changes to HUD.
-  - Revised sprites for the player, Zumby, and Rotdog.
+  - Revised sprites for the player, and the Zumby, Rotdog, Upchuck, and Gasbag zombies.
 
 Known Issues:
 
@@ -118,6 +118,7 @@ TODO:
   - Overhaul game graphics.
   - Add background music or ambient sounds so the game isn't as quiet. Maybe add zombie noises.
   - Create final splash screen to reflect new sprites.
+  - Reduce radius of light around player and add a conical "flashlight" to act as the light source.
 
 Planned Future Changes (Most likely post-1.0):
   - Add a lighting system so that you can only see directly in front of you, like a flashlight.
