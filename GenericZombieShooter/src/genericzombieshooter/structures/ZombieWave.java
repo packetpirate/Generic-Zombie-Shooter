@@ -102,7 +102,7 @@ public class ZombieWave {
                     specialsSpawned++;
                 } else if(zombieType == Globals.ZOMBIE_POISONFOG_TYPE) {
                     // Gasbag
-                    Animation a_ = new Animation(Images.ZOMBIE_POISONFOG, 40, 40, 2, (int)p_.x, (int)p_.y, 100, 0, true);
+                    Animation a_ = new Animation(Images.ZOMBIE_POISONFOG, 48, 48, 4, (int)p_.x, (int)p_.y, 100, 0, true);
                     PoisonFogZombie pfz_ = new PoisonFogZombie(p_, 250, 1, 2, 80, a_);
                     wave.add(pfz_);
                     specialsSpawned++;
