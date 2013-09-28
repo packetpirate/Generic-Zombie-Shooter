@@ -108,7 +108,7 @@ public class ZombieWave {
                     specialsSpawned++;
                 } else if(zombieType == Globals.ZOMBIE_MATRON_TYPE) {
                     // Big Mama
-                    Animation a_ = new Animation(Images.ZOMBIE_MATRON, 48, 48, 2, (int)p_.x, (int)p_.y, 200, 0, true);
+                    Animation a_ = new Animation(Images.ZOMBIE_MATRON, 64, 64, 4, (int)p_.x, (int)p_.y, 200, 0, true);
                     ZombieMatron zm_ = new ZombieMatron(p_, 500, 1, 1, 150, a_);
                     wave.add(zm_);
                     specialsSpawned++;
