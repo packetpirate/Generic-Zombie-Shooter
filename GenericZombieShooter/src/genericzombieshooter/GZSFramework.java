@@ -159,7 +159,7 @@ public class GZSFramework {
                         if (key == KeyEvent.VK_C) {
                             if(Globals.started && !Globals.crashed && !Globals.deathScreen &&
                                !Globals.paused && !Globals.storeOpen && !Globals.levelScreenOpen) {
-                                currentWave = 20;
+                                currentWave = 15;
                             }
                         }
                         if(!Globals.deathScreen && !Globals.crashed && !Globals.storeOpen && !Globals.levelScreenOpen) {
