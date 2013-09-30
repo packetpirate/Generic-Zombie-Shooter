@@ -99,23 +99,22 @@ public class StoreWindow {
     
     public void draw(Graphics2D g2d, Player player) {
         if(this.background != null) g2d.drawImage(this.background, 0, 0, null);
-        this.drawWeaponFrame(g2d, player, Globals.ASSAULT_RIFLE, "/resources/images/GZS_RTPS.png");
-        this.drawWeaponFrame(g2d, player, Globals.SHOTGUN, "/resources/images/GZS_Boomstick.png");
-        this.drawWeaponFrame(g2d, player, Globals.FLAMETHROWER, "/resources/images/GZS_Flamethrower.png");
-        this.drawWeaponFrame(g2d, player, Globals.GRENADE, "/resources/images/GZS_Grenade.png");
-        this.drawWeaponFrame(g2d, player, Globals.LANDMINE, "/resources/images/GZS_Landmine.png");
-        this.drawWeaponFrame(g2d, player, Globals.FLARE, "/resources/images/GZS_Flare.png");
-        this.drawWeaponFrame(g2d, player, Globals.LASERWIRE, "/resources/images/GZS_LaserWire.png");
-        this.drawWeaponFrame(g2d, player, Globals.TURRETWEAPON, "/resources/images/GZS_Turret.png");
-        this.drawWeaponFrame(g2d, player, Globals.TELEPORTER, "/resources/images/GZS_BigRedButton.png");
+        this.drawWeaponFrame(g2d, player, Globals.ASSAULT_RIFLE, Globals.ASSAULT_RIFLE.getImage());
+        this.drawWeaponFrame(g2d, player, Globals.SHOTGUN, Globals.SHOTGUN.getImage());
+        this.drawWeaponFrame(g2d, player, Globals.FLAMETHROWER, Globals.FLAMETHROWER.getImage());
+        this.drawWeaponFrame(g2d, player, Globals.GRENADE, Globals.GRENADE.getImage());
+        this.drawWeaponFrame(g2d, player, Globals.LANDMINE, Globals.LANDMINE.getImage());
+        this.drawWeaponFrame(g2d, player, Globals.FLARE, Globals.FLARE.getImage());
+        this.drawWeaponFrame(g2d, player, Globals.LASERWIRE, Globals.LASERWIRE.getImage());
+        this.drawWeaponFrame(g2d, player, Globals.TURRETWEAPON, Globals.TURRETWEAPON.getImage());
+        this.drawWeaponFrame(g2d, player, Globals.TELEPORTER, Globals.TELEPORTER.getImage());
     }
     
-    private void drawWeaponFrame(Graphics2D g2d, Player player, Weapon w, String file) {
+    private void drawWeaponFrame(Graphics2D g2d, Player player, Weapon w, BufferedImage brbt) {
         FontMetrics metrics = g2d.getFontMetrics();
         
         int x = (int)(this.weaponFrames.get(w.getName()).get(0).x + 18);
         int y = (int)(this.weaponFrames.get(w.getName()).get(0).y + 17.2);
-        BufferedImage brbt = GZSFramework.loadImage(file);
         g2d.drawImage(brbt, x, y, null);
         g2d.setColor(Color.WHITE);
         g2d.drawString(w.getName(), (x + 58), (y + 12));

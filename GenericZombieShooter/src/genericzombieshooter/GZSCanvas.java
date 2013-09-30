@@ -118,7 +118,6 @@ public class GZSCanvas extends JPanel {
                         sg.fillRect(0, 0, Globals.W_WIDTH, Globals.W_HEIGHT);
                         sg.setComposite(AlphaComposite.DstIn);
 
-                        player.getLightSource().draw(sg);
                         { // Draw flashlight gradient.
                             double distance = 400;
                             Polygon flashlight = new Polygon();
@@ -140,6 +139,7 @@ public class GZSCanvas extends JPanel {
                             sg.setPaint(gp);
                             sg.fill(flashlight);
                         } // End drawing flashlight gradient.
+                        player.getLightSource().draw(sg);
 
                         // Draw the light sources from flares.
                         if(player.hasWeapon(Globals.FLARE.getName())) {

@@ -87,29 +87,29 @@ public class ZombieWave {
                 if(zombieType == Globals.ZOMBIE_REGULAR_TYPE) {
                     // Zumby
                     Animation a_ = new Animation(Images.ZOMBIE_REGULAR, 48, 48, 4, (int)p_.x, (int)p_.y, 200, 0, true);
-                    Zombie z_ = new Zombie(p_, Globals.ZOMBIE_REGULAR_TYPE, 250, 1, 1, 10, 20, a_);
+                    Zombie z_ = new Zombie(p_, Globals.ZOMBIE_REGULAR_TYPE, 250, 1, 1, 25, 20, a_);
                     wave.add(z_);
                 } else if(zombieType == Globals.ZOMBIE_DOG_TYPE) {
                     // Rotdog
                     Animation a_ = new Animation(Images.ZOMBIE_DOG, 48, 48, 4, (int)p_.x, (int)p_.y, 80, 0, true);
-                    Zombie z_ = new Zombie(p_, Globals.ZOMBIE_DOG_TYPE, 100, 3, 2, 20, 30, a_);
+                    Zombie z_ = new Zombie(p_, Globals.ZOMBIE_DOG_TYPE, 100, 2, 2, 50, 30, a_);
                     wave.add(z_);
                 } else if(zombieType == Globals.ZOMBIE_ACID_TYPE) {
-                    // Up-Chuck
+                    // Upchuck
                     Animation a_ = new Animation(Images.ZOMBIE_ACID, 64, 64, 4, (int)p_.x, (int)p_.y, 200, 0, true);
-                    AcidZombie z_ = new AcidZombie(p_, 300, 1, 1, 50, a_);
+                    AcidZombie z_ = new AcidZombie(p_, 300, 1, 1, 100, a_);
                     wave.add(z_);
                     specialsSpawned++;
                 } else if(zombieType == Globals.ZOMBIE_POISONFOG_TYPE) {
                     // Gasbag
                     Animation a_ = new Animation(Images.ZOMBIE_POISONFOG, 48, 48, 4, (int)p_.x, (int)p_.y, 100, 0, true);
-                    PoisonFogZombie pfz_ = new PoisonFogZombie(p_, 250, 1, 2, 80, a_);
+                    PoisonFogZombie pfz_ = new PoisonFogZombie(p_, 250, 1, 2, 200, a_);
                     wave.add(pfz_);
                     specialsSpawned++;
                 } else if(zombieType == Globals.ZOMBIE_MATRON_TYPE) {
                     // Big Mama
                     Animation a_ = new Animation(Images.ZOMBIE_MATRON, 64, 64, 4, (int)p_.x, (int)p_.y, 200, 0, true);
-                    ZombieMatron zm_ = new ZombieMatron(p_, 500, 1, 1, 150, a_);
+                    ZombieMatron zm_ = new ZombieMatron(p_, 500, 1, 1, 350, a_);
                     wave.add(zm_);
                     specialsSpawned++;
                 }

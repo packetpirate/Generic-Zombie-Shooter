@@ -50,7 +50,7 @@ public class Flamethrower extends Weapon {
     private static final int PARTICLE_LIFE_MAX = 1400;
     
     public Flamethrower() {
-        super("The Flammenwerfer", KeyEvent.VK_4, "/resources/images/GZS_Flamethrower.png", 
+        super("The Flammenwerfer", KeyEvent.VK_4, "/resources/images/GZS_Flammenwerfer.png", 
               Flamethrower.DEFAULT_AMMO, Flamethrower.MAX_AMMO, Flamethrower.AMMO_PER_USE, 0, true);
     }
     

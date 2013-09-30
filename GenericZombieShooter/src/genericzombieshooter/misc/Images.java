@@ -39,7 +39,7 @@ public class Images {
     public static final BufferedImage ZOMBIE_ACID = GZSFramework.loadImage("/resources/images/GZS_Upchuck2.png");
     public static final BufferedImage ZOMBIE_POISONFOG = GZSFramework.loadImage("/resources/images/GZS_Gasbag2.png");
     public static final BufferedImage ZOMBIE_MATRON = GZSFramework.loadImage("/resources/images/GZS_BigMama2.png");
-    public static final BufferedImage ZOMBIE_TINY = GZSFramework.loadImage("/resources/images/GZS_ZombieTiny.png");
+    public static final BufferedImage ZOMBIE_TINY = GZSFramework.loadImage("/resources/images/GZS_TinyZumby.png");
     public static final BufferedImage BOSS_ABERRATION = GZSFramework.loadImage("/resources/images/GZS_Aberration2.png");
     public static final BufferedImage BOSS_ZOMBAT = GZSFramework.loadImage("/resources/images/GZS_Zombat.png");
     public static final BufferedImage BOSS_STITCHES = GZSFramework.loadImage("/resources/images/GZS_Stitches.png");
@@ -63,8 +63,8 @@ public class Images {
     public static final BufferedImage POPGUN_BULLET = GZSFramework.loadImage("/resources/images/GZS_Bullet.png");
     public static final BufferedImage RTPS_BULLET = GZSFramework.loadImage("/resources/images/GZS_Bullet2.png");
     public static final BufferedImage FIRE_PARTICLE = GZSFramework.loadImage("/resources/images/GZS_FireParticle.png");
-    public static final BufferedImage GRENADE_PARTICLE = GZSFramework.loadImage("/resources/images/GZS_GrenadeParticle.png");
-    public static final BufferedImage LANDMINE_PARTICLE = GZSFramework.loadImage("/resources/images/GZS_LandmineParticle.png");
+    public static final BufferedImage GRENADE_PARTICLE = GZSFramework.loadImage("/resources/images/GZS_HandEggParticle.png");
+    public static final BufferedImage LANDMINE_PARTICLE = GZSFramework.loadImage("/resources/images/GZS_FlipFlopParticle.png");
     public static final BufferedImage FLARE_PARTICLE = GZSFramework.loadImage("/resources/images/GZS_FlareParticle.png");
     public static final BufferedImage LASER_TERMINAL = GZSFramework.loadImage("/resources/images/GZS_LaserTerminal.png");
     public static final BufferedImage EXPLOSION_SHEET = GZSFramework.loadImage("/resources/images/GZS_Explosion.png");

@@ -51,7 +51,7 @@ public class Landmine extends Weapon {
     private List<Explosion> explosions;
     
     public Landmine() {
-        super("Flip-Flop", KeyEvent.VK_6, "/resources/images/GZS_Landmine.png",
+        super("Flip-Flop", KeyEvent.VK_6, "/resources/images/GZS_FlipFlop.png",
               Landmine.DEFAULT_AMMO, Landmine.MAX_AMMO, Landmine.AMMO_PER_USE, 50, false);
         this.explosions = Collections.synchronizedList(new ArrayList<Explosion>());
     }

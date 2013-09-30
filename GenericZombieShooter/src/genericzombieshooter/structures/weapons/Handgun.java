@@ -42,7 +42,7 @@ public class Handgun extends Weapon{
     private static final int DEFAULT_AMMO = 0;
     private static final int MAX_AMMO = 0;
     private static final int AMMO_PER_USE = 0;
-    private static final int DAMAGE_PER_PARTICLE = 50;
+    private static final int DAMAGE_PER_PARTICLE = 75;
     private static final double PARTICLE_SPREAD = 3.0;
     private static final int PARTICLE_LIFE = 1000;
     
