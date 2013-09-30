@@ -33,8 +33,10 @@ import java.awt.Composite;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.FontMetrics;
+import java.awt.GradientPaint;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Polygon;
 import java.awt.Stroke;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Point2D;
@@ -117,6 +119,27 @@ public class GZSCanvas extends JPanel {
                         sg.setComposite(AlphaComposite.DstIn);
 
                         player.getLightSource().draw(sg);
+                        { // Draw flashlight gradient.
+                            double distance = 400;
+                            Polygon flashlight = new Polygon();
+                            Point2D.Double startPoint = new Point2D.Double(player.getCenterX(), player.getCenterY());
+                            Point2D.Double endPoint = new Point2D.Double(startPoint.x, startPoint.y);
+                            double theta = player.getTheta() - (Math.PI / 2);
+                            { // Add points to flashlight polygon.
+                                flashlight.addPoint((int)endPoint.x, (int)endPoint.y);
+                                flashlight.addPoint((int)(endPoint.x + (distance * Math.cos(theta - Math.toRadians(25)))), 
+                                                    (int)(endPoint.y + (distance * Math.sin(theta - Math.toRadians(25)))));
+                                flashlight.addPoint((int)(endPoint.x + (distance * Math.cos(theta + Math.toRadians(25)))), 
+                                                    (int)(endPoint.y + (distance * Math.sin(theta + Math.toRadians(25)))));
+                            } // End adding points to flashlight polygon.
+                            startPoint.x += (distance / 2) * Math.cos(theta);
+                            startPoint.y += (distance / 2) * Math.sin(theta);
+                            endPoint.x += (distance * Math.cos(theta)) * 0.75;
+                            endPoint.y += (distance * Math.sin(theta)) * 0.75;
+                            GradientPaint gp = new GradientPaint(startPoint, new Color(0, 0, 0, 100), endPoint, Color.WHITE);
+                            sg.setPaint(gp);
+                            sg.fill(flashlight);
+                        } // End drawing flashlight gradient.
 
                         // Draw the light sources from flares.
                         if(player.hasWeapon(Globals.FLARE.getName())) {

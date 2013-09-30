@@ -55,6 +55,7 @@ public class Player extends Rectangle2D.Double {
     
     // Member variables.
     private AffineTransform af;
+    private double theta;
     private BufferedImage img;
     private LightSource light;
     
@@ -90,12 +91,13 @@ public class Player extends Rectangle2D.Double {
     public Player(double x_, double y_, double w_, double h_) {
         super(x_, y_, w_, h_);
         this.af = new AffineTransform();
+        this.theta = 0;
         this.img = Images.PLAYER;
         
         {
             int xLoc = (int)this.getCenterX();
             int yLoc = (int)this.getCenterY();
-            float intensity = 200.0f;
+            float intensity = 64.0f;
             float [] distance = {0.0f, 0.6f, 0.8f, 1.0f};
             Color [] colors = {new Color(0.0f, 0.0f, 0.0f, 0.0f),
                                        new Color(0.0f, 0.0f, 0.0f, 0.75f),
@@ -137,6 +139,7 @@ public class Player extends Rectangle2D.Double {
 
     // Getter/Setter methods.
     public AffineTransform getTransform() { return this.af; }
+    public double getTheta() { return this.theta; }
     public BufferedImage getImage() { return this.img; }
     public LightSource getLightSource() { return this.light; }
 
@@ -270,8 +273,8 @@ public class Player extends Rectangle2D.Double {
         // Calculate the player's angle based on the mouse position.
         double cX = this.getCenterX();
         double cY = this.getCenterY();
-        double pAngle = Math.atan2((cY - Globals.mousePos.y), (cX - Globals.mousePos.x)) - Math.PI / 2;
-        this.rotate(pAngle);
+        this.theta = Math.atan2((cY - Globals.mousePos.y), (cX - Globals.mousePos.x)) - Math.PI / 2;
+        this.rotate(this.theta);
         
         // Move the player according to which keys are being held down.
         for(int i = 0; i < Globals.keys.length; i++)  {
@@ -281,8 +284,8 @@ public class Player extends Rectangle2D.Double {
         // If the left mouse button is held down, create a new projectile.
         if(Globals.buttons[0]) {
             Point target = new Point(Globals.mousePos);
-            Point2D.Double pos = new Point2D.Double((this.x + 32), (this.y + 1));
-            AffineTransform.getRotateInstance(pAngle, this.getCenterX(), this.getCenterY()).transform(pos, pos);
+            Point2D.Double pos = new Point2D.Double((this.x + 28), (this.y + 2));
+            AffineTransform.getRotateInstance(this.theta, this.getCenterX(), this.getCenterY()).transform(pos, pos);
             double theta = Math.atan2((target.x - pos.x), (target.y - pos.y));
             this.getWeapon().fire(theta, pos, this);
         }
