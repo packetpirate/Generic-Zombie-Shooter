@@ -104,6 +104,7 @@ Changes:
   - Added boss type, Stitches. See above description.
   - Made changes to HUD.
   - Revised sprites for the player, and the Zumby, Rotdog, Upchuck, Gasbag, and Big Mama zombies.
+  - Reduced radius of light emanating from the player and added a concial "flashlight" to replace it.
 
 Known Issues:
 
@@ -121,8 +122,7 @@ TODO:
   - Reduce radius of light around player and add a conical "flashlight" to act as the light source.
 
 Planned Future Changes (Most likely post-1.0):
-  - Add a lighting system so that you can only see directly in front of you, like a flashlight.
-    (Addendum) Add a day-night cycle so you need your flashlight at night and possibly flares you can throw around.
+  - Add a day-night cycle so you need your flashlight/flares at night.
   - Add randomly generated terrain (buildings, etc) to make combat a bit more interesting.
   - Add pathing AI to make the aforementioned terrain possible.
   - Add level-based gameplay.
@@ -134,4 +134,4 @@ Planned Future Changes (Most likely post-1.0):
     "footsteps" so zombies can detect you at a certain distance. Any zombies that detect you will make
     "noise" that will attract any zombies near that zombie to attack as well, creating "hordes".
   - Create custom graphics. (least likely, considering I'm terrible at graphics work)
-  - (Optional) Re-design game engine and migrate to LWJGL and Slick2D.
+  - (Optional) Re-design game engine and migrate to either LWJGL/Slick2D or LibGDX.
