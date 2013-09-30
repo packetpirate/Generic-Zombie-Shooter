@@ -104,6 +104,7 @@ Changes:
   - Added boss type, Stitches. See above description.
   - Made changes to HUD.
   - Revised sprites for the player, and the Zumby, Rotdog, Upchuck, Gasbag, and Big Mama zombies.
+  - Revised sprites for Popgun, RTPS, Boomstick, Flammenwerfer, Hand Egg, and Flip Flop weapons.
   - Reduced radius of light emanating from the player and added a concial "flashlight" to replace it.
 
 Known Issues:
