@@ -359,7 +359,7 @@ public class Player extends Rectangle2D.Double {
                 int xPos = (int)(this.getCenterX() - (w / 2));
                 int yPos = (int)(this.getCenterY() - (h / 2) + 5);
                 g2d.setColor(new Color(0, 0, 0, 100));
-                g2d.fillOval(xPos, yPos, w, h);
+                g2d.fillOval((xPos + 5), (yPos + 6), (w - 10), (h - 12));
             } // End drawing player shadow.
             g2d.drawImage(this.img, (int) this.x, (int) this.y, null);
         }

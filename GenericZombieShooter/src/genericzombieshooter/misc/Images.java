@@ -30,7 +30,7 @@ public class Images {
     public static final BufferedImage DEATH_SCREEN = GZSFramework.loadImage("/resources/images/GZS_DeathScreen.png");
     
     // Player-Related
-    public static final BufferedImage PLAYER = GZSFramework.loadImage("/resources/images/GZS_Player2.png");
+    public static final BufferedImage PLAYER = GZSFramework.loadImage("/resources/images/GZS_Player.png");
     public static final BufferedImage CROSSHAIR = GZSFramework.loadImage("/resources/images/GZS_Crosshair.png");
     
     // Zombie-Related
