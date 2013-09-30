@@ -110,16 +110,12 @@ Known Issues:
 
   - There was one particular case of an IllegalStateException after killing a tiny zombie from a matron horde, but
     I have no been able to replicate it, and am not sure what the cause was.
-  - Landmines and Grenades are capable of killing any enemy in one hit due to the fact that it is dealing damage
-    in every update that they are active. They need to modified so they can only damage each enemy once. This makes 
-    the fight with the Aberration a joke, as he dies instantly.
 
 TODO:
 
   - Overhaul game graphics.
   - Add background music or ambient sounds so the game isn't as quiet. Maybe add zombie noises.
   - Create final splash screen to reflect new sprites.
-  - Reduce radius of light around player and add a conical "flashlight" to act as the light source.
 
 Planned Future Changes (Most likely post-1.0):
   - Add a day-night cycle so you need your flashlight/flares at night.
