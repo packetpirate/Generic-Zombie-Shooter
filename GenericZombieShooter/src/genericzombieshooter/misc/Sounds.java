@@ -46,6 +46,11 @@ public enum Sounds {
     MOAN1("zombie_moan_01.wav", false, false),
     MOAN2("zombie_moan_02.wav", false, false),
     MOAN3("zombie_moan_03.wav", false, false),
+    MOAN4("zombie_moan_04.wav", false, false),
+    MOAN5("zombie_moan_05.wav", false, false),
+    MOAN6("zombie_moan_06.wav", false, false),
+    MOAN7("zombie_moan_07.wav", false, false),
+    MOAN8("zombie_moan_08.wav", false, false),
     POISONCLOUD("poison_cloud.wav", false, true),
     
     // Game Sounds

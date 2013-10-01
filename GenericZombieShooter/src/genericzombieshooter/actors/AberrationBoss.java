@@ -18,6 +18,7 @@ package genericzombieshooter.actors;
 
 import genericzombieshooter.misc.Globals;
 import genericzombieshooter.misc.Images;
+import genericzombieshooter.misc.Sounds;
 import genericzombieshooter.structures.Animation;
 import genericzombieshooter.structures.Particle;
 import java.awt.Dimension;
@@ -98,6 +99,18 @@ public class AberrationBoss extends Zombie {
     public void draw(Graphics2D g2d) {
         super.draw(g2d);
         if(!this.particles.isEmpty()) drawParticles(g2d);
+    }
+    
+    @Override
+    public void moan(Player player) {
+        if(Globals.gameTime.getElapsedMillis() >= this.nextMoan) {
+            double xD = player.getCenterX() - this.x;
+            double yD = player.getCenterY() - this.y;
+            double dist = Math.sqrt((xD * xD) + (yD * yD));
+            double gain = 1.0 - (dist / Player.AUDIO_RANGE);
+            Sounds.MOAN7.play(gain);
+            this.nextMoan = Globals.gameTime.getElapsedMillis() + ((Globals.r.nextInt(7) + 6) * 1000);
+        }
     }
     
     private void fire(Point2D.Double playerPos) {

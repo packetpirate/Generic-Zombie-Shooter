@@ -117,13 +117,14 @@ public class Zombie extends Point2D.Double {
         // To be overridden.
         boolean regular = this.type == Globals.ZOMBIE_REGULAR_TYPE;
         boolean dog = this.type == Globals.ZOMBIE_DOG_TYPE;
-        if(regular || dog) {
+        boolean tiny = this.type == Globals.ZOMBIE_TINY_TYPE;
+        if(regular || dog || tiny) {
             if(Globals.gameTime.getElapsedMillis() >= this.nextMoan) {
                 double xD = player.getCenterX() - this.x;
                 double yD = player.getCenterY() - this.y;
                 double dist = Math.sqrt((xD * xD) + (yD * yD));
                 double gain = 1.0 - (dist / Player.AUDIO_RANGE);
-                if(regular) Sounds.MOAN1.play(gain);
+                if(regular || tiny) Sounds.MOAN1.play(gain);
                 else if(dog) Sounds.MOAN2.play(gain);
                 this.nextMoan = Globals.gameTime.getElapsedMillis() + ((Globals.r.nextInt(7) + 6) * 1000);
             }
