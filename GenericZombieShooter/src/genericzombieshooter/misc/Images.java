@@ -26,7 +26,7 @@ import java.awt.image.BufferedImage;
 public class Images {
     // Background Images
     public static final BufferedImage START_SCREEN = GZSFramework.loadImage("/resources/images/GZS_Splash.png");
-    public static final BufferedImage BACKGROUND = GZSFramework.loadImage("/resources/images/GZS_Background_3.png");
+    public static final BufferedImage BACKGROUND = GZSFramework.loadImage("/resources/images/GZS_Background6.png");
     public static final BufferedImage DEATH_SCREEN = GZSFramework.loadImage("/resources/images/GZS_DeathScreen.png");
     
     // Player-Related
@@ -62,7 +62,7 @@ public class Images {
     // Ammo-Related
     public static final BufferedImage POPGUN_BULLET = GZSFramework.loadImage("/resources/images/GZS_Bullet.png");
     public static final BufferedImage RTPS_BULLET = GZSFramework.loadImage("/resources/images/GZS_Bullet2.png");
-    public static final BufferedImage FIRE_PARTICLE = GZSFramework.loadImage("/resources/images/GZS_FireParticle.png");
+    public static final BufferedImage FIRE_PARTICLE = GZSFramework.loadImage("/resources/images/GZS_FireParticle2.png");
     public static final BufferedImage GRENADE_PARTICLE = GZSFramework.loadImage("/resources/images/GZS_HandEggParticle.png");
     public static final BufferedImage LANDMINE_PARTICLE = GZSFramework.loadImage("/resources/images/GZS_FlipFlopParticle.png");
     public static final BufferedImage FLARE_PARTICLE = GZSFramework.loadImage("/resources/images/GZS_FlareParticle.png");

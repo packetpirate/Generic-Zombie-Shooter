@@ -27,6 +27,8 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
+import java.awt.geom.AffineTransform;
+import java.awt.geom.NoninvertibleTransformException;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import java.util.Iterator;
@@ -116,7 +118,27 @@ public class Flamethrower extends Weapon {
                     int size = Globals.r.nextInt(8) + 1;
                     Particle p = new Particle(theta, Flamethrower.PARTICLE_SPREAD, 4.0,
                                           (life / (int)Globals.SLEEP_TIME), new Point2D.Double(pos.x, pos.y),
-                                           new Dimension(size, size), Images.FIRE_PARTICLE);
+                                           new Dimension(size, size), Images.FIRE_PARTICLE) {
+                        @Override
+                        public void draw(Graphics2D g2d) {
+                            try {
+                                AffineTransform saved = g2d.getTransform();
+                                AffineTransform at = AffineTransform.getRotateInstance(this.theta, this.pos.x, this.pos.y).createInverse();
+                                double x = this.pos.x - (this.size.width / 2);
+                                double y = this.pos.y - (this.size.height / 2);
+                                g2d.setTransform(at);
+                                if(this.image == null) {
+                                    double w = this.size.width;
+                                    double h = this.size.height;
+                                    Rectangle2D.Double rect = new Rectangle2D.Double(x, y, w, h);
+                                    g2d.fill(at.createTransformedShape(rect));
+                                } else {
+                                    g2d.drawImage(this.image, (int)x, (int)y, null);
+                                }
+                                g2d.setTransform(saved);
+                            } catch(NoninvertibleTransformException nte) {}
+                        }
+                    };
                     this.particles.add(p);
                 }
                 // Use up ammo.
