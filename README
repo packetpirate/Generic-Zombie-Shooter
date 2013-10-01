@@ -106,6 +106,9 @@ Changes:
   - Revised sprites for the player, and the Zumby, Rotdog, Upchuck, Gasbag, and Big Mama zombies.
   - Revised sprites for Popgun, RTPS, Boomstick, Flammenwerfer, Hand Egg, and Flip Flop weapons.
   - Reduced radius of light emanating from the player and added a concial "flashlight" to replace it.
+  - Added "moan" sounds to the various zombies that randomly play. The volume is dependent on their distance to
+    the player, so the farther away they are from the player, the lower the volume, and the closer they are, the
+    louder it is. This may help warn some players of zombies that are getting too close.
 
 Known Issues:
 
@@ -114,9 +117,7 @@ Known Issues:
 
 TODO:
 
-  - Overhaul game graphics.
   - Add background music or ambient sounds so the game isn't as quiet. Maybe add zombie noises.
-  - Create final splash screen to reflect new sprites.
 
 Planned Future Changes (Most likely post-1.0):
   - Add a day-night cycle so you need your flashlight/flares at night.
