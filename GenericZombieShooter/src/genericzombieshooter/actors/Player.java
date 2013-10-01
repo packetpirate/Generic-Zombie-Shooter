@@ -45,6 +45,7 @@ public class Player extends Rectangle2D.Double {
     public static final int DEFAULT_HEALTH = 150;
     public static final long INVINCIBILITY_LENGTH = 3000;
     private static final double MOVE_SPEED = 2; // How many pixels per tick the player moves.
+    public static final double AUDIO_RANGE = 500;
     
     public static final int MAX_HEALTH_ID = 1;
     private static final int MAX_HEALTH_INC = 50;

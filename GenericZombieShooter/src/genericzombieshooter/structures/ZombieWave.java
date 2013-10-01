@@ -92,7 +92,7 @@ public class ZombieWave {
                 } else if(zombieType == Globals.ZOMBIE_DOG_TYPE) {
                     // Rotdog
                     Animation a_ = new Animation(Images.ZOMBIE_DOG, 48, 48, 4, (int)p_.x, (int)p_.y, 80, 0, true);
-                    Zombie z_ = new Zombie(p_, Globals.ZOMBIE_DOG_TYPE, 100, 2, 2, 50, 30, a_);
+                    Zombie z_ = new Zombie(p_, Globals.ZOMBIE_DOG_TYPE, 100, 1, 2, 50, 30, a_);
                     wave.add(z_);
                 } else if(zombieType == Globals.ZOMBIE_ACID_TYPE) {
                     // Upchuck
@@ -204,6 +204,7 @@ public class ZombieWave {
                 z.rotate(theta_);
                 z.move(theta_);
                 z.update(player, this.zombiesUnborn);
+                z.moan(player);
             } // End movement and animation updates.
             { // Check the zombie for collisions with ammo, etc.
                 if(!z.isDead()) {

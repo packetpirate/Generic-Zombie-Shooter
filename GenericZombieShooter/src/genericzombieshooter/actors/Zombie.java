@@ -17,6 +17,7 @@
 package genericzombieshooter.actors;
 
 import genericzombieshooter.misc.Globals;
+import genericzombieshooter.misc.Sounds;
 import genericzombieshooter.structures.Animation;
 import genericzombieshooter.structures.Particle;
 import java.awt.Color;
@@ -42,6 +43,8 @@ public class Zombie extends Point2D.Double {
     private int cashValue; // How many points the zombie is worth.
     private int experience; // How many experience points the zombie is worth.
     
+    protected long nextMoan;
+    
     public Zombie(Point2D.Double p_, int type_,  int health_, int damage_, double speed_, int cash_, int exp_, Animation animation_) {
         super(p_.x, p_.y);
         this.af = new AffineTransform();
@@ -53,6 +56,8 @@ public class Zombie extends Point2D.Double {
         this.speed = speed_;
         this.cashValue = cash_;
         this.experience = exp_;
+        
+        this.nextMoan = Globals.gameTime.getElapsedMillis() + ((Globals.r.nextInt(7) + 6) * 1000);
     }
     
     // Getter/Setter methods.
@@ -106,6 +111,23 @@ public class Zombie extends Point2D.Double {
             g2d.fillOval(xPos, yPos, width, height);
         } // End drawing zombie's shadow.
         this.img.draw((Graphics2D)g2d);
+    }
+    
+    public void moan(Player player) {
+        // To be overridden.
+        boolean regular = this.type == Globals.ZOMBIE_REGULAR_TYPE;
+        boolean dog = this.type == Globals.ZOMBIE_DOG_TYPE;
+        if(regular || dog) {
+            if(Globals.gameTime.getElapsedMillis() >= this.nextMoan) {
+                double xD = player.getCenterX() - this.x;
+                double yD = player.getCenterY() - this.y;
+                double dist = Math.sqrt((xD * xD) + (yD * yD));
+                double gain = 1.0 - (dist / Player.AUDIO_RANGE);
+                if(regular) Sounds.MOAN1.play(gain);
+                else if(dog) Sounds.MOAN2.play(gain);
+                this.nextMoan = Globals.gameTime.getElapsedMillis() + ((Globals.r.nextInt(7) + 6) * 1000);
+            }
+        }
     }
     
     public List<Particle> getParticles() {

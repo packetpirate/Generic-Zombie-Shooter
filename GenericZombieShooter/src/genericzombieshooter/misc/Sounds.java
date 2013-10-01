@@ -23,6 +23,7 @@ import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 import javax.sound.sampled.DataLine;
+import javax.sound.sampled.FloatControl;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 
@@ -32,33 +33,37 @@ import javax.sound.sampled.UnsupportedAudioFileException;
  */
 public enum Sounds {
     // Weapon-Related
-    POPGUN("shoot2.wav", false),
-    RTPS("shoot1.wav", false),
-    BOOMSTICK("shotgun1.wav", false),
-    FLAMETHROWER("flamethrower.wav", true),
-    THROW("throw.wav", false),
-    EXPLOSION("explosion.wav", false),
-    LANDMINE_ARMED("landmine_armed.wav", false),
-    TELEPORT("teleport.wav", false),
+    POPGUN("shoot2.wav", false, true),
+    RTPS("shoot1.wav", false, true),
+    BOOMSTICK("shotgun1.wav", false, true),
+    FLAMETHROWER("flamethrower.wav", true, true),
+    THROW("throw.wav", false, true),
+    EXPLOSION("explosion.wav", false, true),
+    LANDMINE_ARMED("landmine_armed.wav", false, true),
+    TELEPORT("teleport.wav", false, true),
     
     // Zombie-Related
-    POISONCLOUD("poison_cloud.wav", false),
+    MOAN1("zombie_moan_01.wav", false, false),
+    MOAN2("zombie_moan_02.wav", false, false),
+    MOAN3("zombie_moan_03.wav", false, false),
+    POISONCLOUD("poison_cloud.wav", false, true),
     
     // Game Sounds
-    POWERUP("powerup.wav", false),
-    PURCHASEWEAPON("purchase_weapon.wav", false),
-    BUYAMMO("buy_ammo.wav", false),
-    PAUSE("pause.wav", false),
-    UNPAUSE("unpause.wav", false);
+    POWERUP("powerup.wav", false, true),
+    PURCHASEWEAPON("purchase_weapon.wav", false, true),
+    BUYAMMO("buy_ammo2.wav", false, true),
+    PAUSE("pause.wav", false, true),
+    UNPAUSE("unpause.wav", false, true);
     
     private Clip clip;
     private boolean looped;
+    private boolean resets;
 
-    Sounds(String filename, boolean loop) {
-        openClip(filename, loop);
+    Sounds(String filename, boolean loop, boolean reset) {
+        openClip(filename, loop, reset);
     }
 
-    private synchronized void openClip(String filename, boolean loop) {
+    private synchronized void openClip(String filename, boolean loop, boolean reset) {
         try {
             URL audioFile = Sounds.class.getResource("/resources/sounds/" + filename);
 
@@ -76,14 +81,23 @@ public enum Sounds {
             System.out.println(lue);
         }
         looped = loop;
+        resets = reset;
     }
 
     public synchronized void play() {
+        play(1.0);
+    }
+    
+    public synchronized void play(final double gain) {
         Runnable soundPlay = new Runnable() {
             @Override
             public void run() {
-                if(!looped) reset();
-                clip.loop((looped)?Clip.LOOP_CONTINUOUSLY:0);
+                Clip clipCopy = (Clip)clip;
+                FloatControl gainControl = (FloatControl)clipCopy.getControl(FloatControl.Type.MASTER_GAIN);
+                float dB = (float)(Math.log(gain) / Math.log(10.0) * 20.0);
+                gainControl.setValue(dB);
+                if(!looped || (!resets && clipCopy.isActive())) reset(clipCopy);
+                clipCopy.loop((looped)?Clip.LOOP_CONTINUOUSLY:0);
                 
             }
         };
@@ -91,8 +105,12 @@ public enum Sounds {
     }
     
     public synchronized void reset() {
-        synchronized(clip) { clip.stop(); }
-        clip.setFramePosition(0);
+        reset(clip);
+    }
+    
+    public synchronized void reset(Clip clipCopy) {
+        synchronized(clipCopy) { clipCopy.stop(); }
+        clipCopy.setFramePosition(0);
     }
 
     public static void init() {
