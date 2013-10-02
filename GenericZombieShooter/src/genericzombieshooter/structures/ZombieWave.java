@@ -13,6 +13,7 @@ import genericzombieshooter.misc.Images;
 import genericzombieshooter.structures.items.ExpMultiplier;
 import genericzombieshooter.structures.items.ExtraLife;
 import genericzombieshooter.structures.items.Invulnerability;
+import genericzombieshooter.structures.items.NightVision;
 import genericzombieshooter.structures.items.SpeedUp;
 import genericzombieshooter.structures.items.UnlimitedAmmo;
 import genericzombieshooter.structures.weapons.Weapon;
@@ -234,8 +235,10 @@ public class ZombieWave {
                                         ExtraLife extra = new ExtraLife(z);
                                         ExpMultiplier exp = new ExpMultiplier(z);
                                         Invulnerability invuln = new Invulnerability(z);
-                                        Item [] statusItems = {speed, unlimited, speed, invuln, 
-                                                               speed, extra, speed, exp, speed, exp};
+                                        NightVision night = new NightVision(z);
+                                        Item [] statusItems = {speed, unlimited, night, speed, 
+                                                               invuln, speed, extra, speed, exp, 
+                                                               speed, night, exp, night};
                                         int i = Globals.r.nextInt(statusItems.length);
                                         itemFactory.dropItem(statusItems[i]);
                                     }

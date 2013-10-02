@@ -28,6 +28,7 @@ import genericzombieshooter.structures.components.ErrorWindow;
 import genericzombieshooter.structures.components.LevelScreen;
 import genericzombieshooter.structures.components.StoreWindow;
 import genericzombieshooter.structures.components.WeaponsLoadout;
+import genericzombieshooter.structures.items.NightVision;
 import genericzombieshooter.structures.weapons.Weapon;
 import java.awt.Graphics2D;
 import java.awt.Point;
@@ -159,7 +160,8 @@ public class GZSFramework {
                         if (key == KeyEvent.VK_C) {
                             if(Globals.started && !Globals.crashed && !Globals.deathScreen &&
                                !Globals.paused && !Globals.storeOpen && !Globals.levelScreenOpen) {
-                                currentWave = 15;
+                                //currentWave = 15;
+                                player.addStatusEffect(NightVision.ID, NightVision.EFFECT_NAME, Images.NIGHT_VISION, NightVision.DURATION, 0);
                             }
                         }
                         if(!Globals.deathScreen && !Globals.crashed && !Globals.storeOpen && !Globals.levelScreenOpen) {

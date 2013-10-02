@@ -25,6 +25,7 @@ import genericzombieshooter.structures.StatusEffect;
 import genericzombieshooter.structures.components.LevelScreen;
 import genericzombieshooter.structures.components.StoreWindow;
 import genericzombieshooter.structures.components.WeaponsLoadout;
+import genericzombieshooter.structures.items.NightVision;
 import genericzombieshooter.structures.weapons.Weapon;
 import java.awt.AlphaComposite;
 import java.awt.BasicStroke;
@@ -113,8 +114,9 @@ public class GZSCanvas extends JPanel {
                         Graphics2D sg = (Graphics2D)shadowBuffer.getGraphics();
 
                         // For each light source, draw a translucent radial gradient painted rectangle over the "shadow" layer.
+                        float layerOpacity = ((player.hasEffect(NightVision.EFFECT_NAME))?0.80f:0.95f);
                         sg.setComposite(AlphaComposite.Src);
-                        sg.setColor(new Color(0.0f, 0.0f, 0.0f, 0.95f));
+                        sg.setColor(new Color(0.0f, 0.0f, 0.0f, layerOpacity));
                         sg.fillRect(0, 0, Globals.W_WIDTH, Globals.W_HEIGHT);
                         sg.setComposite(AlphaComposite.DstIn);
 

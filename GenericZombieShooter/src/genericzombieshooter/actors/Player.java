@@ -24,6 +24,7 @@ import genericzombieshooter.structures.Message;
 import genericzombieshooter.structures.StatusEffect;
 import genericzombieshooter.structures.items.ExpMultiplier;
 import genericzombieshooter.structures.items.Invulnerability;
+import genericzombieshooter.structures.items.NightVision;
 import genericzombieshooter.structures.items.SpeedUp;
 import genericzombieshooter.structures.items.UnlimitedAmmo;
 import genericzombieshooter.structures.weapons.Weapon;
@@ -319,6 +320,11 @@ public class Player extends Rectangle2D.Double {
                     this.experienceMultiplier = 1;
                     this.removeEffect(ExpMultiplier.EFFECT_NAME);
                 }
+            }
+            if(this.hasEffect(NightVision.EFFECT_NAME)) {
+                // If the player no longer has the effect, remove it.
+                StatusEffect status = this.statusEffects.get(NightVision.EFFECT_NAME);
+                if(!status.isActive()) this.removeEffect(NightVision.EFFECT_NAME);
             }
             
             // Negative Effects

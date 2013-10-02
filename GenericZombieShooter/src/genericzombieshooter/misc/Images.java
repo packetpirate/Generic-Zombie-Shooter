@@ -58,6 +58,7 @@ public class Images {
     public static final BufferedImage EXTRA_LIFE = GZSFramework.loadImage("/resources/images/GZS_ExtraLife.png");
     public static final BufferedImage EXP_MULTIPLIER = GZSFramework.loadImage("/resources/images/GZS_ExpMultiplier.png");
     public static final BufferedImage INVULNERABILITY = GZSFramework.loadImage("/resources/images/GZS_Invulnerability.png");
+    public static final BufferedImage NIGHT_VISION = GZSFramework.loadImage("/resources/images/GZS_NightVision.png");
     
     // Ammo-Related
     public static final BufferedImage POPGUN_BULLET = GZSFramework.loadImage("/resources/images/GZS_Bullet.png");
