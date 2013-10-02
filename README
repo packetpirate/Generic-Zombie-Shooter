@@ -114,7 +114,11 @@ Changes:
 Known Issues:
 
   - There was one particular case of an IllegalStateException after killing a tiny zombie from a matron horde, but
-    I have no been able to replicate it, and am not sure what the cause was.
+    I have no been able to replicate it, and am not sure what the cause was. (No repeated incidents in over a month.)
+  - A couple of sound issues, mainly, that sometimes the game will randomly freeze. I have not confirmed that this
+    is in fact the Sounds class' fault, but after adding a few longer than normal sounds and modifying the class to
+    allow setting the gain of the clip, it has been freezing regularly. Also, sometimes, the Flammenwerfer sound
+    will not reset. (and here I was thinking I had fixed that...)
 
 TODO:
 
