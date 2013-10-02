@@ -71,6 +71,7 @@ Items:
   - Extra Life, gives the player 1 extra life.
   - Experience Multiplier, doubles the player's experience for 20 seconds.
   - Invulnerability, makes the player invincible for a short time.
+  - Night Vision, makes it easier to see for 30 seconds.
 
 Copyright Information:
 
@@ -85,8 +86,8 @@ Changes:
   - Added five power-up items; the SpeedUp, which doubles the player's movement speed for 10 seconds, the Unlimited
     Ammo power-up, which stops ammo consumption for the Assault Rifle, Shotgun, and Flamethrower for 10 seconds,
     the Extra Life power-up, which.... gives the player an extra life, the Experience Multiplier power-up,
-    which doubles the player's experience for 20 seconds, and the Invulnerability power-up, which makes the player
-    completely impervious to damage for 10 seconds!
+    which doubles the player's experience for 20 seconds, the Invulnerability power-up, which makes the player
+    completely impervious to damage for 10 seconds, and Night Vision, which makes it easier to see for 30 seconds!
   - Changed invulnerability effect for when player dies to a "blink" effect, rather than the white circle used previously.
   - Added expiration times for items so health packs, ammo, power-ups, etc will disappear from the screen after
     a set duration.
