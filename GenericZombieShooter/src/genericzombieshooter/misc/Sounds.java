@@ -33,42 +33,41 @@ import javax.sound.sampled.UnsupportedAudioFileException;
  */
 public enum Sounds {
     // Weapon-Related
-    POPGUN("shoot2.wav", false, true),
-    RTPS("shoot1.wav", false, true),
-    BOOMSTICK("shotgun1.wav", false, true),
-    FLAMETHROWER("flamethrower.wav", true, true),
-    THROW("throw.wav", false, true),
-    EXPLOSION("explosion.wav", false, true),
-    LANDMINE_ARMED("landmine_armed.wav", false, true),
-    TELEPORT("teleport.wav", false, true),
+    POPGUN("shoot2.wav", false),
+    RTPS("shoot1.wav", false),
+    BOOMSTICK("shotgun1.wav", false),
+    FLAMETHROWER("flamethrower.wav", true),
+    THROW("throw.wav", false),
+    EXPLOSION("explosion2.wav", false),
+    LANDMINE_ARMED("landmine_armed.wav", false),
+    TELEPORT("teleport.wav", false),
     
     // Zombie-Related
-    MOAN1("zombie_moan_01.wav", false, false),
-    MOAN2("zombie_moan_02.wav", false, false),
-    MOAN3("zombie_moan_03.wav", false, false),
-    MOAN4("zombie_moan_04.wav", false, false),
-    MOAN5("zombie_moan_05.wav", false, false),
-    MOAN6("zombie_moan_06.wav", false, false),
-    MOAN7("zombie_moan_07.wav", false, false),
-    MOAN8("zombie_moan_08.wav", false, false),
-    POISONCLOUD("poison_cloud.wav", false, true),
+    MOAN1("zombie_moan_01.wav", false),
+    MOAN2("zombie_moan_02.wav", false),
+    MOAN3("zombie_moan_03.wav", false),
+    MOAN4("zombie_moan_04.wav", false),
+    MOAN5("zombie_moan_05.wav", false),
+    MOAN6("zombie_moan_06.wav", false),
+    MOAN7("zombie_moan_07.wav", false),
+    MOAN8("zombie_moan_08.wav", false),
+    POISONCLOUD("poison_cloud.wav", false),
     
     // Game Sounds
-    POWERUP("powerup.wav", false, true),
-    PURCHASEWEAPON("purchase_weapon.wav", false, true),
-    BUYAMMO("buy_ammo2.wav", false, true),
-    PAUSE("pause.wav", false, true),
-    UNPAUSE("unpause.wav", false, true);
+    POWERUP("powerup.wav", false),
+    PURCHASEWEAPON("purchase_weapon.wav", false),
+    BUYAMMO("buy_ammo2.wav", false),
+    PAUSE("pause.wav", false),
+    UNPAUSE("unpause.wav", false);
     
     private Clip clip;
     private boolean looped;
-    private boolean resets;
 
-    Sounds(String filename, boolean loop, boolean reset) {
-        openClip(filename, loop, reset);
+    Sounds(String filename, boolean loop) {
+        openClip(filename, loop);
     }
 
-    private synchronized void openClip(String filename, boolean loop, boolean reset) {
+    private synchronized void openClip(String filename, boolean loop) {
         try {
             URL audioFile = Sounds.class.getResource("/resources/sounds/" + filename);
 
@@ -86,7 +85,6 @@ public enum Sounds {
             System.out.println(lue);
         }
         looped = loop;
-        resets = reset;
     }
 
     public synchronized void play() {
@@ -101,7 +99,7 @@ public enum Sounds {
                 FloatControl gainControl = (FloatControl)clipCopy.getControl(FloatControl.Type.MASTER_GAIN);
                 float dB = (float)(Math.log(gain) / Math.log(10.0) * 20.0);
                 gainControl.setValue(dB);
-                if(!looped || (!resets && clipCopy.isActive())) reset(clipCopy);
+                if(!looped) reset(clipCopy);
                 clipCopy.loop((looped)?Clip.LOOP_CONTINUOUSLY:0);
                 
             }
