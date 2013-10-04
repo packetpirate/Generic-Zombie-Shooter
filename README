@@ -110,19 +110,19 @@ Changes:
   - Added "moan" sounds to the various zombies that randomly play. The volume is dependent on their distance to
     the player, so the farther away they are from the player, the lower the volume, and the closer they are, the
     louder it is. This may help warn some players of zombies that are getting too close.
+  - Revised various sounds.
 
 Known Issues:
 
   - There was one particular case of an IllegalStateException after killing a tiny zombie from a matron horde, but
     I have no been able to replicate it, and am not sure what the cause was. (No repeated incidents in over a month.)
-  - A couple of sound issues, mainly, that sometimes the game will randomly freeze. I have not confirmed that this
-    is in fact the Sounds class' fault, but after adding a few longer than normal sounds and modifying the class to
-    allow setting the gain of the clip, it has been freezing regularly. Also, sometimes, the Flammenwerfer sound
-    will not reset. (and here I was thinking I had fixed that...)
+  - The Sounds class is defunct and needs to be replaced using a different class or library. Apparently, the Clip
+    class is not suited for playing the same clip multiple times simultaneously, and it was causing the game to freeze.
 
 TODO:
 
   - Add background music or ambient sounds so the game isn't as quiet. Maybe add zombie noises.
+    - Replace Sounds class using a different class/library.
 
 Planned Future Changes (Most likely post-1.0):
   - Add a day-night cycle so you need your flashlight/flares at night.
