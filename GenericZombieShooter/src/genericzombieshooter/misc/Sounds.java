@@ -37,7 +37,7 @@ public enum Sounds {
     RTPS("shoot1.wav", false),
     BOOMSTICK("shotgun1.wav", false),
     FLAMETHROWER("flamethrower.wav", true),
-    THROW("throw.wav", false),
+    THROW("throw2.wav", false),
     EXPLOSION("explosion2.wav", false),
     LANDMINE_ARMED("landmine_armed.wav", false),
     TELEPORT("teleport.wav", false),
@@ -57,6 +57,7 @@ public enum Sounds {
     POWERUP("powerup.wav", false),
     PURCHASEWEAPON("purchase_weapon.wav", false),
     BUYAMMO("buy_ammo2.wav", false),
+    POINTBUY("point_buy.wav", false),
     PAUSE("pause.wav", false),
     UNPAUSE("unpause.wav", false);
     
@@ -112,8 +113,10 @@ public enum Sounds {
     }
     
     public synchronized void reset(Clip clipCopy) {
-        synchronized(clipCopy) { clipCopy.stop(); }
-        clipCopy.setFramePosition(0);
+        synchronized(clipCopy) { 
+            clipCopy.stop(); 
+            clipCopy.setFramePosition(0);
+        }
     }
 
     public static void init() {

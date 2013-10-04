@@ -160,7 +160,6 @@ public class GZSFramework {
                         if (key == KeyEvent.VK_C) {
                             if(Globals.started && !Globals.crashed && !Globals.deathScreen &&
                                !Globals.paused && !Globals.storeOpen && !Globals.levelScreenOpen) {
-                                //currentWave = 15;
                                 player.addStatusEffect(NightVision.ID, NightVision.EFFECT_NAME, Images.NIGHT_VISION, NightVision.DURATION, 0);
                             }
                         }

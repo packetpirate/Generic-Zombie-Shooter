@@ -19,6 +19,7 @@ package genericzombieshooter.structures.components;
 import genericzombieshooter.GZSFramework;
 import genericzombieshooter.actors.Player;
 import genericzombieshooter.misc.Images;
+import genericzombieshooter.misc.Sounds;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.FontMetrics;
@@ -143,15 +144,24 @@ public class LevelScreen {
             if(this.rects.get(LevelScreen.HEALTH_BUTTON_NAME).contains(mousePos)) {
                 // Attempt to raise the player's max health.
                 int val = player.spendPoint(Player.MAX_HEALTH_ID, this.healthLevel);
-                if(val == 1) this.healthLevel++;
+                if(val == 1) {
+                    this.healthLevel++;
+                    Sounds.POINTBUY.play();
+                }
             } else if(this.rects.get(LevelScreen.DAMAGE_BUTTON_NAME).contains(mousePos)) {
                 // Attempt to raise the player's damage.
                 int val = player.spendPoint(Player.DAMAGE_ID, this.damageLevel);
-                if(val == 1) this.damageLevel++;
+                if(val == 1) {
+                    this.damageLevel++;
+                    Sounds.POINTBUY.play();
+                }
             } else if(this.rects.get(LevelScreen.SPEED_BUTTON_NAME).contains(mousePos)) {
                 // Attempt to raise the player's speed.
                 int val = player.spendPoint(Player.SPEED_ID, this.speedLevel);
-                if(val == 1) this.speedLevel++;
+                if(val == 1) {
+                    this.speedLevel++;
+                    Sounds.POINTBUY.play();
+                }
             }
         } // End checking Add Health Button
     }
