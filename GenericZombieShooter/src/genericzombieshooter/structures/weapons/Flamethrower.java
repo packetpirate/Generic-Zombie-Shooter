@@ -144,7 +144,7 @@ public class Flamethrower extends Weapon {
                 // Use up ammo.
                 if(!player.hasEffect(UnlimitedAmmo.EFFECT_NAME)) this.consumeAmmo();
                 this.resetCooldown();
-                Sounds.FLAMETHROWER.play();
+                if(!Sounds.FLAMETHROWER.getAudio().isActive()) Sounds.FLAMETHROWER.play();
             }
         }
     }

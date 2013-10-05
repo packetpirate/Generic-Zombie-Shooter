@@ -16,17 +16,6 @@
  **/
 package genericzombieshooter.misc;
 
-import java.io.IOException;
-import java.net.URL;
-import javax.sound.sampled.AudioFormat;
-import javax.sound.sampled.AudioInputStream;
-import javax.sound.sampled.AudioSystem;
-import javax.sound.sampled.Clip;
-import javax.sound.sampled.DataLine;
-import javax.sound.sampled.FloatControl;
-import javax.sound.sampled.LineUnavailableException;
-import javax.sound.sampled.UnsupportedAudioFileException;
-
 /**
  * Contains all pre-loaded sounds.
  * @author Darin Beaudreau
@@ -61,62 +50,25 @@ public enum Sounds {
     PAUSE("pause.wav", false),
     UNPAUSE("unpause.wav", false);
     
-    private Clip clip;
-    private boolean looped;
+    private AudioData audio;
+    public AudioData getAudio() { return this.audio; }
+    private boolean looped; 
 
     Sounds(String filename, boolean loop) {
         openClip(filename, loop);
     }
 
     private synchronized void openClip(String filename, boolean loop) {
-        try {
-            URL audioFile = Sounds.class.getResource("/resources/sounds/" + filename);
-
-            AudioInputStream audio = AudioSystem.getAudioInputStream(audioFile);
-            AudioFormat format = audio.getFormat();
-            DataLine.Info info = new DataLine.Info(Clip.class, format);
-            clip = (Clip) AudioSystem.getLine(info);
-
-            clip.open(audio);
-        } catch (UnsupportedAudioFileException uae) {
-            System.out.println(uae);
-        } catch (IOException ioe) {
-            System.out.println(ioe);
-        } catch (LineUnavailableException lue) {
-            System.out.println(lue);
-        }
+        audio = new AudioData("/resources/sounds/" + filename);
         looped = loop;
     }
-
+    
     public synchronized void play() {
         play(1.0);
     }
     
     public synchronized void play(final double gain) {
-        Runnable soundPlay = new Runnable() {
-            @Override
-            public void run() {
-                Clip clipCopy = (Clip)clip;
-                FloatControl gainControl = (FloatControl)clipCopy.getControl(FloatControl.Type.MASTER_GAIN);
-                float dB = (float)(Math.log(gain) / Math.log(10.0) * 20.0);
-                gainControl.setValue(dB);
-                if(!looped) reset(clipCopy);
-                clipCopy.loop((looped)?Clip.LOOP_CONTINUOUSLY:0);
-                
-            }
-        };
-        new Thread(soundPlay).start();
-    }
-    
-    public synchronized void reset() {
-        reset(clip);
-    }
-    
-    public synchronized void reset(Clip clipCopy) {
-        synchronized(clipCopy) { 
-            clipCopy.stop(); 
-            clipCopy.setFramePosition(0);
-        }
+        audio.play(gain, looped);
     }
 
     public static void init() {

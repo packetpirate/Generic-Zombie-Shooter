@@ -243,7 +243,7 @@ public class GZSFramework {
                         if (m.getButton() == MouseEvent.BUTTON1) {
                             Globals.buttons[0] = false;
                             if(player.getCurrentWeaponName().equals(Globals.FLAMETHROWER.getName())) {
-                                Sounds.FLAMETHROWER.reset();
+                                Sounds.FLAMETHROWER.getAudio().setActive(false);
                             }
                             
                             // Reset non-automatic weapons.
@@ -391,7 +391,7 @@ public class GZSFramework {
                         Globals.resetWeapons();
                     }
                     loadout.setCurrentWeapon(Globals.HANDGUN.getName());
-                    Sounds.FLAMETHROWER.reset();
+                    Sounds.FLAMETHROWER.getAudio().setActive(false);
                 }
 
                 { // Begin weapon updates.
