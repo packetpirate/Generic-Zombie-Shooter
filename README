@@ -111,18 +111,16 @@ Changes:
     the player, so the farther away they are from the player, the lower the volume, and the closer they are, the
     louder it is. This may help warn some players of zombies that are getting too close.
   - Revised various sounds.
+  - Rewrote sound engine to correct issues with some sounds causing the game to freeze.
 
 Known Issues:
 
   - There was one particular case of an IllegalStateException after killing a tiny zombie from a matron horde, but
     I have no been able to replicate it, and am not sure what the cause was. (No repeated incidents in over a month.)
-  - The Sounds class is defunct and needs to be replaced using a different class or library. Apparently, the Clip
-    class is not suited for playing the same clip multiple times simultaneously, and it was causing the game to freeze.
 
 TODO:
 
   - Add background music or ambient sounds so the game isn't as quiet. Maybe add zombie noises.
-    - Replace Sounds class using a different class/library.
 
 Planned Future Changes (Most likely post-1.0):
   - Add a day-night cycle so you need your flashlight/flares at night.
