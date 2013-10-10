@@ -16,51 +16,58 @@
  **/
 package genericzombieshooter.misc;
 
+import kuusisto.tinysound.Music;
+import kuusisto.tinysound.TinySound;
+
 /**
  * Contains all pre-loaded sounds.
  * @author Darin Beaudreau
  */
 public enum Sounds {
     // Weapon-Related
-    POPGUN("shoot2.wav", false),
-    RTPS("shoot1.wav", false),
-    BOOMSTICK("shotgun1.wav", false),
-    FLAMETHROWER("flamethrower.wav", true),
-    THROW("throw2.wav", false),
-    EXPLOSION("explosion2.wav", false),
-    LANDMINE_ARMED("landmine_armed.wav", false),
-    TELEPORT("teleport.wav", false),
+    POPGUN("shoot2.wav", false, false),
+    RTPS("shoot1.wav", false, false),
+    BOOMSTICK("shotgun1.wav", false, false),
+    FLAMETHROWER("flamethrower.wav", true, false),
+    THROW("throw2.wav", false, false),
+    EXPLOSION("explosion2.wav", false, false),
+    LANDMINE_ARMED("landmine_armed.wav", false, false),
+    TELEPORT("teleport.wav", false, false),
     
     // Zombie-Related
-    MOAN1("zombie_moan_01.wav", false),
-    MOAN2("zombie_moan_02.wav", false),
-    MOAN3("zombie_moan_03.wav", false),
-    MOAN4("zombie_moan_04.wav", false),
-    MOAN5("zombie_moan_05.wav", false),
-    MOAN6("zombie_moan_06.wav", false),
-    MOAN7("zombie_moan_07.wav", false),
-    MOAN8("zombie_moan_08.wav", false),
-    POISONCLOUD("poison_cloud.wav", false),
+    MOAN1("zombie_moan_01.wav", false, true),
+    MOAN2("zombie_moan_02.wav", false, true),
+    MOAN3("zombie_moan_03.wav", false, true),
+    MOAN4("zombie_moan_04.wav", false, true),
+    MOAN5("zombie_moan_05.wav", false, true),
+    MOAN6("zombie_moan_06.wav", false, true),
+    MOAN7("zombie_moan_07.wav", false, true),
+    MOAN8("zombie_moan_08.wav", false, true),
+    POISONCLOUD("poison_cloud.wav", false, false),
     
     // Game Sounds
-    POWERUP("powerup.wav", false),
-    PURCHASEWEAPON("purchase_weapon.wav", false),
-    BUYAMMO("buy_ammo2.wav", false),
-    POINTBUY("point_buy.wav", false),
-    PAUSE("pause.wav", false),
-    UNPAUSE("unpause.wav", false);
+    POWERUP("powerup.wav", false, false),
+    PURCHASEWEAPON("purchase_weapon.wav", false, true),
+    BUYAMMO("buy_ammo2.wav", false, true),
+    POINTBUY("point_buy.wav", false, true),
+    PAUSE("pause.wav", false, false),
+    UNPAUSE("unpause.wav", false, false);
     
-    private AudioData audio;
-    public AudioData getAudio() { return this.audio; }
+    private String file;
+    private Music audio;
+    public Music getAudio() { return this.audio; }
     private boolean looped; 
+    private boolean overlap;
 
-    Sounds(String filename, boolean loop) {
-        openClip(filename, loop);
+    Sounds(String filename, boolean loop, boolean over) {
+        openClip(filename, loop, over);
     }
 
-    private synchronized void openClip(String filename, boolean loop) {
-        audio = new AudioData("/resources/sounds/" + filename);
+    private synchronized void openClip(String filename, boolean loop, boolean over) {
+        file = filename;
+        audio = TinySound.loadMusic("/resources/sounds/" + filename);
         looped = loop;
+        overlap = over;
     }
     
     public synchronized void play() {
@@ -68,7 +75,15 @@ public enum Sounds {
     }
     
     public synchronized void play(final double gain) {
-        audio.play(gain, looped);
+        // If the clip supports overlapping, create a new Music object to use.
+        if(overlap) {
+            Music m = TinySound.loadMusic("/resources/sounds/" + file);
+            m.rewind();
+            m.play(looped, gain);
+        } else {
+            audio.rewind();
+            audio.play(looped, gain);
+        }
     }
 
     public static void init() {

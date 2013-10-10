@@ -263,7 +263,7 @@ public class Player extends Rectangle2D.Double {
     public int setWeapon(String name) {
         if(this.weaponsMap.containsKey(name)) {
             this.currentWeaponName = name;
-            Sounds.FLAMETHROWER.getAudio().setActive(false);
+            Sounds.FLAMETHROWER.getAudio().stop();
             return 1;
         } else return 0;
     }

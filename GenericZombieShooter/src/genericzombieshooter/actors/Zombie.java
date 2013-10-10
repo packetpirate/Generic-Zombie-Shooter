@@ -44,6 +44,7 @@ public class Zombie extends Point2D.Double {
     private int experience; // How many experience points the zombie is worth.
     
     protected long nextMoan;
+    protected boolean moaned;
     
     public Zombie(Point2D.Double p_, int type_,  int health_, int damage_, double speed_, int cash_, int exp_, Animation animation_) {
         super(p_.x, p_.y);
@@ -58,6 +59,7 @@ public class Zombie extends Point2D.Double {
         this.experience = exp_;
         
         this.nextMoan = Globals.gameTime.getElapsedMillis() + ((Globals.r.nextInt(7) + 6) * 1000);
+        this.moaned = false;
     }
     
     // Getter/Setter methods.
@@ -115,18 +117,20 @@ public class Zombie extends Point2D.Double {
     
     public void moan(Player player) {
         // To be overridden.
-        boolean regular = this.type == Globals.ZOMBIE_REGULAR_TYPE;
-        boolean dog = this.type == Globals.ZOMBIE_DOG_TYPE;
-        boolean tiny = this.type == Globals.ZOMBIE_TINY_TYPE;
-        if(regular || dog || tiny) {
-            if(Globals.gameTime.getElapsedMillis() >= this.nextMoan) {
-                double xD = player.getCenterX() - this.x;
-                double yD = player.getCenterY() - this.y;
-                double dist = Math.sqrt((xD * xD) + (yD * yD));
-                double gain = 1.0 - (dist / Player.AUDIO_RANGE);
-                if(regular || tiny) Sounds.MOAN1.play(gain);
-                else if(dog) Sounds.MOAN2.play(gain);
-                this.nextMoan = Globals.gameTime.getElapsedMillis() + ((Globals.r.nextInt(7) + 6) * 1000);
+        if(!this.moaned) {
+            boolean regular = this.type == Globals.ZOMBIE_REGULAR_TYPE;
+            boolean dog = this.type == Globals.ZOMBIE_DOG_TYPE;
+            boolean tiny = this.type == Globals.ZOMBIE_TINY_TYPE;
+            if(regular || dog || tiny) {
+                if(Globals.gameTime.getElapsedMillis() >= this.nextMoan) {
+                    double xD = player.getCenterX() - this.x;
+                    double yD = player.getCenterY() - this.y;
+                    double dist = Math.sqrt((xD * xD) + (yD * yD));
+                    double gain = 1.0 - (dist / Player.AUDIO_RANGE);
+                    if(regular || tiny) Sounds.MOAN1.play(gain);
+                    else if(dog) Sounds.MOAN2.play(gain);
+                    this.moaned = true;
+                }
             }
         }
     }

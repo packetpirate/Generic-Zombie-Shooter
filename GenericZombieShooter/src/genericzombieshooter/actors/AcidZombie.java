@@ -101,13 +101,15 @@ public class AcidZombie extends Zombie {
     
     @Override
     public void moan(Player player) {
-        if(Globals.gameTime.getElapsedMillis() >= this.nextMoan) {
-            double xD = player.getCenterX() - this.x;
-            double yD = player.getCenterY() - this.y;
-            double dist = Math.sqrt((xD * xD) + (yD * yD));
-            double gain = 1.0 - (dist / Player.AUDIO_RANGE);
-            Sounds.MOAN3.play(gain);
-            this.nextMoan = Globals.gameTime.getElapsedMillis() + ((Globals.r.nextInt(9) + 8) * 1000);
+        if(!this.moaned) {
+            if(Globals.gameTime.getElapsedMillis() >= this.nextMoan) {
+                double xD = player.getCenterX() - this.x;
+                double yD = player.getCenterY() - this.y;
+                double dist = Math.sqrt((xD * xD) + (yD * yD));
+                double gain = 1.0 - (dist / Player.AUDIO_RANGE);
+                Sounds.MOAN3.play(gain);
+                this.moaned = true;
+            }
         }
     }
     

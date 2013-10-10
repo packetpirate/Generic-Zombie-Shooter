@@ -25,6 +25,7 @@ import java.awt.Cursor;
 import java.awt.Toolkit;
 import javax.swing.JApplet;
 import javax.swing.JFrame;
+import kuusisto.tinysound.TinySound;
 
 /**
  * 
@@ -32,11 +33,16 @@ import javax.swing.JFrame;
  */
 public class GenericZombieShooter extends JApplet {
     public static void main(String[] args) {
+        // Initialize TinySound before everything else.
+        TinySound.init();
+        
+        // Create the frame and add the framework's canvas to it.
         JFrame frame = new JFrame("Generic Zombie Shooter v" + Globals.VERSION);
         GZSFramework framework = new GZSFramework(frame);
         
         frame.add(framework.canvas);
         
+        // Set the custom cursor to the crosshair image.
         Toolkit toolkit = Toolkit.getDefaultToolkit();
         Cursor cursor = toolkit.createCustomCursor(Images.CROSSHAIR, Globals.mousePos, "Crosshair");
         

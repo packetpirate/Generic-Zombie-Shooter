@@ -42,6 +42,7 @@ import java.io.IOException;
 import java.util.Iterator;
 import javax.imageio.ImageIO;
 import javax.swing.JFrame;
+import kuusisto.tinysound.TinySound;
 
 /**
  * Contains many of the methods used to update game objects and handles the game
@@ -243,7 +244,7 @@ public class GZSFramework {
                         if (m.getButton() == MouseEvent.BUTTON1) {
                             Globals.buttons[0] = false;
                             if(player.getCurrentWeaponName().equals(Globals.FLAMETHROWER.getName())) {
-                                Sounds.FLAMETHROWER.getAudio().setActive(false);
+                                Sounds.FLAMETHROWER.getAudio().stop();
                             }
                             
                             // Reset non-automatic weapons.
@@ -391,7 +392,7 @@ public class GZSFramework {
                         Globals.resetWeapons();
                     }
                     loadout.setCurrentWeapon(Globals.HANDGUN.getName());
-                    Sounds.FLAMETHROWER.getAudio().setActive(false);
+                    Sounds.FLAMETHROWER.getAudio().stop();
                 }
 
                 { // Begin weapon updates.
@@ -478,6 +479,7 @@ public class GZSFramework {
                         createErrorWindow(e);
                     }
                 }
+                TinySound.shutdown();
                 System.exit(0);
             }
         };
