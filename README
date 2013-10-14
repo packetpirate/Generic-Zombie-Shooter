@@ -112,6 +112,8 @@ Changes:
     louder it is. This may help warn some players of zombies that are getting too close.
   - Revised various sounds.
   - Rewrote sound engine (twice!) to correct issues with some sounds causing the game to freeze.
+  - Set prices on weapons and ammo in the store. (May not be final prices. I need to check to make sure they're
+    not unbalanced.)
 
 Known Issues:
 
