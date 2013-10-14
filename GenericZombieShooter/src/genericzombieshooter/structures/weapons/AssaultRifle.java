@@ -38,8 +38,8 @@ import java.util.List;
  */
 public class AssaultRifle extends Weapon {
     // Final Variables
-    private static final int WEAPON_PRICE = 0;
-    private static final int AMMO_PRICE = 0;
+    private static final int WEAPON_PRICE = 1000;
+    private static final int AMMO_PRICE = 200;
     private static final int DEFAULT_AMMO = 60;
     private static final int MAX_AMMO = 300;
     private static final int AMMO_PER_USE = 1;

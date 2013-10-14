@@ -37,8 +37,8 @@ import java.util.List;
  */
 public class Shotgun extends Weapon {
     // Final Variables
-    private static final int WEAPON_PRICE = 0;
-    private static final int AMMO_PRICE = 0;
+    private static final int WEAPON_PRICE = 1200;
+    private static final int AMMO_PRICE = 200;
     private static final int DEFAULT_AMMO = 24;
     private static final int MAX_AMMO = 64;
     private static final int AMMO_PER_USE = 1;

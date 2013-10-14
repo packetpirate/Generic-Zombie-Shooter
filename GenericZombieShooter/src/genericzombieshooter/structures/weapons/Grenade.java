@@ -39,8 +39,8 @@ import java.util.List;
  */
 public class Grenade extends Weapon {
     // Final Variables
-    private static final int WEAPON_PRICE = 0;
-    private static final int AMMO_PRICE = 0;
+    private static final int WEAPON_PRICE = 800;
+    private static final int AMMO_PRICE = 500;
     private static final int DEFAULT_AMMO = 1;
     private static final int MAX_AMMO = 3;
     private static final int AMMO_PER_USE = 1;

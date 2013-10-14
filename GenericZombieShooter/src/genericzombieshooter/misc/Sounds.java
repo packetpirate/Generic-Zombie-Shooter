@@ -26,7 +26,7 @@ import kuusisto.tinysound.TinySound;
 public enum Sounds {
     // Weapon-Related
     POPGUN("shoot2.wav", false, false),
-    RTPS("shoot1.wav", false, false),
+    RTPS("shoot3.wav", false, false),
     BOOMSTICK("shotgun1.wav", false, false),
     FLAMETHROWER("flamethrower.wav", true, false),
     THROW("throw2.wav", false, false),

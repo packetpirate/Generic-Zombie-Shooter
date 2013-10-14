@@ -42,8 +42,8 @@ import java.util.List;
  */
 public class LaserWire extends Weapon {
     // Final Variables
-    private static final int WEAPON_PRICE = 0;
-    private static final int AMMO_PRICE = 0;
+    private static final int WEAPON_PRICE = 1500;
+    private static final int AMMO_PRICE = 400;
     private static final int DEFAULT_AMMO = 1;
     private static final int MAX_AMMO = 1;
     private static final int AMMO_PER_USE = 1;

@@ -34,8 +34,8 @@ import java.util.List;
  */
 public class TurretWeapon extends Weapon {
     // Final Variables
-    private static final int WEAPON_PRICE = 0;
-    private static final int AMMO_PRICE = 0;
+    private static final int WEAPON_PRICE = 4000;
+    private static final int AMMO_PRICE = 1200;
     private static final int DEFAULT_AMMO = 1;
     private static final int MAX_AMMO = 1;
     private static final int AMMO_PER_USE = 1;
