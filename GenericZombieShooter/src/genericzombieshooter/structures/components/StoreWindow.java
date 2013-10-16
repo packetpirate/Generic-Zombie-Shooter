@@ -123,7 +123,7 @@ public class StoreWindow {
         
         String pS = "Purchase : $" + w.getWeaponPrice();
         Rectangle2D.Double purchase = this.weaponFrames.get(w.getName()).get(1);
-        if(!player.hasWeapon(w.getName())) g2d.setColor(new Color(8, 84, 22));
+        if(!player.hasWeapon(w.getName()) && (player.getCash() >= w.getWeaponPrice())) g2d.setColor(new Color(8, 84, 22));
         else g2d.setColor(Color.DARK_GRAY);
         g2d.fill(purchase);
         g2d.setColor(Color.BLACK);
@@ -134,7 +134,7 @@ public class StoreWindow {
         
         String bS = "Buy Ammo: $" + w.getAmmoPrice();
         Rectangle2D.Double buyAmmo = this.weaponFrames.get(w.getName()).get(2);
-        if(player.hasWeapon(w.getName()) && !w.ammoFull()) g2d.setColor(new Color(8, 84, 22));
+        if(player.hasWeapon(w.getName()) && !w.ammoFull() && (player.getCash() >= w.getAmmoPrice())) g2d.setColor(new Color(8, 84, 22));
         else g2d.setColor(Color.DARK_GRAY);
         g2d.fill(buyAmmo);
         g2d.setColor(Color.BLACK);

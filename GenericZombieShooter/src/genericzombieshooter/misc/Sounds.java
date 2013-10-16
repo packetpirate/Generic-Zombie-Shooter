@@ -25,14 +25,14 @@ import kuusisto.tinysound.TinySound;
  */
 public enum Sounds {
     // Weapon-Related
-    POPGUN("shoot2.wav", false, false),
+    POPGUN("shoot4.wav", false, true),
     RTPS("shoot3.wav", false, false),
-    BOOMSTICK("shotgun1.wav", false, false),
-    FLAMETHROWER("flamethrower.wav", true, false),
+    BOOMSTICK("shotgun2.wav", false, false),
+    FLAMETHROWER("flamethrower2.wav", true, false),
     THROW("throw2.wav", false, false),
     EXPLOSION("explosion2.wav", false, false),
     LANDMINE_ARMED("landmine_armed.wav", false, false),
-    TELEPORT("teleport.wav", false, false),
+    TELEPORT("teleport2.wav", false, false),
     
     // Zombie-Related
     MOAN1("zombie_moan_01.wav", false, true),
@@ -46,8 +46,8 @@ public enum Sounds {
     POISONCLOUD("poison_cloud.wav", false, false),
     
     // Game Sounds
-    POWERUP("powerup.wav", false, false),
-    PURCHASEWEAPON("purchase_weapon.wav", false, true),
+    POWERUP("powerup2.wav", false, false),
+    PURCHASEWEAPON("purchase_weapon2.wav", false, true),
     BUYAMMO("buy_ammo2.wav", false, true),
     POINTBUY("point_buy.wav", false, true),
     PAUSE("pause.wav", false, false),

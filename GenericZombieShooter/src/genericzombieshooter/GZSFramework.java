@@ -158,12 +158,6 @@ public class GZSFramework {
                                 }
                             }
                         }
-                        if (key == KeyEvent.VK_C) {
-                            if(Globals.started && !Globals.crashed && !Globals.deathScreen &&
-                               !Globals.paused && !Globals.storeOpen && !Globals.levelScreenOpen) {
-                                player.addStatusEffect(NightVision.ID, NightVision.EFFECT_NAME, Images.NIGHT_VISION, NightVision.DURATION, 0);
-                            }
-                        }
                         if(!Globals.deathScreen && !Globals.crashed && !Globals.storeOpen && !Globals.levelScreenOpen) {
                             if (key == Globals.HANDGUN.getKey()) {
                                 int r = player.setWeapon(Globals.HANDGUN.getName());

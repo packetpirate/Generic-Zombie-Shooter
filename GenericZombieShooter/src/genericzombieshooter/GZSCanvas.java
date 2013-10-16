@@ -123,7 +123,8 @@ public class GZSCanvas extends JPanel {
                         { // Draw flashlight gradient.
                             double distance = 400;
                             Polygon flashlight = new Polygon();
-                            Point2D.Double startPoint = new Point2D.Double(player.getCenterX(), player.getCenterY());
+                            Point2D.Double startPoint = new Point2D.Double((player.getCenterX() + 4), (player.getCenterY() - 8));
+                            AffineTransform.getRotateInstance(player.getTheta(), player.getCenterX(), player.getCenterY()).transform(startPoint, startPoint);
                             Point2D.Double endPoint = new Point2D.Double(startPoint.x, startPoint.y);
                             double theta = player.getTheta() - (Math.PI / 2);
                             { // Add points to flashlight polygon.
