@@ -78,7 +78,9 @@ Changes:
 
 Known Issues:
 
-  - None.
+  - After playing for a while, sound starts to crackle and pop randomly. I noticed this starts when I use the
+    Sentry Gun and Assault Rifle in tandem. Since they use the same sound and are being loaded so rapidly,
+    this might be the cause.
 
 Planned Future Changes (post-1.0):
   - Add a day-night cycle so you need your flashlight/flares at night.
