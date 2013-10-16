@@ -10,6 +10,9 @@ Generic Zombie Shooter is a simple overhead shooter game. Kill as many zombies a
 Instructions:
 
 The game is finally complete, and ready to play! Below are the controls and everything you need to know.
+You can download the JAR here: https://www.dropbox.com/s/t43ov84snt658zh/GenericZombieShooter.zip
+Included is a BAT file that will launch the game for you. The LIB folder and the BAT file MUST be in the same folder
+as the JAR file.
 
 Controls:
 
