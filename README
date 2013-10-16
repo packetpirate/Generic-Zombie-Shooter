@@ -1,6 +1,6 @@
 -----------------------
 Author: Darin Beaudreau
-Version: 0.9.95
+Version: 1.0
 -----------------------
 
 Description:
@@ -9,23 +9,14 @@ Generic Zombie Shooter is a simple overhead shooter game. Kill as many zombies a
 
 Instructions:
 
-The game is almost complete, but there are a few features that aren't yet added. Enjoy!
+The game is finally complete, and ready to play! Below are the controls and everything you need to know.
 
 Controls:
 
   WASD keys - Movement
   Mouse - Aim
   Left Click/Hold - Fire equipped weapon.
-  1 - Select Popgun (Handgun)
-  2 - Select Rooty Tooty Point & Shooty (Assault Rifle)
-  3 - Select Boomstick (Shotgun)
-  4 - Select the Flammenwerfer (Flamethrower)
-  5 - Select Hand Eggs (Grenades)
-  6 - Select Flip-Flops (Landmines)
-  7 - Select Shiny Sticks (Flares)
-  8 - Select Laser Wire (needs better name)
-  9 - Select Turrets (needs better name)
-  0 - Select Big Red Button (Teleporter)
+  0-9 - Select Weapons
   Mouse Scroll Wheel - Quick Select Weapon (Up = Left, Down = Right)
   B - Open Weapon Store
   T - Open Experience / Leveling Screen
@@ -80,50 +71,13 @@ the project on Github, or at http://www.gnu.org/licenses/gpl.txt
 
 Changes:
 
-  - Added weapons store and changed player to only start with the Handgun. The store allows the player to purchase
-    weapons and ammo. Ammo crates still spawn as per usual. All weapon and ammo prices set to 0 for testing purposes.
-  - Added translucent overlay to weapon icons to show remaining cooldown on that weapon. Shrinks from right to left.
-  - Added five power-up items; the SpeedUp, which doubles the player's movement speed for 10 seconds, the Unlimited
-    Ammo power-up, which stops ammo consumption for the Assault Rifle, Shotgun, and Flamethrower for 10 seconds,
-    the Extra Life power-up, which.... gives the player an extra life, the Experience Multiplier power-up,
-    which doubles the player's experience for 20 seconds, the Invulnerability power-up, which makes the player
-    completely impervious to damage for 10 seconds, and Night Vision, which makes it easier to see for 30 seconds!
-  - Changed invulnerability effect for when player dies to a "blink" effect, rather than the white circle used previously.
-  - Added expiration times for items so health packs, ammo, power-ups, etc will disappear from the screen after
-    a set duration.
-  - Added status effect icon display under upper HUD to show status effects currently affecting the player.
-  - Status effect icons now "fade out" when within 3 seconds of their expiration time.
-  - Added message system to show helpful information about power-ups you collect above the weapons loadout.
-  - Modified items to now blink when they are close to the time they are set to expire.
-  - Added basic experience / leveling system with skill points. All skills max out at 5. Each level in health
-    increments your maximum health by 50. Each level in damage increases your damage bonus by 20%, and each level
-    in speed increases your speed bonus by 20%. The experience / leveling screen shows your current level in each skill.
-  - Added GameTime class to replace current method of keeping track of elapsed time. This fixed issues where the wave
-    countdown would continue while the game was paused, among other things.
-  - Added boss type, the Aberration. See the above description.
-  - Added boss type, the Zombat. See above description.
-  - Added boss type, Stitches. See above description.
-  - Made changes to HUD.
-  - Revised sprites for the player, and the Zumby, Rotdog, Upchuck, Gasbag, and Big Mama zombies.
-  - Revised sprites for Popgun, RTPS, Boomstick, Flammenwerfer, Hand Egg, and Flip Flop weapons.
-  - Reduced radius of light emanating from the player and added a concial "flashlight" to replace it.
-  - Added "moan" sounds to the various zombies that randomly play. The volume is dependent on their distance to
-    the player, so the farther away they are from the player, the lower the volume, and the closer they are, the
-    louder it is. This may help warn some players of zombies that are getting too close.
-  - Revised various sounds.
-  - Rewrote sound engine (twice!) to correct issues with some sounds causing the game to freeze.
-  - Set prices on weapons and ammo in the store. (May not be final prices. I need to check to make sure they're
-    not unbalanced.)
+  - Version 1.0 release.
 
 Known Issues:
 
   - None.
 
-TODO:
-
-  - Finish adding new noises.
-
-Planned Future Changes (Most likely post-1.0):
+Planned Future Changes (post-1.0):
   - Add a day-night cycle so you need your flashlight/flares at night.
   - Add randomly generated terrain (buildings, etc) to make combat a bit more interesting.
   - Add pathing AI to make the aforementioned terrain possible.
