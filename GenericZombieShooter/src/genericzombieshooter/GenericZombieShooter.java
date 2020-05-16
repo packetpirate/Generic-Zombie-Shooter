@@ -34,7 +34,8 @@ import kuusisto.tinysound.TinySound;
 public class GenericZombieShooter extends JApplet {
     public static void main(String[] args) {
         // Initialize TinySound before everything else.
-        TinySound.init();
+        
+    	TinySound.init();
         
         // Create the frame and add the framework's canvas to it.
         JFrame frame = new JFrame("Generic Zombie Shooter v" + Globals.VERSION);
