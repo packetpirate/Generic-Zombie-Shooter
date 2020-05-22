@@ -80,10 +80,35 @@ public class Globals {
     public static boolean waveInProgress; // Whether the player is fighting or waiting for another wave.
     public static long nextWave;
     
+    public static void resetState() {
+    	animation = null;
+    	gameTime = new GameTime();
+
+    	running = false;
+        started = false;
+        crashed = false;
+        paused = false;
+        storeOpen = false;
+        levelScreenOpen = false;
+        deathScreen = false;
+        waveInProgress = false;
+        nextWave = Globals.gameTime.getElapsedMillis() + 3000;
+    }
+    
     // Input Related
     public static boolean [] keys; // The state of the game key controls.
     public static boolean [] buttons; // The state of the game mouse button controls.
     public static Point mousePos; // The current position of the mouse on the screen.
+    
+    public static void initializeInputVar() {
+        keys = new boolean[4];
+        for (boolean k : keys) k = false;
+        buttons = new boolean[2];
+        for (boolean b : buttons) b = false;
+
+        mousePos = new Point(0, 0);
+    }
+    
     
     // Static Weapons
     public static Handgun HANDGUN = new Handgun();

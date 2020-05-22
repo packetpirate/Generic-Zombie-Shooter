@@ -70,29 +70,19 @@ public class GZSFramework {
     private ItemFactory itemFactory;
     public ItemFactory getItemFactory() { return this.itemFactory; }
 
+    
     public GZSFramework(JFrame frame_) {
         frame = frame_;
         store = new StoreWindow();
         levelScreen = new LevelScreen();
         canvas = new GZSCanvas(this, store, levelScreen);
         
-        Globals.gameTime = new GameTime();
-        Globals.started = false;
-        Globals.paused = false;
-        Globals.storeOpen = false;
-        Globals.levelScreenOpen = false;
-        Globals.crashed = false;
-        Globals.deathScreen = false;
-        Globals.waveInProgress = false;
-        Globals.nextWave = Globals.gameTime.getElapsedMillis() + 3000;
+        
+        Globals.resetState();
+        Globals.initializeInputVar();
 
         { // Begin initializing member variables.
-            Globals.keys = new boolean[4];
-            for (boolean k : Globals.keys) k = false;
-            Globals.buttons = new boolean[2];
-            for (boolean b : Globals.buttons) b = false;
 
-            Globals.mousePos = new Point(0, 0);
         } // End member variable initialization.
 
         { // Begin initializing game objects.
