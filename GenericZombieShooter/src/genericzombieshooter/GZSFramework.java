@@ -77,7 +77,7 @@ public class GZSFramework {
         levelScreen = new LevelScreen();
         canvas = new GZSCanvas(this, store, levelScreen);
         
-        
+        //testtest
         Globals.resetState();
         Globals.initializeInputVar();
 
